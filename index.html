@@ -680,6 +680,30 @@ body.sv #clouds3 .cloud3{animation-play-state:paused!important}
 #clouds3 .c2{background:color-mix(in srgb,color-mix(in srgb,var(--cl) 38%,#fff) var(--h,100%),var(--b))}
 @media(prefers-reduced-motion:reduce){body[data-bg=plush] #stars i,#sun svg.plush,#sun svg.plush .pet{animation:none}}
 </style>
+
+<style id="android-selector-visibility-fix">
+/* Fix: keep every option in the mobile section selector visible on Android */
+@media (max-width: 700px) {
+  #stabs {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    padding-bottom: 4px;
+  }
+  #stabs button {
+    min-width: 0 !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+  .sheet.idle #stabs {
+    max-height: none !important;
+    overflow: visible !important;
+  }
+}
+</style>
+
 </head>
 <body data-p="night">
 <style>
