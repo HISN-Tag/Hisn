@@ -680,47 +680,6 @@ body.sv #clouds3 .cloud3{animation-play-state:paused!important}
 #clouds3 .c2{background:color-mix(in srgb,color-mix(in srgb,var(--cl) 38%,#fff) var(--h,100%),var(--b))}
 @media(prefers-reduced-motion:reduce){body[data-bg=plush] #stars i,#sun svg.plush,#sun svg.plush .pet{animation:none}}
 </style>
-<style id="moreCSS">
-/* قسم «المزيد»: مجموعات قابلة للطي + كروت أريح */
-#svcg:not(.ho)>.gh[data-tab=mor].show{display:flex!important;align-items:center;gap:10px;margin:8px 0 0!important;padding:12px 14px!important;font-size:.98rem!important;font-weight:700;color:var(--ink)!important;background:var(--card);border:1.5px solid var(--line)!important;border-radius:16px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;transition:background .2s,border-color .2s}
-#svcg:not(.ho)>.gh[data-tab=mor].show:first-of-type{margin-top:0!important}
-#svcg>.gh[data-tab=mor]:active{background:color-mix(in srgb,var(--ac) 14%,var(--card))}
-#svcg>.gh[data-tab=mor].gopen{border-color:color-mix(in srgb,var(--ac) 55%,transparent)!important;background:color-mix(in srgb,var(--ac) 9%,var(--card))}
-#svcg>.gh[data-tab=mor]:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-.gh[data-tab=mor] .gi{font-size:1.3rem;line-height:1}
-.gh[data-tab=mor] .gt{flex:1;min-width:0}
-.gh[data-tab=mor] .gn{font-size:.78rem;font-weight:600;color:var(--mut);padding:2px 9px;border-radius:99px;background:rgba(255,255,255,.07)}
-.gh[data-tab=mor] .gc{font-size:1.2rem;line-height:1;color:var(--ac);transition:transform .25s}
-.gh[data-tab=mor].gopen .gc{transform:rotate(-90deg)}
-#svcg .sc.cl.gcol{display:none!important}
-#svcg.mor{grid-template-columns:repeat(2,1fr)!important;gap:8px!important}
-#svcg.mor>.gh[data-tab=mor]{grid-column:1/-1}
-#svcg.mor .sc[data-p=mor].show.cl{flex-direction:row;justify-content:flex-start;min-height:56px!important;padding:8px 10px 8px 34px!important;border-radius:14px!important}
-#svcg.mor .sc[data-p=mor].cl h3{flex-direction:row!important;justify-content:flex-start!important;align-items:center;gap:9px!important;text-align:right!important;font-size:.9rem!important;line-height:1.35}
-#svcg.mor .sc[data-p=mor].cl .ic{font-size:1.3rem!important}
-
-/* زجاجي وشفاف جزئيًا + حركة الفتح والطي */
-body:not(.fx-glass) #svcg:not(.ho)>.gh[data-tab=mor].show{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(255,255,255,.04) 60%,rgba(255,255,255,.09))!important;-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);border:1px solid rgba(255,255,255,.2)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 -1px 0 rgba(255,255,255,.05),0 8px 22px rgba(0,0,0,.22);transition:background .35s,border-color .35s,box-shadow .35s,transform .2s}
-body:not(.fx-glass) #svcg:not(.ho)>.gh[data-tab=mor].show.gopen{background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 30%,transparent),color-mix(in srgb,var(--ac) 8%,transparent) 65%,rgba(255,255,255,.08))!important;border-color:color-mix(in srgb,var(--ac) 60%,rgba(255,255,255,.2))!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 10px 28px color-mix(in srgb,var(--ac) 22%,transparent),0 0 0 1px color-mix(in srgb,var(--ac) 18%,transparent)}
-body:not(.fx-more) #svcg>.gh[data-tab=mor]:active{transform:scale(.985)}
-.gh[data-tab=mor]::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.32) 50%,transparent 70%);transform:translateX(130%);opacity:0}
-body:not(.fx-more) .gh[data-tab=mor].gflash::before{animation:gSheen .85s ease-out both}
-body:not(.fx-glass) .gh[data-tab=mor] .gn{background:rgba(255,255,255,.12);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
-body:not(.fx-glass) .gh[data-tab=mor].gopen .gn{background:color-mix(in srgb,var(--ac) 28%,rgba(255,255,255,.1))}
-body:not(.fx-more) .gh[data-tab=mor] .gc{transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
-body:not(.fx-more) .gh[data-tab=mor] .gi{transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s}
-body:not(.fx-more) .gh[data-tab=mor].gopen .gi{transform:scale(1.18) rotate(-6deg);filter:drop-shadow(0 2px 6px color-mix(in srgb,var(--ac) 55%,transparent))}
-body:not(.fx-glass) #svcg.mor .sc[data-p=mor].show.cl{background:linear-gradient(135deg,rgba(255,255,255,.13),rgba(255,255,255,.04));-webkit-backdrop-filter:blur(10px) saturate(1.4);backdrop-filter:blur(10px) saturate(1.4);border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 4px 14px rgba(0,0,0,.16)}
-body:not(.fx-more) #svcg.mor .sc[data-p=mor].show.cl.gin{animation:gIn .42s cubic-bezier(.2,.9,.3,1) both!important;animation-delay:calc(var(--j,0)*55ms + 70ms)!important}
-body:not(.fx-more) #svcg.mor .sc[data-p=mor].show.cl.gout{animation:gOut .22s ease-in both!important;animation-delay:0ms!important;pointer-events:none}
-@keyframes gIn{0%{opacity:0;transform:translateY(-14px) scale(.9)}60%{opacity:1}100%{opacity:1;transform:none}}
-@keyframes gOut{from{opacity:1;transform:none}to{opacity:0;transform:translateY(-10px) scale(.92)}}
-@keyframes gSheen{0%{transform:translateX(130%);opacity:1}100%{transform:translateX(-130%);opacity:1}}
-@media(prefers-reduced-motion:reduce){#svcg .sc.gin,#svcg .sc.gout,.gh[data-tab=mor].gflash::before{animation:none!important}.gh[data-tab=mor] .gc,.gh[data-tab=mor] .gi{transition:none}}
-body.fx-more .gh[data-tab=mor] .gc,body.fx-more .gh[data-tab=mor] .gi{transition:none}
-body.fx-more .gh[data-tab=mor]::before{display:none}
-body.fx-more #svcg.mor .sc[data-p=mor].show.cl,body.fx-more #svcg.mor>.gh[data-tab=mor].show{animation:none!important}
-</style>
 </head>
 <body data-p="night">
 <style>
@@ -2073,26 +2032,6 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
   const curT=()=>(($('stabs').querySelector('.on'))||{dataset:{t:''}}).dataset.t;
   window.svTab=t=>{const L=[...svc.querySelectorAll('.sc')].filter(x=>x.dataset.p===t);L.forEach(x=>x.classList.add('cl'));if(L.length===1)L[0].classList.remove('cl');svc.classList.toggle('ho',L.length===1);svc.querySelectorAll(':scope>.gh').forEach(h=>h.classList.toggle('show',h.dataset.tab===t));sh2.scrollTop=0};
   {const _t=window.svTab;window.svTab=t=>{_t(t);let i=0;[...svc.children].forEach(x=>{if(x.classList.contains('gh')?x.classList.contains('show'):x.dataset.p===t)x.style.setProperty('--i',i++)})}}
-  /* «المزيد»: مجموعات قابلة للطي */
-  {const IC={'تزكية النفس':'🌱','العقيدة والعبادات الأخرى':'☝️','المال والمعاملات':'💰','الأسرة والمجتمع':'👨‍👩‍👧','اللباس والمأكل والترفيه':'🧥','الأخلاق وحفظ الحقوق':'⚖️','دروس ومعارف':'🎓','أدوات':'🧰'};
-   let cur=null;
-   [...svc.children].forEach(x=>{
-     if(x.classList.contains('gh')){cur=null;if(x.dataset.tab!=='mor')return;cur=x;cur._n=0;const t=x.textContent;
-       x.innerHTML=`<span class="gi" aria-hidden="true">${IC[t]||'📂'}</span><span class="gt">${t}</span><span class="gn"></span><span class="gc" aria-hidden="true">‹</span>`;
-       x.setAttribute('role','button');x.tabIndex=0;x.setAttribute('aria-expanded','false')}
-     else if(x.classList.contains('sc')){if(cur&&x.dataset.p==='mor'){x._g=cur;cur._n++}else cur=null}});
-   svc.querySelectorAll(':scope>.gh[data-tab="mor"]').forEach(h=>{h.querySelector('.gn').textContent=ar(h._n)});
-   const apply=anim=>{svc.querySelectorAll(':scope>.gh[data-tab="mor"]').forEach(h=>h._j=0);
-     [...svc.children].forEach(x=>{const h=x._g;if(!h)return;const open=h.classList.contains('gopen'),hid=x.classList.contains('gcol'),out=x.classList.contains('gout'),nf=document.body.classList.contains('fx-more')||document.body.classList.contains('fx-ui');
-       if(open){if(hid||out){clearTimeout(x._to);x.classList.remove('gcol','gout');if(anim&&!nf){x.style.setProperty('--j',h._j);x.classList.remove('gin');void x.offsetWidth;x.classList.add('gin')}}h._j++}
-       else if(!hid&&!out){if(anim&&!nf&&x.offsetParent){x.classList.remove('gin');x.classList.add('gout');x._to=setTimeout(()=>{x.classList.remove('gout');x.classList.add('gcol')},220)}else x.classList.add('gcol')}})};
-   const shut=k=>svc.querySelectorAll(':scope>.gh[data-tab="mor"].gopen').forEach(g=>{if(g!==k){g.classList.remove('gopen');g.setAttribute('aria-expanded','false')}});
-   const flip=h=>{const o=h.classList.toggle('gopen');h.setAttribute('aria-expanded',o);if(o){shut(h);h.classList.remove('gflash');void h.offsetWidth;h.classList.add('gflash');setTimeout(()=>h.classList.remove('gflash'),900)}apply(true)};
-   apply();
-   svc.addEventListener('click',e=>{const h=e.target.closest('.gh[data-tab="mor"]');if(h){flip(h);return}
-     const sc=e.target.closest('.sc');if(sc&&sc._g&&!sc._g.classList.contains('gopen')){sc._g.classList.add('gopen');sc._g.setAttribute('aria-expanded','true');shut(sc._g);apply(true)}});
-   svc.addEventListener('keydown',e=>{const h=e.target.closest&&e.target.closest('.gh[data-tab="mor"]');if(h&&(e.key==='Enter'||e.key===' ')){e.preventDefault();flip(h)}});
-   const _m=window.svTab;window.svTab=t=>{_m(t);svc.classList.toggle('mor',t==='mor')}}
   svc.addEventListener('click',e=>{const sc=e.target.closest('.sc');if(!sc)return;const cl=sc.classList.contains('cl');
     if(!cl&&(!e.target.closest('h3')||e.target.closest('button,input,a,textarea,select')))return;
     svc.querySelectorAll('.sc:not(.cl)').forEach(x=>x.classList.add('cl'));if(cl)sc.classList.remove('cl');
@@ -4235,9 +4174,7 @@ body.fx-ui .sheet.open { will-change: auto; }
     var OPTIONS = [                       /* [مفتاح التخزين، فئة body، النص] */
       ['fxplay', 'fx-play', 'إلغاء تأثيرات زر التشغيل'],
       ['fxctl',  'fx-ctl',  'إلغاء تأثيرات أزرار التحكم'],
-      ['fxui',   'fx-ui',   'إلغاء حركات القوائم والكروت'],
-      ['fxglass','fx-glass','إلغاء زجاجية «المزيد»'],
-      ['fxmore', 'fx-more', 'إلغاء حركات مجموعات «المزيد»']
+      ['fxui',   'fx-ui',   'إلغاء حركات القوائم والكروت']
     ];
     function isOn(k) { return lsGet(PREFIX + k) === '1'; }
     function applyClasses() { OPTIONS.forEach(function (o) { body.classList.toggle(o[1], isOn(o[0])); }); }
@@ -4263,7 +4200,7 @@ body.fx-ui .sheet.open { will-change: auto; }
           return '<button class="chip" type="button" data-k="' + o[0] + '" aria-pressed="false">' + o[2] + '</button>';
         }).join('') +
       '</div>' +
-      '<p class="mutp">فعّل ما تريد إلغاءه: يشمل زر التشغيل (الكرة والهالات والنبض)، وأزرار السابق والتالي والتقديم والرجوع والتنقل السفلي، وحركات القوائم، والشكل الزجاجي وحركة فتح المجموعات وطيّها في «المزيد». يُحفظ اختيارك.</p>';
+      '<p class="mutp">فعّل ما تريد إلغاءه: يشمل زر التشغيل (الكرة والهالات والنبض)، وأزرار السابق والتالي والتقديم والرجوع والتنقل السفلي، وحركات القوائم. يُحفظ اختيارك.</p>';
     (after || anchor).after(section);
 
     var chips = $('apfxc');
