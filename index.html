@@ -884,6 +884,16 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="sc" data-p="b"><h3>ضبط المواقيت</h3><p class="mutp" style="margin:0 0 6px;text-align:start">طريقة الحساب</p><select id="pmM" class="pmsel" aria-label="طريقة الحساب"></select><p class="mutp" style="margin:6px 0;text-align:start">المذهب في العصر</p><select id="pmA" class="pmsel" aria-label="المذهب في العصر"></select><p class="mutp" style="margin:6px 0;text-align:start">المدينة</p><select id="pmC" class="pmsel" aria-label="المدينة"></select><p class="mutp" style="margin:6px 0;text-align:start">تعديل بالدقائق</p><div class="qd" id="pmJ"></div><p class="mutp" style="margin:12px 0 6px;text-align:start">مواقيت اليوم بهذا الضبط</p><div class="qd" id="pmP"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="pmR">إعادة الضبط</button></div></section>
   <section class="sc" data-p="b"><h3>إمساكية رمضان</h3><div class="seg" id="imc"><button class="chip on" data-k="ram">رمضان</button><button class="chip" data-k="m30">٣٠ يومًا من اليوم</button></div><p class="mutp" id="imi" style="text-align:start"></p><div style="overflow-x:auto" id="imt"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="imp">طباعة</button><button class="chip" id="imy">نسخ الجدول</button></div></section>
   <section class="sc" data-p="c"><h3>التقرير الأسبوعي</h3><div class="qd" id="wkr"></div><p class="duat" id="wkm"></p><div class="chips" style="justify-content:center"><button class="chip" id="wks">شارك تقريرك كصورة</button></div></section>
+<section class="sc" data-p="c" id="aboutUs"><h3>نبذة عنا</h3>
+<p class="mutp sth" style="text-align:start">عن حصن المسلم</p>
+<p class="mutp" style="text-align:start;line-height:1.95;margin:0 0 10px">حصن المسلم تطبيق إسلامي يجمع الأذكار والأدعية ومواقيت الصلاة والمسبحة ومتابعة العبادات اليومية في مكان واحد، بتصميم بسيط وخفيف يناسب الهاتف، ويمكن تثبيته على الشاشة الرئيسية. وتُحفظ بياناتك الشخصية مثل التسبيح والملاحظات والإعدادات على جهازك.</p>
+<p class="mutp sth" style="text-align:start">المطورون</p>
+<p class="mutp" style="text-align:start;line-height:1.95;margin:0 0 10px">يقف وراء التطبيق فريق من المطورين يعملون على تحسينه وتحديثه باستمرار، ويحرصون على سهولة الاستخدام ودقة المحتوى، ويرحّبون بملاحظاتكم واقتراحاتكم وتصحيحاتكم، فهي أكبر عون لنا في تطويره.</p>
+<p class="mutp sth" style="text-align:start">تواصل معنا</p>
+<p class="mutp" style="text-align:start;line-height:1.9;margin:0 0 8px">لإبلاغنا عن خطأ في نص أو لأي اقتراح أو استفسار، راسلنا على:</p>
+<div class="chips" style="justify-content:center"><a class="chip" id="aboutMail" href="mailto:hisn.elmuslim.tag@gmail.com?subject=%D8%AD%D8%B5%D9%86%3A%20%D8%AA%D9%88%D8%A7%D8%B5%D9%84" style="text-decoration:none;direction:ltr;unicode-bidi:plaintext">hisn.elmuslim.tag@gmail.com</a></div>
+<p class="mutp" style="margin-top:12px">جزاكم الله خيرًا، ولا تنسونا من صالح دعائكم.</p>
+</section>
 <!-- ===== v14: خدمات جديدة ===== -->
 <section class="sc" data-p="s"><h3><span>حاسبة الكفارات والفدية</span><span id="exkfc"></span></h3>
 <div class="chips" id="exkft" style="justify-content:center"></div>
@@ -1842,7 +1852,7 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
   const sx2=window.svx;window.svx=()=>{sx2();znr();syR()};svx();
   /* ===== خدمات إضافية (٤) ===== */
   const MN=[['عند الاستيقاظ','الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور'],['دخول الخلاء','اللهم إني أعوذ بك من الخبث والخبائث'],['الخروج من الخلاء','غفرانك'],['بعد الوضوء','أشهد أن لا إله إلا الله وحده لا شريك له، وأشهد أن محمدًا عبده ورسوله'],['الخروج من المنزل','بسم الله، توكلت على الله، ولا حول ولا قوة إلا بالله'],['دخول المسجد','اللهم افتح لي أبواب رحمتك'],['الخروج من المسجد','اللهم إني أسألك من فضلك'],['قبل الطعام','بسم الله'],['بعد الطعام','الحمد لله الذي أطعمني هذا ورزقنيه من غير حول مني ولا قوة'],['ركوب الدابة أو السيارة','سبحان الذي سخر لنا هذا وما كنا له مقرنين، وإنا إلى ربنا لمنقلبون'],['عند المطر','اللهم صيبًا نافعًا'],['عند رؤية الهلال','اللهم أهله علينا بالأمن والإيمان، والسلامة والإسلام، ربي وربك الله'],['دعاء الكرب','لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم، لا إله إلا الله رب السماوات ورب الأرض ورب العرش الكريم'],['سيد الاستغفار','اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك علي، وأبوء لك بذنبي، فاغفر لي فإنه لا يغفر الذنوب إلا أنت'],['عند سماع الأذان (بعده)','اللهم رب هذه الدعوة التامة والصلاة القائمة، آتِ محمدًا الوسيلة والفضيلة، وابعثه مقامًا محمودًا الذي وعدته'],['عند الفطر','ذهب الظمأ وابتلت العروق وثبت الأجر إن شاء الله'],['ليلة القدر','اللهم إنك عفو تحب العفو فاعف عني'],['عند الغضب','أعوذ بالله من الشيطان الرجيم'],['زيارة المريض','لا بأس، طهور إن شاء الله'],['دخول المنزل','بسم الله ولجنا، وبسم الله خرجنا، وعلى ربنا توكلنا'],['لبس الثوب الجديد','اللهم لك الحمد أنت كسوتنيه، أسألك من خيره وخير ما صنع له، وأعوذ بك من شره وشر ما صنع له'],['عند العطاس','الحمد لله'],['تهنئة المتزوج','بارك الله لك، وبارك عليك، وجمع بينكما في خير'],['التلبية','لبيك اللهم لبيك، لبيك لا شريك لك لبيك، إن الحمد والنعمة لك والملك، لا شريك لك'],['تكبيرات العيد','الله أكبر الله أكبر، لا إله إلا الله، والله أكبر الله أكبر، ولله الحمد'],['عند ذبح الأضحية','بسم الله والله أكبر'],['عند المصيبة','إنا لله وإنا إليه راجعون، اللهم أجرني في مصيبتي وأخلفني خيرًا منها'],['التعزية','إن لله ما أخذ وله ما أعطى، وكل شيء عنده بأجل مسمى'],['زيارة القبور','السلام عليكم أهل الديار من المؤمنين والمسلمين، وإنا إن شاء الله بكم لاحقون، نسأل الله لنا ولكم العافية'],['كفارة المجلس','سبحانك اللهم وبحمدك، أشهد أن لا إله إلا أنت، أستغفرك وأتوب إليك'],['تثبيت القلب','يا مقلب القلوب ثبت قلبي على دينك'],['قضاء الدين','اللهم اكفني بحلالك عن حرامك، وأغنني بفضلك عمن سواك'],['في الصلاة: دعاء الاستفتاح','سبحانك اللهم وبحمدك، وتبارك اسمك، وتعالى جدك، ولا إله غيرك'],['في الصلاة: الركوع','سبحان ربي العظيم'],['في الصلاة: الرفع من الركوع','سمع الله لمن حمده، ربنا ولك الحمد'],['في الصلاة: السجود','سبحان ربي الأعلى'],['في الصلاة: بين السجدتين','رب اغفر لي، رب اغفر لي'],['في الصلاة: التشهد','التحيات لله والصلوات والطيبات، السلام عليك أيها النبي ورحمة الله وبركاته، السلام علينا وعلى عباد الله الصالحين، أشهد أن لا إله إلا الله وأشهد أن محمدًا عبده ورسوله'],['في الصلاة: الصلاة الإبراهيمية','اللهم صل على محمد وعلى آل محمد، كما صليت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد، اللهم بارك على محمد وعلى آل محمد، كما باركت على إبراهيم وعلى آل إبراهيم، إنك حميد مجيد']];
-  const SRC={"عند الاستيقاظ": "رواه البخاري", "دخول الخلاء": "متفق عليه", "الخروج من الخلاء": "رواه أبو داود والترمذي", "بعد الوضوء": "رواه مسلم", "الخروج من المنزل": "رواه أبو داود والترمذي", "دخول المسجد": "رواه مسلم", "الخروج من المسجد": "رواه مسلم", "قبل الطعام": "رواه الترمذي", "بعد الطعام": "رواه أبو داود والترمذي", "ركوب الدابة أو السيارة": "رواه مسلم", "عند المطر": "رواه البخاري", "عند رؤية الهلال": "رواه الترمذي", "دعاء الكرب": "متفق عليه", "سيد الاستغفار": "رواه البخاري", "عند سماع الأذان (بعده)": "رواه البخاري", "عند الفطر": "رواه أبو داود", "ليلة القدر": "رواه الترمذي وابن ماجه", "عند الغضب": "متفق عليه", "زيارة المريض": "رواه البخاري", "دخول المنزل": "رواه أبو داود", "لبس الثوب الجديد": "رواه أبو داود والترمذي", "عند العطاس": "رواه البخاري", "تهنئة المتزوج": "رواه أبو داود والترمذي", "التلبية": "متفق عليه", "عند المصيبة": "رواه مسلم", "التعزية": "متفق عليه", "زيارة القبور": "رواه مسلم", "كفارة المجلس": "رواه الترمذي", "تثبيت القلب": "رواه الترمذي", "قضاء الدين": "رواه الترمذي", "عند ذبح الأضحية": "رواه مسلم", "في الصلاة: دعاء الاستفتاح": "رواه أبو داود والترمذي", "في الصلاة: الركوع": "رواه مسلم وأبو داود", "في الصلاة: الرفع من الركوع": "متفق عليه", "في الصلاة: السجود": "رواه مسلم وأبو داود", "في الصلاة: بين السجدتين": "رواه أبو داود وابن ماجه", "في الصلاة: التشهد": "متفق عليه", "في الصلاة: الصلاة الإبراهيمية": "متفق عليه", "تكبيرات العيد": "مأثور عن الصحابة"};
+  const SRC={"عند الاستيقاظ": "رواه البخاري", "دخول الخلاء": "متفق عليه", "الخروج من الخلاء": "رواه أبو داود والترمذي", "بعد الوضوء": "رواه مسلم", "الخروج من المنزل": "رواه أبو داود والترمذي", "دخول المسجد": "رواه مسلم", "الخروج من المسجد": "رواه مسلم", "قبل الطعام": "رواه الترمذي", "بعد الطعام": "رواه أبو داود والترمذي", "ركوب الدابة أو السيارة": "رواه مسلم", "عند المطر": "رواه البخاري", "عند رؤية الهلال": "رواه الترمذي", "دعاء الكرب": "متفق عليه", "سيد الاستغفار": "رواه البخاري", "عند سماع الأذان (بعده)": "رواه البخاري", "عند الفطر": "رواه أبو داود", "ليلة القدر": "رواه الترمذي وابن ماجه", "عند الغضب": "متفق عليه", "زيارة المريض": "رواه البخاري", "دخول المنزل": "رواه أبو داود", "لبس الثوب الجديد": "رواه أبو داود والترمذي", "عند العطاس": "رواه البخاري", "تهنئة المتزوج": "رواه أبو داود والترمذي", "التلبية": "متفق عليه", "عند المصيبة": "رواه مسلم", "التعزية": "متفق عليه", "زيارة القبور": "رواه مسلم", "كفارة المجلس": "رواه الترمذي", "تثبيت القلب": "رواه الترمذي", "قضاء الدين": "رواه الترمذي", "عند ذبح الأضحية": "رواه مسلم", "في الصلاة: دعاء الاستفتاح": "رواه أبو داود والترمذي", "في الصلاة: الركوع": "رواه مسلم وأبو داود", "في الصلاة: الرفع من الركوع": "متفق عليه", "في الصلاة: السجود": "رواه مسلم وأبو داود", "في الصلاة: بين السجدتين": "رواه أبو داود وابن ماجه", "في الصلاة: التشهد": "متفق عليه", "في الصلاة: الصلاة الإبراهيمية": "متفق عليه", "تكبيرات العيد": "مأثور عن الصحابة"}; window.__sd={DU:DU,NM:NM,HD:HD};
   window.addNewDuas(MN);window.DUAS_NEW.forEach(x=>{if(!SRC[x[0]])SRC[x[0]]=x[2]});
   const mnR=()=>{const q=$('mnq').value.trim(),L=MN.filter(x=>!q||(x[0]+x[1]).includes(q));$('mnl').innerHTML=L.length?L.map(x=>`<button data-t="${MN.indexOf(x)}"><span>${x[0]}<small>${x[1]}</small>${SRC[x[0]]?`<small style="opacity:.6;font-size:.78rem">المصدر: ${SRC[x[0]]}</small>`:''}</span></button>`).join(''):'<p class="mutp">لا نتائج</p>'};
   $('mnq').oninput=mnR;mnR();
@@ -1988,7 +1998,7 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
 ['@h','mor','أدوات'],
 ['mor','إنجازاتي','📈',[['اليوم','@today'],['الشهر','@heat'],['الأسبوع','التقرير الأسبوعي'],['التسبيح ٧ أيام','تسبيحك آخر ٧ أيام'],['يومياتي','سجل إنجازات العبادة']]],
 ['mor','التقويم والمناسبات','📅',[['التقويم','التقويم الهجري'],['المناسبات','العد التنازلي للمناسبات'],['الأشهر','الأشهر الهجرية'],['المحوّل','محوّل التاريخ إلى الهجري'],['مواعيدي','مواعيدي']]],
-['mor','الإعدادات','⚙️',[['التنبيهات','إعدادات التنبيهات'],['المواقيت','ضبط المواقيت'],['التشغيل','إعدادات التشغيل'],['المظهر','إعدادات المظهر'],['المسبحة','إعدادات المسبحة'],['نسخة احتياطية','نسخة احتياطية لبياناتك']]]
+['mor','الإعدادات','⚙️',[['التنبيهات','إعدادات التنبيهات'],['المواقيت','ضبط المواقيت'],['التشغيل','إعدادات التشغيل'],['المظهر','إعدادات المظهر'],['المسبحة','إعدادات المسبحة'],['نسخة احتياطية','نسخة احتياطية لبياناتك'],['نبذة عنا','نبذة عنا']]]
   ];
   const sh2=$('sheet'),svc=document.createElement('div');svc.className='svcg';svc.id='svcg';
   const AL=[...sh2.querySelectorAll('.sc')],ttl=x=>((x.querySelector('h3 span')||x.querySelector('h3')).textContent||'').trim(),BY=new Map(AL.map(x=>[ttl(x),x])),US=new Set();
@@ -3654,123 +3664,695 @@ sync();buildRows();render();
 @media(pointer:coarse){#stabs button,.seg .chip,.chips .chip{min-height:44px}}
 #stabs small{font-size:11px}
 </style>
-<style id="sqcss">
-#sqw{margin:0 0 10px}
-#sq{width:100%;box-sizing:border-box;min-height:44px;padding:8px 14px;border-radius:14px;border:1.5px solid var(--line);background:rgba(255,255,255,.07);color:var(--ink);font:inherit;font-size:.95rem}
-#sqr{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px}
-#sqr .chip{min-height:40px}
-#sqr p{margin:4px 0;font-size:.85rem;opacity:.75}
+<!-- ╔════════════════════════════════════════════════════════════════╗
+     ║  إضافات حصن المسلم — الأنماط (CSS)                              ║
+     ║  1) أزرار رأس القائمة   2) البحث   3) فقاعة الإبلاغ             ║
+     ║  4) المستطيلات المقسّمة (تبويبات المجموعات + شريط المسبحة)      ║
+     ║  5) خيارات تخفيف التأثيرات                                      ║
+     ╚════════════════════════════════════════════════════════════════╝ -->
+<style id="hisn-css">
+
+/* ───────── 1) أزرار رأس القائمة: بحث · إبلاغ · إغلاق (مقاس واحد) ───────── */
+.sht { display: flex; align-items: center; gap: 8px; }
+
+#sheet .sh-h #sx,
+#sheet .sh-h #sqb,
+#sheet .sh-h #rptb {
+  width: 42px !important; height: 42px !important; min-height: 0 !important;
+  padding: 0 !important; box-sizing: border-box !important;
+  border-radius: 50% !important; font-size: 1.1rem !important;
+  display: inline-flex; align-items: center; justify-content: center;
+  line-height: 1; flex: none;
+}
+#sqb {
+  border: 1.5px solid var(--line); background: rgba(255,255,255,.07);
+  color: var(--ink); cursor: pointer;
+}
+#sqb:active, #sheet .sh-h #rptb:active { transform: scale(.92); }
+#sqb[aria-expanded="true"] {
+  background: color-mix(in srgb, var(--ac) 18%, transparent);
+  border-color: color-mix(in srgb, var(--ac) 55%, transparent);
+}
+#sheet .sh-h #rptb {
+  border: 1.5px solid rgba(224,96,90,.6); background: rgba(224,96,90,.16);
+  color: #ff8f89; text-decoration: none; cursor: pointer;
+}
+
+/* ───────── 2) البحث ───────── */
+#sqw { margin: 0 0 10px; }
+#sqw.sqc { display: none; }                                   /* مطوي */
+.sheet.sqon > :not(.sh-h):not(#sqw) { display: none !important; } /* أثناء البحث: إخفاء الكروت */
+
+#sq {
+  width: 100%; box-sizing: border-box; min-height: 44px; padding: 8px 14px;
+  border-radius: 14px; border: 1.5px solid var(--line);
+  background: rgba(255,255,255,.07); color: var(--ink);
+  font: inherit; font-size: .95rem;
+}
+#sqr {
+  display: flex; flex-direction: column; gap: 6px; margin-top: 8px;
+  max-height: 58vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+}
+#sqr > * { flex: none; }                                      /* لا تنكمش الصفوف داخل القائمة */
+#sqr > p { margin: 2px 4px; font-size: .8rem; opacity: .7; text-align: center; }
+#sqr .sqrow {
+  display: block; width: 100%; height: auto; min-height: 44px; box-sizing: border-box;
+  text-align: start; padding: 8px 12px !important; border-radius: 12px !important;
+  white-space: normal; line-height: 1.7; font-size: .88rem; font-weight: 400;
+}
+#sqr .sqrow small { display: block; font-size: .72rem; opacity: .75; color: var(--ac); margin-bottom: 2px; font-weight: 600; }
+#sqr .sqrow mark  { background: var(--ac); color: #1a1408; border-radius: 4px; padding: 0 3px; }
+.sqflash { outline: 2px solid var(--ac); outline-offset: 3px; border-radius: 10px; }
+
+/* ───────── 3) فقاعة تعريف زر الإبلاغ ───────── */
+#rpttip {
+  position: fixed; z-index: 60; max-width: min(250px, calc(100vw - 16px)); box-sizing: border-box;
+  padding: 9px 13px; border-radius: 12px; background: #2b1513; color: #ffdad6;
+  border: 1px solid rgba(224,96,90,.65); box-shadow: 0 8px 22px rgba(0,0,0,.45);
+  font-size: .8rem; line-height: 1.55; text-align: center; direction: rtl; cursor: pointer;
+  opacity: 0; transform: translateY(5px) scale(.96); transition: opacity .22s, transform .22s;
+}
+#rpttip.on { opacity: 1; transform: none; }
+#rpttip::after {                                               /* السهم */
+  content: ""; position: absolute; left: calc(var(--ax, 50%) - 6px);
+  width: 10px; height: 10px; background: #2b1513; transform: rotate(45deg);
+}
+#rpttip.up::after { bottom: -6px; border-right: 1px solid rgba(224,96,90,.65); border-bottom: 1px solid rgba(224,96,90,.65); }
+#rpttip.dn::after { top: -6px;    border-left:  1px solid rgba(224,96,90,.65); border-top:    1px solid rgba(224,96,90,.65); }
+@media (prefers-reduced-motion: reduce) { #rpttip { transition: none; } }
+
+/* ───────── 4) مستطيل متعدد الأزرار: تبويبات المجموعات + شريط المسبحة ───────── */
+.tbrow,
+.sc[data-g] > .seg {
+  display: flex !important; flex-wrap: nowrap !important; gap: 0 !important;
+  width: fit-content; max-width: 100%; align-items: stretch; justify-content: center;
+  border: 1.5px solid var(--line); border-radius: 16px; background: rgba(255,255,255,.06);
+}
+.tbrow .chip,
+.sc[data-g] > .seg .chip {
+  height: 44px !important; min-height: 44px !important; box-sizing: border-box;
+  border: 0 !important; border-radius: 0 !important; background: transparent;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: .86rem !important; line-height: 1;
+}
+.tbrow .chip + .chip,
+.sc[data-g] > .seg .chip + .chip { border-inline-start: 1px solid var(--line) !important; }
+.tbrow .chip.on,
+.sc[data-g] > .seg .chip.on { background: var(--ac); color: #1a1408; font-weight: 600; }
+
+/* شريط المسبحة */
+.tbrow { margin: 8px auto 0 !important; overflow: hidden; }
+.tbrow .chip { padding: 0 12px !important; flex: 0 1 auto; min-width: 0; max-width: none; }
+.tbrow #tfsb { flex: none; width: 46px; padding: 0 !important; }
+.tbrow #tfsb svg { width: 20px; height: 20px; }
+.tbrow #tdel { color: #ff8f89; background: rgba(224,96,90,.16); }
+.tbrow #tdel:active { background: rgba(224,96,90,.3); }
+.tbrow .chip[hidden], #tundo { display: none !important; }    /* «تراجع» ملغى */
+
+/* تبويبات المجموعات (تتحرك أفقيًا إن زادت عن العرض) */
+.sc[data-g] > .seg {
+  margin: 2px auto 12px; overflow-x: auto; overflow-y: hidden;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.sc[data-g] > .seg::-webkit-scrollbar { display: none; }
+.sc[data-g] > .seg .chip { flex: 0 0 auto; padding: 0 14px !important; white-space: nowrap; }
+
+/* ───────── 5) تخفيف التأثيرات (الإعدادات › المظهر) ───────── */
+/* زر التشغيل */
+body.fx-play .play { background: var(--ac) !important; box-shadow: none !important; animation: none !important; transition: none !important; }
+body.fx-play .play::before, body.fx-play .play::after { display: none !important; }
+body.fx-play .play svg { filter: none !important; }
+body.fx-play .play:active { transform: none !important; opacity: .85; }
+body.fx-play .halo, body.fx-play .orb::before { display: none !important; animation: none !important; }
+body.fx-play .orb .ring .pr { filter: none !important; }
+/* باقي أزرار التحكم */
+body.fx-ctl .big, body.fx-ctl .big2 { background: var(--card) !important; box-shadow: none !important; transition: none !important; }
+body.fx-ctl .big2 .hf, body.fx-ctl .big2 .hf svg, body.fx-ctl .hs { transition: none !important; filter: none !important; animation: none !important; }
+body.fx-ctl .big2 .hf:active, body.fx-ctl .big2 .hf:hover, body.fx-ctl .big2:active { background: transparent !important; transform: none !important; }
+body.fx-ctl .big2 .hf:active svg { transform: none !important; opacity: .7; }
+body.fx-ctl .big2 .hs::before { display: none !important; }
+body.fx-ctl .hs.spin { background: transparent !important; }
+body.fx-ctl .cat::before { box-shadow: none !important; transition: none !important; }
+body.fx-ctl .cat button { transition: none !important; }
+body.fx-ctl .cat button::after { animation: none !important; }
+/* حركات القوائم والكروت */
+body.fx-ui .sheet, body.fx-ui .sheet *, body.fx-ui #toast, body.fx-ui #rpttip { animation: none !important; transition: none !important; }
+body.fx-ui .sheet.open { will-change: auto; }
+
 </style>
-<script id="sqjs">(function(){try{var d=document,h=d.getElementById('tabhint'),g=d.getElementById('svcg'),tb=d.getElementById('stabs');if(!h||!g||!tb||d.getElementById('sq'))return;
-var w=d.createElement('div');w.id='sqw';w.innerHTML='<input id="sq" type="search" enterkeyhint="search" autocomplete="off" placeholder="ابحث في كل الخدمات…" aria-label="بحث في الخدمات"><div id="sqr" aria-live="polite"></div>';h.after(w);
-var nz=function(s){return String(s||'').replace(/[\u064B-\u065F\u0670\u0640]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').toLowerCase().trim()};
-var cs=function(){return[].slice.call(g.children).filter(function(x){return x.classList.contains('sc')})};
-var q=d.getElementById('sq'),r=d.getElementById('sqr');
-q.addEventListener('input',function(){var v=nz(q.value);r.innerHTML='';if(v.length<2)return;
-var m=cs().filter(function(c){var t=c.dataset.g||c.dataset.kw||'',h3=c.querySelector('h3');return nz(t+' '+(h3?h3.textContent:'')).indexOf(v)>-1}).slice(0,12);
-if(!m.length){r.innerHTML='<p>لا توجد نتائج</p>';return}
-m.forEach(function(c){var b=d.createElement('button'),h3=c.querySelector('h3'),ic=c.querySelector('.ic');b.type='button';b.className='chip';b.textContent=(ic?ic.textContent+' ':'')+(c.dataset.g||c.dataset.kw||(h3?h3.textContent:''));
-b.onclick=function(){var t=tb.querySelector('[data-t="'+c.dataset.p+'"]');if(!t)return;if(!t.classList.contains('on'))t.click();setTimeout(function(){if(c.classList.contains('cl'))c.click();try{c.scrollIntoView({block:'start',behavior:'smooth'})}catch(e){}},120)};r.appendChild(b)})})}catch(e){}})();</script>
-<style id="sqicon">.sht{display:flex;align-items:center;gap:10px}#sqb{display:flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;border-radius:50%;border:1.5px solid var(--line);background:rgba(255,255,255,.07);color:var(--ink);font-size:.95rem;line-height:1;cursor:pointer}#sqb:active{transform:scale(.92)}#sqb[aria-expanded="true"]{background:color-mix(in srgb,var(--ac) 18%,transparent);border-color:color-mix(in srgb,var(--ac) 55%,transparent)}#sqw.sqc{display:none}.sheet.sqon>:not(.sh-h):not(#sqw){display:none!important}</style>
-<script id="sqicjs">(function(){try{var d=document,w=d.getElementById('sqw'),q=d.getElementById('sq'),hd=d.querySelector('#sheet .sh-h');if(!w||!q||!hd||d.getElementById('sqb'))return;var t=hd.firstElementChild,c=d.createElement('div');c.className='sht';hd.insertBefore(c,t);c.appendChild(t);
-var b=d.createElement('button');b.id='sqb';b.type='button';b.setAttribute('aria-label','بحث في الخدمات');b.setAttribute('aria-expanded','false');b.textContent='\uD83D\uDD0D';c.appendChild(b);w.classList.add('sqc');
-var rm=function(){return window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches};
-var isOpen=function(){return b.getAttribute('aria-expanded')==='true'};
-function fly(on){if(rm()||!w.animate)return null;var r=b.getBoundingClientRect(),k=w.getBoundingClientRect();w.style.transformOrigin=(r.left+r.width/2-k.left)+'px '+(r.top+r.height/2-k.top)+'px';var f=[{opacity:0,transform:'scale(.08,.3)'},{opacity:1,transform:'scale(1)'}];return w.animate(on?f:f.slice().reverse(),{duration:on?280:180,easing:on?'cubic-bezier(.2,.9,.3,1.1)':'ease-in'})}
-function op(){var s=d.getElementById('sheet');try{s.scrollTo({top:0,behavior:'smooth'})}catch(_){s.scrollTop=0}s.classList.add('sqon');w.getAnimations&&w.getAnimations().forEach(function(x){x.cancel()});w.classList.remove('sqc');b.setAttribute('aria-expanded','true');fly(true);q.focus({preventScroll:true})}
-function cl(){if(!isOpen())return;d.getElementById('sheet').classList.remove('sqon');b.setAttribute('aria-expanded','false');var a=fly(false);if(a){a.onfinish=function(){if(!isOpen())w.classList.add('sqc')}}else w.classList.add('sqc')}
-d.getElementById('sqr').addEventListener('click',function(e){if(e.target.closest('.chip'))setTimeout(function(){q.value='';q.dispatchEvent(new Event('input'));cl()},0)});
-b.addEventListener('click',function(){if(!isOpen())op();else{q.value='';q.dispatchEvent(new Event('input'));cl()}});
-q.addEventListener('blur',function(){setTimeout(function(){if(!q.value.trim()&&d.activeElement!==b)cl()},200)});
-var sh0=d.getElementById('sheet');new MutationObserver(function(){if(!sh0.classList.contains('open')&&isOpen()){q.value='';q.dispatchEvent(new Event('input'));cl()}}).observe(sh0,{attributes:true,attributeFilter:['class']});
-sh0.addEventListener('touchend',function(e){if(sh0.classList.contains('sqon'))e.stopImmediatePropagation()},true);
-q.addEventListener('keydown',function(e){if(e.key==='Escape'){q.value='';q.dispatchEvent(new Event('input'));cl();b.focus()}})}catch(e){}})();</script>
-<style id="hdrbtn">#sheet .sh-h #sx,#sheet .sh-h #sqb,#sheet .sh-h #rptb{width:42px!important;height:42px!important;min-height:0!important;padding:0!important;box-sizing:border-box!important;border-radius:50%!important;display:inline-flex;align-items:center;justify-content:center;font-size:1.1rem!important;line-height:1;flex:none}
-#sheet .sh-h #rptb{border:1.5px solid rgba(224,96,90,.6);background:rgba(224,96,90,.16);color:#ff8f89;text-decoration:none;cursor:pointer}#sheet .sh-h #rptb:active{transform:scale(.92)}
-.sht{gap:8px!important}
-#rpttip{position:fixed;z-index:60;max-width:min(250px,calc(100vw - 16px));box-sizing:border-box;padding:9px 13px;border-radius:12px;background:#2b1513;color:#ffdad6;border:1px solid rgba(224,96,90,.65);box-shadow:0 8px 22px rgba(0,0,0,.45);font-size:.8rem;line-height:1.55;text-align:center;direction:rtl;opacity:0;transform:translateY(5px) scale(.96);transition:opacity .22s,transform .22s;cursor:pointer}
-#rpttip.on{opacity:1;transform:none}
-#rpttip::after{content:"";position:absolute;left:calc(var(--ax,50%) - 6px);width:10px;height:10px;background:#2b1513;transform:rotate(45deg)}
-#rpttip.up::after{bottom:-6px;border-right:1px solid rgba(224,96,90,.65);border-bottom:1px solid rgba(224,96,90,.65)}
-#rpttip.dn::after{top:-6px;border-left:1px solid rgba(224,96,90,.65);border-top:1px solid rgba(224,96,90,.65)}
-@media(prefers-reduced-motion:reduce){#rpttip{transition:none}}</style>
-<script id="rptjs">(function(){try{var d=document,c=d.querySelector('#sheet .sht')||d.querySelector('#sheet .sh-h'),sh=d.getElementById('sheet');if(!c||!sh||d.getElementById('rptb'))return;
-var a=d.createElement('a');a.id='rptb';a.setAttribute('aria-label','للإبلاغ عن خطأ أو للتواصل');a.title='للإبلاغ عن خطأ أو للتواصل';var sub='حصن: إبلاغ عن خطأ / تواصل',body='السلام عليكم،\n\nنوع الرسالة (خطأ في نص / اقتراح / تواصل):\nالقسم أو الموضوع:\nالتفاصيل:\n';a.href='mailto:hisn.elmuslim.tag@gmail.com?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(body);a.textContent='\u2709\uFE0F';c.appendChild(a);
-/* فقاعة تعريف: مرة في اليوم */
-var KEY='rptTipDay',mem='',tip=null,tm=0,tt=0;
-function day(){var t=new Date();return t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate()}
-function seen(){try{return localStorage.getItem(KEY)===day()}catch(e){return mem===day()}}
-function mark(){mem=day();try{localStorage.setItem(KEY,mem)}catch(e){}}
-function hide(){clearTimeout(tm);clearTimeout(tt);if(tip){var t=tip;tip=null;t.classList.remove('on');setTimeout(function(){t.remove()},260)}}
-function show(f){if(tip||(!f&&seen())||!sh.classList.contains('open'))return;var r=a.getBoundingClientRect();if(!r.width)return;mark();
-var t=d.createElement('div');t.id='rpttip';t.setAttribute('role','status');t.textContent='وجدت خطأً في النصوص؟ أو تريد التواصل معنا؟ اضغط هنا';d.body.appendChild(t);
-var w=t.offsetWidth,h=t.offsetHeight,vw=d.documentElement.clientWidth,cx=r.left+r.width/2,left=Math.max(8,Math.min(vw-w-8,cx-w/2)),up=r.top>h+18;
-t.style.left=left+'px';t.style.top=(up?r.top-h-10:r.bottom+10)+'px';t.style.setProperty('--ax',(cx-left)+'px');t.classList.add(up?'up':'dn');
-requestAnimationFrame(function(){requestAnimationFrame(function(){t.classList.add('on')})});tip=t;tm=setTimeout(hide,6500)}
-window.rptTipAgain=function(){hide();try{sh.scrollTo({top:0})}catch(e){sh.scrollTop=0}setTimeout(function(){show(true)},60)};
-new MutationObserver(function(){if(sh.classList.contains('open')){clearTimeout(tt);tt=setTimeout(function(){show()},550)}else hide()}).observe(sh,{attributes:true,attributeFilter:['class']});
-d.addEventListener('pointerdown',function(){hide()},true);
-if(sh.classList.contains('open'))tt=setTimeout(function(){show()},550)}catch(e){}})();</script>
-<style id="fxcss">
-body.fx-play .play{background:var(--ac)!important;box-shadow:none!important;animation:none!important;transition:none!important}
-body.fx-play .play::before,body.fx-play .play::after{display:none!important}
-body.fx-play .play svg{filter:none!important}
-body.fx-play .play:active{transform:none!important;opacity:.85}
-body.fx-play .halo,body.fx-play .orb::before{display:none!important;animation:none!important}
-body.fx-play .orb .ring .pr{filter:none!important}
-body.fx-ctl .big,body.fx-ctl .big2{background:var(--card)!important;box-shadow:none!important;transition:none!important}
-body.fx-ctl .big2 .hf,body.fx-ctl .big2 .hf svg,body.fx-ctl .hs{transition:none!important;filter:none!important;animation:none!important}
-body.fx-ctl .big2 .hf:active,body.fx-ctl .big2 .hf:hover,body.fx-ctl .big2:active{background:transparent!important;transform:none!important}
-body.fx-ctl .big2 .hf:active svg{transform:none!important;opacity:.7}
-body.fx-ctl .big2 .hs::before{display:none!important}
-body.fx-ctl .hs.spin{background:transparent!important}
-body.fx-ctl .cat::before{box-shadow:none!important;transition:none!important}
-body.fx-ctl .cat button{transition:none!important}
-body.fx-ctl .cat button::after{animation:none!important}
-body.fx-ui .sheet,body.fx-ui .sheet *,body.fx-ui #toast,body.fx-ui #rpttip{animation:none!important;transition:none!important}
-body.fx-ui .sheet.open{will-change:auto}
-</style>
-<script id="fxjs">(function(){try{var d=document,b=d.body,P='ap_';
-var O=[['fxplay','fx-play','إلغاء تأثيرات زر التشغيل'],['fxctl','fx-ctl','إلغاء تأثيرات أزرار التحكم'],['fxui','fx-ui','إلغاء حركات القوائم والكروت']];
-function on(k){try{return localStorage.getItem(P+k)==='1'}catch(e){return false}}
-function ap(){O.forEach(function(o){b.classList.toggle(o[1],on(o[0]))})}
-function mk(w){w.querySelectorAll('.chip').forEach(function(x){var v=on(x.dataset.k);x.classList.toggle('on',v);x.setAttribute('aria-pressed',String(v))})}
-ap();
-var a=d.getElementById('apt');if(!a||d.getElementById('apfx'))return;var n=a.nextElementSibling;
-var w=d.createElement('div');w.id='apfx';
-w.innerHTML='<p class="mutp sth">تخفيف التأثيرات</p><div class="chips" id="apfxc">'+O.map(function(o){return '<button class="chip" type="button" data-k="'+o[0]+'" aria-pressed="false">'+o[2]+'</button>'}).join('')+'</div><p class="mutp">فعّل ما تريد إلغاءه: يشمل زر التشغيل (الكرة والهالات والنبض)، وأزرار السابق والتالي والتقديم والرجوع والتنقل السفلي، وحركات القوائم. يُحفظ اختيارك.</p>';
-(n||a).after(w);
-var c=d.getElementById('apfxc');mk(c);
-c.addEventListener('click',function(e){var x=e.target.closest('.chip');if(!x)return;try{localStorage.setItem(P+x.dataset.k,on(x.dataset.k)?'0':'1')}catch(_){}ap();mk(c);try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}})}catch(e){}})();</script>
-<style id="tbrowcss">
-.tbrow{display:flex!important;flex-wrap:nowrap!important;width:fit-content;max-width:100%;margin:8px auto 0!important;gap:0!important;align-items:stretch;justify-content:center;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.06)}
-.tbrow .chip{height:44px!important;min-height:44px!important;padding:0 12px!important;box-sizing:border-box;border:0!important;border-radius:0!important;background:transparent;display:inline-flex;align-items:center;justify-content:center;font-size:.86rem!important;line-height:1;flex:0 1 auto;min-width:0;max-width:none}
-.tbrow .chip+.chip{border-inline-start:1px solid var(--line)!important}
-.tbrow .chip.on{background:var(--ac)}
-.tbrow #tfsb{flex:none;width:46px;padding:0!important}
-.tbrow #tfsb svg{width:20px;height:20px}
-.tbrow .chip[hidden],.tbrow #tundo{display:none!important}
-.tbrow #tdel{color:#ff8f89;background:rgba(224,96,90,.16)}
-.tbrow #tdel:active{background:rgba(224,96,90,.3)}
-#tundo{display:none!important}
-</style>
-<script id="autolitejs">(function(){try{var d=document,b=d.body,K='ap_autolite',nav=navigator,bat=null;
-function enabled(){try{return localStorage.getItem(K)!=='0'}catch(e){return true}}
-function manual(){try{return localStorage.getItem('ap_lite')==='1'}catch(e){return false}}
-function weak(){var c=nav.connection||{};return !!((nav.deviceMemory&&nav.deviceMemory<=2)||(nav.hardwareConcurrency&&nav.hardwareConcurrency<=2)||c.saveData)}
-function low(){return !!(bat&&!bat.charging&&bat.level<=0.15)}
-var why='';
-function sync(){var a=enabled()&&(weak()||low());why=a?(weak()?'الجهاز محدود الموارد':'البطارية منخفضة'):'';var want=manual()||a;if(b.classList.contains('lite')!==want)b.classList.toggle('lite',want);stat()}
-function stat(){var e=d.getElementById('alS');if(e)e.textContent=enabled()?(why?'مفعّل الآن تلقائيًا: '+why+'.':'غير مفعّل الآن: جهازك وبطاريتك في حالة جيدة.'):'الخيار متوقف، فلن يُفعَّل الوضع الخفيف إلا يدويًا.'}
-new MutationObserver(sync).observe(b,{attributes:true,attributeFilter:['class']});
-try{if(nav.getBattery)nav.getBattery().then(function(x){bat=x;x.addEventListener('levelchange',sync);x.addEventListener('chargingchange',sync);sync()}).catch(function(){})}catch(e){}
-sync();
-var w=d.getElementById('apfx');
-if(w&&!d.getElementById('alT')){var h=d.createElement('div');h.innerHTML='<p class="mutp sth">الوضع الخفيف التلقائي</p><div class="chips"><button class="chip" id="alT" type="button" aria-pressed="true">وضع خفيف تلقائي</button></div><p class="mutp" id="alS" role="status"></p><p class="mutp">يفعّل الوضع الخفيف وحده على الأجهزة الضعيفة، أو عند تفعيل توفير البيانات، أو عندما تنخفض البطارية إلى ١٥٪ أو أقل ولا يكون الجهاز على الشاحن. إن أردت منعه أوقف هذا الخيار.</p>';while(h.firstChild)w.appendChild(h.firstChild);
-var t=d.getElementById('alT');function mk(){var o=enabled();t.classList.toggle('on',o);t.setAttribute('aria-pressed',String(o));stat()}mk();
-t.addEventListener('click',function(){try{localStorage.setItem(K,enabled()?'0':'1')}catch(e){}sync();mk();try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}})}
-var tg=d.getElementById('tourAgain');if(tg&&!d.getElementById('rptAgain')){var r=d.createElement('button');r.className='chip';r.id='rptAgain';r.type='button';r.textContent='إعادة عرض فقاعة الإبلاغ';tg.after(r);r.addEventListener('click',function(){window.rptTipAgain&&window.rptTipAgain()})}
-}catch(e){}})();</script>
+
+<!-- ╔════════════════════════════════════════════════════════════════╗
+     ║  إضافات حصن المسلم — السلوك (JS)                                ║
+     ║  0) أدوات مشتركة                                                ║
+     ║  1) البحث الشامل                                                ║
+     ║  2) رأس القائمة: زر البحث + زر الإبلاغ + فقاعة اليوم            ║
+     ║  3) الإعدادات: تخفيف التأثيرات + الوضع الخفيف التلقائي         ║
+     ║  4) توسيط تبويب المجموعة المختار                                ║
+     ╚════════════════════════════════════════════════════════════════╝ -->
+<script id="hisn-js">
+(function () {
+  var d = document;
+  var $ = function (id) { return d.getElementById(id); };
+
+  /* ═══════════════ 0) أدوات مشتركة ═══════════════ */
+  function safe(fn) { try { fn(); } catch (e) { /* الإضافات لا تعطّل التطبيق */ } }
+  function lsGet(k)    { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function buzz()      { try { navigator.vibrate && navigator.vibrate(8); } catch (e) {} }
+  function clearInput(q) { q.value = ''; q.dispatchEvent(new Event('input')); }
+  function scrollTop0(el, smooth) {
+    try { el.scrollTo({ top: 0, behavior: smooth ? 'smooth' : 'auto' }); } catch (e) { el.scrollTop = 0; }
+  }
+
+  /* ═══════════════ 1) البحث الشامل ═══════════════
+     يبحث في عناوين الكروت ونصوصها ثم في بيانات (أسماء الله/الأحاديث/الأدعية)
+     التي تُعرض واحدة واحدة. النتائج: عناوين ← نصوص ← بيانات. */
+  safe(function search() {
+    var hint = $('tabhint'), list = $('svcg'), tabs = $('stabs');
+    if (!hint || !list || !tabs || $('sq')) return;
+
+    var box = d.createElement('div');
+    box.id = 'sqw';
+    box.innerHTML =
+      '<input id="sq" type="search" enterkeyhint="search" autocomplete="off" ' +
+      'placeholder="ابحث في الأذكار والأحكام وكل الخدمات…" aria-label="بحث شامل">' +
+      '<div id="sqr" aria-live="polite"></div>';
+    hint.after(box);
+
+    var q = $('sq'), out = $('sqr');
+    var MAX_ROWS = 45;
+    var DIACRITICS = /[\u064B-\u065F\u0670\u0640\u06D6-\u06ED]/;
+    /* عناصر النص التي نبحث داخلها (الأعمق يفوز) */
+    var TEXT_SEL = 'p,li,.qr,.duat,.zk,.nmv,.rqt,.fqh,.fqe div,label,.ck>*,.rqd';
+    /* بيانات تُعرض عنصرًا واحدًا في كل مرة: [المفتاح، عنوان الكارت، id للانتقال، صيغة النص] */
+    var DATASETS = [
+      ['NM', 'أسماء الله الحسنى', 'nm',  function (x) { return x; }],
+      ['HD', 'حديث اليوم',        'hdt', function (x) { return x[0] + ' — ' + x[1]; }],
+      ['DU', 'أدعية مأثورة',      'dt',  function (x) { return x[0] + ' — ' + x[1]; }]
+    ];
+
+    /* --- تطبيع النص: بلا تشكيل، والهمزات/التاء المربوطة/الألف المقصورة موحّدة --- */
+    function normalize(s) {
+      s = String(s || '');
+      var n = '', map = [];
+      for (var i = 0; i < s.length; i++) {
+        var c = s.charAt(i);
+        if (DIACRITICS.test(c)) continue;
+        if ('أإآٱ'.indexOf(c) > -1) c = 'ا';
+        else if (c === 'ة') c = 'ه';
+        else if (c === 'ى') c = 'ي';
+        else c = c.toLowerCase();
+        n += c; map.push(i);          /* map: موضع الحرف في النص الأصلي */
+      }
+      return { n: n, m: map };
+    }
+    function clean(t)  { return String(t || '').replace(/\s+/g, ' ').trim(); }
+    function tokens(v) { return normalize(v).n.trim().split(/\s+/).filter(Boolean); }
+
+    /* يعيد موضع التطابق في النص الأصلي إن وُجدت كل الكلمات، وإلا null */
+    function find(text, tk) {
+      if (!tk.length || !text) return null;
+      var o = normalize(text), n = o.n, i;
+      for (i = 0; i < tk.length; i++) if (n.indexOf(tk[i]) < 0) return null;
+      var phrase = tk.join(' '), p = n.indexOf(phrase), len = phrase.length;
+      if (p < 0) { p = n.indexOf(tk[0]); len = tk[0].length; }
+      return { a: o.m[p], b: o.m[p + len - 1] + 1 };
+    }
+
+    /* مقتطف مع تظليل الكلمة */
+    function snippet(text, hit, wide) {
+      var s = Math.max(0, hit.a - (wide ? 60 : 40));
+      var e = Math.min(text.length, hit.b + (wide ? 140 : 70));
+      var f = d.createDocumentFragment(), mark = d.createElement('mark');
+      f.appendChild(d.createTextNode((s > 0 ? '… ' : '') + text.slice(s, hit.a)));
+      mark.textContent = text.slice(hit.a, hit.b);
+      f.appendChild(mark);
+      f.appendChild(d.createTextNode(text.slice(hit.b, e) + (e < text.length ? ' …' : '')));
+      return f;
+    }
+
+    /* --- معلومات الكروت --- */
+    function cards() {
+      return [].slice.call(list.children).filter(function (x) { return x.classList.contains('sc'); });
+    }
+    function cardTitle(c) {
+      var h3 = c.querySelector('h3'), span = h3 && h3.querySelector('span:not(.ic)');
+      return c.dataset.g || c.dataset.kw || clean((span || h3 || {}).textContent);
+    }
+    function cardIcon(c) { var x = c.querySelector('.ic'); return x ? x.textContent + ' ' : ''; }
+
+    /* --- فتح النتيجة: القسم ← الكارت ← التبويب الفرعي ← تمرير وتحويط --- */
+    function openResult(card, panel, el) {
+      var tab = tabs.querySelector('[data-t="' + card.dataset.p + '"]');
+      if (!tab) return;
+      if (!tab.classList.contains('on')) tab.click();
+      setTimeout(function () {
+        if (card.classList.contains('cl')) card.click();
+        if (panel && panel !== card) {
+          var b = card.querySelector(':scope>.seg .chip[data-k="' + panel.dataset.k + '"]');
+          if (b && !b.classList.contains('on')) b.click();
+        }
+        setTimeout(function () {
+          var x = el || card;
+          try { x.scrollIntoView({ block: 'center', behavior: 'smooth' }); } catch (e) {}
+          x.classList.add('sqflash');
+          setTimeout(function () { x.classList.remove('sqflash'); }, 2400);
+        }, 170);
+      }, 140);
+    }
+
+    function row(where, frag, onClick) {
+      var b = d.createElement('button'), s = d.createElement('small');
+      b.type = 'button'; b.className = 'chip sqrow';
+      s.textContent = where; b.appendChild(s);
+      if (frag) { var sp = d.createElement('span'); sp.appendChild(frag); b.appendChild(sp); }
+      b.onclick = onClick;
+      return b;
+    }
+
+    /* --- جمع النتائج --- */
+    function collectFromCard(c, tk, titleRows, contentRows) {
+      var title = cardTitle(c);
+      var panels = [].slice.call(c.querySelectorAll(':scope>.sp'));
+      if (!panels.length) panels = [c];
+
+      panels.forEach(function (p) {
+        var label = '';
+        if (p !== c) {
+          var chip = c.querySelector(':scope>.seg .chip[data-k="' + p.dataset.k + '"]');
+          label = chip ? clean(chip.textContent) : '';
+        }
+        var where = cardIcon(c) + title + (label ? ' › ' + label : '');
+
+        /* تطابق العنوان */
+        if (titleRows.length < 8 && find(title + ' ' + label + ' ' + (c.dataset.kw || ''), tk)) {
+          titleRows.push(row(where, null, function () { openResult(c, p); }));
+        }
+        if (contentRows.length >= MAX_ROWS) return;
+
+        /* تطابق النص: أعمق عنصر يحتوي الكلمات، حتى 3 لكل لوحة */
+        var found = 0, els = [].slice.call(p.querySelectorAll(TEXT_SEL));
+        for (var i = 0; i < els.length && found < 3 && contentRows.length < MAX_ROWS; i++) {
+          var el = els[i], text = clean(el.textContent), hit = find(text, tk);
+          if (!hit) continue;
+          var childMatches = false, kids = el.querySelectorAll(TEXT_SEL);
+          for (var j = 0; j < kids.length; j++) {
+            if (find(clean(kids[j].textContent), tk)) { childMatches = true; break; }
+          }
+          if (childMatches) continue;
+          found++;
+          contentRows.push(row(where, snippet(text, hit), (function (c, p, el) {
+            return function () { openResult(c, p, el); };
+          })(c, p, el)));
+        }
+        /* لا عنصر مطابق: ربما النص موزّع، نجرّب اللوحة كلها */
+        if (!found) {
+          var ptext = clean(p.textContent), phit = find(ptext, tk);
+          if (phit && contentRows.length < MAX_ROWS) {
+            contentRows.push(row(where, snippet(ptext, phit), function () { openResult(c, p); }));
+          }
+        }
+      });
+    }
+
+    function collectFromData(tk, dataRows) {
+      var store = window.__sd || {};   /* يُعرَّض من سكربت التطبيق الرئيسي */
+      DATASETS.forEach(function (ds) {
+        var arr = store[ds[0]] || [], n = 0;
+        for (var i = 0; i < arr.length && n < 4; i++) {
+          var text = clean(ds[3](arr[i])), hit = find(text, tk);
+          if (!hit) continue;
+          n++;
+          dataRows.push(row('📖 ' + ds[1], snippet(text, hit, true), (function (id) {
+            return function () {
+              var anchor = $(id); if (!anchor) return;
+              var card = anchor.closest('.sc');
+              if (card) openResult(card, anchor.closest('.sp') || card, anchor);
+            };
+          })(ds[2])));
+        }
+      });
+    }
+
+    function run() {
+      var value = q.value, tk = tokens(value);
+      out.innerHTML = '';
+      if (normalize(value).n.trim().length < 2) return;
+
+      var titleRows = [], contentRows = [], dataRows = [];
+      cards().forEach(function (c) { collectFromCard(c, tk, titleRows, contentRows); });
+      collectFromData(tk, dataRows);
+
+      var all = titleRows.concat(contentRows, dataRows).slice(0, MAX_ROWS + 8);
+      if (!all.length) { out.innerHTML = '<p>لا توجد نتائج</p>'; return; }
+
+      var count = d.createElement('p');
+      count.textContent = all.length >= MAX_ROWS
+        ? 'أكثر من ' + MAX_ROWS + ' نتيجة، أضف كلمة لتضييق البحث'
+        : all.length + ' نتيجة';
+      out.appendChild(count);
+      all.forEach(function (b) { out.appendChild(b); });
+    }
+
+    var timer = 0;
+    q.addEventListener('input', function () {
+      clearTimeout(timer);
+      if (!q.value.trim()) { out.innerHTML = ''; return; }
+      timer = setTimeout(run, 140);
+    });
+  });
+
+  /* ═══════════════ 2) رأس القائمة: بحث · إبلاغ · فقاعة اليوم ═══════════════ */
+  safe(function header() {
+    var sheet = $('sheet'), box = $('sqw'), q = $('sq'), head = d.querySelector('#sheet .sh-h');
+    if (!sheet || !box || !q || !head || $('sqb')) return;
+
+    /* العنوان + زر البحث + زر الإبلاغ في حاوية واحدة، وزر ✕ في الطرف الآخر */
+    var title = head.firstElementChild, wrap = d.createElement('div');
+    wrap.className = 'sht';
+    head.insertBefore(wrap, title);
+    wrap.appendChild(title);
+
+    /* ---- زر البحث: ينبثق الحقل من العلامة ---- */
+    var btn = d.createElement('button');
+    btn.id = 'sqb'; btn.type = 'button';
+    btn.setAttribute('aria-label', 'بحث في الخدمات');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.textContent = '\uD83D\uDD0D';
+    wrap.appendChild(btn);
+    box.classList.add('sqc');
+
+    function isOpen() { return btn.getAttribute('aria-expanded') === 'true'; }
+    function reducedMotion() {
+      return window.matchMedia && matchMedia('(prefers-reduced-motion:reduce)').matches;
+    }
+    /* حركة الانبثاق من موضع العلامة وإليه */
+    function fly(opening) {
+      if (reducedMotion() || !box.animate) return null;
+      var r = btn.getBoundingClientRect(), k = box.getBoundingClientRect();
+      box.style.transformOrigin = (r.left + r.width / 2 - k.left) + 'px ' + (r.top + r.height / 2 - k.top) + 'px';
+      var frames = [{ opacity: 0, transform: 'scale(.08,.3)' }, { opacity: 1, transform: 'scale(1)' }];
+      return box.animate(opening ? frames : frames.slice().reverse(), {
+        duration: opening ? 280 : 180,
+        easing: opening ? 'cubic-bezier(.2,.9,.3,1.1)' : 'ease-in'
+      });
+    }
+    function openSearch() {
+      scrollTop0(sheet, true);
+      sheet.classList.add('sqon');
+      box.getAnimations && box.getAnimations().forEach(function (a) { a.cancel(); });
+      box.classList.remove('sqc');
+      btn.setAttribute('aria-expanded', 'true');
+      fly(true);
+      q.focus({ preventScroll: true });
+    }
+    function closeSearch() {
+      if (!isOpen()) return;
+      sheet.classList.remove('sqon');
+      btn.setAttribute('aria-expanded', 'false');
+      var a = fly(false);
+      if (a) a.onfinish = function () { if (!isOpen()) box.classList.add('sqc'); };
+      else box.classList.add('sqc');
+    }
+    function resetAndClose() { clearInput(q); closeSearch(); }
+
+    btn.addEventListener('click', function () { if (!isOpen()) openSearch(); else resetAndClose(); });
+    q.addEventListener('blur', function () {
+      setTimeout(function () { if (!q.value.trim() && d.activeElement !== btn) closeSearch(); }, 200);
+    });
+    q.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { resetAndClose(); btn.focus(); }
+    });
+    /* اختيار نتيجة يغلق البحث */
+    $('sqr').addEventListener('click', function (e) {
+      if (e.target.closest('.chip')) setTimeout(resetAndClose, 0);
+    });
+    /* أثناء البحث نمنع السحب الجانبي لتغيير الأقسام */
+    sheet.addEventListener('touchend', function (e) {
+      if (sheet.classList.contains('sqon')) e.stopImmediatePropagation();
+    }, true);
+
+    /* ---- زر الإبلاغ والتواصل ---- */
+    var MAIL = 'hisn.elmuslim.tag@gmail.com';
+    var SUBJECT = 'حصن: إبلاغ عن خطأ / تواصل';
+    var BODY = 'السلام عليكم،\n\nنوع الرسالة (خطأ في نص / اقتراح / تواصل):\nالقسم أو الموضوع:\nالتفاصيل:\n';
+    var mail = d.createElement('a');
+    mail.id = 'rptb';
+    mail.setAttribute('aria-label', 'للإبلاغ عن خطأ أو للتواصل');
+    mail.title = 'للإبلاغ عن خطأ أو للتواصل';
+    mail.href = 'mailto:' + MAIL + '?subject=' + encodeURIComponent(SUBJECT) + '&body=' + encodeURIComponent(BODY);
+    mail.textContent = '\u2709\uFE0F';
+    wrap.appendChild(mail);
+
+    /* ---- فقاعة التعريف: مرة في اليوم عند فتح الخدمات ---- */
+    var TIP_KEY = 'rptTipDay', TIP_TEXT = 'وجدت خطأً في النصوص؟ أو تريد التواصل معنا؟ اضغط هنا';
+    var shownMem = '', tip = null, hideTimer = 0, showTimer = 0;
+
+    function today() { var t = new Date(); return t.getFullYear() + '-' + (t.getMonth() + 1) + '-' + t.getDate(); }
+    function seenToday() { var v = lsGet(TIP_KEY); return (v === null ? shownMem : v) === today(); }
+    function markSeen() { shownMem = today(); lsSet(TIP_KEY, shownMem); }
+
+    function hideTip() {
+      clearTimeout(hideTimer); clearTimeout(showTimer);
+      if (!tip) return;
+      var t = tip; tip = null;
+      t.classList.remove('on');
+      setTimeout(function () { t.remove(); }, 260);
+    }
+    function showTip(force) {
+      if (tip || (!force && seenToday()) || !sheet.classList.contains('open')) return;
+      var r = mail.getBoundingClientRect();
+      if (!r.width) return;
+      markSeen();
+
+      var t = d.createElement('div');
+      t.id = 'rpttip'; t.setAttribute('role', 'status'); t.textContent = TIP_TEXT;
+      d.body.appendChild(t);
+
+      var w = t.offsetWidth, h = t.offsetHeight, vw = d.documentElement.clientWidth;
+      var cx = r.left + r.width / 2;
+      var left = Math.max(8, Math.min(vw - w - 8, cx - w / 2));
+      var above = r.top > h + 18;                       /* لا مساحة فوق؟ نضعها تحت الزر */
+      t.style.left = left + 'px';
+      t.style.top = (above ? r.top - h - 10 : r.bottom + 10) + 'px';
+      t.style.setProperty('--ax', (cx - left) + 'px');
+      t.classList.add(above ? 'up' : 'dn');
+      requestAnimationFrame(function () { requestAnimationFrame(function () { t.classList.add('on'); }); });
+      tip = t;
+      hideTimer = setTimeout(hideTip, 6500);
+    }
+    /* زر «إعادة عرض الفقاعة» في الإعدادات */
+    window.rptTipAgain = function () {
+      hideTip(); scrollTop0(sheet, false);
+      setTimeout(function () { showTip(true); }, 60);
+    };
+    d.addEventListener('pointerdown', hideTip, true);
+
+    /* ---- مراقبة فتح/غلق القائمة ---- */
+    function onSheetChange() {
+      var open = sheet.classList.contains('open');
+      if (!open && isOpen()) resetAndClose();           /* أُغلقت القائمة والبحث مفتوح */
+      if (open) { clearTimeout(showTimer); showTimer = setTimeout(function () { showTip(); }, 550); }
+      else hideTip();
+    }
+    new MutationObserver(onSheetChange).observe(sheet, { attributes: true, attributeFilter: ['class'] });
+    if (sheet.classList.contains('open')) showTimer = setTimeout(function () { showTip(); }, 550);
+  });
+
+  /* ═══════════════ 3) الإعدادات › المظهر: تخفيف التأثيرات + الوضع الخفيف التلقائي ═══════════════
+     مفاتيح التخزين تبدأ بـ ap_ فتدخل تلقائيًا في النسخة الاحتياطية. */
+  var PREFIX = 'ap_';
+
+  /* ---- 3أ) تخفيف التأثيرات: فئات على body (التنسيق في قسم 5 بالـ CSS) ---- */
+  safe(function effects() {
+    var body = d.body;
+    var OPTIONS = [                       /* [مفتاح التخزين، فئة body، النص] */
+      ['fxplay', 'fx-play', 'إلغاء تأثيرات زر التشغيل'],
+      ['fxctl',  'fx-ctl',  'إلغاء تأثيرات أزرار التحكم'],
+      ['fxui',   'fx-ui',   'إلغاء حركات القوائم والكروت']
+    ];
+    function isOn(k) { return lsGet(PREFIX + k) === '1'; }
+    function applyClasses() { OPTIONS.forEach(function (o) { body.classList.toggle(o[1], isOn(o[0])); }); }
+    function paintChips(group) {
+      group.querySelectorAll('.chip').forEach(function (x) {
+        var v = isOn(x.dataset.k);
+        x.classList.toggle('on', v);
+        x.setAttribute('aria-pressed', String(v));
+      });
+    }
+
+    applyClasses();                       /* يُطبَّق عند التشغيل حتى لو لم تُفتح الإعدادات */
+
+    var anchor = $('apt');
+    if (!anchor || $('apfx')) return;
+    var after = anchor.nextElementSibling;
+    var section = d.createElement('div');
+    section.id = 'apfx';
+    section.innerHTML =
+      '<p class="mutp sth">تخفيف التأثيرات</p>' +
+      '<div class="chips" id="apfxc">' +
+        OPTIONS.map(function (o) {
+          return '<button class="chip" type="button" data-k="' + o[0] + '" aria-pressed="false">' + o[2] + '</button>';
+        }).join('') +
+      '</div>' +
+      '<p class="mutp">فعّل ما تريد إلغاءه: يشمل زر التشغيل (الكرة والهالات والنبض)، وأزرار السابق والتالي والتقديم والرجوع والتنقل السفلي، وحركات القوائم. يُحفظ اختيارك.</p>';
+    (after || anchor).after(section);
+
+    var chips = $('apfxc');
+    paintChips(chips);
+    chips.addEventListener('click', function (e) {
+      var x = e.target.closest('.chip'); if (!x) return;
+      lsSet(PREFIX + x.dataset.k, isOn(x.dataset.k) ? '0' : '1');
+      applyClasses(); paintChips(chips); buzz();
+    });
+  });
+
+  /* ---- 3ب) الوضع الخفيف التلقائي ---- */
+  safe(function autoLite() {
+    var body = d.body, nav = navigator, KEY = PREFIX + 'autolite';
+    var battery = null, slow = false, reason = '';
+    var reducedMq = null;
+    try { reducedMq = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)'); } catch (e) {}
+
+    function enabled() { return lsGet(KEY) !== '0'; }           /* مفعّل افتراضيًا */
+    function manualLite() { return lsGet(PREFIX + 'lite') === '1'; }
+
+    /* إشارات الكشف */
+    function weakDevice() {
+      var c = nav.connection || {};
+      return !!((nav.deviceMemory && nav.deviceMemory <= 2) ||
+                (nav.hardwareConcurrency && nav.hardwareConcurrency <= 2) || c.saveData);
+    }
+    function lowBattery()    { return !!(battery && !battery.charging && battery.level <= 0.15); }
+    function reducedMotion() { return !!(reducedMq && reducedMq.matches); }
+
+    /* تطبيق الحالة: فئة lite تأتي من الخيار اليدوي أو من الكشف التلقائي */
+    function sync() {
+      var auto = enabled() && (weakDevice() || lowBattery() || slow || reducedMotion());
+      reason = !auto ? '' :
+        weakDevice()    ? 'الجهاز محدود الموارد' :
+        lowBattery()    ? 'البطارية منخفضة' :
+        slow            ? 'رُصد بطء في الأداء (وقد يكون وضع توفير الطاقة مفعّلًا)' :
+                          'إعداد تقليل الحركة مفعّل في جهازك';
+      var want = manualLite() || auto;
+      if (body.classList.contains('lite') !== want) body.classList.toggle('lite', want);
+      paintStatus();
+    }
+    function paintStatus() {
+      var el = $('alS'); if (!el) return;
+      el.textContent = !enabled() ? 'الخيار متوقف، فلن يُفعَّل الوضع الخفيف إلا يدويًا.'
+        : reason ? 'مفعّل الآن تلقائيًا: ' + reason + '.'
+        : 'غير مفعّل الآن: لم يُرصد ما يستدعيه.';
+    }
+
+    /* قياس سلاسة الرسم: iOS لا يتيح قراءة البطارية ولا وضع توفير الطاقة،
+       لكنه يخفّض الإطارات إلى ~30 في ذلك الوضع، فنقيسها. */
+    var measuring = false;
+    function measureFps(done) {
+      if (measuring || d.visibilityState !== 'visible' || !window.requestAnimationFrame) return;
+      measuring = true;
+      var gaps = [], last = 0, n = 0;
+      function frame(t) {
+        if (d.visibilityState !== 'visible') { measuring = false; return; }
+        if (last) gaps.push(t - last);
+        last = t; n++;
+        if (n < 50) { requestAnimationFrame(frame); return; }
+        measuring = false;
+        gaps = gaps.slice(8).sort(function (a, b) { return a - b; });
+        done(gaps[gaps.length >> 1] > 24);          /* وسيط الفارق > 24ms ≈ أقل من 41 إطارًا */
+      }
+      requestAnimationFrame(frame);
+    }
+    /* canClear: السماح بإلغاء حالة «بطيء» (عند العودة للتطبيق فقط، لتفادي التذبذب) */
+    function probe(canClear) {
+      if (!enabled()) { if (slow) { slow = false; sync(); } return; }
+      measureFps(function (slow1) {
+        if (!slow1) { if (slow && canClear) { slow = false; sync(); } return; }
+        setTimeout(function () {                    /* تأكيد بقياس ثانٍ */
+          measureFps(function (slow2) {
+            if (slow2 && !slow) { slow = true; sync(); }
+            else if (!slow2 && slow && canClear) { slow = false; sync(); }
+          });
+        }, 1500);
+      });
+    }
+
+    /* إعادة المزامنة عندما يغيّر التطبيق فئة body (مثل زر الوضع الخفيف اليدوي) */
+    new MutationObserver(sync).observe(body, { attributes: true, attributeFilter: ['class'] });
+    try {
+      if (reducedMq) {
+        if (reducedMq.addEventListener) reducedMq.addEventListener('change', sync);
+        else if (reducedMq.addListener) reducedMq.addListener(sync);
+      }
+    } catch (e) {}
+    try {
+      if (nav.getBattery) nav.getBattery().then(function (b) {
+        battery = b;
+        b.addEventListener('levelchange', sync);
+        b.addEventListener('chargingchange', sync);
+        sync();
+      }).catch(function () {});
+    } catch (e) {}
+
+    sync();
+    setTimeout(function () { probe(true); }, 2500);
+    setInterval(function () { probe(false); }, 60000);
+    d.addEventListener('visibilitychange', function () {
+      if (d.visibilityState === 'visible') setTimeout(function () { probe(true); }, 900);
+    });
+    window.addEventListener('pageshow', function () { setTimeout(function () { probe(true); }, 900); });
+
+    /* ---- واجهة الإعدادات: زر الخيار + سطر الحالة + شرح ---- */
+    var section = $('apfx');
+    if (section && !$('alT')) {
+      var tmp = d.createElement('div');
+      tmp.innerHTML =
+        '<p class="mutp sth">الوضع الخفيف التلقائي</p>' +
+        '<div class="chips"><button class="chip" id="alT" type="button" aria-pressed="true">وضع خفيف تلقائي</button></div>' +
+        '<p class="mutp" id="alS" role="status"></p>' +
+        '<p class="mutp">يفعّل الوضع الخفيف وحده في هذه الحالات: جهاز محدود الموارد، أو تفعيل توفير البيانات، أو بطارية ١٥٪ أو أقل دون شاحن، أو تفعيل «تقليل الحركة» في الجهاز، أو رصد بطء في سلاسة الرسم. وعلى الآيفون يعتمد على قياس السلاسة لأن النظام لا يتيح قراءة وضع توفير الطاقة؛ فيُفعَّل عادةً بعد ثوانٍ من تشغيله وقد يتأخر دقيقة. إن أردت منعه أوقف هذا الخيار.</p>';
+      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+
+      var toggle = $('alT');
+      function paintToggle() {
+        var on = enabled();
+        toggle.classList.toggle('on', on);
+        toggle.setAttribute('aria-pressed', String(on));
+        paintStatus();
+      }
+      paintToggle();
+      toggle.addEventListener('click', function () {
+        lsSet(KEY, enabled() ? '0' : '1');
+        sync(); paintToggle(); probe(true); buzz();
+      });
+    }
+
+    /* ---- زر «إعادة عرض فقاعة الإبلاغ» بجانب زر إعادة الجولة ---- */
+    var tour = $('tourAgain');
+    if (tour && !$('rptAgain')) {
+      var again = d.createElement('button');
+      again.className = 'chip'; again.id = 'rptAgain'; again.type = 'button';
+      again.textContent = 'إعادة عرض فقاعة الإبلاغ';
+      tour.after(again);
+      again.addEventListener('click', function () { window.rptTipAgain && window.rptTipAgain(); });
+    }
+  });
+
+  /* ═══════════════ 4) توسيط تبويب المجموعة المختار داخل مستطيله ═══════════════ */
+  safe(function centerGroupTab() {
+    function center() {
+      d.querySelectorAll('.sc[data-g]>.seg .chip.on').forEach(function (c) {
+        if (c.offsetParent === null) return;            /* مخفي */
+        try { c.scrollIntoView({ inline: 'center', block: 'nearest' }); } catch (e) {}
+      });
+    }
+    d.addEventListener('click', function (e) {
+      if (e.target.closest('.sc[data-g]>.seg .chip')) setTimeout(center, 40);
+      else if (e.target.closest('#stabs button,#svcg .sc')) setTimeout(center, 480);
+    }, true);
+  });
+})();
+</script>
 <script>try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('./sw.js').then(function(r){window.__swr=r}).catch(function(){})}catch(e){}</script>
 </body>
 </html>
