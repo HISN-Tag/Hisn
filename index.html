@@ -624,6 +624,8 @@ body[data-bg=sunset] #moon,body[data-bg=sunrise] #moon{opacity:0!important}
 body[data-bg=sunset] #sun{--x:30!important;--y:60!important;--s:1.3!important;--hz:1!important;opacity:1!important}
 body[data-bg=sunrise] #sun{--x:68!important;--y:62!important;--s:1.3!important;--hz:1!important;opacity:1!important}
 html body[data-bg=sunset] #stars,html body[data-bg=sunrise] #stars{opacity:.35}
+html body[data-bg=plain]{--t:#4a7ea8;--b:#4a7ea8;--ac:#f0dcae;--cl:#b9d3e8;--co:0;background:#4a7ea8!important}
+body[data-bg=plain] #stars,body[data-bg=plain] #wxsky,body[data-bg=plain] #wxfog,body[data-bg=plain] #sun,body[data-bg=plain] #moon,body[data-bg=plain] #clouds,body[data-bg=plain] #clouds3,body[data-bg=plain] #birds,body[data-bg=plain] #aur,body[data-bg=plain] #bgfx,body[data-bg=plain] #wxfx,body[data-bg=plain] #wxflash,body[data-bg=plain] #pgl,body[data-bg=plain] .shoot,body[data-bg=plain] .dunes{display:none!important}
 body[data-bg=calm] #clouds,body[data-bg=calm] #birds,body[data-bg=calm] .shoot,body[data-bg=calm] #sun::after{display:none!important}
 body[data-bg=calm] #stars i{animation:none;opacity:.7}
 body[data-bg=calm] .dunes .drift{animation:none}
@@ -686,7 +688,7 @@ body.sv #clouds3 .cloud3{animation-play-state:paused!important}
 #boot{position:fixed;inset:0;z-index:99;background:linear-gradient(180deg,#0a1124,#1d2c52);transition:opacity .3s}
 </style><div id="boot"></div>
 <script>(function(){var d=document,B=d.body,x=d.getElementById('boot'),k=0;
-try{var v=localStorage.getItem('ap_bg');if(v&&/^(anime|mount|sea|forest|aurora|sunset|sunrise|calm)$/.test(v))B.setAttribute('data-bg',v);var p=localStorage.getItem('ap_p');if(p&&/^[a-z]+$/.test(p))B.setAttribute('data-p',p);new MutationObserver(function(){try{localStorage.setItem('ap_p',B.getAttribute('data-p')||'')}catch(e){}}).observe(B,{attributes:true,attributeFilter:['data-p']})}catch(e){}
+try{var v=localStorage.getItem('ap_bg');if(localStorage.getItem('ap_bgr')==='1'){var A=['auto','anime','plush','mount','sea','forest','aurora','sunset','sunrise','calm','plain'],n;do{n=A[Math.floor(Math.random()*A.length)]}while(n===(v||'auto'));v=n==='auto'?null:n;if(v)localStorage.setItem('ap_bg',v);else localStorage.removeItem('ap_bg');if(!v)B.removeAttribute('data-bg')}if(v&&/^(anime|plush|mount|sea|forest|aurora|sunset|sunrise|calm|plain)$/.test(v))B.setAttribute('data-bg',v);var p=localStorage.getItem('ap_p');if(p&&/^[a-z]+$/.test(p))B.setAttribute('data-p',p);new MutationObserver(function(){try{localStorage.setItem('ap_p',B.getAttribute('data-p')||'')}catch(e){}}).observe(B,{attributes:true,attributeFilter:['data-p']})}catch(e){}
 function rm(){if(k)return;k=1;x.style.opacity=0;setTimeout(function(){x.remove()},350)}
 var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.disconnect()}});mo.observe(d.documentElement,{childList:true,subtree:true});setTimeout(rm,3000)})();</script>
 <div aria-hidden="true" class="bg" id="stars"><span class="shoot"></span></div>
@@ -880,7 +882,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="sc" data-p="m"><h3>أعمال الحج والعمرة</h3><p class="mutp" style="margin:8px 0 6px;text-align:start;color:var(--ac);font-weight:600">العمرة</p><div class="qd"><div class="qr"><span>١. الإحرام من الميقات</span></div><div class="qr"><span>٢. الطواف بالبيت</span><b style="font-size:.8rem;min-width:0">٧ أشواط</b></div><div class="qr"><span>٣. السعي بين الصفا والمروة</span><b style="font-size:.8rem;min-width:0">٧ أشواط</b></div><div class="qr"><span>٤. الحلق أو التقصير</span></div></div><p class="mutp" style="margin:8px 0 6px;text-align:start;color:var(--ac);font-weight:600">الحج</p><div class="qd"><div class="qr"><span>٨ ذو الحجة (التروية)</span><b style="font-size:.8rem;min-width:0">الإحرام والتوجه إلى منى</b></div><div class="qr"><span>٩ (يوم عرفة)</span><b style="font-size:.8rem;min-width:0">الوقوف بعرفة ثم مزدلفة</b></div><div class="qr"><span>١٠ (يوم النحر)</span><b style="font-size:.8rem;min-width:0">رمي جمرة العقبة والنحر والحلق وطواف الإفاضة</b></div><div class="qr"><span>١١ إلى ١٣ (التشريق)</span><b style="font-size:.8rem;min-width:0">رمي الجمرات الثلاث والمبيت بمنى</b></div><div class="qr"><span>عند المغادرة</span><b style="font-size:.8rem;min-width:0">طواف الوداع</b></div></div><p class="mutp">تختلف الصور بحسب نوع النسك (تمتع أو قران أو إفراد)، فاتبع إرشاد حملتك وأهل العلم</p></section>
   <section class="sc" data-p="s"><h3>صيام التطوع</h3><p class="mutp" style="margin:0 0 6px">الاثنان والخميس هذا الأسبوع</p><div class="ck" id="vfw"></div><p class="mutp" style="margin:12px 0 6px">الأيام البيض هذا الشهر الهجري</p><div class="ck" id="vfb"></div></section>
   <section class="sc" data-p="s"><h3>مواعيدي</h3><div class="add"><input id="evt" maxlength="40" placeholder="اسم الموعد" aria-label="اسم الموعد" autocomplete="off"><input id="evd" type="date" aria-label="تاريخ الموعد"></div><div class="chips" style="justify-content:center;margin:8px 0"><button class="chip" id="eva">إضافة</button></div><div class="qd" id="evl"></div><p class="mutp">اضغط على الموعد لحذفه</p></section>
-<section class="sc" data-p="c"><h3>إعدادات المظهر</h3><p class="mutp sth">الخلفية</p><div class="chips" id="bgC"></div><p class="mutp" id="bgN"></p><p class="mutp sth">اللون المميز</p><div class="chips" id="apc"></div><p class="mutp sth">حجم الخط</p><div class="chips" id="apf"><button class="chip" data-f="90">صغير</button><button class="chip" data-f="100">عادي</button><button class="chip" data-f="115">كبير</button><button class="chip" data-f="130">أكبر</button></div><p class="mutp sth">الأداء</p><div class="chips" id="apt"><button class="chip" data-k="lite">وضع خفيف</button></div><p class="mutp">الوضع الخفيف يوقف تأثيرات السماء لتوفير البطارية.</p><p class="mutp sth">الجولة التعريفية</p><div class="chips"><button class="chip" id="tourAgain" type="button">إعادة الجولة التعريفية</button></div></section>
+<section class="sc" data-p="c"><h3>إعدادات المظهر</h3><p class="mutp sth">الخلفية</p><div class="chips" id="bgC"></div><p class="mutp" id="bgN"></p><p class="mutp sth">اللون المميز</p><div class="chips" id="apc"></div><p class="mutp sth">حجم الخط</p><div class="chips" id="apf"><button class="chip" data-f="90">صغير</button><button class="chip" data-f="100">عادي</button><button class="chip" data-f="115">كبير</button><button class="chip" data-f="130">أكبر</button></div><p class="mutp sth">الأداء</p><div id="apfx"></div><p class="mutp sth">الجولة التعريفية</p><div class="chips"><button class="chip" id="tourAgain" type="button">إعادة الجولة التعريفية</button></div></section>
 <section class="sc" data-p="b"><h3>ضبط المواقيت</h3><p class="mutp" style="margin:0 0 6px;text-align:start">طريقة الحساب</p><select id="pmM" class="pmsel" aria-label="طريقة الحساب"></select><p class="mutp" style="margin:6px 0;text-align:start">المذهب في العصر</p><select id="pmA" class="pmsel" aria-label="المذهب في العصر"></select><p class="mutp" style="margin:6px 0;text-align:start">المدينة</p><select id="pmC" class="pmsel" aria-label="المدينة"></select><p class="mutp" style="margin:6px 0;text-align:start">تعديل بالدقائق</p><div class="qd" id="pmJ"></div><p class="mutp" style="margin:12px 0 6px;text-align:start">مواقيت اليوم بهذا الضبط</p><div class="qd" id="pmP"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="pmR">إعادة الضبط</button></div></section>
   <section class="sc" data-p="b"><h3>إمساكية رمضان</h3><div class="seg" id="imc"><button class="chip on" data-k="ram">رمضان</button><button class="chip" data-k="m30">٣٠ يومًا من اليوم</button></div><p class="mutp" id="imi" style="text-align:start"></p><div style="overflow-x:auto" id="imt"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="imp">طباعة</button><button class="chip" id="imy">نسخ الجدول</button></div></section>
   <section class="sc" data-p="c"><h3>التقرير الأسبوعي</h3><div class="qd" id="wkr"></div><p class="duat" id="wkm"></p><div class="chips" style="justify-content:center"><button class="chip" id="wks">شارك تقريرك كصورة</button></div></section>
@@ -2312,7 +2314,7 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
   const vib=p=>g('vib')?(nat?nat(norm(p)):alt(norm(p))):false;
   try{Object.defineProperty(navigator,'vibrate',{configurable:true,writable:true,value:vib})}catch(e){try{navigator.vibrate=vib}catch(e2){}}
   const AC=['','#e8cc8e','#9fe0b4','#9cc7ff','#ffb3c7','#cdb4ff'],gs=k=>{try{return LS.getItem(k)||''}catch(e){return ''}};
-  const apply=()=>{b.classList.toggle('lite',!!g('lite'));const c=gs('ap_ac');c?b.style.setProperty('--ac',c):b.style.removeProperty('--ac');d.documentElement.style.fontSize=(+gs('ap_fs')||100)+'%'};
+  const apply=()=>{const c=gs('ap_ac');c?b.style.setProperty('--ac',c):b.style.removeProperty('--ac');d.documentElement.style.fontSize=(+gs('ap_fs')||100)+'%'};
   const apc=d.getElementById('apc'),apf=d.getElementById('apf'),apt=d.getElementById('apt'),apt2=d.getElementById('apt2'),apts=[apt,apt2].filter(Boolean);
   const mark=()=>{if(!apc)return;apc.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x.dataset.c===gs('ap_ac')));
     apf.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',+x.dataset.f===(+gs('ap_fs')||100)));
@@ -2323,7 +2325,7 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
     const tg=e=>{const x=e.target.closest('.chip');if(!x)return;st(x.dataset.k,g(x.dataset.k)?0:1);apply();mark();if(x.dataset.k==='vib'&&g('vib'))navigator.vibrate&&navigator.vibrate(20)};apts.forEach(a=>{a.onclick=tg})}
   const vt=d.getElementById('vtest'),vm=d.getElementById('vmsg');
   if(vt)vt.onclick=()=>{
-    if(!g('vib')){vm.textContent='خيار «الاهتزاز» مقفول. فعّله من الأعلى ثم جرّب مرة أخرى.';return}
+    if(!g('vib')){vm.textContent='الاهتزاز مقفول. غيّر زر «الصوت والاهتزاز» من الأعلى ثم جرّب مرة أخرى.';return}
     if(nat){const ok=nat([70,60,70,60,110]);
       vm.textContent=ok?'تم إرسال نبضات تجريبية. إن لم تشعر بها فافحص إعدادات الهاتف: اهتزاز اللمس، ووضع توفير الطاقة، وعدم الإزعاج.':'رفض المتصفح تشغيل الاهتزاز، وغالبًا بسبب إعدادات الهاتف أو لأن الصفحة داخل إطار مقيّد.'}
     else{alt([70,60,70]);vm.textContent='هذا المتصفح لا يدعم واجهة الاهتزاز (مثل سفاري على الآيفون). جرّبنا لمسة النظام البديلة، وتعمل على iOS ‏١٧٫٤ وما بعده عند تفعيل اللمس الاهتزازي في إعدادات الصوت واللمس.'}};
@@ -2822,7 +2824,7 @@ if(NG)NG.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)re
  else N[k]=N[k]?0:1;
  sv('ntf31',JSON.stringify(N));vb(8);nr();try{qr()}catch(x){}});nr();
 addEventListener('focus',nr);document.addEventListener('visibilitychange',()=>{if(!document.hidden)nr()});
-{const sg=svc.querySelector(':scope>.sc[data-g="الإعدادات"]');if(sg)sg.dataset.kw+=' المواقيت طريقة الحساب المدينة العصر الأذان تنبيه إشعار تذكير الاهتزاز النقر صوت سرعة مؤقت النوم خط لون وضع خفيف نسخ استعادة'}
+{const sg=svc.querySelector(':scope>.sc[data-g="الإعدادات"]');if(sg)sg.dataset.kw+=' المواقيت طريقة الحساب المدينة العصر الأذان تنبيه إشعار تذكير الاهتزاز النقر صوت سرعة مؤقت النوم خط لون وضع خفيف تلقائي يدوي مخصص تطبيق الآن نسخ استعادة'}
 const bn=document.createElement('div');bn.className='nt31';document.body.appendChild(bn);
 if(!ld('bk_first'))sv('bk_first',String(Date.now()));
 let sent=J('nsent31',{});const fire=(id,title,body,act,cb)=>{const k=D()+id;if(sent[k])return false;sent={...Object.fromEntries(Object.entries(sent).filter(([x])=>x.startsWith(D()))),[k]:1};sv('nsent31',JSON.stringify(sent));vb([60,40,60]);let ok=0;try{if('Notification' in window&&Notification.permission==='granted'){const _o={body,lang:'ar',dir:'rtl',tag:k},_r=window.__swr;if(_r&&_r.showNotification)_r.showNotification(title,_o);else new Notification(title,_o);ok=1}}catch(e){}
@@ -3370,7 +3372,7 @@ sync();buildRows();render();
     sec.appendChild(box);
     PV=mkI(box.querySelector('#tsbPv'));
     let delMode=false;
-    const renderU=()=>{const w=box.querySelector('#tsbU');w.innerHTML=U.length?U.map((u,i)=>`<button class="chip" type="button" data-u="${i}">${delMode?'✕ ':''}${u.n}</button>`).join(''):'<span class="mutp">لسه مفيش ستايلات محفوظة</span>'};
+    const renderU=()=>{const w=box.querySelector('#tsbU');w.innerHTML=U.length?U.map((u,i)=>`<button class="chip" type="button" data-u="${i}">${delMode?'✕ ':''}${u.n}</button>`).join(''):'<span class="mutp">لا يوجد</span>'};
     mark=()=>{box.querySelectorAll('[data-g]').forEach(b=>{const on=cfg[b.dataset.g]===b.dataset.v;b.classList.toggle('on',on);b.setAttribute('aria-pressed',String(on))});
       box.querySelectorAll('[data-act="pd"]').forEach(b=>{b.classList.toggle('on',pd);b.setAttribute('aria-pressed',String(pd))});
       box.querySelectorAll('[data-act="del"]').forEach(b=>b.classList.toggle('on',delMode));renderU()};
@@ -3594,7 +3596,7 @@ sync();buildRows();render();
 /* خلفيات متعددة: تُختار من الإعدادات وتُحفظ على الجهاز */
 (function(){
   const d=document,$=i=>d.getElementById(i),B=d.body,KEY='ap_bg';
-  const L=[['auto','🌗 تلقائية','تتغيّر السماء مع وقت الصلاة والطقس.'],['anime','🎌 أنمي','شمس وقمر ونجوم وأرض بألوان مسطحة وبريق.'],['plush','🧸 دمى محشوة','شمس وقمر ونجوم وسحب وأرض كأنها دمى قماش محشوة بغرز وأزرار.'],['mount','🏔️ جبال','قمم جبال ثلجية، والسماء تتغيّر مع الوقت والطقس الفعلي.'],['sea','🌊 بحر','أفق بحر وأمواج متحركة، والسماء تتغيّر مع الوقت والطقس الفعلي.'],['forest','🌲 غابة','غابة صنوبر بطبقات، والسماء تتغيّر مع الوقت والطقس الفعلي.'],['aurora','🌌 شفق','تلال ثلجية وأضواء شمالية تظهر بالليل، والسماء بحسب الطقس الفعلي.'],['sunset','🌇 غروب','غروب ذهبي ثابت.'],['sunrise','🌅 شروق','فجر وردي والشمس عند الأفق.'],['calm','🍃 هادئة','تدرّج ساكن بلا سحب ولا حركة، وأخف على الجهاز.']];
+  const L=[['auto','🌗 تلقائية','تتغيّر السماء مع وقت الصلاة والطقس.'],['anime','🎌 أنمي','شمس وقمر ونجوم وأرض بألوان مسطحة وبريق.'],['plush','🧸 دمى محشوة','شمس وقمر ونجوم وسحب وأرض كأنها دمى قماش محشوة بغرز وأزرار.'],['mount','🏔️ جبال','قمم جبال ثلجية، والسماء تتغيّر مع الوقت والطقس الفعلي.'],['sea','🌊 بحر','أفق بحر وأمواج متحركة، والسماء تتغيّر مع الوقت والطقس الفعلي.'],['forest','🌲 غابة','غابة صنوبر بطبقات، والسماء تتغيّر مع الوقت والطقس الفعلي.'],['aurora','🌌 شفق','تلال ثلجية وأضواء شمالية تظهر بالليل، والسماء بحسب الطقس الفعلي.'],['sunset','🌇 غروب','غروب ذهبي ثابت.'],['sunrise','🌅 شروق','فجر وردي والشمس عند الأفق.'],['calm','🍃 هادئة','تدرّج ساكن بلا سحب ولا حركة، وأخف على الجهاز.'],['plain','🟦 بدون خلفية','لون سماوي أزرق ساده بلا سماء ولا مناظر ولا حركة.']];
   const g=()=>{try{return localStorage.getItem(KEY)||'auto'}catch(e){return 'auto'}};
   const SC=['#ffffff','#fff1b8','#cfe8ff','#ffd3ea'];
   d.querySelectorAll('#stars i').forEach((e,i)=>{const r=Math.random();if(r<.2)e.className='s l';else if(r<.5)e.className='s';e.style.setProperty('--sc',SC[i%4])});
@@ -3609,11 +3611,21 @@ sync();buildRows();render();
     v==='auto'?B.removeAttribute('data-bg'):B.setAttribute('data-bg',v);
     moonSkin(v);window.__plush&&__plush(v==='plush');
     const n=$('bgN');if(n)n.textContent=L.find(x=>x[0]===v)[2];
-    const w=$('bgC');if(w)w.querySelectorAll('.chip').forEach(x=>{const on=x.dataset.v===v;x.classList.toggle('on',on);x.setAttribute('aria-pressed',String(on))});
+    const bb=$('bgB');if(bb){const i=L.findIndex(x=>x[0]===v);bb.textContent=L[i][1]+'  ('+(i+1)+'/'+L.length+')';bb.dataset.v=v}
   }
+  const RK='ap_bgr',rnd=()=>{try{return localStorage.getItem(RK)==='1'}catch(e){return false}};
   const w=$('bgC');
-  if(w){w.innerHTML=L.map(x=>`<button class="chip" type="button" data-v="${x[0]}">${x[1]}</button>`).join('');
-    w.onclick=e=>{const x=e.target.closest('.chip');if(!x)return;try{x.dataset.v==='auto'?localStorage.removeItem(KEY):localStorage.setItem(KEY,x.dataset.v)}catch(_){}apply(x.dataset.v);try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}}}
+  if(w){
+    w.innerHTML='<button class="chip on" type="button" id="bgB" aria-label="تبديل الخلفية"></button><button class="chip" type="button" id="bgR" aria-pressed="false">🎲 خلفية عشوائية مع كل تحديث</button>';
+    const R=$('bgR'),paintR=()=>{const o=rnd();R.classList.toggle('on',o);R.setAttribute('aria-pressed',String(o))};
+    const save=v=>{try{v==='auto'?localStorage.removeItem(KEY):localStorage.setItem(KEY,v)}catch(_){}};
+    const buzz=()=>{try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}};
+    $('bgB').onclick=()=>{
+      const cur=g(),i=Math.max(0,L.findIndex(x=>x[0]===cur)),j=(i+1)%L.length;
+      save(L[j][0]);apply(L[j][0]);buzz()};
+    R.onclick=()=>{try{localStorage.setItem(RK,rnd()?'0':'1')}catch(_){}paintR();buzz()};
+    paintR();
+  }
   apply(g());
 })();
 </script>
@@ -3783,6 +3795,8 @@ sync();buildRows();render();
 .sc[data-g] > .seg .chip { flex: 0 0 auto; padding: 0 14px !important; white-space: nowrap; }
 
 /* ───────── 5) تخفيف التأثيرات (الإعدادات › المظهر) ───────── */
+/* السماء (الحالة المخصصة) */
+body.fx-sky #wxfx, body.fx-sky #birds, body.fx-sky #clouds, body.fx-sky #clouds3, body.fx-sky .shoot, body.fx-sky #wxflash, body.fx-sky #pgl { display: none !important; }
 /* زر التشغيل */
 body.fx-play .play { background: var(--ac) !important; box-shadow: none !important; animation: none !important; transition: none !important; }
 body.fx-play .play::before, body.fx-play .play::after { display: none !important; }
@@ -4164,65 +4178,54 @@ body.fx-ui .sheet.open { will-change: auto; }
     if (sheet.classList.contains('open')) showTimer = setTimeout(function () { showTip(); }, 550);
   });
 
-  /* ═══════════════ 3) الإعدادات › المظهر: تخفيف التأثيرات + الوضع الخفيف التلقائي ═══════════════
-     مفاتيح التخزين تبدأ بـ ap_ فتدخل تلقائيًا في النسخة الاحتياطية. */
+  /* ═══════════════ 3) الإعدادات › الأداء: زر واحد بأربع حالات ═══════════════
+     الحالات: تلقائي · يدوي · مخصص · غير مفعّل
+     مفاتيح التخزين تبدأ بـ ap_ فتدخل تلقائيًا في النسخة الاحتياطية.
+       ap_perf : auto | manual | custom | off
+       ap_cs / ap_cp / ap_cc / ap_cu : اختيارات الحالة المخصصة المُطبَّقة (السماء/التشغيل/التحكم/القوائم) */
   var PREFIX = 'ap_';
 
-  /* ---- 3أ) تخفيف التأثيرات: فئات على body (التنسيق في قسم 5 بالـ CSS) ---- */
-  safe(function effects() {
-    var body = d.body;
-    var OPTIONS = [                       /* [مفتاح التخزين، فئة body، النص] */
-      ['fxplay', 'fx-play', 'إلغاء تأثيرات زر التشغيل'],
-      ['fxctl',  'fx-ctl',  'إلغاء تأثيرات أزرار التحكم'],
-      ['fxui',   'fx-ui',   'إلغاء حركات القوائم والكروت']
+  safe(function perfMode() {
+    var body = d.body, nav = navigator;
+    var MODES = ['auto', 'manual', 'custom', 'off'];            /* ترتيب التبديل بالضغط */
+    var LABEL = { auto: 'تلقائي', manual: 'يدوي', custom: 'مخصص', off: 'غير مفعّل' };
+    var ICON  = { auto: '🔄', manual: '🔋', custom: '🎛️', off: '✨' };
+    var CUSTOM = [                                              /* [مفتاح، النص] */
+      ['cs', 'إلغاء تأثيرات السماء (السحب والطيور والنجوم)'],
+      ['cp', 'إلغاء تأثيرات زر التشغيل'],
+      ['cc', 'إلغاء تأثيرات أزرار التحكم'],
+      ['cu', 'إلغاء حركات القوائم والكروت']
     ];
-    function isOn(k) { return lsGet(PREFIX + k) === '1'; }
-    function applyClasses() { OPTIONS.forEach(function (o) { body.classList.toggle(o[1], isOn(o[0])); }); }
-    function paintChips(group) {
-      group.querySelectorAll('.chip').forEach(function (x) {
-        var v = isOn(x.dataset.k);
-        x.classList.toggle('on', v);
-        x.setAttribute('aria-pressed', String(v));
-      });
+
+    /* ---------- الحالة ---------- */
+    function getMode() {
+      var m = lsGet(PREFIX + 'perf');
+      if (MODES.indexOf(m) >= 0) return m;
+      /* ترحيل الإعدادات القديمة مرة واحدة */
+      if (lsGet(PREFIX + 'lite') === '1') m = 'manual';
+      else if (lsGet(PREFIX + 'fxplay') === '1' || lsGet(PREFIX + 'fxctl') === '1' || lsGet(PREFIX + 'fxui') === '1') {
+        lsSet(PREFIX + 'cs', '0');
+        lsSet(PREFIX + 'cp', lsGet(PREFIX + 'fxplay') === '1' ? '1' : '0');
+        lsSet(PREFIX + 'cc', lsGet(PREFIX + 'fxctl') === '1' ? '1' : '0');
+        lsSet(PREFIX + 'cu', lsGet(PREFIX + 'fxui') === '1' ? '1' : '0');
+        m = 'custom';
+      } else if (lsGet(PREFIX + 'autolite') === '0') m = 'off';
+      else m = 'auto';
+      lsSet(PREFIX + 'perf', m);
+      return m;
     }
+    function cget(k) { return lsGet(PREFIX + k) === '1'; }
 
-    applyClasses();                       /* يُطبَّق عند التشغيل حتى لو لم تُفتح الإعدادات */
+    var mode = getMode();            /* الحالة المُطبَّقة فعليًا */
+    var view = mode;                 /* الحالة المعروضة على الزر (قد تكون «مخصص» قبل التطبيق) */
+    var draft = {};                  /* اختيارات المخصص قبل الضغط على «تطبيق الآن» */
+    CUSTOM.forEach(function (o) { draft[o[0]] = cget(o[0]); });
 
-    var anchor = $('apt');
-    if (!anchor || $('apfx')) return;
-    var after = anchor.nextElementSibling;
-    var section = d.createElement('div');
-    section.id = 'apfx';
-    section.innerHTML =
-      '<p class="mutp sth">تخفيف التأثيرات</p>' +
-      '<div class="chips" id="apfxc">' +
-        OPTIONS.map(function (o) {
-          return '<button class="chip" type="button" data-k="' + o[0] + '" aria-pressed="false">' + o[2] + '</button>';
-        }).join('') +
-      '</div>' +
-      '<p class="mutp">فعّل ما تريد إلغاءه: يشمل زر التشغيل (الكرة والهالات والنبض)، وأزرار السابق والتالي والتقديم والرجوع والتنقل السفلي، وحركات القوائم. يُحفظ اختيارك.</p>';
-    (after || anchor).after(section);
-
-    var chips = $('apfxc');
-    paintChips(chips);
-    chips.addEventListener('click', function (e) {
-      var x = e.target.closest('.chip'); if (!x) return;
-      lsSet(PREFIX + x.dataset.k, isOn(x.dataset.k) ? '0' : '1');
-      applyClasses(); paintChips(chips); buzz();
-    });
-  });
-
-  /* ---- 3ب) الوضع الخفيف التلقائي ---- */
-  safe(function autoLite() {
-    var body = d.body, nav = navigator, KEY = PREFIX + 'autolite';
+    /* ---------- الكشف التلقائي ---------- */
     var battery = null, slow = false, reason = '';
     var reducedMq = null;
     try { reducedMq = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)'); } catch (e) {}
 
-    function enabled() { return lsGet(KEY) !== '0'; }           /* مفعّل افتراضيًا */
-    function manualLite() { return lsGet(PREFIX + 'lite') === '1'; }
-
-    /* إشارات الكشف */
     function weakDevice() {
       var c = nav.connection || {};
       return !!((nav.deviceMemory && nav.deviceMemory <= 2) ||
@@ -4230,28 +4233,26 @@ body.fx-ui .sheet.open { will-change: auto; }
     }
     function lowBattery()    { return !!(battery && !battery.charging && battery.level <= 0.15); }
     function reducedMotion() { return !!(reducedMq && reducedMq.matches); }
+    function autoActive()    { return mode === 'auto' && (weakDevice() || lowBattery() || slow || reducedMotion()); }
 
-    /* تطبيق الحالة: فئة lite تأتي من الخيار اليدوي أو من الكشف التلقائي */
-    function sync() {
-      var auto = enabled() && (weakDevice() || lowBattery() || slow || reducedMotion());
-      reason = !auto ? '' :
-        weakDevice()    ? 'الجهاز محدود الموارد' :
-        lowBattery()    ? 'البطارية منخفضة' :
-        slow            ? 'رُصد بطء في الأداء (وقد يكون وضع توفير الطاقة مفعّلًا)' :
-                          'إعداد تقليل الحركة مفعّل في جهازك';
-      var want = manualLite() || auto;
-      if (body.classList.contains('lite') !== want) body.classList.toggle('lite', want);
+    /* ---------- تطبيق الفئات على body ---------- */
+    function applyPerf() {
+      var all = (mode === 'manual') || autoActive();
+      var c = mode === 'custom';
+      reason = (mode === 'auto' && autoActive())
+        ? (weakDevice() ? 'الجهاز محدود الموارد' :
+           lowBattery() ? 'البطارية منخفضة' :
+           slow ? 'رُصد بطء في الأداء (وقد يكون وضع توفير الطاقة مفعّلًا)' :
+                  'إعداد تقليل الحركة مفعّل في جهازك') : '';
+      body.classList.toggle('lite',    all);                  /* السماء (يدوي/تلقائي) */
+      body.classList.toggle('fx-sky',  c && cget('cs'));      /* السماء (مخصص) */
+      body.classList.toggle('fx-play', all || (c && cget('cp')));
+      body.classList.toggle('fx-ctl',  all || (c && cget('cc')));
+      body.classList.toggle('fx-ui',   all || (c && cget('cu')));
       paintStatus();
     }
-    function paintStatus() {
-      var el = $('alS'); if (!el) return;
-      el.textContent = !enabled() ? 'الخيار متوقف، فلن يُفعَّل الوضع الخفيف إلا يدويًا.'
-        : reason ? 'مفعّل الآن تلقائيًا: ' + reason + '.'
-        : 'غير مفعّل الآن: لم يُرصد ما يستدعيه.';
-    }
 
-    /* قياس سلاسة الرسم: iOS لا يتيح قراءة البطارية ولا وضع توفير الطاقة،
-       لكنه يخفّض الإطارات إلى ~30 في ذلك الوضع، فنقيسها. */
+    /* ---------- قياس سلاسة الرسم (للآيفون) ---------- */
     var measuring = false;
     function measureFps(done) {
       if (measuring || d.visibilityState !== 'visible' || !window.requestAnimationFrame) return;
@@ -4264,74 +4265,304 @@ body.fx-ui .sheet.open { will-change: auto; }
         if (n < 50) { requestAnimationFrame(frame); return; }
         measuring = false;
         gaps = gaps.slice(8).sort(function (a, b) { return a - b; });
-        done(gaps[gaps.length >> 1] > 24);          /* وسيط الفارق > 24ms ≈ أقل من 41 إطارًا */
+        done(gaps[gaps.length >> 1] > 24);
       }
       requestAnimationFrame(frame);
     }
-    /* canClear: السماح بإلغاء حالة «بطيء» (عند العودة للتطبيق فقط، لتفادي التذبذب) */
     function probe(canClear) {
-      if (!enabled()) { if (slow) { slow = false; sync(); } return; }
+      if (mode !== 'auto') { if (slow) { slow = false; applyPerf(); } return; }
       measureFps(function (slow1) {
-        if (!slow1) { if (slow && canClear) { slow = false; sync(); } return; }
-        setTimeout(function () {                    /* تأكيد بقياس ثانٍ */
+        if (!slow1) { if (slow && canClear) { slow = false; applyPerf(); } return; }
+        setTimeout(function () {
           measureFps(function (slow2) {
-            if (slow2 && !slow) { slow = true; sync(); }
-            else if (!slow2 && slow && canClear) { slow = false; sync(); }
+            if (mode !== 'auto') return;
+            if (slow2 && !slow) { slow = true; applyPerf(); }
+            else if (!slow2 && slow && canClear) { slow = false; applyPerf(); }
           });
         }, 1500);
       });
     }
-
-    /* إعادة المزامنة عندما يغيّر التطبيق فئة body (مثل زر الوضع الخفيف اليدوي) */
-    new MutationObserver(sync).observe(body, { attributes: true, attributeFilter: ['class'] });
     try {
       if (reducedMq) {
-        if (reducedMq.addEventListener) reducedMq.addEventListener('change', sync);
-        else if (reducedMq.addListener) reducedMq.addListener(sync);
+        if (reducedMq.addEventListener) reducedMq.addEventListener('change', applyPerf);
+        else if (reducedMq.addListener) reducedMq.addListener(applyPerf);
       }
     } catch (e) {}
     try {
       if (nav.getBattery) nav.getBattery().then(function (b) {
         battery = b;
-        b.addEventListener('levelchange', sync);
-        b.addEventListener('chargingchange', sync);
-        sync();
+        b.addEventListener('levelchange', applyPerf);
+        b.addEventListener('chargingchange', applyPerf);
+        applyPerf();
       }).catch(function () {});
     } catch (e) {}
 
-    sync();
+    /* ---------- الواجهة ---------- */
+    var host = $('apfx'), btn, status, panel, cchips, applyBtn;
+    function dirty() {
+      return view === 'custom' && (mode !== 'custom' || CUSTOM.some(function (o) { return draft[o[0]] !== cget(o[0]); }));
+    }
+    function paintStatus() {
+      if (!status) return;
+      var t = '';
+      if (view === 'auto') {
+        t = mode !== 'auto' ? '' :
+            reason ? 'مفعّل الآن تلقائيًا: ' + reason + '.' : 'غير مفعّل الآن: لم يُرصد ما يستدعيه.';
+      } else if (view === 'manual') {
+        t = 'مفعّل دائمًا: تُلغى تأثيرات السماء وزر التشغيل وأزرار التحكم وحركات القوائم والكروت.';
+      } else if (view === 'off') {
+        t = 'كل التأثيرات تعمل كاملة.';
+      } else {
+        t = dirty() ? 'لم يُطبَّق بعد. اختر ما تريد ثم اضغط «تطبيق الآن».' : 'المخصص مُطبَّق.';
+      }
+      status.textContent = t;
+      if (applyBtn) applyBtn.classList.toggle('on', dirty());
+    }
+    function paint() {
+      if (!btn) return;
+      btn.textContent = ICON[view] + ' الوضع الخفيف: ' + LABEL[view];
+      btn.setAttribute('aria-pressed', String(view !== 'off'));
+      btn.classList.toggle('on', view !== 'off');
+      panel.hidden = view !== 'custom';
+      cchips.querySelectorAll('.chip').forEach(function (x) {
+        var v = !!draft[x.dataset.k];
+        x.classList.toggle('on', v);
+        x.setAttribute('aria-pressed', String(v));
+      });
+      var h = $('pfH');
+      if (h) h.textContent = {
+        auto:   'يفعّل الوضع الخفيف وحده (يلغي تأثيرات السماء وزر التشغيل وأزرار التحكم وحركات القوائم والكروت) عند: جهاز محدود الموارد، أو توفير البيانات، أو بطارية ١٥٪ أو أقل دون شاحن، أو «تقليل الحركة» في الجهاز، أو رصد بطء في سلاسة الرسم. وعلى الآيفون يعتمد على قياس السلاسة، فقد يتأخر تفعيله دقيقة.',
+        manual: 'يطبّق الوضع الخفيف كاملًا طوال الوقت لتوفير البطارية.',
+        custom: 'حدّد بنفسك ما يُلغى، ثم اضغط «تطبيق الآن». لا يتغيّر شيء قبل الضغط.',
+        off:    'لا يُلغى أي تأثير، ولا يتفعّل الوضع الخفيف تلقائيًا.'
+      }[view];
+      paintStatus();
+    }
+
+    if (host && !$('pfB')) {
+      host.innerHTML =
+        '<div class="chips"><button class="chip" id="pfB" type="button" aria-pressed="true"></button></div>' +
+        '<p class="mutp" id="pfS" role="status"></p>' +
+        '<div id="pfC" hidden>' +
+          '<div class="chips" id="pfCc">' +
+            CUSTOM.map(function (o) {
+              return '<button class="chip" type="button" data-k="' + o[0] + '" aria-pressed="false">' + o[1] + '</button>';
+            }).join('') +
+          '</div>' +
+          '<div class="chips"><button class="chip" id="pfA" type="button">تطبيق الآن</button></div>' +
+        '</div>' +
+        '<p class="mutp" id="pfH"></p>';
+      btn = $('pfB'); status = $('pfS'); panel = $('pfC'); cchips = $('pfCc'); applyBtn = $('pfA');
+
+      btn.addEventListener('click', function () {
+        view = MODES[(MODES.indexOf(view) + 1) % MODES.length];
+        if (view !== 'custom') {                 /* غير المخصص: يُطبَّق فورًا */
+          mode = view; lsSet(PREFIX + 'perf', mode);
+          if (mode !== 'auto') slow = false;
+          applyPerf();
+          if (mode === 'auto') probe(true);
+        }
+        paint(); buzz();
+      });
+      cchips.addEventListener('click', function (e) {
+        var x = e.target.closest('.chip'); if (!x) return;
+        draft[x.dataset.k] = !draft[x.dataset.k];
+        paint(); buzz();
+      });
+      applyBtn.addEventListener('click', function () {
+        CUSTOM.forEach(function (o) { lsSet(PREFIX + o[0], draft[o[0]] ? '1' : '0'); });
+        mode = 'custom'; lsSet(PREFIX + 'perf', mode); slow = false;
+        applyPerf(); paint(); buzz();
+        status.textContent = 'تم التطبيق.';
+      });
+      paint();
+    }
+
+    applyPerf();
     setTimeout(function () { probe(true); }, 2500);
     setInterval(function () { probe(false); }, 60000);
     d.addEventListener('visibilitychange', function () {
       if (d.visibilityState === 'visible') setTimeout(function () { probe(true); }, 900);
     });
     window.addEventListener('pageshow', function () { setTimeout(function () { probe(true); }, 900); });
+  });
 
-    /* ---- واجهة الإعدادات: زر الخيار + سطر الحالة + شرح ---- */
-    var section = $('apfx');
-    if (section && !$('alT')) {
-      var tmp = d.createElement('div');
-      tmp.innerHTML =
-        '<p class="mutp sth">الوضع الخفيف التلقائي</p>' +
-        '<div class="chips"><button class="chip" id="alT" type="button" aria-pressed="true">وضع خفيف تلقائي</button></div>' +
-        '<p class="mutp" id="alS" role="status"></p>' +
-        '<p class="mutp">يفعّل الوضع الخفيف وحده في هذه الحالات: جهاز محدود الموارد، أو تفعيل توفير البيانات، أو بطارية ١٥٪ أو أقل دون شاحن، أو تفعيل «تقليل الحركة» في الجهاز، أو رصد بطء في سلاسة الرسم. وعلى الآيفون يعتمد على قياس السلاسة لأن النظام لا يتيح قراءة وضع توفير الطاقة؛ فيُفعَّل عادةً بعد ثوانٍ من تشغيله وقد يتأخر دقيقة. إن أردت منعه أوقف هذا الخيار.</p>';
-      while (tmp.firstChild) section.appendChild(tmp.firstChild);
+  /* ═══════════════ 3ج) دمج مجموعات الخيارات في أزرار واحدة (تبديل بالضغط) ═══════════════
+     الأزرار الأصلية تبقى مخفية وتعمل كما هي، والزر الجديد ينقر التالي منها،
+     فلا يتغيّر أي منطق قديم (الحفظ، التطبيق، النسخ الاحتياطي). */
+  safe(function cyclers() {
+    var st = d.createElement('style');
+    st.textContent = '.cyb .dot{display:inline-block;width:16px;height:16px;border-radius:50%;' +
+      'border:1.5px solid var(--ink);vertical-align:-3px;margin-inline-end:8px}';
+    d.head.appendChild(st);
 
-      var toggle = $('alT');
-      function paintToggle() {
-        var on = enabled();
-        toggle.classList.toggle('on', on);
-        toggle.setAttribute('aria-pressed', String(on));
-        paintStatus();
-      }
-      paintToggle();
-      toggle.addEventListener('click', function () {
-        lsSet(KEY, enabled() ? '0' : '1');
-        sync(); paintToggle(); probe(true); buzz();
-      });
+    function mkBtn(group) {
+      var wrap = d.createElement('div');
+      wrap.className = 'chips';
+      var b = d.createElement('button');
+      b.type = 'button'; b.className = 'chip on cyb';
+      wrap.appendChild(b);
+      group.parentNode.insertBefore(wrap, group);
+      group.style.display = 'none';
+      return b;
+    }
+    function watch(group, fn) {
+      try {
+        new MutationObserver(fn).observe(group, { attributes: true, attributeFilter: ['class'], subtree: true, childList: true });
+      } catch (e) {}
     }
 
+    /* مجموعة أزرار → زر واحد. toggleOff: آخر نقرة تُطفئ الخيار (مثل مؤقت النوم) */
+    function cycle(id, o) {
+      var g = typeof id === 'string' ? $(id) : id; if (!g || g.dataset.cy) return;
+      g.dataset.cy = '1'; o = o || {};
+      var b = mkBtn(g);
+      function chips() { return Array.prototype.slice.call(g.querySelectorAll('.chip')); }
+      function cur(cs) { for (var i = 0; i < cs.length; i++) if (cs[i].classList.contains('on')) return i; return -1; }
+      function sync() {
+        var cs = chips(), i = cur(cs); b.textContent = '';
+        if (!cs.length) return;
+        if (i < 0) { b.textContent = o.toggleOff ? (o.offLabel || 'متوقف') : (o.none || 'غير محدد'); return; }
+        var c = cs[i];
+        if (c.dataset.c) { var dot = d.createElement('span'); dot.className = 'dot'; dot.style.background = c.dataset.c; b.appendChild(dot); }
+        var t = (c.textContent || '').trim();
+        if (t) b.appendChild(d.createTextNode(t));
+        if (!o.toggleOff) { var cn = d.createElement('span'); cn.className = 'cn'; cn.textContent = ' (' + (i + 1) + '/' + cs.length + ')'; b.appendChild(cn); }
+        b.setAttribute('aria-label', (o.label || '') + ' ' + (t || c.getAttribute('aria-label') || ''));
+      }
+      b.addEventListener('click', function () {
+        var cs = chips(), i = cur(cs); if (!cs.length) return;
+        var n = (i < 0) ? 0 : (i === cs.length - 1 ? (o.toggleOff ? i : 0) : i + 1);
+        cs[n].click(); buzz(); sync();
+      });
+      watch(g, sync); sync(); setTimeout(sync, 300);
+    }
+
+    /* مجموعة بلا حالة «مختارة» (ستايلات جاهزة / ستايلاتي): الزر يجرّب التالي في كل ضغطة */
+    function seq(g, o) {
+      if (!g || g.dataset.cy) return; g.dataset.cy = '1'; o = o || {};
+      var b = mkBtn(g), i = -1;
+      function chips() { return g.querySelectorAll('.chip'); }
+      function sync() {
+        var cs = chips();
+        if (!cs.length) { b.textContent = (g.textContent || '').trim() || o.empty || ''; return; }
+        if (i >= cs.length) i = cs.length - 1;
+        b.textContent = i < 0 ? (o.idle || 'اضغط للتبديل') : (cs[i].textContent || '').trim();
+        if (i >= 0) { var cn = d.createElement('span'); cn.className = 'cn'; cn.textContent = ' (' + (i + 1) + '/' + cs.length + ')'; b.appendChild(cn); }
+      }
+      b.addEventListener('click', function () {
+        var cs = chips(); if (!cs.length) return;
+        i = (i + 1) % cs.length; cs[i].click(); buzz();
+        setTimeout(sync, 0); sync();
+      });
+      watch(g, sync); sync();
+    }
+
+    /* حماية: أي ضغطة على أزرار التبديل لا تغيّر موضع التمرير في القائمة */
+    (function scrollGuard() {
+      var sh = $('sheet'); if (!sh) return;
+      d.addEventListener('click', function (e) {
+        var t = e.target; if (!t || !t.closest || !t.closest('.cyb')) return;
+        var y = sh.scrollTop;
+        function back() { if (Math.abs(sh.scrollTop - y) > 1) sh.scrollTop = y; }
+        [0, 60, 200, 500].forEach(function (ms) { setTimeout(back, ms); });
+        requestAnimationFrame(back);
+      }, true);
+    })();
+
+    cycle('apc', { label: 'اللون المميز' });
+    cycle('apf', { label: 'حجم الخط' });
+    cycle('sp',  { label: 'سرعة التشغيل' });
+    cycle('sl',  { label: 'مؤقت النوم', toggleOff: true, offLabel: 'متوقف' });
+    cycle('tdgC', { label: 'هدف التسبيح' });
+    cycle('tbcC', { label: 'لون زر المسبحة' });
+    cycle('tncC', { label: 'لون الأرقام' });
+
+    /* إعدادات شكل المسبحة (المعاينة والستايلات) */
+    var tsb = $('tsbSet');
+    if (tsb) {
+      var pre = tsb.querySelector('[data-pre]');
+      if (pre) seq(pre.parentNode, { idle: '🎨 جرّب' });
+      seq($('tsbU'), { empty: 'لا يوجد', idle: '⭐ جرّب' });
+      Array.prototype.forEach.call(tsb.querySelectorAll('.chips[data-grp]'), function (g) { cycle(g, {}); });
+    }
+
+    /* الصوت والاهتزاز: أربع حالات في زر واحد */
+    (function soundVib() {
+      var g = $('apt2'); if (!g || g.dataset.cy) return; g.dataset.cy = '1';
+      var b = mkBtn(g);
+      var S = [[1, 1, '🔔📳 الكل'], [1, 0, '🔔 صوت'], [0, 1, '📳 اهتزاز'], [0, 0, '🔕 صامت']];
+      function chip(k) { return g.querySelector('.chip[data-k="' + k + '"]'); }
+      function on(k) { var c = chip(k); return !!(c && c.classList.contains('on')); }
+      function idx() { var a = on('clk') ? 1 : 0, v = on('vib') ? 1 : 0; for (var i = 0; i < S.length; i++) if (S[i][0] === a && S[i][1] === v) return i; return 0; }
+      function sync() { var i = idx(); b.textContent = S[i][2]; var cn = d.createElement('span'); cn.className = 'cn'; cn.textContent = ' (' + (i + 1) + '/4)'; b.appendChild(cn); }
+      b.addEventListener('click', function () {
+        var n = S[(idx() + 1) % S.length];
+        [['clk', n[0]], ['vib', n[1]]].forEach(function (p) {
+          var c = chip(p[0]); if (c && on(p[0]) !== !!p[1]) c.click();
+        });
+        sync();
+      });
+      watch(g, sync); sync(); setTimeout(sync, 300);
+    })();
+  });
+
+  /* ═══════════════ 3د) جدول واحد لكل خيارات المسبحة تحت المعاينة (المعاينة ثابتة أثناء التمرير) ═══════════════ */
+  safe(function tsbTable() {
+    var box = $('tsbSet');
+    if (!box || box.dataset.tb) return;
+    var head = box.querySelector('p.mutp.sth'), pv = box.querySelector('.tsbp');
+    if (!head || !pv) return;
+    box.dataset.tb = '1';
+
+    var st = d.createElement('style');
+    st.textContent =
+      '#tsbSet .tsbstk{position:sticky;top:0;z-index:5;margin:0 -6px 10px;padding:6px 6px 8px;border-radius:0 0 18px 18px;' +
+        'background:color-mix(in srgb,var(--t) 92%,#000);border-bottom:1px solid var(--line)}' +
+      '#tsbSet .tsbstk .sth{margin:0 0 2px;text-align:center}' +
+      '#tsbSet .tsbstk .tsbp{margin:0}' +
+      '#tsbSet .tsbstk .tsbp canvas{width:150px}' +
+      '#tsbSet .tsbtb{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px 6px;margin:4px 0 12px}' +
+      '#tsbSet .tsbtb .ti{display:flex;flex-direction:column;gap:2px;min-width:0}' +
+      '#tsbSet .tsbtb .tl{font-size:.66rem;color:var(--mut);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+      '#tsbSet .tsbtb .cn{display:none}' +
+      '#tsbSet .tsbtb .cyb{display:flex;align-items:center;justify-content:center;width:100%;min-height:30px;margin:0;padding:0 3px;' +
+        'font-size:.72rem;border-radius:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}' +
+      '#tsbSet .tsbtb .cyb .dot{width:12px;height:12px;margin-inline-end:3px;vertical-align:-2px}';
+    d.head.appendChild(st);
+
+    /* المعاينة تثبت أعلى الجدول */
+    var stk = d.createElement('div'); stk.className = 'tsbstk';
+    box.insertBefore(stk, head); stk.appendChild(head); stk.appendChild(pv);
+
+    var table = d.createElement('div'); table.className = 'tsbtb'; table.setAttribute('role', 'table');
+    box.insertBefore(table, stk.nextSibling);
+
+    var SHORT = { 'ستايلات جاهزة': 'جاهز', 'شكل المسبحة': 'الشكل', 'نوع الخرز': 'الخرز', 'عدد الخرز': 'العدد',
+      'لون الشرابة': 'لونها', 'فواصل بين الخرز': 'الفواصل', 'تدرّج لون الخرز': 'التدرّج', 'جودة الرسم': 'الجودة',
+      'هدف التسبيح اليومي': 'الهدف', 'لون زر المسبحة': 'لون الزر', 'لون الأرقام': 'الأرقام', 'الصوت والاهتزاز': 'الصوت' };
+    function btnOf(group) {                    /* زر التبديل الذي أُنشئ قبل المجموعة المخفية */
+      var w = group && group.previousElementSibling;
+      return w ? w.querySelector('.cyb') : null;
+    }
+    function addRow(group) {
+      var b = btnOf(group); if (!b) return;
+      var w = b.parentNode, p = w.previousElementSibling, label = '';
+      if (p && p.classList.contains('sth')) { label = (p.textContent || '').trim(); p.remove(); }
+      var l = d.createElement('span'); l.className = 'tl'; l.textContent = SHORT[label] || label || b.getAttribute('aria-label') || '';
+      var it = d.createElement('div'); it.className = 'ti'; it.appendChild(l); it.appendChild(b);
+      table.appendChild(it);
+      w.remove();
+    }
+
+    var pre = box.querySelector('[data-pre]');
+    if (pre) addRow(pre.parentNode);
+    addRow($('tsbU'));
+    Array.prototype.forEach.call(box.querySelectorAll('.chips[data-grp]'), addRow);
+    ['tdgC', 'tbcC', 'tncC', 'apt2'].forEach(function (id) { addRow($(id)); });
+  });
+
+  safe(function rptAgainBtn() {
     /* ---- زر «إعادة عرض فقاعة الإبلاغ» بجانب زر إعادة الجولة ---- */
     var tour = $('tourAgain');
     if (tour && !$('rptAgain')) {
