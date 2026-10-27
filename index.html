@@ -647,7 +647,7 @@ body[data-bg=calm] .swv,body[data-bg=calm] #aur{animation:none}
 @media(prefers-reduced-motion:reduce){.swv,#aur{animation:none}}
 .dunes.scn{top:auto;height:50dvh}
 body[data-bg=aurora][data-p=night] #aur{opacity:max(0,calc(1 - var(--wo,0) * 1.5))}
-#bgC .chip{min-height:40px}
+
 .top:has(.immb){gap:6px}
 .top:has(.immb) .dbtn,.top:has(.immb) .cd{padding:0 7px;gap:4px;font-size:clamp(.58rem,2.65vw,.8rem)}
 .top .immb{flex:0 0 42px;width:42px;height:42px;min-height:0;margin:0;padding:0;display:grid;place-items:center;border-radius:50%;font-size:0;color:var(--ink);cursor:pointer;background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 60%),var(--card);border:1.5px solid var(--line);box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 8px 24px rgba(0,0,0,.18);-webkit-backdrop-filter:none;backdrop-filter:none;-webkit-tap-highlight-color:transparent}
@@ -777,7 +777,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="sc" data-p="t"><h3>المسبحة</h3><div class="wheelw"><div class="wheel" id="dz" role="listbox" tabindex="0" aria-label="قائمة الأذكار"></div></div>
 <div class="add"><input aria-label="ذكر جديد" id="tin" maxlength="60" placeholder="أضف ذكرًا خاصًا بك…"/><button class="chip" id="tadd">إضافة</button></div>
 <div class="tas" id="tas"><button aria-label="تسبيحة" id="tbtn"><b id="tn">٠</b><small id="tp"></small></button></div>
-<div class="chips tbrow"><button class="chip" id="tgt"></button><button class="chip" id="tauto" type="button"></button><button class="chip" id="trs">تصفير</button><button class="chip" id="tfsb" type="button" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button><button class="chip" hidden="" id="tdel">حذف هذا الذكر</button><button class="chip" id="tundo" type="button" disabled hidden>↩ تراجع</button></div><div class="tgp" id="tgp" hidden><div class="chips" id="tgpc" style="justify-content:center"></div><div class="add" style="justify-content:center"><input aria-label="عدد مخصص" id="tgi" inputmode="numeric" max="99999" min="1" placeholder="عدد آخر…" style="max-width:150px;text-align:center" type="number"/><button class="chip" id="tgo" type="button">تعيين</button></div></div><p class="mutp" id="tday"></p><div class="kbar" id="tdbarw" hidden style="margin:6px 0"><i id="tdbar"></i></div><p class="mutp" id="tdl"></p></section><section class="sc" data-p="c"><h3>إعدادات المسبحة</h3><div id="tsbHost"></div><p class="mutp sth">هدف التسبيح اليومي</p><div class="chips" id="tdgC"></div><p class="mutp sth">لون زر المسبحة</p><div class="chips" id="tbcC"></div><p class="mutp sth">لون الأرقام</p><div class="chips" id="tncC"></div><p class="mutp">يظهر لون الأرقام على العدّاد داخل الزر وعلى +١ عند كل تسبيحة. «تلقائي» يرجّع الألوان الأصلية.</p><p class="mutp sth">الصوت والاهتزاز</p><div class="chips" id="apt2"><button class="chip" data-k="clk">صوت نقر المسبحة</button><button class="chip" data-k="vib">الاهتزاز</button></div><div class="chips" style="margin-top:8px"><button class="chip" id="tchm" type="button">تنبيه صوتي للذكر التالي</button></div><div class="chips" style="margin-top:8px"><button class="chip" id="vtest" type="button">تجربة الاهتزاز</button></div><p class="mutp" id="vmsg" role="status"></p></section>
+<div class="chips tbrow"><button class="chip" id="tgt"></button><button class="chip" id="tauto" type="button"></button><button class="chip" id="trs">تصفير</button><button class="chip" id="tfsb" type="button" aria-label="ملء الشاشة" title="ملء الشاشة"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button><button class="chip" hidden="" id="tdel">حذف هذا الذكر</button><button class="chip" id="tundo" type="button" disabled hidden>↩ تراجع</button></div><div class="tgp" id="tgp" hidden><div class="chips" id="tgpc" style="justify-content:center"></div><div class="add" style="justify-content:center"><input aria-label="عدد مخصص" id="tgi" inputmode="numeric" max="99999" min="1" placeholder="عدد آخر…" style="max-width:150px;text-align:center" type="number"/><button class="chip" id="tgo" type="button">تعيين</button></div></div><p class="mutp" id="tday"></p><div class="kbar" id="tdbarw" hidden style="margin:6px 0"><i id="tdbar"></i></div><p class="mutp" id="tdl"></p></section><section class="sc" data-p="c"><h3>إعدادات المسبحة</h3><div id="tsbHost"></div><p class="mutp sth">هدف التسبيح اليومي</p><div class="chips" id="tdgC"></div><p class="mutp sth">لون زر المسبحة</p><div class="chips" id="tbcC"></div><p class="mutp sth">لون الأرقام</p><div class="chips" id="tncC"></div><p class="mutp">يظهر لون الأرقام على العدّاد داخل الزر وعلى +١ عند كل تسبيحة. «تلقائي» يرجّع الألوان الأصلية.</p><p class="mutp sth">الصوت والاهتزاز</p><div class="chips" id="apt2"><button class="chip" data-k="clk">صوت نقر المسبحة</button><button class="chip" data-k="vib">الاهتزاز</button></div><div class="chips" style="margin-top:8px"><button class="chip" id="tchm" type="button">🔔 صوتي</button></div><div class="chips" style="margin-top:8px"><button class="chip" id="vtest" type="button">📳 تجربة</button></div><p class="mutp" id="vmsg" role="status"></p></section>
 <section class="sc" data-p="b"><h3><span>متتبع الصلوات اليوم</span><span id="pc"></span></h3><div class="pt" id="pt"></div><p class="mutp" id="ps"></p></section>
 <section class="sc" data-p="b"><h3><span>ورد القرآن اليوم</span><span id="wrd"></span></h3><div class="row2"><button aria-label="إنقاص" class="chip" id="wm">−</button><b id="wn">٠</b><button aria-label="زيادة" class="chip" id="wp">+</button><button class="chip" id="wg"></button></div></section>
 <section class="sc" data-p="b"><h3><span>صيام اليوم</span><span id="fc"></span></h3><div class="chips"><button class="chip" id="fb">أنا صائم اليوم</button></div></section>
@@ -801,11 +801,11 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <div class="zr"><label for="zd">ديون مستحقة عليك</label><input autocomplete="off" id="zd" inputmode="decimal" placeholder="٠"/></div>
 <div class="zres" id="zres"></div>
 <p class="mutp">النصاب = ٨٥ جرام ذهب عيار ٢٤، ويُشترط مرور عام هجري كامل على المال. للفتوى في حالتك راجع أهل العلم.</p></section>
-<section class="sc" data-p="m"><h3>نسخة احتياطية لبياناتك</h3><div class="chips"><button class="chip" id="bkc">نسخ احتياطي</button><button class="chip" id="bkr">استعادة</button></div><input id="bkf" type="file" accept=".txt,text/plain,application/json,.json" hidden/><p class="mutp" id="bkl" style="text-align:start;margin:0 0 4px"></p><p class="mutp" id="bkm" role="status" style="text-align:start;min-height:1.2em"></p><p class="mutp">«نسخ احتياطي» يحفظ بياناتك في ملف نصي على جهازك، و«استعادة» تطلب منك اختيار هذا الملف.</p></section>
+<section class="sc" data-p="m"><h3>نسخة احتياطية لبياناتك</h3><div class="stb" style="--c:2"><div class="ti"><span class="tl">حفظ بياناتك</span><div class="chips"><button class="chip" id="bkc">نسخ احتياطي</button></div></div><div class="ti"><span class="tl">من ملف</span><div class="chips"><button class="chip" id="bkr">استعادة</button></div></div></div><input id="bkf" type="file" accept=".txt,text/plain,application/json,.json" hidden/><p class="mutp" id="bkl" style="text-align:start;margin:0 0 4px"></p><p class="mutp" id="bkm" role="status" style="text-align:start;min-height:0;margin:0"></p><p class="mutp">«نسخ احتياطي» يحفظ بياناتك في ملف نصي على جهازك، و«استعادة» تطلب منك اختيار هذا الملف.</p></section>
 
-<section class="sc" data-p="c"><h3>إعدادات التنبيهات</h3><p class="mutp sth">الأذان</p><div class="chips"><button class="chip" id="oa"></button></div><p class="mutp">يشغّل صوت الأذان تلقائيًا عند دخول وقت كل صلاة ما دام التطبيق مفتوحًا.</p><div id="ntg"></div></section>
+<section class="sc" data-p="c"><h3>إعدادات التنبيهات</h3><div id="ntg"><button class="chip" id="oa" type="button"></button></div></section>
 
-<section class="sc" data-p="c"><h3>إعدادات التشغيل</h3><p class="mutp sth">سرعة التشغيل</p><div class="chips" id="sp"><button class="chip" data-r="0.85">٠٫٨٥×</button><button class="chip on" data-r="1">١×</button><button class="chip" data-r="1.25">١٫٢٥×</button><button class="chip" data-r="1.5">١٫٥×</button></div><p class="mutp sth" style="display:flex;justify-content:space-between;align-items:center"><span>مؤقت النوم</span><span id="sst" style="font-weight:400;color:var(--mut);font-size:.85rem"></span></p><div class="chips" id="sl"><button class="chip" data-m="15">١٥ د</button><button class="chip" data-m="30">٣٠ د</button><button class="chip" data-m="60">ساعة</button><button class="chip" data-m="90">ساعة ونصف</button></div><p class="mutp">يخفض مؤقت النوم الصوت تدريجيًا ثم يوقف التشغيل.</p></section>
+<section class="sc" data-p="c"><h3>إعدادات التشغيل</h3><div class="stb" style="--c:2"><div class="ti"><span class="tl">سرعة التشغيل</span><div class="chips" id="sp"><button class="chip" data-r="0.85">٠٫٨٥×</button><button class="chip on" data-r="1">١×</button><button class="chip" data-r="1.25">١٫٢٥×</button><button class="chip" data-r="1.5">١٫٥×</button></div></div><div class="ti"><span class="tl">مؤقت النوم</span><div class="chips" id="sl"><button class="chip" data-m="15">١٥ د</button><button class="chip" data-m="30">٣٠ د</button><button class="chip" data-m="60">ساعة</button><button class="chip" data-m="90">ساعة ونصف</button></div></div></div><p class="mutp" style="margin-top:6px"><span id="sst" style="display:block;color:var(--ac);font-weight:600"></span>يخفض مؤقت النوم الصوت تدريجيًا ثم يوقف التشغيل.</p></section>
 <section class="sc" data-p="d"><h3>الأذكار بعد الصلاة</h3><div class="ck" id="pa"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="par">بدء صلاة جديدة ↻</button></div></section>
 <section class="sc" data-p="b"><h3><span>نوافل اليوم</span><span id="nfc"></span></h3><div class="ck" id="nf"></div></section>
 <section class="sc" data-p="b"><h3><span>سنن الجمعة</span><span id="jmc"></span></h3><div class="ck" id="jm"></div><p class="mutp">تُصفَّر تلقائيًا كل أسبوع</p></section>
@@ -882,8 +882,8 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="sc" data-p="m"><h3>أعمال الحج والعمرة</h3><p class="mutp" style="margin:8px 0 6px;text-align:start;color:var(--ac);font-weight:600">العمرة</p><div class="qd"><div class="qr"><span>١. الإحرام من الميقات</span></div><div class="qr"><span>٢. الطواف بالبيت</span><b style="font-size:.8rem;min-width:0">٧ أشواط</b></div><div class="qr"><span>٣. السعي بين الصفا والمروة</span><b style="font-size:.8rem;min-width:0">٧ أشواط</b></div><div class="qr"><span>٤. الحلق أو التقصير</span></div></div><p class="mutp" style="margin:8px 0 6px;text-align:start;color:var(--ac);font-weight:600">الحج</p><div class="qd"><div class="qr"><span>٨ ذو الحجة (التروية)</span><b style="font-size:.8rem;min-width:0">الإحرام والتوجه إلى منى</b></div><div class="qr"><span>٩ (يوم عرفة)</span><b style="font-size:.8rem;min-width:0">الوقوف بعرفة ثم مزدلفة</b></div><div class="qr"><span>١٠ (يوم النحر)</span><b style="font-size:.8rem;min-width:0">رمي جمرة العقبة والنحر والحلق وطواف الإفاضة</b></div><div class="qr"><span>١١ إلى ١٣ (التشريق)</span><b style="font-size:.8rem;min-width:0">رمي الجمرات الثلاث والمبيت بمنى</b></div><div class="qr"><span>عند المغادرة</span><b style="font-size:.8rem;min-width:0">طواف الوداع</b></div></div><p class="mutp">تختلف الصور بحسب نوع النسك (تمتع أو قران أو إفراد)، فاتبع إرشاد حملتك وأهل العلم</p></section>
   <section class="sc" data-p="s"><h3>صيام التطوع</h3><p class="mutp" style="margin:0 0 6px">الاثنان والخميس هذا الأسبوع</p><div class="ck" id="vfw"></div><p class="mutp" style="margin:12px 0 6px">الأيام البيض هذا الشهر الهجري</p><div class="ck" id="vfb"></div></section>
   <section class="sc" data-p="s"><h3>مواعيدي</h3><div class="add"><input id="evt" maxlength="40" placeholder="اسم الموعد" aria-label="اسم الموعد" autocomplete="off"><input id="evd" type="date" aria-label="تاريخ الموعد"></div><div class="chips" style="justify-content:center;margin:8px 0"><button class="chip" id="eva">إضافة</button></div><div class="qd" id="evl"></div><p class="mutp">اضغط على الموعد لحذفه</p></section>
-<section class="sc" data-p="c"><h3>إعدادات المظهر</h3><p class="mutp sth">الخلفية</p><div class="chips" id="bgC"></div><p class="mutp" id="bgN"></p><p class="mutp sth">اللون المميز</p><div class="chips" id="apc"></div><p class="mutp sth">حجم الخط</p><div class="chips" id="apf"><button class="chip" data-f="90">صغير</button><button class="chip" data-f="100">عادي</button><button class="chip" data-f="115">كبير</button><button class="chip" data-f="130">أكبر</button></div><p class="mutp sth">الأداء</p><div id="apfx"></div><p class="mutp sth">الجولة التعريفية</p><div class="chips"><button class="chip" id="tourAgain" type="button">إعادة الجولة التعريفية</button></div></section>
-<section class="sc" data-p="b"><h3>ضبط المواقيت</h3><p class="mutp" style="margin:0 0 6px;text-align:start">طريقة الحساب</p><select id="pmM" class="pmsel" aria-label="طريقة الحساب"></select><p class="mutp" style="margin:6px 0;text-align:start">المذهب في العصر</p><select id="pmA" class="pmsel" aria-label="المذهب في العصر"></select><p class="mutp" style="margin:6px 0;text-align:start">المدينة</p><select id="pmC" class="pmsel" aria-label="المدينة"></select><p class="mutp" style="margin:6px 0;text-align:start">تعديل بالدقائق</p><div class="qd" id="pmJ"></div><p class="mutp" style="margin:12px 0 6px;text-align:start">مواقيت اليوم بهذا الضبط</p><div class="qd" id="pmP"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="pmR">إعادة الضبط</button></div></section>
+<section class="sc" data-p="c"><h3>إعدادات المظهر</h3><div class="stb" style="--c:4"><div class="ti w2"><span class="tl">الخلفية</span><div class="chips" id="bgC"></div></div><div class="ti"><span class="tl">عشوائية</span><div class="chips"><button class="chip" type="button" id="bgR" aria-pressed="false" aria-label="خلفية عشوائية مع كل تحديث">🎲 متوقفة</button></div></div><div class="ti"><span class="tl">اللون المميز</span><div class="chips" id="apc"></div></div><div class="ti"><span class="tl">حجم الخط</span><div class="chips" id="apf"><button class="chip" data-f="90">صغير</button><button class="chip" data-f="100">عادي</button><button class="chip" data-f="115">كبير</button><button class="chip" data-f="130">أكبر</button></div></div><div class="ti"><span class="tl">الأداء</span><div class="chips"><button class="chip" id="pfB" type="button" aria-pressed="true"></button></div></div><div class="ti"><span class="tl">الجولة</span><div class="chips"><button class="chip" id="tourAgain" type="button">▶ إعادة</button></div></div></div><p class="mutp" id="bgN" style="margin-top:6px"></p><div id="apfx"></div></section>
+<section class="sc" data-p="b"><h3>ضبط المواقيت</h3><div class="stb" style="--c:2"><div class="ti w2"><span class="tl">طريقة الحساب</span><select id="pmM" class="pmsel" aria-label="طريقة الحساب"></select></div><div class="ti"><span class="tl">المذهب في العصر</span><select id="pmA" class="pmsel" aria-label="المذهب في العصر"></select></div><div class="ti"><span class="tl">المدينة</span><select id="pmC" class="pmsel" aria-label="المدينة"></select></div></div><div id="pmJ"></div><div id="pmP" hidden></div><div class="chips" style="justify-content:center;margin-top:8px"><button class="chip" id="pmR">إعادة الضبط</button></div></section>
   <section class="sc" data-p="b"><h3>إمساكية رمضان</h3><div class="seg" id="imc"><button class="chip on" data-k="ram">رمضان</button><button class="chip" data-k="m30">٣٠ يومًا من اليوم</button></div><p class="mutp" id="imi" style="text-align:start"></p><div style="overflow-x:auto" id="imt"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="imp">طباعة</button><button class="chip" id="imy">نسخ الجدول</button></div></section>
   <section class="sc" data-p="c"><h3>التقرير الأسبوعي</h3><div class="qd" id="wkr"></div><p class="duat" id="wkm"></p><div class="chips" style="justify-content:center"><button class="chip" id="wks">شارك تقريرك كصورة</button></div></section>
 <section class="sc" data-p="c" id="aboutUs"><h3>نبذة عنا</h3>
@@ -1749,8 +1749,8 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
     r.onerror=()=>bkm('تعذّرت قراءة الملف');
     r.onload=()=>{try{const o=JSON.parse(String(r.result).replace(/^\uFEFF/,'').trim());if(!o||typeof o!=='object'||Array.isArray(o))throw 0;let n=0;for(const k in o)if(typeof o[k]==='string'&&!BKX.includes(k)){sv(k,o[k]);n++}if(!n)throw 0;bkm('تمت استعادة '+ar(n)+' عنصرًا، جارٍ إعادة التحميل…');setTimeout(()=>location.reload(),900)}catch(x){bkm('الملف غير صالح')}};
     r.readAsText(f,'utf-8')};
-  const opt=(id,k,t,f)=>{const b=$(id);let on=ld(k)!=='0';const r=()=>{b.classList.toggle('on',on);b.textContent=t+(on?' ✓':'');window[f]=!on};b.onclick=()=>{on=!on;sv(k,on?'1':'0');r()};r()};
-  opt('oa','oa','الأذان تلقائيًا','NOADHAN');
+  const opt=(id,k,t,f)=>{const b=$(id);let on=ld(k)!=='0';const r=()=>{b.classList.toggle('on',on);b.textContent=on?t[0]:t[1];window[f]=!on};b.onclick=()=>{on=!on;sv(k,on?'1':'0');r()};r()};
+  opt('oa','oa',['مفعّل ✓','متوقف'],'NOADHAN');
   /* اختصارات لوحة المفاتيح: مسافة = تشغيل/إيقاف، الأسهم = السابق/التالي */
   addEventListener('keydown',e=>{if(sh.classList.contains('open')||e.target.closest('button,input,textarea'))return;
     if(e.code==='Space'){e.preventDefault();$('b-play').click()}else if(e.key==='ArrowLeft')$('b-next').click();else if(e.key==='ArrowRight')$('b-prev').click()});
@@ -2376,8 +2376,11 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
     pmM.innerHTML=Object.entries(METH).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join('');pmM.value=o.m;
     pmA.innerHTML='<option value="1">الجمهور (ظل المثل)</option><option value="2">الحنفي (ظل المثلين)</option>';pmA.value=String(o.a);
     pmC.innerHTML='<option value="">تلقائي (حسب موقعك)</option>'+CITY.map(c=>`<option>${c[0]}</option>`).join('');pmC.value=o.city;
-    $('pmJ').innerHTML=PR.map(([k,n])=>`<div class="qr"><span>${n}</span><span class="ad"><button class="chip" data-k="${k}" data-d="-1" aria-label="إنقاص">−</button><b>${ar(o.adj[k])}</b><button class="chip" data-k="${k}" data-d="1" aria-label="زيادة">+</button></span></div>`).join('');$('pmJ').innerHTML+=`<div class="qr"><span>تعديل التاريخ الهجري</span><select id="pmH" class="pmsel" aria-label="تعديل التاريخ الهجري">${[-1,0,1].map(v=>`<option value="${v}"${v===(+gs('ap_hjadj')||0)?' selected':''}>${v===0?'بدون تعديل':v>0?'+١ يوم':'−١ يوم'}</option>`).join('')}</select></div>`;
-    const t=calcTimes(new Date());$('pmP').innerHTML=PR.map(([k,n])=>`<div class="qr"><span>${n}</span><b style="font-size:.95rem">${tf(t[k])}</b></div>`).join('')};
+    const t=calcTimes(new Date());
+    $('pmJ').innerHTML='<div class="pmt"><span class="h">الصلاة</span><span class="h">الوقت</span><span class="h">التعديل بالدقائق</span>'
+      +PR.map(([k,n])=>`<span class="pn">${n}</span><b class="pv">${tf(t[k])}</b><span class="ad"><button class="chip" data-k="${k}" data-d="-1" aria-label="إنقاص ${n}">−</button><b>${ar(o.adj[k])}</b><button class="chip" data-k="${k}" data-d="1" aria-label="زيادة ${n}">+</button></span>`).join('')
+      +`<span class="pn">تعديل التاريخ الهجري</span><select id="pmH" class="pmsel" aria-label="تعديل التاريخ الهجري">${[-1,0,1].map(v=>`<option value="${v}"${v===(+gs('ap_hjadj')||0)?' selected':''}>${v===0?'بدون تعديل':v>0?'+١ يوم':'−١ يوم'}</option>`).join('')}</select></div>`;
+    $('pmP').innerHTML=''};
   if(pmM){
     pmM.onchange=()=>{const o=pmGet();o.m=pmM.value;pmSave(o);refresh();pmR()};
     pmA.onchange=()=>{const o=pmGet();o.a=+pmA.value;pmSave(o);refresh();pmR()};
@@ -2800,17 +2803,24 @@ let N=Object.assign({on:(()=>{try{return ld('ap_nud')==='0'&&!ld('ntf31')?0:1}ca
 if(N.pre>1){N.pm=N.pre;N.pre=1}if(![5,10,15,30].includes(N.pm))N.pm=10;
 const NG=$('ntg'),nb=(k,t)=>`<button class="chip ${N[k]?'on':''}" data-k="${k}">${t}</button>`,nh=t=>`<p class="mutp sth">${t}</p>`;
 let npm='';
-const pbtn=p=>p==='granted'?'<button class="chip on" data-k="perm">إشعارات الجهاز: مسموحة ✓</button>':p==='denied'?'<button class="chip nbad" data-k="perm">إشعارات الجهاز: محجوبة ✕</button>':p==='default'?'<button class="chip" data-k="perm">السماح بإشعارات الجهاز</button>':'<button class="chip nbad" data-k="perm">إشعارات الجهاز غير مدعومة</button>';
-const nr=()=>{if(!NG)return;const sup='Notification' in window,p=sup?Notification.permission:'none';
- NG.innerHTML=nh('التنبيهات والتذكير')+`<div class="chips"><button class="chip ${N.on?'on':''}" data-k="on">${N.on?'التنبيهات مفعّلة ✓':'تفعيل التنبيهات'}</button>${pbtn(p)}</div>${npm?`<p class="mutp" style="margin:6px 0 0;text-align:start">${npm}</p>`:''}`
- +`<div style="opacity:${N.on?1:.5}">`
- +nh('الصلاة')+`<div class="chips">${nb('adhan','إشعار الأذان')}${nb('pre','تذكير قبل الصلاة')}</div>`
- +(N.pre?`<p class="mutp" style="margin:8px 0 6px;text-align:start">قبل الصلاة بـ</p><div class="chips">${[5,10,15,30].map(m=>`<button class="chip ${N.pm===m?'on':''}" data-m="${m}">${ar(m)} د</button>`).join('')}</div>`:'')
- +nh('الأذكار')+`<div class="chips">${nb('sab','أذكار الصباح')}${nb('mas','أذكار المساء')}</div>`
- +nh('الجمعة والصيام والزكاة')+`<div class="chips">${nb('kahf','سورة الكهف')}${nb('mt','صيام الاثنين والخميس')}${nb('wb','الأيام البيض')}${nb('zk','حول الزكاة')}</div>`
- +nh('المتابعة')+`<div class="chips">${nb('wk','التقرير الأسبوعي')}${nb('dr','تقرير اليوم (بعد العشاء بساعة)')}${nb('bk','تذكير النسخ الاحتياطي')}</div></div>`
- +`<p class="mutp">تظهر التنبيهات داخل التطبيق، وكإشعارات للجهاز إن سمحت بها. تعمل ما دام التطبيق مفتوحًا (ولو في الخلفية)، ولا يستطيع ملف HTML وحده إرسال إشعار والتطبيق مغلق.</p>`};
-if(NG)NG.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b)return;const k=b.dataset.k;
+const pbtn=p=>p==='granted'?'<button class="chip on" data-k="perm">مسموحة ✓</button>':p==='denied'?'<button class="chip nbad" data-k="perm">محجوبة ✕</button>':p==='default'?'<button class="chip" data-k="perm">اضغط للسماح</button>':'<button class="chip nbad" data-k="perm">غير مدعومة</button>';
+const oaBtn=document.getElementById('oa');
+const nr=()=>{if(!NG)return;const sup='Notification' in window,p=sup?Notification.permission:'none',D=!N.on;
+ const ce=(l,b,dim)=>'<div class="ti"'+(dim?' style="opacity:.5"':'')+'><span class="tl">'+l+'</span>'+b+'</div>',
+  tb=(k,l)=>ce(l,'<button class="chip '+(N[k]?'on':'')+'" data-k="'+k+'">'+(N[k]?'مفعّل ✓':'متوقف')+'</button>',D),
+  PM=[5,10,15,30],nx=PM[(PM.indexOf(N.pm)+1)%PM.length];
+ NG.innerHTML='<div class="stb" style="--c:3">'
+  +ce('التنبيهات','<button class="chip '+(N.on?'on':'')+'" data-k="on">'+(N.on?'مفعّلة ✓':'متوقفة')+'</button>')
+  +ce('إشعارات الجهاز',pbtn(p))
+  +'<div class="ti" id="oaSlot"><span class="tl">الأذان تلقائيًا</span></div>'
+  +tb('adhan','إشعار الأذان')+tb('pre','تذكير قبل الصلاة')
+  +(N.pre?ce('قبل الصلاة بـ','<button class="chip on" data-m="'+nx+'" aria-label="قبل الصلاة بـ '+ar(N.pm)+' دقيقة، اضغط للتغيير">'+ar(N.pm)+' د</button>',D):'')
+  +tb('sab','أذكار الصباح')+tb('mas','أذكار المساء')+tb('kahf','سورة الكهف')+tb('mt','الاثنين والخميس')+tb('wb','الأيام البيض')+tb('zk','حول الزكاة')+tb('wk','التقرير الأسبوعي')+tb('dr','تقرير اليوم')+tb('bk','نسخ احتياطي')
+  +'</div>'
+  +(npm?'<p class="mutp" style="margin:6px 0 0;text-align:start">'+npm+'</p>':'')
+  +'<p class="mutp" style="margin-top:6px">الأذان التلقائي يشغّل الصوت عند دخول وقت كل صلاة. تظهر التنبيهات داخل التطبيق، وكإشعارات للجهاز إن سمحت بها، وتعمل ما دام التطبيق مفتوحًا (ولو في الخلفية)، ولا يستطيع ملف HTML وحده إرسال إشعار والتطبيق مغلق. «تقرير اليوم» يصل بعد العشاء بساعة.</p>';
+ const sl=NG.querySelector('#oaSlot');if(sl&&oaBtn)sl.appendChild(oaBtn)};
+if(NG)NG.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b||(!b.dataset.k&&!b.dataset.m))return;const k=b.dataset.k;
  if(b.dataset.m)N.pm=+b.dataset.m;
  else if(k==='perm'){npm='';
   if(!('Notification' in window)){npm='هذا المتصفح لا يدعم إشعارات الجهاز، وسيظهر التنبيه داخل التطبيق فقط.';nr();return}
@@ -3366,8 +3376,8 @@ sync();buildRows();render();
     const box=d.createElement('div');box.id='tsbSet';
     const grp=g=>`<p class="mutp sth">${TT[g]}</p><div class="chips" data-grp="${g}">${OPT[g].map(o=>`<button class="chip" type="button" data-g="${g}" data-v="${o[0]}">${o[1]}</button>`).join('')}</div>`;
     box.innerHTML='<p class="mutp sth">معاينة المسبحة</p><div class="tsbp"><canvas id="tsbPv" aria-hidden="true"></canvas></div><p class="mutp sth">ستايلات جاهزة</p><div class="chips">'+PRE.map((p,i)=>`<button class="chip" type="button" data-pre="${i}">${p[0]}</button>`).join('')+'</div>'
-      +'<p class="mutp sth">ستايلاتي</p><div class="chips" id="tsbU"></div><div class="chips"><button class="chip" type="button" data-act="save">💾 حفظ ستايلي</button><button class="chip" type="button" data-act="rnd">🎲 عشوائي</button><button class="chip" type="button" data-act="del">🗑 حذف ستايل</button></div>'
-      +'<div class="chips"><button class="chip" type="button" data-act="pd">ستايل مختلف لكل ذكر</button></div><p class="mutp">لما تفعّل «ستايل لكل ذكر» كل ذكر بيفتكر شكل مسبحته لوحده.</p>'
+      +'<p class="mutp sth">ستايلاتي</p><div class="chips" id="tsbU"></div><div class="chips"><button class="chip" type="button" data-act="save">💾 حفظ</button><button class="chip" type="button" data-act="rnd">🎲 جرّب</button><button class="chip" type="button" data-act="del">🗑 حذف</button></div>'
+      +'<div class="chips"><button class="chip" type="button" data-act="pd">🔀 مختلف</button></div><p class="mutp">لما تفعّل «ستايل لكل ذكر» كل ذكر بيفتكر شكل مسبحته لوحده.</p>'
       +Object.keys(TT).map(grp).join('');
     sec.appendChild(box);
     PV=mkI(box.querySelector('#tsbPv'));
@@ -3381,8 +3391,8 @@ sync();buildRows();render();
       if(ds.pre!=null){const q=cfg.q;Object.assign(cfg,DEF,PRE[+ds.pre][1]);cfg.q=q}
       else if(ds.u!=null){const i=+ds.u;if(delMode){U.splice(i,1);wr(UK,U);if(!U.length)delMode=false;mark();return}if(U[i])setC(U[i].c);else return}
       else if(ds.g){cfg[ds.g]=ds.v}
-      else if(ds.act==='save'){if(U.length>=8){b.textContent='الحد ٨ ستايلات';setTimeout(()=>{b.textContent='💾 حفظ ستايلي'},1600);return}
-        const n=U.reduce((m,u)=>Math.max(m,+(u.n.match(/\d+/)||[0])[0]),0)+1;U.push({n:'ستايلي '+n,c:snapC()});wr(UK,U);b.textContent='اتحفظ ✓';setTimeout(()=>{b.textContent='💾 حفظ ستايلي'},1400);mark();return}
+      else if(ds.act==='save'){if(U.length>=8){b.textContent='الحد ٨';setTimeout(()=>{b.textContent='💾 حفظ'},1600);return}
+        const n=U.reduce((m,u)=>Math.max(m,+(u.n.match(/\d+/)||[0])[0]),0)+1;U.push({n:'ستايلي '+n,c:snapC()});wr(UK,U);b.textContent='اتحفظ ✓';setTimeout(()=>{b.textContent='💾 حفظ'},1400);mark();return}
       else if(ds.act==='del'){if(!U.length)return;delMode=!delMode;mark();return}
       else if(ds.act==='rnd'){for(const k in OPT){if(k==='q')continue;cfg[k]=k==='n'?rn(['auto','33','99']):rn(OPT[k])[0]}}
       else if(ds.act==='pd'){pd=!pd;try{localStorage.setItem(PDK,pd?'1':'0')}catch(_){}if(pd){if(curD)PM[curD]=snapC();wr(PMK,PM)}else setC(G);mark();sync();return}
@@ -3611,13 +3621,13 @@ sync();buildRows();render();
     v==='auto'?B.removeAttribute('data-bg'):B.setAttribute('data-bg',v);
     moonSkin(v);window.__plush&&__plush(v==='plush');
     const n=$('bgN');if(n)n.textContent=L.find(x=>x[0]===v)[2];
-    const bb=$('bgB');if(bb){const i=L.findIndex(x=>x[0]===v);bb.textContent=L[i][1]+'  ('+(i+1)+'/'+L.length+')';bb.dataset.v=v}
+    const bb=$('bgB');if(bb){const i=L.findIndex(x=>x[0]===v);bb.textContent=L[i][1];bb.setAttribute('aria-label','تبديل الخلفية: '+L[i][1]+' ('+(i+1)+'/'+L.length+')');bb.dataset.v=v}
   }
   const RK='ap_bgr',rnd=()=>{try{return localStorage.getItem(RK)==='1'}catch(e){return false}};
   const w=$('bgC');
   if(w){
-    w.innerHTML='<button class="chip on" type="button" id="bgB" aria-label="تبديل الخلفية"></button><button class="chip" type="button" id="bgR" aria-pressed="false">🎲 خلفية عشوائية مع كل تحديث</button>';
-    const R=$('bgR'),paintR=()=>{const o=rnd();R.classList.toggle('on',o);R.setAttribute('aria-pressed',String(o))};
+    w.innerHTML='<button class="chip on" type="button" id="bgB" aria-label="تبديل الخلفية"></button>';
+    const R=$('bgR'),paintR=()=>{const o=rnd();R.classList.toggle('on',o);R.setAttribute('aria-pressed',String(o));R.textContent=o?'🎲 مفعّلة':'🎲 متوقفة'};
     const save=v=>{try{v==='auto'?localStorage.removeItem(KEY):localStorage.setItem(KEY,v)}catch(_){}};
     const buzz=()=>{try{navigator.vibrate&&navigator.vibrate(8)}catch(_){}};
     $('bgB').onclick=()=>{
@@ -3828,6 +3838,25 @@ body.fx-ui .sheet.open { will-change: auto; }
      ║  3) الإعدادات: تخفيف التأثيرات + الوضع الخفيف التلقائي         ║
      ║  4) توسيط تبويب المجموعة المختار                                ║
      ╚════════════════════════════════════════════════════════════════╝ -->
+<style id="stb-css">
+/* جداول الإعدادات الموحّدة: عنوان صغير + زر واحد لكل خانة، لتقليل المساحة */
+.stb{display:grid;grid-template-columns:repeat(var(--c,4),minmax(0,1fr));gap:8px 6px;margin:4px 0 8px}
+.stb .ti{display:flex;flex-direction:column;gap:2px;min-width:0}
+.stb .ti.w2{grid-column:span 2}
+.stb .tl{font-size:.66rem;color:var(--mut);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stb .chips{display:flex;flex-wrap:nowrap;gap:0;margin:0;min-width:0}
+.stb .chip,.stb .chips .chip{display:flex;align-items:center;justify-content:center;width:100%;min-height:32px;margin:0;padding:0 4px;font-size:.74rem;border-radius:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stb .cn{display:none}
+.stb .cyb .dot{width:12px;height:12px;margin-inline-end:3px;vertical-align:-2px}
+.stb .pmsel,.pmt .pmsel{min-height:32px;font-size:.78rem;padding:0 8px;border-radius:10px}
+.pmt{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px 12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:8px 10px;margin:2px 0}
+.pmt .h{font-size:.66rem;color:var(--mut)}
+.pmt .h:nth-child(n+2){text-align:center}
+.pmt .pn{font-size:.9rem}
+.pmt .pv{font-size:.92rem;font-weight:600;text-align:center}
+.pmt .ad{display:flex;align-items:center;gap:6px}
+.pmt .pmsel{grid-column:2/4}
+</style>
 <script id="hisn-js">
 (function () {
   var d = document;
@@ -4320,7 +4349,7 @@ body.fx-ui .sheet.open { will-change: auto; }
     }
     function paint() {
       if (!btn) return;
-      btn.textContent = ICON[view] + ' الوضع الخفيف: ' + LABEL[view];
+      btn.textContent = ICON[view] + ' ' + LABEL[view]; btn.setAttribute('aria-label', 'الوضع الخفيف: ' + LABEL[view]);
       btn.setAttribute('aria-pressed', String(view !== 'off'));
       btn.classList.toggle('on', view !== 'off');
       panel.hidden = view !== 'custom';
@@ -4339,9 +4368,8 @@ body.fx-ui .sheet.open { will-change: auto; }
       paintStatus();
     }
 
-    if (host && !$('pfB')) {
+    if (host && $('pfB') && !$('pfS')) {
       host.innerHTML =
-        '<div class="chips"><button class="chip" id="pfB" type="button" aria-pressed="true"></button></div>' +
         '<p class="mutp" id="pfS" role="status"></p>' +
         '<div id="pfC" hidden>' +
           '<div class="chips" id="pfCc">' +
@@ -4568,10 +4596,37 @@ body.fx-ui .sheet.open { will-change: auto; }
     if (tour && !$('rptAgain')) {
       var again = d.createElement('button');
       again.className = 'chip'; again.id = 'rptAgain'; again.type = 'button';
-      again.textContent = 'إعادة عرض فقاعة الإبلاغ';
-      tour.after(again);
+      again.textContent = '💬 إعادة'; again.setAttribute('aria-label', 'إعادة عرض فقاعة الإبلاغ');
+      var tc = tour.closest('.ti');
+      if (tc && tc.parentNode) {
+        var it = d.createElement('div'); it.className = 'ti';
+        var lb = d.createElement('span'); lb.className = 'tl'; lb.textContent = 'فقاعة الإبلاغ';
+        var wr = d.createElement('div'); wr.className = 'chips'; wr.appendChild(again);
+        it.appendChild(lb); it.appendChild(wr); tc.after(it);
+      } else tour.after(again);
       again.addEventListener('click', function () { window.rptTipAgain && window.rptTipAgain(); });
     }
+  });
+
+  /* ═══════════════ 3هـ) إكمال جدول المسبحة: أزرار الستايل + التنبيه الصوتي + تجربة الاهتزاز في نفس الجدول ═══════════════ */
+  safe(function tsbTableExtras() {
+    var box = $('tsbSet'), table = box && box.querySelector('.tsbtb');
+    if (!table || table.dataset.x) return;
+    table.dataset.x = '1';
+    function put(label, b) {
+      if (!b) return;
+      var w = b.parentNode;
+      var l = d.createElement('span'); l.className = 'tl'; l.textContent = label;
+      var it = d.createElement('div'); it.className = 'ti';
+      b.classList.add('cyb'); it.appendChild(l); it.appendChild(b); table.appendChild(it);
+      if (w && w !== table && w.classList && w.classList.contains('chips') && !w.children.length) w.remove();
+    }
+    put('حفظ ستايلي', box.querySelector('[data-act="save"]'));
+    put('ستايل عشوائي', box.querySelector('[data-act="rnd"]'));
+    put('حذف ستايل', box.querySelector('[data-act="del"]'));
+    put('ستايل لكل ذكر', box.querySelector('[data-act="pd"]'));
+    put('تنبيه التالي', $('tchm'));
+    put('الاهتزاز', $('vtest'));
   });
 
   /* ═══════════════ 4) توسيط تبويب المجموعة المختار داخل مستطيله ═══════════════ */
@@ -4590,5 +4645,92 @@ body.fx-ui .sheet.open { will-change: auto; }
 })();
 </script>
 <script>try{if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))navigator.serviceWorker.register('./sw.js').then(function(r){window.__swr=r}).catch(function(){})}catch(e){}</script>
+<style id="snav-css">
+/* v37: شريط تنقل واحد متصل داخل رأس الخدمات: [رجوع | الخدمات ‹ القسم] */
+#sheet[data-snav] #stBack{display:none!important}
+#sheet[data-snav] #svcg .sc:not(.cl)>h3{min-height:0;padding-inline-end:0!important;margin-bottom:8px}
+#sheet[data-snav] #svcg .sc:not(.cl)>h3::after{display:none!important}
+#sheet[data-snav] .sht{flex:1 1 auto;min-width:0}
+#sheet[data-snav] .sh-h #sx{flex:none}
+#snGrp{display:none}
+#sheet:is([data-sn="list"],[data-sn="card"]) #snGrp{display:inline-flex;align-items:stretch;flex:none;height:38px;overflow:hidden;border-radius:99px;border:1.5px solid color-mix(in srgb,var(--ac) 45%,transparent);background:rgba(255,255,255,.06)}
+#sheet.sqon #snGrp{display:none}
+#snGrp>*{display:inline-flex;align-items:center;margin:0;font:inherit;white-space:nowrap}
+#snGrp #snBack{width:auto;min-width:0;height:auto;gap:5px;padding:0 14px 0 12px;border:0;border-radius:0;font-size:.84rem;font-weight:700;color:#1a1408;cursor:pointer;-webkit-tap-highlight-color:transparent;background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 82%,#fff),var(--ac));box-shadow:none;transition:filter .2s}
+#snGrp #snBack b{font-size:1rem;line-height:1}
+#snGrp #snBack:active{filter:brightness(.88)}
+#snGrp #snTitle{flex:none;padding:0 4px 0 8px;font-size:.84rem;font-weight:500;color:var(--mut);cursor:pointer}
+#snGrp #snSep{flex:none;color:var(--mut);opacity:.6;font-family:system-ui,sans-serif;font-size:1rem;margin:0}
+#snGrp #snTab{width:auto;min-width:0;height:auto;gap:5px;padding:0 12px;border:0;border-radius:0;background:none;font-size:.88rem;font-weight:700;color:var(--ac);cursor:pointer}
+#snBack:focus-visible,#snTab:focus-visible,#snTitle:focus-visible{outline:2px solid var(--ac);outline-offset:-3px}
+#sheet:is([data-sn="list"],[data-sn="card"]) .sh-h{padding-bottom:8px;gap:6px}
+#sheet:is([data-sn="list"],[data-sn="card"]) .sht{gap:6px}
+#sheet:is([data-sn="list"],[data-sn="card"]) .sh-h :is(#sx,#sqb,#rptb){width:38px!important;height:38px!important;font-size:1rem!important}
+#sheet:is([data-sn="list"],[data-sn="card"]) #sqb{margin-inline-start:auto}
+@media(max-width:370px){#snGrp :is(#snTitle,#snSep){display:none}}
+</style>
+<script id="snav-js">
+(function () {
+  var d = document, $ = function (i) { return d.getElementById(i); };
+  try {
+    var sheet = $('sheet'), svc = $('svcg'), tabs = $('stabs'), head = d.querySelector('#sheet .sh-h');
+    if (!sheet || !svc || !tabs || !head || $('snBack')) return;
+    var host = head.querySelector('.sht') || head;
+    var title = host.querySelector('span') || head.firstElementChild;
+    if (!title) return;
+    if (!title.id) title.id = 'snTitle';
+
+    var back = d.createElement('button');
+    back.id = 'snBack'; back.type = 'button';
+    back.innerHTML = '<b aria-hidden="true">→</b><span>رجوع</span>';
+    var sep = d.createElement('span');
+    sep.id = 'snSep'; sep.setAttribute('aria-hidden', 'true'); sep.textContent = '‹';
+    var chip = d.createElement('button');
+    chip.id = 'snTab'; chip.type = 'button';
+    chip.innerHTML = '<span></span>';
+    var grp = d.createElement('div');
+    grp.id = 'snGrp';
+    host.insertBefore(grp, title);
+    grp.appendChild(back); grp.appendChild(title); grp.appendChild(sep); grp.appendChild(chip);
+
+    function curTab() { return tabs.querySelector('button.on'); }
+    function openCard() { return svc.querySelector('.sc.show:not(.cl)'); }
+    function multi() { return svc.querySelectorAll('.sc.show').length > 1; }
+
+    function sync() {
+      var b = curTab(), st = '', name = '';
+      if (b) {
+        var nm = b.querySelector('span');
+        name = nm ? nm.textContent : '';
+        chip.firstChild.textContent = name;
+        st = (openCard() && multi()) ? 'card' : 'list';
+      }
+      sheet.dataset.sn = st;
+      back.setAttribute('aria-label', st === 'card' ? 'رجوع إلى مواضيع ' + name : 'رجوع إلى كل الأقسام');
+      chip.setAttribute('aria-label', 'القسم الحالي: ' + name);
+    }
+    function goBack() {
+      var b = curTab();
+      if (!b) return;
+      var oc = openCard();
+      if (oc && multi()) { var h = oc.querySelector(':scope>h3'); (h || oc).click(); }
+      else b.click();
+    }
+    back.addEventListener('click', goBack);
+    chip.addEventListener('click', function () {
+      if (openCard() && multi()) goBack();
+      else try { sheet.scrollTo({ top: 0, behavior: 'smooth' }); } catch (e) { sheet.scrollTop = 0; }
+    });
+    title.addEventListener('click', function () { var b = curTab(); if (b) b.click(); });
+
+    var pend = 0;
+    function sched() { if (pend) return; pend = requestAnimationFrame(function () { pend = 0; sync(); }); }
+    var mo = new MutationObserver(sched), o = { subtree: true, attributes: true, attributeFilter: ['class'] };
+    mo.observe(tabs, o); mo.observe(svc, o);
+    sheet.setAttribute('data-snav', '1');
+    sync();
+  } catch (e) { /* الإضافة لا تعطّل التطبيق */ }
+})();
+</script>
 </body>
 </html>
