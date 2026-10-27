@@ -805,6 +805,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 
 <section class="sc" data-p="c"><h3>إعدادات التنبيهات</h3><div id="ntg"><button class="chip" id="oa" type="button"></button></div></section>
 
+<section class="sc" data-p="c"><h3>إعدادات الصوتيات</h3><p class="mutp" id="oaSt">جاري الحساب…</p><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaAdh" type="button">⬇ حمّل الأذكار</button><button class="chip" id="oaAdn" type="button">⬇ حمّل الأذان</button><button class="chip" id="oaClr" type="button">🗑 مسح المحفوظ</button></div><p class="mutp" id="oaPr"></p><p class="mutp">أي مقطع يشتغل مرة بيتحفظ لوحده ويشتغل بعدها بدون نت. ومن قوائم القرآن والأذكار تقدر تحمّل المحدد مقدمًا.</p></section>
 <section class="sc" data-p="c"><h3>إعدادات التشغيل</h3><div class="stb" style="--c:2"><div class="ti"><span class="tl">سرعة التشغيل</span><div class="chips" id="sp"><button class="chip" data-r="0.85">٠٫٨٥×</button><button class="chip on" data-r="1">١×</button><button class="chip" data-r="1.25">١٫٢٥×</button><button class="chip" data-r="1.5">١٫٥×</button></div></div><div class="ti"><span class="tl">مؤقت النوم</span><div class="chips" id="sl"><button class="chip" data-m="15">١٥ د</button><button class="chip" data-m="30">٣٠ د</button><button class="chip" data-m="60">ساعة</button><button class="chip" data-m="90">ساعة ونصف</button></div></div></div><p class="mutp" style="margin-top:6px"><span id="sst" style="display:block;color:var(--ac);font-weight:600"></span>يخفض مؤقت النوم الصوت تدريجيًا ثم يوقف التشغيل.</p></section>
 <section class="sc" data-p="d"><h3>الأذكار بعد الصلاة</h3><div class="ck" id="pa"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="par">بدء صلاة جديدة ↻</button></div></section>
 <section class="sc" data-p="b"><h3><span>نوافل اليوم</span><span id="nfc"></span></h3><div class="ck" id="nf"></div></section>
@@ -1497,13 +1498,14 @@ function openPk(m){
   pkM=m;const items=pkItems(m);let saved=[];try{saved=JSON.parse(localStorage.getItem('pk_'+m)||'[]')}catch(e){}
   const keys=new Set(items.map(x=>x.key));pkSel=new Set(saved.filter(k=>keys.has(k)));
   if(!pkEl){pkEl=document.createElement('div');pkEl.id='pk';pkEl.hidden=true;
-    pkEl.innerHTML='<div class="pkc" role="dialog" aria-modal="true"><div class="pkh"><b id="pkt"></b><button type="button" id="pkx" aria-label="إغلاق">✕</button></div><input id="pks" type="search" placeholder="ابحث…" autocomplete="off"><div class="pkb"><button type="button" class="chip" id="pkall">تحديد الكل</button><button type="button" class="chip" id="pkno">مسح</button><button type="button" class="chip" id="pksh" aria-pressed="false">ترتيب عشوائي</button><select id="pkj" aria-label="الجزء" title="السور التي تبدأ في هذا الجزء" hidden></select><span id="pkn"></span></div><div class="pkl" id="pkl"></div><button type="button" class="pkg" id="pkg">تشغيل المحدد</button></div>';
+    pkEl.innerHTML='<div class="pkc" role="dialog" aria-modal="true"><div class="pkh"><b id="pkt"></b><button type="button" id="pkx" aria-label="إغلاق">✕</button></div><input id="pks" type="search" placeholder="ابحث…" autocomplete="off"><div class="pkb"><button type="button" class="chip" id="pkall">تحديد الكل</button><button type="button" class="chip" id="pkno">مسح</button><button type="button" class="chip" id="pkdl">⬇ تحميل بدون نت</button><button type="button" class="chip" id="pksh" aria-pressed="false">ترتيب عشوائي</button><select id="pkj" aria-label="الجزء" title="السور التي تبدأ في هذا الجزء" hidden></select><span id="pkn"></span></div><div class="pkl" id="pkl"></div><button type="button" class="pkg" id="pkg">تشغيل المحدد</button></div>';
     document.body.appendChild(pkEl);
     pkEl.addEventListener('click',e=>{if(e.target===pkEl||e.target.closest('#pkx')){pkClose();return}
       const r=e.target.closest('.pkr');if(r){const k=r.dataset.k;pkSel.has(k)?pkSel.delete(k):pkSel.add(k);r.classList.toggle('on',pkSel.has(k));r.setAttribute('aria-pressed',String(pkSel.has(k)));pkCount();return}
       if(e.target.closest('#pkall')){pkVis().forEach(x=>pkSel.add(x.key));pkDraw();return}
       if(e.target.closest('#pkno')){pkSel.clear();pkDraw();return}
       if(e.target.closest('#pksh')){pkShuf=!pkShuf;try{localStorage.setItem('pk_shuf',pkShuf?'1':'0')}catch(x){}pkShufUi();return}
+      if(e.target.closest('#pkdl')){pkDl();return}
       if(e.target.closest('#pkg'))pkGo()});
     pkEl.querySelector('#pks').addEventListener('input',pkDraw);
     {const j=pkEl.querySelector('#pkj');j.innerHTML='<option value="0">كل الأجزاء</option>'+Array.from({length:30},(_,i)=>'<option value="'+(i+1)+'">الجزء '+pkAr(i+1)+'</option>').join('');j.addEventListener('change',()=>{pkJ=+j.value;pkDraw()})}
@@ -1516,14 +1518,22 @@ function pkShufUi(){const b=pkEl.querySelector('#pksh');b.classList.toggle('on',
 const pkVis=()=>{const q=pkNz(pkEl.querySelector('#pks').value.trim());return pkItems(pkM).filter(x=>(!q||pkNz(x.title).includes(q))&&(pkM!=='quran'||!pkJ||jzOf(x.title)===pkJ))};
 function pkCount(){pkEl.querySelector('#pkn').textContent=pkSel.size?pkAr(pkSel.size)+' محدد':'';const g=pkEl.querySelector('#pkg');g.disabled=!pkSel.size;g.textContent=pkSel.size?'تشغيل المحدد ('+pkAr(pkSel.size)+')':'تشغيل المحدد'}
 function pkDraw(){const V=pkVis(),el=pkEl.querySelector('#pkl');
-  el.innerHTML=V.length?V.map((x,i)=>'<button type="button" class="pkr'+(pkSel.has(x.key)?' on':'')+'" style="--n:'+Math.min(i,12)+'" data-k="'+pkEsc(x.key)+'" aria-pressed="'+pkSel.has(x.key)+'"><i class="pkk"></i><span>'+pkEsc(x.title)+'</span></button>').join(''):'<p class="mutp" style="text-align:center;margin:18px 0">'+(pkItems(pkM).length?'لا نتائج مطابقة.':LISTM[pkM]?'لا توجد ملفات بعد — ضعها في مجلد audio/'+pkM:'لا توجد ملفات متاحة.')+'</p>';pkCount()}
+  el.innerHTML=V.length?V.map((x,i)=>'<button type="button" class="pkr'+(pkSel.has(x.key)?' on':'')+'" style="--n:'+Math.min(i,12)+'" data-k="'+pkEsc(x.key)+'" aria-pressed="'+pkSel.has(x.key)+'"><i class="pkk"></i><span>'+pkEsc(x.title)+'</span></button>').join(''):'<p class="mutp" style="text-align:center;margin:18px 0">'+(pkItems(pkM).length?'لا نتائج مطابقة.':LISTM[pkM]?'لا توجد ملفات بعد — ضعها في مجلد audio/'+pkM:'لا توجد ملفات متاحة.')+'</p>';pkCount();try{window.hisnOA&&hisnOA.mark(el,V)}catch(e){}}
+function pkDl(){const O=window.hisnOA,T=m=>{try{window.apToast&&apToast(m)}catch(e){}};
+  if(!O||!O.ok){T('الحفظ بدون نت يحتاج فتح التطبيق عبر https');return}
+  const L=pkItems(pkM).filter(x=>pkSel.has(x.key));if(!L.length){T('حدّد المقاطع اللي عايز تحمّلها الأول');return}
+  const todo=L.filter(x=>!O.has(x.url));if(!todo.length){T('كل المحدد محفوظ بالفعل ✓');return}
+  if(navigator.onLine===false){T('محتاج نت عشان التحميل');return}
+  if(todo.length>3&&!confirm('هتحمّل '+pkAr(todo.length)+' مقطع على جهازك، وممكن ياخدوا مساحة كبيرة. تكمل؟'))return;
+  const b=pkEl.querySelector('#pkdl');b.disabled=true;
+  O.download(todo.map(x=>x.url),(d,n)=>{b.textContent='⬇ '+pkAr(d)+'/'+pkAr(n)}).then(r=>{b.disabled=false;b.textContent='⬇ تحميل بدون نت';pkDraw();T(r.fail?('اتحفظ '+pkAr(r.ok)+' وتعذّر '+pkAr(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+pkAr(r.ok)+' مقطع للتشغيل بدون نت ✓'))})}
 function pkGo(){const L=pkItems(pkM).filter(x=>pkSel.has(x.key)).map(x=>({...x,why:pkShuf?'من قائمتك • عشوائي':'من قائمتك'}));if(!L.length)return;
   if(pkShuf)for(let i=L.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[L[i],L[j]]=[L[j],L[i]]}
   try{localStorage.setItem('pk_'+pkM,JSON.stringify(L.map(x=>x.key)))}catch(e){}
   PKQ={mode:pkM,list:L};mode=pkM;mark();pkClose();load(L[0])}
 audio.ontimeupdate=()=>{if(!audio.duration)return;ring(audio.currentTime/audio.duration);$('time').textContent=`${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;errs=0};
 audio.onended=()=>step(1);
-audio.onerror=()=>{setState(false,'تعذر تشغيل الملف، تأكد من اسمه ومساره');if(++errs<3)setTimeout(()=>step(1),2000)};
+audio.onerror=()=>{const off=navigator.onLine===false;setState(false,off?'المقطع ده لازم يتحمّل بنت أول مرة':'تعذر تشغيل الملف، تأكد من اسمه ومساره');if(off&&window.apToast&&!window.__oaT){window.__oaT=1;setTimeout(()=>{window.__oaT=0},15000);try{apToast('المقطع ده لم يُحفظ بعد، يحتاج نت أول مرة')}catch(e){}}if(++errs<3)setTimeout(()=>step(1),2000)};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!audio.paused)lock()});
 if('mediaSession' in navigator){const ms=navigator.mediaSession;ms.setActionHandler('play',play);ms.setActionHandler('pause',()=>{audio.pause();setState(false,'متوقف مؤقتًا')});ms.setActionHandler('nexttrack',()=>step(1));ms.setActionHandler('previoustrack',()=>step(-1))}
 
@@ -2000,7 +2010,7 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
 ['@h','mor','أدوات'],
 ['mor','إنجازاتي','📈',[['اليوم','@today'],['الشهر','@heat'],['الأسبوع','التقرير الأسبوعي'],['التسبيح ٧ أيام','تسبيحك آخر ٧ أيام'],['يومياتي','سجل إنجازات العبادة']]],
 ['mor','التقويم والمناسبات','📅',[['التقويم','التقويم الهجري'],['المناسبات','العد التنازلي للمناسبات'],['الأشهر','الأشهر الهجرية'],['المحوّل','محوّل التاريخ إلى الهجري'],['مواعيدي','مواعيدي']]],
-['mor','الإعدادات','⚙️',[['التنبيهات','إعدادات التنبيهات'],['المواقيت','ضبط المواقيت'],['التشغيل','إعدادات التشغيل'],['المظهر','إعدادات المظهر'],['المسبحة','إعدادات المسبحة'],['نسخة احتياطية','نسخة احتياطية لبياناتك'],['نبذة عنا','نبذة عنا']]]
+['mor','الإعدادات','⚙️',[['التنبيهات','إعدادات التنبيهات'],['المواقيت','ضبط المواقيت'],['التشغيل','إعدادات التشغيل'],['صوتيات','إعدادات الصوتيات'],['المظهر','إعدادات المظهر'],['المسبحة','إعدادات المسبحة'],['نسخة احتياطية','نسخة احتياطية لبياناتك'],['نبذة عنا','نبذة عنا']]]
   ];
   const sh2=$('sheet'),svc=document.createElement('div');svc.className='svcg';svc.id='svcg';
   const AL=[...sh2.querySelectorAll('.sc')],ttl=x=>((x.querySelector('h3 span')||x.querySelector('h3')).textContent||'').trim(),BY=new Map(AL.map(x=>[ttl(x),x])),US=new Set();
@@ -3431,6 +3441,7 @@ sync();buildRows();render();
     SIL='data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
   const bad=new Set(),files=id=>LIB.filter(x=>x&&x.type===id&&x.file).map(x=>/^https?:/.test(x.file)?x.file:encodeURI(x.file)).filter(s=>!bad.has(s)),
     pick=id=>{const f=files(id);return f.length?f[Math.floor(Math.random()*f.length)]:null};
+  addEventListener('online',()=>{bad.clear()});
   /* بعض المتصفحات (آيفون) تتجاهل تغيير volume، فنكتفي بالكتم/التشغيل */
   const VOL_OK=(()=>{try{const t=new Audio();t.volume=.5;return t.volume===.5}catch(_){return false}})();
   const setV=(e,v)=>{v=Math.max(0,Math.min(1,v));if(VOL_OK)e.volume=v;else e.muted=v<.15};
@@ -3542,7 +3553,7 @@ sync();buildRows();render();
     {g:SV,sheet:1,sel:'#stabs [data-t="zak"]',ic:'💰',t:'الزكاة',li:['الزكاة والكفارات: زكاة المال، زكاة الفطر، الكفارات والفدية','الصدقات: سجل الصدقات، خطة شهرية، الصدقة الجارية','أحكام الزكاة، وحول الزكاة']},
     {g:SV,sheet:1,sel:'#stabs [data-t="qur"]',ic:'📖',t:'القرآن',li:['ورد القرآن: اليوم، الأسبوع، الختمات، مؤقت التدبر','الختمة والحفظ: خطة الختمة، حاسبة الورد، متابعة الحفظ، المراجعة، حاسبة الحفظ، خريطة الحفظ','علوم القرآن: التجويد، فهرس السور، الأنبياء، دفتر تدبر الآيات']},
     {g:SV,sheet:1,sel:'#stabs [data-t="mor"]',ic:'☰',t:'المزيد',li:['تزكية النفس: عادات الخير، ودفاتر الفوائد والامتنان والمحاسبة والدعوات','أحكام العقيدة والحج والنذر واليمين والجنائز','أحكام المال والمعاملات والأسرة والميراث','أحكام اللباس والطعام والترفيه والأخلاق','تعلّم واختبر معلوماتك','أدوات: إنجازاتي، التقويم والمناسبات، الإعدادات']},
-    {g:ST,sheet:1,ic:'⚙️',t:'الإعدادات',p:'تجدها في «المزيد ← الإعدادات»:',li:['التنبيهات: تشغيل الأذان تلقائيًا عند دخول كل وقت','المواقيت: طريقة الحساب والمذهب والمدينة والتعديل بالدقائق','التشغيل: سرعة الصوت (أبطأ قليلًا أو أسرع حتى مرة ونصف) ومؤقت النوم الذي يخفض الصوت تدريجيًا ثم يوقفه','المظهر: شكل الخلفية واللون المميز وحجم الخط والوضع الخفيف لتوفير البطارية','المسبحة: الهدف اليومي وألوان الزر وصوت النقر والاهتزاز','نسخة احتياطية: حفظ بياناتك في ملف واستعادتها'],p2:'يمكنك إعادة هذه الجولة من «إعدادات المظهر».'},
+    {g:ST,sheet:1,ic:'⚙️',t:'الإعدادات',p:'تجدها في «المزيد ← الإعدادات»:',li:['التنبيهات: تشغيل الأذان تلقائيًا عند دخول كل وقت','المواقيت: طريقة الحساب والمذهب والمدينة والتعديل بالدقائق','التشغيل: سرعة الصوت (أبطأ قليلًا أو أسرع حتى مرة ونصف) ومؤقت النوم الذي يخفض الصوت تدريجيًا ثم يوقفه','الصوتيات: حفظ المقاطع على جهازك للتشغيل بدون نت، وتحميل الأذكار والأذان مقدمًا، ومسح المحفوظ','المظهر: شكل الخلفية واللون المميز وحجم الخط والوضع الخفيف لتوفير البطارية','المسبحة: الهدف اليومي وألوان الزر وصوت النقر والاهتزاز','نسخة احتياطية: حفظ بياناتك في ملف واستعادتها'],p2:'يمكنك إعادة هذه الجولة من «إعدادات المظهر».'},
     {g:END,ic:'📲',t:'أضفه إلى شاشتك',p:ios?'اضغط زر المشاركة في سفاري ثم «إضافة إلى الشاشة الرئيسية»، وافتحه من الأيقونة ليعمل بكامل الشاشة.':'من قائمة المتصفح اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية» ليعمل بكامل الشاشة.',p2:'بارك الله فيك، وتقبّل منك.',last:1}
   ];
   let idx=0,root,hole,card,busy=false;
@@ -4696,6 +4707,12 @@ body.fx-ui .sheet.open { will-change: auto; }
 #sheet:has(#stabs button.on){padding-inline:8px!important}
 #sheet:has(#stabs button.on) #svcg>.gh{margin-inline:0!important;padding-inline:0!important}
 #sheet:has(#stabs button.on) #svcg{justify-content:space-between!important}
+
+/* ===== الصوتيات بدون نت ===== */
+#oabar{position:fixed;top:calc(env(safe-area-inset-top,0px) + 4px);left:50%;transform:translateX(-50%);z-index:60;padding:3px 12px;border-radius:99px;font-size:.72rem;line-height:1.5;background:rgba(20,16,10,.82);color:#ffd9a0;border:1px solid rgba(255,200,120,.35);pointer-events:none;white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#oabar[hidden]{display:none}
+#pk .pkr .oab{margin-inline-start:auto;font-size:.68rem;color:var(--ac);white-space:nowrap}
+.is-offline #pkdl{opacity:.5}
 </style>
 <script id="snav-js">
 (function () {
@@ -4758,6 +4775,77 @@ body.fx-ui .sheet.open { will-change: auto; }
     sheet.setAttribute('data-snav', '1');
     sync();
   } catch (e) { /* الإضافة لا تعطّل التطبيق */ }
+})();
+</script>
+<script id="offline-audio-js">
+(function(){
+  var NAME='hisn-audio',ok=!!(window.caches&&window.isSecureContext!==false),set=new Set(),d=document;
+  var abs=function(u){try{return new URL(u,location.href).href.split('#')[0]}catch(_){return String(u)}};
+  var ar=function(n){return Number(n).toLocaleString('ar-EG')};
+  function refresh(){if(!ok)return Promise.resolve(false);
+    return caches.open(NAME).then(function(c){return c.keys()}).then(function(ks){var n=new Set(ks.map(function(r){return r.url})),ch=n.size!==set.size;if(!ch)n.forEach(function(x){if(!set.has(x))ch=true});set=n;return ch}).catch(function(){return false})}
+  function has(u){return set.has(abs(u))}
+  function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+  async function save(u){
+    var k=abs(u);if(set.has(k))return true;
+    try{
+      var same=new URL(k).origin===location.origin,viaSW=!!(navigator.serviceWorker&&navigator.serviceWorker.controller);
+      var r=await fetch(k,viaSW?{headers:{'X-Hisn-Save':'1'},mode:same?'same-origin':'cors',credentials:'omit'}:{mode:same?'same-origin':'cors',credentials:'omit'});
+      if(!r.ok||r.status!==200)return r.status===204?(await refresh(),set.has(k)):false;
+      if(viaSW){var rd=r.body.getReader();while(!(await rd.read()).done){}
+        for(var i=0;i<6;i++){await refresh();if(set.has(k))return true;await sleep(300)}return false}
+      var c=await caches.open(NAME);await c.put(k,r);set.add(k);return true
+    }catch(_){return false}
+  }
+  async function download(urls,cb){var q=urls.slice(),done=0,good=0,bad=0;
+    async function w(){while(q.length){var u=q.shift(),r=await save(u);r?good++:bad++;done++;cb&&cb(done,urls.length)}}
+    await Promise.all([w(),w()]);await refresh();return{ok:good,fail:bad}}
+  async function stats(){var c=await caches.open(NAME),ks=await c.keys(),bytes=0;
+    for(var i=0;i<ks.length;i++){var r=await c.match(ks[i]),l=r&&+r.headers.get('content-length');if(l)bytes+=l;else if(r){try{bytes+=(await r.blob()).size}catch(_){}}}
+    return{n:ks.length,bytes:bytes}}
+  async function clear(){if(!ok)return;try{await caches.delete(NAME)}catch(_){}set=new Set()}
+  function mark(el,V){if(!ok)return;
+    var apply=function(){el.querySelectorAll('.pkr').forEach(function(b,i){var x=V[i];if(!x)return;var on=has(x.url),s=b.querySelector('.oab');
+      if(on&&!s){s=d.createElement('small');s.className='oab';s.textContent='✓ بدون نت';b.appendChild(s)}else if(!on&&s)s.remove()})};
+    apply();refresh().then(function(ch){if(ch)apply()})}
+  window.hisnOA={ok:ok,has:has,save:save,download:download,stats:stats,clear:clear,mark:mark,refresh:refresh};
+  if(ok)refresh();
+
+  /* بعد ما مقطع يشتغل، الـ service worker بيحفظه في الخلفية: نحدّث القايمة بعد شوية */
+  d.addEventListener('playing',function(){setTimeout(refresh,6000);setTimeout(refresh,30000)},true);
+
+  /* شريط «غير متصل» */
+  var bar=d.createElement('div');bar.id='oabar';bar.hidden=true;bar.setAttribute('role','status');bar.textContent='📴 غير متصل — المقاطع المحفوظة تعمل';d.body.appendChild(bar);
+  var upd=function(){var off=navigator.onLine===false;bar.hidden=!off;d.body.classList.toggle('is-offline',off)};
+  addEventListener('offline',upd);
+  addEventListener('online',function(){upd();try{window.loadWx&&loadWx()}catch(_){}});upd();
+
+  /* تبويب «الصوتيات» في الإعدادات */
+  var $=function(i){return d.getElementById(i)};
+  function show(){var st=$('oaSt');if(!st)return;
+    if(!ok){st.textContent='الحفظ بدون نت غير متاح: افتح التطبيق عبر رابط https.';return}
+    stats().then(function(s){var mb=s.bytes/1048576,t='المحفوظ على الجهاز: '+ar(s.n)+' مقطع • '+ar(mb>=100?Math.round(mb):Math.round(mb*10)/10)+' م.ب';st.textContent=t;
+      if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(function(e){if(e&&e.quota)st.textContent=t+' • المتاح تقريبًا '+ar(Math.round((e.quota-(e.usage||0))/1048576))+' م.ب'}).catch(function(){})}).catch(function(){})}
+  function urlsOf(f){try{return f().map(function(x){return x.url})}catch(_){return[]}}
+  function bulk(btn,urls,label){
+    if(!ok){return}
+    var T=function(m){try{window.apToast&&apToast(m)}catch(_){}};
+    urls=urls.filter(function(u){return !has(u)});
+    if(!urls.length){T('كل ده محفوظ بالفعل ✓');return}
+    if(navigator.onLine===false){T('محتاج نت عشان التحميل');return}
+    btn.disabled=true;var pr=$('oaPr');
+    download(urls,function(dn,n){if(pr)pr.textContent=label+': '+ar(dn)+' من '+ar(n)}).then(function(r){btn.disabled=false;if(pr)pr.textContent='';show();
+      T(r.fail?('اتحفظ '+ar(r.ok)+' وتعذّر '+ar(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+ar(r.ok)+' مقطع للتشغيل بدون نت ✓'))})}
+  d.addEventListener('click',function(e){
+    var b=e.target.closest&&e.target.closest('#oaAdh,#oaAdn,#oaClr');
+    if(b){
+      if(b.id==='oaAdh')bulk(b,urlsOf(function(){return adhkarList()}),'الأذكار');
+      else if(b.id==='oaAdn')bulk(b,urlsOf(function(){return lib('adhan','').concat(lib('adhan_fajr',''))}),'الأذان');
+      else if(confirm('تمسح كل المقاطع المحفوظة على الجهاز؟ هتحتاج نت لتشغيلها تاني.'))clear().then(show);
+      return}
+    if(e.target.closest&&e.target.closest('#svcg'))setTimeout(function(){var st=$('oaSt');if(st&&st.offsetParent)show()},120)
+  });
+  show();
 })();
 </script>
 </body>
