@@ -4709,8 +4709,22 @@ body.fx-ui .sheet.open { will-change: auto; }
 #sheet:has(#stabs button.on) #svcg{justify-content:space-between!important}
 
 /* ===== الصوتيات بدون نت ===== */
-#oabar{position:fixed;top:calc(env(safe-area-inset-top,0px) + 4px);left:50%;transform:translateX(-50%);z-index:60;padding:3px 12px;border-radius:99px;font-size:.72rem;line-height:1.5;background:rgba(20,16,10,.82);color:#ffd9a0;border:1px solid rgba(255,200,120,.35);pointer-events:none;white-space:nowrap;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#oabar{position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:50%;width:max-content;z-index:60;display:flex;align-items:center;gap:10px;max-width:calc(100vw - 24px);padding:6px 16px 6px 7px;border-radius:99px;background:linear-gradient(135deg,rgba(58,36,12,.95),rgba(26,18,10,.95));color:#ffe2b8;border:1px solid rgba(255,190,100,.45);box-shadow:0 8px 26px rgba(0,0,0,.45),0 0 0 4px rgba(255,170,60,.08);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);pointer-events:none;transform:translate(-50%,-150%);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1.15),opacity .3s,background .3s,color .3s,border-color .3s}
+#oabar.show{transform:translate(-50%,0);opacity:1}
 #oabar[hidden]{display:none}
+#oabar .oai{flex:none;position:relative;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:rgba(255,170,60,.18);color:#ffb347}
+#oabar .oai::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid rgba(255,170,60,.55);animation:oap 1.8s ease-out infinite}
+@keyframes oap{from{transform:scale(.85);opacity:.9}to{transform:scale(1.4);opacity:0}}
+#oabar .oat{display:flex;flex-direction:column;line-height:1.35;text-align:start;min-width:0}
+#oabar .oat b{font-size:.82rem;font-weight:700}
+#oabar .oat small{font-size:.68rem;opacity:.75}
+#oabar .ok{display:none}
+#oabar.on-ok{background:linear-gradient(135deg,rgba(12,52,32,.96),rgba(10,28,20,.96));color:#c8f5d9;border-color:rgba(90,220,140,.5);box-shadow:0 8px 26px rgba(0,0,0,.45),0 0 0 4px rgba(90,220,140,.08)}
+#oabar.on-ok .oai{background:rgba(90,220,140,.18);color:#5ddc8c}
+#oabar.on-ok .oai::after{animation:none;opacity:0}
+#oabar.on-ok .wf{display:none}
+#oabar.on-ok .ok{display:block}
+@media(prefers-reduced-motion:reduce){#oabar,#oabar .oai::after{transition:none;animation:none}}
 #pk .pkr .oab{margin-inline-start:auto;font-size:.68rem;color:var(--ac);white-space:nowrap}
 .is-offline #pkdl{opacity:.5}
 </style>
@@ -4815,8 +4829,14 @@ body.fx-ui .sheet.open { will-change: auto; }
   d.addEventListener('playing',function(){setTimeout(refresh,6000);setTimeout(refresh,30000)},true);
 
   /* شريط «غير متصل» */
-  var bar=d.createElement('div');bar.id='oabar';bar.hidden=true;bar.setAttribute('role','status');bar.textContent='📴 غير متصل — المقاطع المحفوظة تعمل';d.body.appendChild(bar);
-  var upd=function(){var off=navigator.onLine===false;bar.hidden=!off;d.body.classList.toggle('is-offline',off)};
+  var bar=d.createElement('div');bar.id='oabar';bar.hidden=true;bar.setAttribute('role','status');bar.setAttribute('aria-live','polite');
+  bar.innerHTML='<span class="oai"><svg class="wf" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h.01"/><path d="M8.5 16.43a5 5 0 0 1 7 0"/><path d="M5 12.86a10 10 0 0 1 5.17-2.69"/><path d="M19 12.86a10 10 0 0 0-2.01-1.52"/><path d="M2 8.82a15 15 0 0 1 4.18-2.64"/><path d="M22 8.82A15 15 0 0 0 10.71 5.06"/><path d="m2 2 20 20"/></svg><svg class="ok" viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg></span><span class="oat"><b></b><small></small></span>';
+  d.body.appendChild(bar);
+  var tT=0,hT=0,bt=bar.querySelector('b'),sm=bar.querySelector('small');
+  function hideBar(){bar.classList.remove('show');clearTimeout(hT);hT=setTimeout(function(){if(!bar.classList.contains('show'))bar.hidden=true},500)}
+  var upd=function(){var off=navigator.onLine===false;d.body.classList.toggle('is-offline',off);clearTimeout(tT);clearTimeout(hT);
+    if(off){bar.classList.remove('on-ok');bt.textContent='لا يوجد اتصال بالإنترنت';sm.textContent='المقاطع المحفوظة تعمل بدون نت';bar.hidden=false;void bar.offsetWidth;bar.classList.add('show')}
+    else if(!bar.hidden){bar.classList.add('on-ok');bt.textContent='رجع الاتصال بالإنترنت';sm.textContent='تقدر تحمّل وتشغّل أي مقطع';bar.classList.add('show');tT=setTimeout(hideBar,2500)}}
   addEventListener('offline',upd);
   addEventListener('online',function(){upd();try{window.loadWx&&loadWx()}catch(_){}});upd();
 
