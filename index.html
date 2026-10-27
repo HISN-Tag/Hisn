@@ -4684,6 +4684,13 @@ body.fx-ui .sheet.open { will-change: auto; }
 #svcg .sc.cl h3{font-size:clamp(.62rem,2.8vw,.74rem)!important;line-height:1.25!important;gap:1px!important}
 #svcg .sc.cl h3 .ic{font-size:1.2rem;line-height:1.1}
 #svcg .sc.cl .fv{width:20px!important;height:20px!important;font-size:.78rem!important;top:1px!important;left:1px!important}
+
+/* الموضوع المفتوح: بدون حاوية (إطار/خلفية/حشو) وعرض الشاشة كامل تقريباً */
+#svcg .sc.show:not(.cl){background:none!important;border:0!important;box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-radius:0!important;padding:0!important}
+#svcg .sc.show:not(.cl)>h3{padding-inline:4px!important}
+#svcg.ho,#svcg:has(.sc.show:not(.cl)){grid-template-columns:minmax(0,1fr)!important;justify-content:stretch}
+#svcg .sc{min-width:0}
+#sheet:has(#svcg .sc.show:not(.cl)){padding-inline:8px!important}
 </style>
 <script id="snav-js">
 (function () {
