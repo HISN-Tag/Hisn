@@ -4692,10 +4692,10 @@ body.fx-ui .sheet.open { will-change: auto; }
 #svcg .sc{min-width:0}
 #sheet:has(#svcg .sc.show:not(.cl)){padding-inline:8px!important}
 
-/* صفحة المزيد على الموبايل: نفس حواف وعرض الصفحة المفتوحة (مثل العقيدة والتوحيد) */
-#sheet:has(#stabs [data-t="mor"].on){padding-inline:8px!important}
-#sheet:has(#stabs [data-t="mor"].on) #svcg>.gh{margin-inline:0!important;padding-inline:0!important}
-#sheet:has(#stabs [data-t="mor"].on) #svcg{justify-content:space-between!important}
+/* كل أقسام الخدمات على الموبايل: نفس حواف وعرض الصفحة المفتوحة (مثل العقيدة والتوحيد) */
+#sheet:has(#stabs button.on){padding-inline:8px!important}
+#sheet:has(#stabs button.on) #svcg>.gh{margin-inline:0!important;padding-inline:0!important}
+#sheet:has(#stabs button.on) #svcg{justify-content:space-between!important}
 </style>
 <script id="snav-js">
 (function () {
