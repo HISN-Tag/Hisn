@@ -15,10 +15,24 @@ const isAudio=r=>{
 self.addEventListener('fetch',e=>{
   const r=e.request;
   if(r.method!=='GET')return;
+  if(r.headers.get('X-Hisn-Save')){e.respondWith(saveReq(r));return}   // طلب «حمّل للتشغيل بدون نت» من الصفحة
   if(isAudio(r)&&/^https?:$/.test(new URL(r.url).protocol)){e.respondWith(audio(e));return}
   if(new URL(r.url).origin!==location.origin)return;
   e.respondWith(fetch(r).then(res=>{const cp=res.clone();caches.open(C).then(c=>c.put(r,cp)).catch(()=>{});return res}).catch(()=>caches.match(r).then(m=>m||caches.match('./'))))
 });
+
+/* ===== حفظ مقطع بطلب من الصفحة (زرار التحميل): تحميلة واحدة، وبترد 204 لما يتحفظ ===== */
+async function saveReq(r){
+  const key=r.url.split('#')[0];
+  try{
+    const cache=await caches.open(AUDIO);
+    if(await cache.match(key))return new Response(null,{status:204});
+    const same=new URL(key).origin===location.origin;
+    const res=await fetch(key,{mode:same?'same-origin':'cors',credentials:'omit'});   // بدون الهيدر المخصص، فمفيش preflight للمواقع الخارجية
+    if(res.ok&&res.status===200){await cache.put(key,res);return new Response(null,{status:204})}
+    return new Response(null,{status:res.status||502});
+  }catch(_){return new Response(null,{status:502})}
+}
 
 /* ===== الصوت: من المحفوظ لو موجود (مع دعم Range)، وإلا من النت مع حفظه في الخلفية ===== */
 async function audio(e){
