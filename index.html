@@ -805,7 +805,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 
 <section class="sc" data-p="c"><h3>إعدادات التنبيهات</h3><div id="ntg"><button class="chip" id="oa" type="button"></button></div></section>
 
-<section class="sc" data-p="c"><h3>إعدادات الصوتيات</h3><p class="mutp" id="oaSt">جاري الحساب…</p><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaAdh" type="button">⬇ حمّل الأذكار</button><button class="chip" id="oaAdn" type="button">⬇ حمّل الأذان</button><button class="chip" id="oaClr" type="button">🗑 مسح المحفوظ</button></div><p class="mutp" id="oaPr"></p><p class="mutp">أي مقطع يشتغل مرة بيتحفظ لوحده ويشتغل بعدها بدون نت. ومن قوائم القرآن والأذكار تقدر تحمّل المحدد مقدمًا.</p></section>
+<section class="sc" data-p="c"><h3>إعدادات الصوتيات</h3><p class="mutp" id="oaSt">جاري الحساب…</p><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaAdh" type="button">⬇ حمّل الأذكار</button><button class="chip" id="oaAdn" type="button">⬇ حمّل الأذان</button></div><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaQur" type="button">⬇ حمّل القرآن</button><button class="chip" id="oaNsh" type="button">⬇ حمّل الأناشيد</button><button class="chip" id="oaIbt" type="button">⬇ حمّل الابتهالات</button><button class="chip" id="oaAmb" type="button">⬇ حمّل أصوات الطبيعة</button><button class="chip" id="oaRqy" type="button">⬇ حمّل الرقية الشرعية</button></div><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaClr" type="button">🗑 مسح المحفوظ</button></div><p class="mutp" id="oaPr"></p><p class="mutp">أي مقطع يشتغل مرة بيتحفظ لوحده ويشتغل بعدها بدون نت. ومن قوائم القرآن والأذكار تقدر تحمّل المحدد مقدمًا. تحميل القرآن كامل حجمه كبير، فيُفضَّل يكون على واي فاي.</p></section>
 <section class="sc" data-p="c"><h3>إعدادات التشغيل</h3><div class="stb" style="--c:2"><div class="ti"><span class="tl">سرعة التشغيل</span><div class="chips" id="sp"><button class="chip" data-r="0.85">٠٫٨٥×</button><button class="chip on" data-r="1">١×</button><button class="chip" data-r="1.25">١٫٢٥×</button><button class="chip" data-r="1.5">١٫٥×</button></div></div><div class="ti"><span class="tl">مؤقت النوم</span><div class="chips" id="sl"><button class="chip" data-m="15">١٥ د</button><button class="chip" data-m="30">٣٠ د</button><button class="chip" data-m="60">ساعة</button><button class="chip" data-m="90">ساعة ونصف</button></div></div></div><p class="mutp" style="margin-top:6px"><span id="sst" style="display:block;color:var(--ac);font-weight:600"></span>يخفض مؤقت النوم الصوت تدريجيًا ثم يوقف التشغيل.</p></section>
 <section class="sc" data-p="d"><h3>الأذكار بعد الصلاة</h3><div class="ck" id="pa"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="par">بدء صلاة جديدة ↻</button></div></section>
 <section class="sc" data-p="b"><h3><span>نوافل اليوم</span><span id="nfc"></span></h3><div class="ck" id="nf"></div></section>
@@ -3553,7 +3553,7 @@ sync();buildRows();render();
     {g:SV,sheet:1,sel:'#stabs [data-t="zak"]',ic:'💰',t:'الزكاة',li:['الزكاة والكفارات: زكاة المال، زكاة الفطر، الكفارات والفدية','الصدقات: سجل الصدقات، خطة شهرية، الصدقة الجارية','أحكام الزكاة، وحول الزكاة']},
     {g:SV,sheet:1,sel:'#stabs [data-t="qur"]',ic:'📖',t:'القرآن',li:['ورد القرآن: اليوم، الأسبوع، الختمات، مؤقت التدبر','الختمة والحفظ: خطة الختمة، حاسبة الورد، متابعة الحفظ، المراجعة، حاسبة الحفظ، خريطة الحفظ','علوم القرآن: التجويد، فهرس السور، الأنبياء، دفتر تدبر الآيات']},
     {g:SV,sheet:1,sel:'#stabs [data-t="mor"]',ic:'☰',t:'المزيد',li:['تزكية النفس: عادات الخير، ودفاتر الفوائد والامتنان والمحاسبة والدعوات','أحكام العقيدة والحج والنذر واليمين والجنائز','أحكام المال والمعاملات والأسرة والميراث','أحكام اللباس والطعام والترفيه والأخلاق','تعلّم واختبر معلوماتك','أدوات: إنجازاتي، التقويم والمناسبات، الإعدادات']},
-    {g:ST,sheet:1,ic:'⚙️',t:'الإعدادات',p:'تجدها في «المزيد ← الإعدادات»:',li:['التنبيهات: تشغيل الأذان تلقائيًا عند دخول كل وقت','المواقيت: طريقة الحساب والمذهب والمدينة والتعديل بالدقائق','التشغيل: سرعة الصوت (أبطأ قليلًا أو أسرع حتى مرة ونصف) ومؤقت النوم الذي يخفض الصوت تدريجيًا ثم يوقفه','الصوتيات: حفظ المقاطع على جهازك للتشغيل بدون نت، وتحميل الأذكار والأذان مقدمًا، ومسح المحفوظ','المظهر: شكل الخلفية واللون المميز وحجم الخط والوضع الخفيف لتوفير البطارية','المسبحة: الهدف اليومي وألوان الزر وصوت النقر والاهتزاز','نسخة احتياطية: حفظ بياناتك في ملف واستعادتها'],p2:'يمكنك إعادة هذه الجولة من «إعدادات المظهر».'},
+    {g:ST,sheet:1,ic:'⚙️',t:'الإعدادات',p:'تجدها في «المزيد ← الإعدادات»:',li:['التنبيهات: تشغيل الأذان تلقائيًا عند دخول كل وقت','المواقيت: طريقة الحساب والمذهب والمدينة والتعديل بالدقائق','التشغيل: سرعة الصوت (أبطأ قليلًا أو أسرع حتى مرة ونصف) ومؤقت النوم الذي يخفض الصوت تدريجيًا ثم يوقفه','الصوتيات: حفظ المقاطع على جهازك للتشغيل بدون نت، وتحميل الأذكار والأذان والقرآن والأناشيد والابتهالات وأصوات الطبيعة والرقية الشرعية مقدمًا، ومسح المحفوظ','المظهر: شكل الخلفية واللون المميز وحجم الخط والوضع الخفيف لتوفير البطارية','المسبحة: الهدف اليومي وألوان الزر وصوت النقر والاهتزاز','نسخة احتياطية: حفظ بياناتك في ملف واستعادتها'],p2:'يمكنك إعادة هذه الجولة من «إعدادات المظهر».'},
     {g:END,ic:'📲',t:'أضفه إلى شاشتك',p:ios?'اضغط زر المشاركة في سفاري ثم «إضافة إلى الشاشة الرئيسية»، وافتحه من الأيقونة ليعمل بكامل الشاشة.':'من قائمة المتصفح اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية» ليعمل بكامل الشاشة.',p2:'بارك الله فيك، وتقبّل منك.',last:1}
   ];
   let idx=0,root,hole,card,busy=false;
@@ -4847,6 +4847,9 @@ body.fx-ui .sheet.open { will-change: auto; }
     stats().then(function(s){var mb=s.bytes/1048576,t='المحفوظ على الجهاز: '+ar(s.n)+' مقطع • '+ar(mb>=100?Math.round(mb):Math.round(mb*10)/10)+' م.ب';st.textContent=t;
       if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(function(e){if(e&&e.quota)st.textContent=t+' • المتاح تقريبًا '+ar(Math.round((e.quota-(e.usage||0))/1048576))+' م.ب'}).catch(function(){})}).catch(function(){})}
   function urlsOf(f){try{return f().map(function(x){return x.url})}catch(_){return[]}}
+  /* أصوات الطبيعة (عصافير/رياح/مطر/...): نفس طريقة التشفير اللي بيستخدمها وضع السكون عشان نفس المفتاح يتطابق */
+  function ambUrls(){try{return (typeof MY_AMBIENT!=='undefined'&&Array.isArray(MY_AMBIENT)?MY_AMBIENT:[]).filter(function(x){return x&&x.file}).map(function(x){return /^https?:/.test(x.file)?x.file:encodeURI(x.file)})}catch(_){return[]}}
+  function uniq(a){return a.filter(function(u,i){return a.indexOf(u)===i})}
   function bulk(btn,urls,label){
     if(!ok){return}
     var T=function(m){try{window.apToast&&apToast(m)}catch(_){}};
@@ -4857,10 +4860,19 @@ body.fx-ui .sheet.open { will-change: auto; }
     download(urls,function(dn,n){if(pr)pr.textContent=label+': '+ar(dn)+' من '+ar(n)}).then(function(r){btn.disabled=false;if(pr)pr.textContent='';show();
       T(r.fail?('اتحفظ '+ar(r.ok)+' وتعذّر '+ar(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+ar(r.ok)+' مقطع للتشغيل بدون نت ✓'))})}
   d.addEventListener('click',function(e){
-    var b=e.target.closest&&e.target.closest('#oaAdh,#oaAdn,#oaClr');
+    var b=e.target.closest&&e.target.closest('#oaAdh,#oaAdn,#oaQur,#oaNsh,#oaIbt,#oaAmb,#oaRqy,#oaClr');
     if(b){
       if(b.id==='oaAdh')bulk(b,urlsOf(function(){return adhkarList()}),'الأذكار');
       else if(b.id==='oaAdn')bulk(b,urlsOf(function(){return lib('adhan','').concat(lib('adhan_fajr',''))}),'الأذان');
+      else if(b.id==='oaQur'){var qu=uniq(urlsOf(function(){return lib('quran','')})),qn=qu.filter(function(u){return !has(u)}).length;
+        if(qn>1&&!confirm('هتحمّل '+ar(qn)+' سورة. حجم القرآن كامل كبير (غالبًا مئات الميجابايت أو أكثر)، ويفضّل تكون على واي فاي ومساحة الجهاز تكفي. تكمل؟'))return;
+        bulk(b,qu,'القرآن')}
+      else if(b.id==='oaNsh')bulk(b,uniq(urlsOf(function(){return lib('anasheed','')})),'الأناشيد');
+      else if(b.id==='oaIbt')bulk(b,uniq(urlsOf(function(){return lib('ibtihalat','')})),'الابتهالات');
+      else if(b.id==='oaAmb')bulk(b,uniq(ambUrls()),'أصوات الطبيعة');
+      else if(b.id==='oaRqy'){var rq=uniq(urlsOf(function(){return lib('ruqyah','')}));
+        if(!rq.length){try{window.apToast&&apToast('مفيش ملفات رقية مضافة لسه')}catch(_){}return}
+        bulk(b,rq,'الرقية الشرعية')}
       else if(confirm('تمسح كل المقاطع المحفوظة على الجهاز؟ هتحتاج نت لتشغيلها تاني.'))clear().then(show);
       return}
     if(e.target.closest&&e.target.closest('#svcg'))setTimeout(function(){var st=$('oaSt');if(st&&st.offsetParent)show()},120)
