@@ -4,55 +4,88 @@
 <head>
 <script>window.__bg=function(f,n){n=n||5;var c=0;return function(){if(!document.hidden||++c%n===0)return f.apply(this,arguments)}};</script>
 <script>
-/* اشعار تثبيت التطبيق على الشاشة الرئيسية كاختصار: يظهر في أول ٥ مرات فتح (آيفون وأندرويد) */
+/* تثبيت التطبيق على الشاشة الرئيسية: زر «تثبيت» حقيقي + إشعار في أول ٥ مرات فتح (آيفون وأندرويد) */
 (function(){
   var KEY='inst_n',DONE='inst_done',MAX=5,w=window,d=document;
   function g(k){try{return localStorage.getItem(k)}catch(e){return null}}
   function st(k,v){try{localStorage.setItem(k,v)}catch(e){}}
   var standalone=false;
   try{standalone=(w.matchMedia&&(matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||matchMedia('(display-mode: minimal-ui)').matches))||navigator.standalone===true}catch(e){}
-  if(standalone){st(DONE,'1');return}
   var ua=navigator.userAgent||'';
   var ios=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  var iphone=/iPhone|iPod/.test(ua),iosSafari=ios&&!/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua);
   var android=/Android/i.test(ua);
-  if(!ios&&!android)return;
-  if(g(DONE))return;
-  var n=(parseInt(g(KEY),10)||0)+1;st(KEY,String(n));
-  if(n>MAX)return;
-  var ev=null,bn=null;
-  var SHARE='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-3px"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1"/></svg>';
-  function msg(){
-    if(ios)return 'اضغط زر المشاركة '+SHARE+' ثم اختر «إضافة إلى الشاشة الرئيسية» ليفتح بضغطة واحدة وبكامل الشاشة.';
-    if(ev)return 'أضفه كاختصار على الشاشة الرئيسية ليفتح بضغطة واحدة وبكامل الشاشة.';
-    return 'من قائمة المتصفح ⋮ اختر «تثبيت التطبيق» أو «إضافة إلى الشاشة الرئيسية».';
-  }
+  var ev=null,bn=null,gd=null;
+  var SHARE='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-4px"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1"/></svg>';
+
+  function syncBtn(){var b=d.getElementById('instNow');if(b)b.style.display=standalone?'none':''}
   function kill(){
     if(!bn)return;var b=bn;bn=null;
     b.style.opacity='0';b.style.transform='translateY(-14px)';
     setTimeout(function(){try{b.remove()}catch(e){}},350);
   }
-  function paint(){
-    if(!bn)return;
-    var logo=w.HISN_LOGO?'<img alt="" src="'+w.HISN_LOGO+'" style="width:44px;height:44px;border-radius:12px;flex:none">':'<span style="font-size:1.9rem;flex:none">🕌</span>';
-    bn.innerHTML=logo+
-      '<div style="flex:1;min-width:0"><b style="display:block;font-size:.95rem;margin-bottom:2px;color:#e8cc8e">ثبّت «حصن» على شاشتك</b><span style="display:block;font-size:.8rem;line-height:1.7;opacity:.95">'+msg()+'</span></div>'+
-      (android&&ev?'<button type="button" data-i="go" style="flex:none;padding:9px 16px;border-radius:12px;background:#e8cc8e;color:#1a1408;font-weight:700;font-size:.85rem;border:0">تثبيت</button>':'')+
-      '<button type="button" data-i="x" aria-label="إغلاق" style="flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,248,232,.3);color:#fff8e8;font-size:.8rem;background:transparent">✕</button>';
+  function closeGuide(){if(gd){try{gd.remove()}catch(e){}gd=null}}
+
+  /* خطوات التثبيت اليدوي (آيفون دايمًا، وأندرويد لو المتصفح ما سمحش بالتثبيت المباشر) */
+  function guide(){
+    if(gd)return;kill();
+    var steps,note='';
+    if(ios){
+      steps=['اضغط زر المشاركة '+SHARE+(iosSafari&&iphone?' (في الشريط السفلي)':' (جنب شريط العنوان)'),'مرّر لتحت واختر <b>«إضافة إلى الشاشة الرئيسية»</b>','اضغط <b>«إضافة»</b> وهتلاقي أيقونة «حصن» على شاشتك'];
+      if(!iosSafari)note='لو ما لقيتش الخيار، افتح الصفحة من <b>سفاري</b>.';
+    }else if(android){
+      steps=['اضغط قائمة المتصفح <b>⋮</b> (أعلى الشاشة)','اختر <b>«تثبيت التطبيق»</b> أو <b>«إضافة إلى الشاشة الرئيسية»</b>','أكّد بالضغط على <b>«تثبيت»</b>'];
+      note='لو الخيار مش موجود، افتح الصفحة من <b>كروم</b>.';
+    }else{
+      steps=['اضغط أيقونة التثبيت في شريط العنوان (أو القائمة ⋮)','اختر <b>«تثبيت حصن»</b>'];
+    }
+    gd=d.createElement('div');gd.id='instGuide';gd.setAttribute('role','dialog');gd.setAttribute('aria-modal','true');gd.setAttribute('aria-label','تثبيت التطبيق');
+    gd.style.cssText='position:fixed;inset:0;z-index:200;background:rgba(3,8,18,.84);display:flex;align-items:center;justify-content:center;padding:18px';
+    var lis='';for(var i=0;i<steps.length;i++)lis+='<li style="display:flex;gap:10px;align-items:flex-start;margin:0 0 12px;line-height:1.8;font-size:.92rem"><span style="flex:none;width:26px;height:26px;border-radius:50%;background:#e8cc8e;color:#1a1408;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.85rem">'+(i+1)+'</span><span style="flex:1">'+steps[i]+'</span></li>';
+    gd.innerHTML='<style>@keyframes instB{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}@media(prefers-reduced-motion:reduce){#instGuide .ia{animation:none!important}}</style>'+
+      '<div style="width:100%;max-width:420px;background:#0f1a2e;border:1.5px solid rgba(232,204,142,.5);border-radius:22px;padding:20px 18px;color:#fff8e8;box-shadow:0 16px 48px rgba(0,0,0,.6)">'+
+      '<div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">'+(w.HISN_LOGO?'<img alt="" src="'+w.HISN_LOGO+'" style="width:48px;height:48px;border-radius:13px">':'<span style="font-size:2rem">🕌</span>')+'<b style="font-size:1.05rem;color:#e8cc8e">ثبّت «حصن» على شاشتك</b></div>'+
+      '<ol style="list-style:none;margin:0;padding:0">'+lis+'</ol>'+(note?'<p style="margin:4px 0 12px;font-size:.8rem;opacity:.85;line-height:1.7">'+note+'</p>':'')+
+      '<button type="button" data-g="ok" style="width:100%;padding:12px;border-radius:14px;background:#e8cc8e;color:#1a1408;font-weight:700;font-size:.95rem;border:0">فهمت</button></div>'+
+      (ios?'<div class="ia" aria-hidden="true" style="position:fixed;'+(iphone&&iosSafari?'bottom:calc(6px + env(safe-area-inset-bottom,0px));left:0;right:0;text-align:center':'top:calc(6px + env(safe-area-inset-top,0px));left:16px;text-align:left')+';color:#e8cc8e;font-size:1.9rem;line-height:1;animation:instB 1.1s ease-in-out infinite;text-shadow:0 2px 8px rgba(0,0,0,.6)">'+(iphone&&iosSafari?'▼':'▲')+'</div>':'');
+    gd.addEventListener('click',function(e){if(e.target===gd||(e.target.closest&&e.target.closest('[data-g="ok"]')))closeGuide()});
+    d.body.appendChild(gd);
   }
+
+  /* زر التثبيت: لو المتصفح سمح (أندرويد/كروم) بيفتح نافذة التثبيت مباشرة، وإلا بيفتح الشرح المصوّر */
+  function install(){
+    if(ev){
+      var p=ev;ev=null;
+      try{p.prompt();(p.userChoice||Promise.resolve({})).then(function(r){if(r&&r.outcome==='accepted'){st(DONE,'1');kill()}},function(){})}catch(x){guide()}
+      return;
+    }
+    guide();
+  }
+  w.hisnInstall=install;
+  d.addEventListener('click',function(e){var t=e.target&&e.target.closest?e.target.closest('#instNow,#instBn [data-i="go"]'):null;if(t){e.preventDefault();install()}});
+
+  w.addEventListener('beforeinstallprompt',function(e){e.preventDefault();ev=e});
+  w.addEventListener('appinstalled',function(){st(DONE,'1');standalone=true;kill();closeGuide();syncBtn()});
+  if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',syncBtn);else syncBtn();
+
+  /* ===== الإشعار: أول ٥ مرات فتح على الموبايل ===== */
+  if(standalone){st(DONE,'1');return}
+  if(!ios&&!android)return;
+  if(g(DONE))return;
+  var n=(parseInt(g(KEY),10)||0)+1;st(KEY,String(n));
+  if(n>MAX)return;
   function show(){
-    if(bn||g(DONE))return;
+    if(bn||g(DONE)||standalone)return;
     bn=d.createElement('div');bn.id='instBn';bn.setAttribute('role','region');bn.setAttribute('aria-label','تثبيت التطبيق');
     bn.style.cssText='position:fixed;z-index:45;left:10px;right:10px;max-width:480px;margin:0 auto;top:calc(8px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:rgba(8,14,28,.95);border:1.5px solid rgba(232,204,142,.45);color:#fff8e8;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(-14px);transition:opacity .35s,transform .35s;touch-action:manipulation';
-    bn.addEventListener('click',function(e){
-      var t=e.target.closest?e.target.closest('button[data-i]'):null;if(!t)return;
-      if(t.getAttribute('data-i')==='x'){kill();return}
-      if(ev){var p=ev;ev=null;try{p.prompt();(p.userChoice||Promise.resolve({})).then(function(r){if(r&&r.outcome==='accepted')st(DONE,'1');kill()},function(){kill()})}catch(x){kill()}}
-    });
-    paint();d.body.appendChild(bn);
+    bn.innerHTML=(w.HISN_LOGO?'<img alt="" src="'+w.HISN_LOGO+'" style="width:44px;height:44px;border-radius:12px;flex:none">':'<span style="font-size:1.9rem;flex:none">🕌</span>')+
+      '<div style="flex:1;min-width:0"><b style="display:block;font-size:.95rem;margin-bottom:2px;color:#e8cc8e">ثبّت «حصن» على شاشتك</b><span style="display:block;font-size:.8rem;line-height:1.7;opacity:.95">اختصار على الشاشة الرئيسية يفتح بضغطة واحدة وبكامل الشاشة.</span></div>'+
+      '<button type="button" data-i="go" style="flex:none;padding:10px 18px;border-radius:12px;background:#e8cc8e;color:#1a1408;font-weight:700;font-size:.9rem;border:0">تثبيت</button>'+
+      '<button type="button" data-i="x" aria-label="إغلاق" style="flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,248,232,.3);color:#fff8e8;font-size:.8rem;background:transparent">✕</button>';
+    bn.addEventListener('click',function(e){var t=e.target.closest?e.target.closest('[data-i="x"]'):null;if(t)kill()});
+    d.body.appendChild(bn);
     requestAnimationFrame(function(){requestAnimationFrame(function(){if(bn){bn.style.opacity='1';bn.style.transform='none'}})});
   }
-  if(android)w.addEventListener('beforeinstallprompt',function(e){e.preventDefault();ev=e;paint()});
-  w.addEventListener('appinstalled',function(){st(DONE,'1');kill()});
   function start(){
     var t=0,iv=setInterval(function(){
       t+=600;
@@ -950,6 +983,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="sc" data-p="c" id="aboutUs"><h3>نبذة عنا</h3>
 <p class="mutp sth" style="text-align:start">عن حصن المسلم</p>
 <p class="mutp" style="text-align:start;line-height:1.95;margin:0 0 10px">حصن المسلم تطبيق إسلامي يجمع الأذكار والأدعية ومواقيت الصلاة والمسبحة ومتابعة العبادات اليومية في مكان واحد، بتصميم بسيط وخفيف يناسب الهاتف، ويمكن تثبيته على الشاشة الرئيسية. وتُحفظ بياناتك الشخصية مثل التسبيح والملاحظات والإعدادات على جهازك.</p>
+<div class="chips" style="justify-content:center;margin:0 0 12px"><button class="chip" id="instNow" type="button">📲 تثبيت التطبيق على الشاشة الرئيسية</button></div>
 <p class="mutp sth" style="text-align:start">المطورون</p>
 <p class="mutp" style="text-align:start;line-height:1.95;margin:0 0 10px">يقف وراء التطبيق فريق من المطورين يعملون على تحسينه وتحديثه باستمرار، ويحرصون على سهولة الاستخدام ودقة المحتوى، ويرحّبون بملاحظاتكم واقتراحاتكم وتصحيحاتكم، فهي أكبر عون لنا في تطويره.</p>
 <p class="mutp sth" style="text-align:start">تواصل معنا</p>
@@ -2152,7 +2186,7 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
   const d=document,e=d.documentElement,rq=e.requestFullscreen||e.webkitRequestFullscreen,
   st=(matchMedia&&(matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches))||navigator.standalone;
   if(st)return;
-  if(rq){const go=ev=>{if(ev&&ev.target&&ev.target.closest&&ev.target.closest('#instBn'))return;removeEventListener('pointerup',go,true);if(d.fullscreenElement||d.webkitFullscreenElement)return;try{const r=rq.call(e,{navigationUI:'hide'});r&&r.catch&&r.catch(()=>{})}catch(x){}};
+  if(rq){const go=ev=>{if(ev&&ev.target&&ev.target.closest&&ev.target.closest('#instBn,#instGuide,#instNow'))return;removeEventListener('pointerup',go,true);if(d.fullscreenElement||d.webkitFullscreenElement)return;try{const r=rq.call(e,{navigationUI:'hide'});r&&r.catch&&r.catch(()=>{})}catch(x){}};
     addEventListener('pointerup',go,true)}
 })();
 </script>
