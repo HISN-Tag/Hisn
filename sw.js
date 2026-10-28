@@ -4,7 +4,11 @@ const AUDIO='hisn-audio';   // كاش المقاطع الصوتية: ما بيت
 const AUDIO_RE=/\.(mp3|m4a|aac|ogg|oga|opus|wav|flac)$/i;
 const inflight=new Set();
 
-self.addEventListener('install',e=>self.skipWaiting());
+const VERSION='2026.1';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
+
+/* ما بنعملش skipWaiting تلقائي: النسخة الجديدة بتستنى لحد ما المستخدم يضغط «تحديث الآن» (الصفحة بتبعت SKIP_WAITING) */
+self.addEventListener('install',e=>{});
+self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x!==AUDIO).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
 
 const isAudio=r=>{

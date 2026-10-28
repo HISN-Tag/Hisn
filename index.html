@@ -3,6 +3,107 @@
 <html dir="rtl" lang="ar">
 <head>
 <script>window.__bg=function(f,n){n=n||5;var c=0;return function(){if(!document.hidden||++c%n===0)return f.apply(this,arguments)}};</script>
+<script id="inapp-js">
+/* متصفحات داخل التطبيقات (إنستجرام/فيسبوك/تيك توك...): التثبيت والإشعارات والتحميل بدون نت ممكن ما يشتغلوش هناك */
+(function(){
+  var w=window,d=document,ua=navigator.userAgent||'',standalone=false;
+  try{standalone=(w.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true}catch(e){}
+  if(standalone)return;
+  var ios=/iPhone|iPad|iPod/.test(ua),android=/Android/i.test(ua);
+  var inapp=/FBAN|FBAV|FB_IAB|FBIOS|Instagram|Line\/|Snapchat|TikTok|musical_ly|BytedanceWebview|Twitter|LinkedInApp|MicroMessenger|Pinterest|Messenger|KAKAOTALK/i.test(ua)
+    ||(android&&/; wv\)/.test(ua))
+    ||(ios&&!/Safari\//.test(ua)&&!/CriOS|FxiOS|EdgiOS|OPiOS/.test(ua));
+  if(!inapp)return;
+  w.__hisnInApp=true;
+  var X='inapp_x';try{if(sessionStorage.getItem(X))return}catch(e){}
+  var bn=null;
+  function intent(){return 'intent://'+location.host+location.pathname+location.search+'#Intent;scheme='+location.protocol.replace(':','')+';package=com.android.chrome;end'}
+  function copy(t){
+    try{if(navigator.clipboard&&w.isSecureContext)return navigator.clipboard.writeText(t)}catch(e){}
+    return new Promise(function(res,rej){try{var a=d.createElement('textarea');a.value=t;a.style.cssText='position:fixed;opacity:0';d.body.appendChild(a);a.select();var ok=d.execCommand('copy');a.remove();ok?res():rej()}catch(e){rej()}})
+  }
+  function kill(){if(!bn)return;var b=bn;bn=null;try{sessionStorage.setItem(X,'1')}catch(e){}b.style.opacity='0';b.style.transform='translateY(-14px)';setTimeout(function(){try{b.remove()}catch(e){}},350)}
+  function show(){
+    if(bn)return;
+    bn=d.createElement('div');bn.id='inappBn';bn.setAttribute('role','region');bn.setAttribute('aria-label','افتح من المتصفح');
+    bn.style.cssText='position:fixed;z-index:46;left:10px;right:10px;max-width:480px;margin:0 auto;top:calc(8px + env(safe-area-inset-top,0px));padding:12px 14px;border-radius:18px;background:rgba(40,22,10,.96);border:1.5px solid rgba(255,180,90,.6);color:#fff8e8;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(-14px);transition:opacity .35s,transform .35s;touch-action:manipulation';
+    var hint=ios?'اضغط «⋯» أو زر المشاركة واختر «فتح في Safari»، أو انسخ الرابط وافتحه هناك.':'افتح الصفحة من كروم عشان كل المزايا تشتغل.';
+    var btn='border-radius:12px;font-weight:700;font-size:.85rem;padding:9px 14px;border:0;text-decoration:none;display:inline-block;';
+    bn.innerHTML='<div style="display:flex;gap:10px;align-items:flex-start"><span aria-hidden="true" style="font-size:1.4rem;flex:none">⚠️</span><div style="flex:1;min-width:0"><b style="display:block;font-size:.93rem;color:#ffd08a;margin-bottom:2px">افتح «حصن» من المتصفح</b><span style="display:block;font-size:.8rem;line-height:1.7;opacity:.95">إنت فاتح الصفحة من داخل تطبيق، وبعض المزايا (التثبيت، الإشعارات، التحميل بدون نت) ممكن ما تشتغلش هنا. '+hint+'</span></div><button type="button" data-a="x" aria-label="إغلاق" style="flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,248,232,.3);color:#fff8e8;font-size:.8rem;background:transparent">✕</button></div>'+
+      '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">'+(android?'<a href="'+intent()+'" style="'+btn+'background:#ffd08a;color:#1a1408">افتح في كروم</a>':'')+'<button type="button" data-a="copy" style="'+btn+'background:rgba(255,255,255,.12);color:#fff8e8">نسخ الرابط</button></div>';
+    bn.addEventListener('click',function(e){
+      var t=e.target.closest?e.target.closest('[data-a]'):null;if(!t)return;
+      var a=t.getAttribute('data-a');
+      if(a==='x'){kill();return}
+      if(a==='copy')copy(location.href.split('#')[0]).then(function(){t.textContent='✓ اتنسخ'},function(){t.textContent='انسخه من شريط العنوان'})});
+    d.body.appendChild(bn);
+    requestAnimationFrame(function(){requestAnimationFrame(function(){if(bn){bn.style.opacity='1';bn.style.transform='none'}})});
+  }
+  function start(){
+    var t=0,iv=setInterval(function(){t+=600;if(d.getElementById('splash')&&t<90000)return;clearInterval(iv);setTimeout(show,1200)},600);
+  }
+  if(d.readyState==='loading')d.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
+<script id="upd-js">
+/* إشعار «في تحديث جديد»: بيكتشف تحديث الـ service worker أو تغيّر ملف الصفحة على السيرفر، ويعرض زر «تحديث الآن» */
+(function(){
+  var d=document,w=window,U=location.href.split('#')[0],S0=null,pend=null,shown=null,bn=null,lastChk=0,reloading=false;
+  function sig(){
+    return fetch(U,{method:'HEAD',cache:'no-store'}).then(function(r){
+      if(!r.ok)return null;var h=r.headers,s=(h.get('etag')||'')+'|'+(h.get('last-modified')||'')+'|'+(h.get('content-length')||'');
+      return s==='||'?null:s}).catch(function(){return null})}
+  function kill(){if(!bn)return;var b=bn;bn=null;b.style.opacity='0';b.style.transform='translateY(14px)';setTimeout(function(){try{b.remove()}catch(e){}},350)}
+  function playing(){var a=d.getElementById('audio');return !!(a&&!a.paused&&!a.ended)}
+  function offer(apply){
+    if(bn)return;
+    bn=d.createElement('div');bn.id='updBn';bn.setAttribute('role','status');bn.setAttribute('aria-live','polite');
+    bn.style.cssText='position:fixed;z-index:46;left:10px;right:10px;max-width:480px;margin:0 auto;bottom:calc(12px + env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:18px;background:rgba(8,14,28,.96);border:1.5px solid rgba(232,204,142,.5);color:#fff8e8;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(14px);transition:opacity .35s,transform .35s;touch-action:manipulation';
+    bn.innerHTML='<span aria-hidden="true" style="font-size:1.4rem;flex:none">🔄</span><div style="flex:1;min-width:0"><b style="display:block;font-size:.92rem;color:#e8cc8e">في تحديث جديد لـ«حصن»</b><span style="display:block;font-size:.78rem;line-height:1.6;opacity:.92">حدّث دلوقتي عشان تاخد آخر التحسينات.</span></div>'+
+      '<button type="button" data-u="go" style="flex:none;padding:9px 16px;border-radius:12px;background:#e8cc8e;color:#1a1408;font-weight:700;font-size:.85rem;border:0">تحديث الآن</button>'+
+      '<button type="button" data-u="x" aria-label="لاحقًا" style="flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,248,232,.3);color:#fff8e8;font-size:.8rem;background:transparent">✕</button>';
+    bn.addEventListener('click',function(e){
+      var t=e.target.closest?e.target.closest('[data-u]'):null;if(!t)return;
+      if(t.getAttribute('data-u')==='x'){kill();return}
+      if(playing()&&!confirm('التحديث هيوقّف الصوت الشغّال دلوقتي. تكمل؟'))return;
+      apply()});
+    d.body.appendChild(bn);
+    requestAnimationFrame(function(){requestAnimationFrame(function(){if(bn){bn.style.opacity='1';bn.style.transform='none'}})});
+  }
+  /* تحديث الصفحة نفسها: نجبر المتصفح يجيب نسخة جديدة (متجاوزين كاش HTTP) وبعدين نعمل reload */
+  function applyPage(){
+    if(reloading)return;reloading=true;
+    var go=function(){location.reload()};
+    try{fetch(U,{cache:'reload'}).then(go,go)}catch(e){go()}
+  }
+  function check(){
+    if(!/^https?:$/.test(location.protocol)||navigator.onLine===false)return;
+    lastChk=Date.now();
+    sig().then(function(s){
+      if(!s)return;
+      if(S0===null){S0=s;return}
+      if(s===S0){pend=null;return}
+      if(s===shown)return;
+      if(pend===s){shown=s;pend=null;offer(applyPage);return}   /* لازم يتأكد مرتين عشان ما نطلعش إنذار كاذب من اختلاف سيرفرات الـCDN */
+      pend=s;setTimeout(check,15000)});
+  }
+  setTimeout(check,4000);
+  setInterval(check,30*60*1000);
+  d.addEventListener('visibilitychange',function(){if(!d.hidden&&Date.now()-lastChk>5*60*1000)check()});
+
+  /* تحديث الـ service worker (لما sw.js نفسه يتغيّر) */
+  if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
+    navigator.serviceWorker.addEventListener('controllerchange',function(){if(w.__hisnUpd&&!reloading){reloading=true;location.reload()}});
+    var offerSW=function(sw){offer(function(){w.__hisnUpd=1;try{sw.postMessage({type:'SKIP_WAITING'})}catch(e){}setTimeout(function(){if(!reloading){reloading=true;location.reload()}},1500)})};
+    navigator.serviceWorker.ready.then(function(reg){
+      if(reg.waiting&&navigator.serviceWorker.controller)offerSW(reg.waiting);
+      reg.addEventListener('updatefound',function(){var nw=reg.installing;if(!nw)return;nw.addEventListener('statechange',function(){if(nw.state==='installed'&&navigator.serviceWorker.controller)offerSW(nw)})});
+      setInterval(function(){try{reg.update().catch(function(){})}catch(e){}},30*60*1000);
+      d.addEventListener('visibilitychange',function(){if(!d.hidden)try{reg.update().catch(function(){})}catch(e){}})
+    }).catch(function(){});
+  }
+})();
+</script>
 <script>
 /* تثبيت التطبيق على الشاشة الرئيسية: زر «تثبيت» حقيقي + إشعار في أول ٥ مرات فتح (آيفون وأندرويد) */
 (function(){
@@ -75,7 +176,7 @@
   var n=(parseInt(g(KEY),10)||0)+1;st(KEY,String(n));
   if(n>MAX)return;
   function show(){
-    if(bn||g(DONE)||standalone)return;
+    if(bn||g(DONE)||standalone||w.__hisnInApp)return;
     bn=d.createElement('div');bn.id='instBn';bn.setAttribute('role','region');bn.setAttribute('aria-label','تثبيت التطبيق');
     bn.style.cssText='position:fixed;z-index:45;left:10px;right:10px;max-width:480px;margin:0 auto;top:calc(8px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:rgba(8,14,28,.95);border:1.5px solid rgba(232,204,142,.45);color:#fff8e8;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(-14px);transition:opacity .35s,transform .35s;touch-action:manipulation';
     bn.innerHTML=(w.HISN_LOGO?'<img alt="" src="'+w.HISN_LOGO+'" style="width:44px;height:44px;border-radius:12px;flex:none">':'<span style="font-size:1.9rem;flex:none">🕌</span>')+
@@ -898,7 +999,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 
 <section class="sc" data-p="c"><h3>إعدادات التنبيهات</h3><div id="ntg"><button class="chip" id="oa" type="button"></button></div></section>
 
-<section class="sc" data-p="c"><h3>إعدادات الصوتيات</h3><p class="mutp" id="oaSt">جاري الحساب…</p><div class="oaw"><table class="oatb" id="oaTb"><thead><tr><th>القسم</th><th>محفوظ</th><th>الحجم</th><th>تحميل</th></tr></thead><tbody><tr><td class="oan"><span aria-hidden="true">📿</span> الأذكار</td><td class="oac" id="oaAdhc">…</td><td class="oas" id="oaAdhs">…</td><td><button class="chip oadl" id="oaAdh" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🕌</span> الأذان</td><td class="oac" id="oaAdnc">…</td><td class="oas" id="oaAdns">…</td><td><button class="chip oadl" id="oaAdn" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">📖</span> القرآن</td><td class="oac" id="oaQurc">…</td><td class="oas" id="oaQurs">…</td><td><button class="chip oadl" id="oaQur" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🎶</span> الأناشيد</td><td class="oac" id="oaNshc">…</td><td class="oas" id="oaNshs">…</td><td><button class="chip oadl" id="oaNsh" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🤲</span> الابتهالات</td><td class="oac" id="oaIbtc">…</td><td class="oas" id="oaIbts">…</td><td><button class="chip oadl" id="oaIbt" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🌿</span> أصوات الطبيعة</td><td class="oac" id="oaAmbc">…</td><td class="oas" id="oaAmbs">…</td><td><button class="chip oadl" id="oaAmb" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🛡️</span> الرقية الشرعية</td><td class="oac" id="oaRqyc">…</td><td class="oas" id="oaRqys">…</td><td><button class="chip oadl" id="oaRqy" type="button">⬇ تحميل</button></td></tr></tbody></table></div><div class="chips" style="justify-content:center;gap:8px;margin:8px 0"><button class="chip" id="oaClr" type="button">🗑 مسح المحفوظ</button></div><p class="mutp" id="oaPr"></p><p class="mutp">أي مقطع يشتغل مرة بيتحفظ لوحده ويشتغل بعدها بدون نت. ومن قوائم القرآن والأذكار تقدر تحمّل المحدد مقدمًا. تحميل القرآن كامل حجمه كبير، فيُفضَّل يكون على واي فاي.</p></section>
+<section class="sc" data-p="c"><h3>إعدادات الصوتيات</h3><p class="mutp" id="oaSt">جاري الحساب…</p><div class="oaw"><table class="oatb" id="oaTb"><thead><tr><th>القسم</th><th>محفوظ</th><th>الحجم</th><th>تحميل</th></tr></thead><tbody><tr><td class="oan"><span aria-hidden="true">📿</span> الأذكار</td><td class="oac" id="oaAdhc">…</td><td class="oas" id="oaAdhs">…</td><td><button class="chip oadl" id="oaAdh" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🕌</span> الأذان</td><td class="oac" id="oaAdnc">…</td><td class="oas" id="oaAdns">…</td><td><button class="chip oadl" id="oaAdn" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">📖</span> القرآن</td><td class="oac" id="oaQurc">…</td><td class="oas" id="oaQurs">…</td><td><button class="chip oadl" id="oaQur" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🎶</span> الأناشيد</td><td class="oac" id="oaNshc">…</td><td class="oas" id="oaNshs">…</td><td><button class="chip oadl" id="oaNsh" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🤲</span> الابتهالات</td><td class="oac" id="oaIbtc">…</td><td class="oas" id="oaIbts">…</td><td><button class="chip oadl" id="oaIbt" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🌿</span> أصوات الطبيعة</td><td class="oac" id="oaAmbc">…</td><td class="oas" id="oaAmbs">…</td><td><button class="chip oadl" id="oaAmb" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🛡️</span> الرقية الشرعية</td><td class="oac" id="oaRqyc">…</td><td class="oas" id="oaRqys">…</td><td><button class="chip oadl" id="oaRqy" type="button">⬇ تحميل</button></td></tr></tbody></table></div><div class="chips" style="justify-content:center;gap:8px;margin:8px 0"><button class="chip" id="oaWifi" type="button" aria-pressed="false">📶 واي فاي فقط: متوقف</button><button class="chip" id="oaPer" type="button">🔒 حماية من المسح</button><button class="chip" id="oaClr" type="button">🗑 مسح المحفوظ</button></div><div id="oaJob" hidden><div class="oajt"><b id="oaJl"></b><span id="oaJp"></span></div><div class="oabr"><i id="oaJb"></i></div><p class="mutp" id="oaJn" role="status"></p><div class="chips" style="justify-content:center;gap:8px"><button class="chip" id="oaJpa" type="button">⏸ إيقاف مؤقت</button><button class="chip" id="oaJx" type="button">✖ إلغاء</button></div></div><p class="mutp" id="oaPr" role="status"></p><p class="mutp">أي مقطع يشتغل مرة بيتحفظ لوحده ويشتغل بعدها بدون نت. ومن قوائم القرآن والأذكار تقدر تحمّل المحدد مقدمًا. تحميل القرآن كامل حجمه كبير، فيُفضَّل يكون على واي فاي. تقدر توقف التحميل مؤقتًا أو تلغيه وتستكمل بعدين، و«حماية من المسح» بتمنع المتصفح من حذف المحفوظات لما المساحة تضيق.</p></section>
 <section class="sc" data-p="c"><h3>إعدادات التشغيل</h3><div class="stb" style="--c:2"><div class="ti"><span class="tl">سرعة التشغيل</span><div class="chips" id="sp"><button class="chip" data-r="0.85">٠٫٨٥×</button><button class="chip on" data-r="1">١×</button><button class="chip" data-r="1.25">١٫٢٥×</button><button class="chip" data-r="1.5">١٫٥×</button></div></div><div class="ti"><span class="tl">مؤقت النوم</span><div class="chips" id="sl"><button class="chip" data-m="15">١٥ د</button><button class="chip" data-m="30">٣٠ د</button><button class="chip" data-m="60">ساعة</button><button class="chip" data-m="90">ساعة ونصف</button></div></div></div><p class="mutp" style="margin-top:6px"><span id="sst" style="display:block;color:var(--ac);font-weight:600"></span>يخفض مؤقت النوم الصوت تدريجيًا ثم يوقف التشغيل.</p></section>
 <section class="sc" data-p="d"><h3>الأذكار بعد الصلاة</h3><div class="ck" id="pa"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="par">بدء صلاة جديدة ↻</button></div></section>
 <section class="sc" data-p="b"><h3><span>نوافل اليوم</span><span id="nfc"></span></h3><div class="ck" id="nf"></div></section>
@@ -4890,6 +4991,7 @@ body.fx-ui .sheet.open { will-change: auto; }
   function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
   async function save(u){
     var k=abs(u);if(set.has(k))return true;
+    persistOnce();
     try{
       var same=new URL(k).origin===location.origin,viaSW=!!(navigator.serviceWorker&&navigator.serviceWorker.controller);
       var r=await fetch(k,viaSW?{headers:{'X-Hisn-Save':'1'},mode:same?'same-origin':'cors',credentials:'omit'}:{mode:same?'same-origin':'cors',credentials:'omit'});
@@ -4899,9 +5001,20 @@ body.fx-ui .sheet.open { will-change: auto; }
       var c=await caches.open(NAME);await c.put(k,r);set.add(k);return true
     }catch(_){return false}
   }
-  async function download(urls,cb){var q=urls.slice(),done=0,good=0,bad=0;
-    async function w(){while(q.length){var u=q.shift(),r=await save(u);r?good++:bad++;done++;cb&&cb(done,urls.length)}}
-    await Promise.all([w(),w()]);await refresh();return{ok:good,fail:bad}}
+  async function download(urls,cb,jb){
+    var q=urls.slice(),done=0,good=0,bad=0;jb=jb||{pause:false,cancel:false,hold:'',cur:[],done:0};
+    var tick=function(){try{jb.on&&jb.on()}catch(_){}};
+    async function w(){
+      while(q.length&&!jb.cancel){
+        while(!jb.cancel&&(jb.pause||(wifiOnly()&&cellular()))){jb.hold=jb.pause?'pause':'wifi';tick();await sleep(400)}
+        jb.hold='';if(jb.cancel)break;
+        var u=q.shift();jb.cur.push(u);tick();
+        var r=await save(u);
+        jb.cur.splice(jb.cur.indexOf(u),1);r?good++:bad++;done++;jb.done=done;
+        cb&&cb(done,urls.length);tick()}}
+    await Promise.all([w(),w()]);await refresh();return{ok:good,fail:bad,left:q.length}}
+  var titles={};
+  function nameOf(u){var k=abs(u);if(titles[k])return titles[k];try{return decodeURIComponent(k.split('?')[0].split('/').pop()).replace(/\.[a-z0-9]{2,4}$/i,'')}catch(_){return k.split('/').pop()}}
   async function stats(){var c=await caches.open(NAME),ks=await c.keys(),bytes=0;
     for(var i=0;i<ks.length;i++){var r=await c.match(ks[i]),l=r&&+r.headers.get('content-length');if(l)bytes+=l;else if(r){try{bytes+=(await r.blob()).size}catch(_){}}}
     return{n:ks.length,bytes:bytes}}
@@ -4949,32 +5062,75 @@ body.fx-ui .sheet.open { will-change: auto; }
       var full=urls.length>0&&saved.length===urls.length;
       cc.textContent=ar(saved.length)+' / '+ar(urls.length);cc.classList.toggle('full',full);
       ss.textContent=fmtMB(bytes);
-      if(bt&&!bt.dataset.busy){bt.disabled=!urls.length;bt.textContent=!urls.length?'—':full?'✓ محفوظ':'⬇ تحميل'}}}
+      if(bt&&!bt.dataset.busy){bt.disabled=!urls.length||!!job;bt.textContent=!urls.length?'—':full?'✓ محفوظ':saved.length?'⬇ استكمال':'⬇ تحميل'}}}
 function show(){var st=$('oaSt');if(!st)return;
     if(!ok){st.textContent='الحفظ بدون نت غير متاح: افتح التطبيق عبر رابط https.';return}
-    fillTable().catch(function(){});
+    fillTable().catch(function(){});wifiLabel();
     stats().then(function(s){var mb=s.bytes/1048576,t='المحفوظ على الجهاز: '+ar(s.n)+' مقطع • '+ar(mb>=100?Math.round(mb):Math.round(mb*10)/10)+' م.ب';st.textContent=t;
-      if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(function(e){if(e&&e.quota)st.textContent=t+' • المتاح تقريبًا '+ar(Math.round((e.quota-(e.usage||0))/1048576))+' م.ب'}).catch(function(){})}).catch(function(){})}
-  function urlsOf(f){try{return f().map(function(x){return x.url})}catch(_){return[]}}
+      var st2=navigator.storage||{},est=st2.estimate?st2.estimate().catch(function(){}):Promise.resolve(),per=st2.persisted?st2.persisted().catch(function(){}):Promise.resolve();
+      return Promise.all([est,per]).then(function(a){var e=a[0],p=a[1];
+        if(e&&e.quota)t+=' • المتاح تقريبًا '+ar(Math.round((e.quota-(e.usage||0))/1048576))+' م.ب';
+        if(p)t+=' • 🔒 محمي من المسح';
+        st.textContent=t;var pb=$('oaPer');if(pb)pb.style.display=(p||!st2.persist)?'none':''})}).catch(function(){})}
+  function urlsOf(f){try{return f().map(function(x){try{var t=x.title||x.name;if(t)titles[abs(x.url)]=t}catch(_){}return x.url})}catch(_){return[]}}
   /* أصوات الطبيعة (عصافير/رياح/مطر/...): نفس طريقة التشفير اللي بيستخدمها وضع السكون عشان نفس المفتاح يتطابق */
-  function ambUrls(){try{return (typeof MY_AMBIENT!=='undefined'&&Array.isArray(MY_AMBIENT)?MY_AMBIENT:[]).filter(function(x){return x&&x.file}).map(function(x){return /^https?:/.test(x.file)?x.file:encodeURI(x.file)})}catch(_){return[]}}
+  function ambUrls(){try{return (typeof MY_AMBIENT!=='undefined'&&Array.isArray(MY_AMBIENT)?MY_AMBIENT:[]).filter(function(x){return x&&x.file}).map(function(x){var u=/^https?:/.test(x.file)?x.file:encodeURI(x.file);try{var t=x.name||x.title||x.label;if(t)titles[abs(u)]=t}catch(_){}return u})}catch(_){return[]}}
   function uniq(a){return a.filter(function(u,i){return a.indexOf(u)===i})}
+  /* ===== تحميل الصوتيات: إيقاف مؤقت / إلغاء / استكمال / واي فاي فقط / حماية من المسح ===== */
+  var job=null,persistTried=false;
+  function conn(){return navigator.connection||navigator.mozConnection||navigator.webkitConnection}
+  function cellular(){var c=conn();return !!(c&&(c.type==='cellular'||c.saveData===true))}
+  function wifiOnly(){try{return localStorage.getItem('oa_wifi')==='1'}catch(_){return false}}
+  function T(m){try{window.apToast&&apToast(m)}catch(_){}}
+  function persistNow(){try{if(navigator.storage&&navigator.storage.persist)return navigator.storage.persist().catch(function(){return false})}catch(_){}return Promise.resolve(false)}
+  function persistOnce(){if(persistTried)return;persistTried=true;persistNow()}
+  function wifiLabel(){var b=$('oaWifi');if(!b)return;var on=wifiOnly();b.textContent='📶 واي فاي فقط: '+(on?'مفعّل':'متوقف');b.setAttribute('aria-pressed',on?'true':'false');b.classList.toggle('on',on)}
+  function toggleWifi(){
+    var on=!wifiOnly();try{localStorage.setItem('oa_wifi',on?'1':'0')}catch(_){}
+    wifiLabel();var pr=$('oaPr');
+    if(pr)pr.textContent=on&&!(conn()&&conn().type)?'تنبيه: المتصفح ده مبيحددش نوع الشبكة، فالخيار مش هيقدر يمنع التحميل على بيانات الموبايل (بيشتغل على كروم أندرويد).':'';
+  }
+  function askPersist(){
+    persistNow().then(function(g){
+      T(g?'التخزين اتحمى من المسح التلقائي ✓':'المتصفح رفض الحماية دلوقتي. ثبّت التطبيق على الشاشة الرئيسية وحمّل شوية مقاطع وجرّب تاني.');
+      show()});
+  }
+  function setBtns(dis){d.querySelectorAll('.oadl').forEach(function(b){b.disabled=dis})}
+  function paintJob(){
+    var box=$('oaJob');if(!box)return;
+    if(!job){box.hidden=true;return}
+    box.hidden=false;
+    $('oaJl').textContent=job.label;
+    $('oaJp').textContent=ar(job.done)+' من '+ar(job.total);
+    $('oaJb').style.width=Math.round(job.done/job.total*100)+'%';
+    $('oaJn').textContent=job.cancel?'جاري إنهاء الجاري ثم التوقف…':job.hold==='wifi'?'⏳ مستني اتصال واي فاي («واي فاي فقط» مفعّل)':job.hold==='pause'?'⏸ متوقف مؤقتًا':(job.cur.length?'⬇ '+job.cur.map(nameOf).join(' + '):'');
+    $('oaJpa').textContent=job.pause?'▶ استكمال':'⏸ إيقاف مؤقت';
+    var c=$(job.btn.id+'c');if(c)c.textContent=ar(job.done)+' من '+ar(job.total);
+  }
   function bulk(btn,urls,label){
     if(!ok){return}
-    var T=function(m){try{window.apToast&&apToast(m)}catch(_){}};
+    if(job){T('في تحميل شغّال دلوقتي: استنى لما يخلص أو ألغيه');return}
     urls=urls.filter(function(u){return !has(u)});
     if(!urls.length){T('كل ده محفوظ بالفعل ✓');return}
     if(navigator.onLine===false){T('محتاج نت عشان التحميل');return}
-    btn.disabled=true;var pr=$('oaPr');
-    btn.dataset.busy='1';download(urls,function(dn,n){if(pr)pr.textContent=label+': '+ar(dn)+' من '+ar(n);var cc=$(btn.id+'c');if(cc)cc.textContent=ar(dn)+' من '+ar(n);btn.textContent='⏳'}).then(function(r){btn.disabled=false;delete btn.dataset.busy;if(pr)pr.textContent='';show();
-      T(r.fail?('اتحفظ '+ar(r.ok)+' وتعذّر '+ar(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+ar(r.ok)+' مقطع للتشغيل بدون نت ✓'))})}
+    if(wifiOnly()&&cellular()){T('«واي فاي فقط» مفعّل وإنت على بيانات الموبايل. وصّل واي فاي أو قفّل الخيار.');return}
+    persistNow();
+    job={label:label,total:urls.length,done:0,cancel:false,pause:false,hold:'',cur:[],btn:btn,on:paintJob};
+    btn.dataset.busy='1';setBtns(true);btn.textContent='⏳';paintJob();
+    download(urls,null,job).then(function(r){
+      var b=job.btn,cancelled=job.cancel;job=null;delete b.dataset.busy;setBtns(false);paintJob();show();
+      T(cancelled?('اتوقف التحميل: اتحفظ '+ar(r.ok)+' وفاضل '+ar(r.left)+'، تقدر تستكمل في أي وقت'):r.fail?('اتحفظ '+ar(r.ok)+' وتعذّر '+ar(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+ar(r.ok)+' مقطع للتشغيل بدون نت ✓'))})}
   d.addEventListener('click',function(e){
-    var b=e.target.closest&&e.target.closest('#oaAdh,#oaAdn,#oaQur,#oaNsh,#oaIbt,#oaAmb,#oaRqy,#oaClr');
+    var b=e.target.closest&&e.target.closest('#oaAdh,#oaAdn,#oaQur,#oaNsh,#oaIbt,#oaAmb,#oaRqy,#oaClr,#oaWifi,#oaPer,#oaJpa,#oaJx');
     if(b){
+      if(b.id==='oaWifi'){toggleWifi();return}
+      if(b.id==='oaPer'){askPersist();return}
+      if(b.id==='oaJpa'){if(job){job.pause=!job.pause;paintJob()}return}
+      if(b.id==='oaJx'){if(job&&confirm('تلغي التحميل؟ اللي اتحفظ هيفضل محفوظ وتقدر تستكمل بعدين.')){job.cancel=true;job.pause=false;paintJob()}return}
       if(b.id==='oaAdh')bulk(b,urlsOf(function(){return adhkarList()}),'الأذكار');
       else if(b.id==='oaAdn')bulk(b,urlsOf(function(){return lib('adhan','').concat(lib('adhan_fajr',''))}),'الأذان');
       else if(b.id==='oaQur'){var qu=uniq(urlsOf(function(){return lib('quran','')})),qn=qu.filter(function(u){return !has(u)}).length;
-        if(qn>1&&!confirm('هتحمّل '+ar(qn)+' سورة. حجم القرآن كامل كبير (غالبًا مئات الميجابايت أو أكثر)، ويفضّل تكون على واي فاي ومساحة الجهاز تكفي. تكمل؟'))return;
+        if(qn>1&&!confirm('هتحمّل '+ar(qn)+' سورة. حجم القرآن كامل كبير (غالبًا مئات الميجابايت أو أكثر)'+(cellular()?'، وإنت دلوقتي على بيانات الموبايل':'')+'، ويفضّل تكون على واي فاي ومساحة الجهاز تكفي. تكمل؟'))return;
         bulk(b,qu,'القرآن')}
       else if(b.id==='oaNsh')bulk(b,uniq(urlsOf(function(){return lib('anasheed','')})),'الأناشيد');
       else if(b.id==='oaIbt')bulk(b,uniq(urlsOf(function(){return lib('ibtihalat','')})),'الابتهالات');
@@ -5051,6 +5207,7 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
   function save() { ls(HKEY, JSON.stringify(hist)); }
   function updBadge() {
     var n = hist.filter(function (h) { return !h.r; }).length;
+    try { if (navigator.setAppBadge) { if (n) navigator.setAppBadge(n).catch(function () {}); else if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function () {}); } } catch (e) {}   /* رقم على أيقونة التطبيق المثبّت */
     if (n) { badge.querySelector('.ntbt').textContent = ar(n) + (n === 1 ? ' جديد' : ' جديدة'); badge.hidden = false; void badge.offsetWidth; badge.classList.add('show'); }
     else { badge.classList.remove('show'); setTimeout(function () { if (!badge.classList.contains('show')) badge.hidden = true; }, 400); }
   }
@@ -5262,6 +5419,13 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
 .oatb .oas{white-space:nowrap;color:var(--mut);font-size:.74rem}
 .oatb .oac.full{color:var(--ac);font-weight:700}
 .oatb .oadl{min-height:0;height:30px;padding:0 10px;font-size:.76rem;white-space:nowrap}
+#oaJob{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0;background:rgba(255,255,255,.04)}
+#oaJob .oajt{display:flex;justify-content:space-between;gap:8px;font-size:.86rem;margin-bottom:6px}
+#oaJp{direction:ltr;unicode-bidi:plaintext;color:var(--mut)}
+.oabr{height:8px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+.oabr i{display:block;height:100%;width:0;background:var(--ac);border-radius:inherit;transition:width .3s}
+#oaJn{min-height:1.4em;margin:6px 0;font-size:.78rem;text-align:start;overflow-wrap:anywhere}
+@media(prefers-reduced-motion:reduce){.oabr i{transition:none}}
 .oatb .oadl:disabled{opacity:.55}
 </style>
 </body>
