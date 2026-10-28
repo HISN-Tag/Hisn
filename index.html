@@ -898,7 +898,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 
 <section class="sc" data-p="c"><h3>إعدادات التنبيهات</h3><div id="ntg"><button class="chip" id="oa" type="button"></button></div></section>
 
-<section class="sc" data-p="c"><h3>إعدادات الصوتيات</h3><p class="mutp" id="oaSt">جاري الحساب…</p><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaAdh" type="button">⬇ حمّل الأذكار</button><button class="chip" id="oaAdn" type="button">⬇ حمّل الأذان</button></div><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaQur" type="button">⬇ حمّل القرآن</button><button class="chip" id="oaNsh" type="button">⬇ حمّل الأناشيد</button><button class="chip" id="oaIbt" type="button">⬇ حمّل الابتهالات</button><button class="chip" id="oaAmb" type="button">⬇ حمّل أصوات الطبيعة</button><button class="chip" id="oaRqy" type="button">⬇ حمّل الرقية الشرعية</button></div><div class="chips" style="justify-content:center;gap:8px;margin:6px 0"><button class="chip" id="oaClr" type="button">🗑 مسح المحفوظ</button></div><p class="mutp" id="oaPr"></p><p class="mutp">أي مقطع يشتغل مرة بيتحفظ لوحده ويشتغل بعدها بدون نت. ومن قوائم القرآن والأذكار تقدر تحمّل المحدد مقدمًا. تحميل القرآن كامل حجمه كبير، فيُفضَّل يكون على واي فاي.</p></section>
+<section class="sc" data-p="c"><h3>إعدادات الصوتيات</h3><p class="mutp" id="oaSt">جاري الحساب…</p><div class="oaw"><table class="oatb" id="oaTb"><thead><tr><th>القسم</th><th>محفوظ</th><th>الحجم</th><th>تحميل</th></tr></thead><tbody><tr><td class="oan"><span aria-hidden="true">📿</span> الأذكار</td><td class="oac" id="oaAdhc">…</td><td class="oas" id="oaAdhs">…</td><td><button class="chip oadl" id="oaAdh" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🕌</span> الأذان</td><td class="oac" id="oaAdnc">…</td><td class="oas" id="oaAdns">…</td><td><button class="chip oadl" id="oaAdn" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">📖</span> القرآن</td><td class="oac" id="oaQurc">…</td><td class="oas" id="oaQurs">…</td><td><button class="chip oadl" id="oaQur" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🎶</span> الأناشيد</td><td class="oac" id="oaNshc">…</td><td class="oas" id="oaNshs">…</td><td><button class="chip oadl" id="oaNsh" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🤲</span> الابتهالات</td><td class="oac" id="oaIbtc">…</td><td class="oas" id="oaIbts">…</td><td><button class="chip oadl" id="oaIbt" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🌿</span> أصوات الطبيعة</td><td class="oac" id="oaAmbc">…</td><td class="oas" id="oaAmbs">…</td><td><button class="chip oadl" id="oaAmb" type="button">⬇ تحميل</button></td></tr><tr><td class="oan"><span aria-hidden="true">🛡️</span> الرقية الشرعية</td><td class="oac" id="oaRqyc">…</td><td class="oas" id="oaRqys">…</td><td><button class="chip oadl" id="oaRqy" type="button">⬇ تحميل</button></td></tr></tbody></table></div><div class="chips" style="justify-content:center;gap:8px;margin:8px 0"><button class="chip" id="oaClr" type="button">🗑 مسح المحفوظ</button></div><p class="mutp" id="oaPr"></p><p class="mutp">أي مقطع يشتغل مرة بيتحفظ لوحده ويشتغل بعدها بدون نت. ومن قوائم القرآن والأذكار تقدر تحمّل المحدد مقدمًا. تحميل القرآن كامل حجمه كبير، فيُفضَّل يكون على واي فاي.</p></section>
 <section class="sc" data-p="c"><h3>إعدادات التشغيل</h3><div class="stb" style="--c:2"><div class="ti"><span class="tl">سرعة التشغيل</span><div class="chips" id="sp"><button class="chip" data-r="0.85">٠٫٨٥×</button><button class="chip on" data-r="1">١×</button><button class="chip" data-r="1.25">١٫٢٥×</button><button class="chip" data-r="1.5">١٫٥×</button></div></div><div class="ti"><span class="tl">مؤقت النوم</span><div class="chips" id="sl"><button class="chip" data-m="15">١٥ د</button><button class="chip" data-m="30">٣٠ د</button><button class="chip" data-m="60">ساعة</button><button class="chip" data-m="90">ساعة ونصف</button></div></div></div><p class="mutp" style="margin-top:6px"><span id="sst" style="display:block;color:var(--ac);font-weight:600"></span>يخفض مؤقت النوم الصوت تدريجيًا ثم يوقف التشغيل.</p></section>
 <section class="sc" data-p="d"><h3>الأذكار بعد الصلاة</h3><div class="ck" id="pa"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="par">بدء صلاة جديدة ↻</button></div></section>
 <section class="sc" data-p="b"><h3><span>نوافل اليوم</span><span id="nfc"></span></h3><div class="ck" id="nf"></div></section>
@@ -2934,7 +2934,7 @@ addEventListener('focus',nr);document.addEventListener('visibilitychange',()=>{i
 const bn=document.createElement('div');bn.className='nt31';document.body.appendChild(bn);
 if(!ld('bk_first'))sv('bk_first',String(Date.now()));
 let sent=J('nsent31',{});const fire=(id,title,body,act,cb)=>{const k=D()+id;if(sent[k])return false;sent={...Object.fromEntries(Object.entries(sent).filter(([x])=>x.startsWith(D()))),[k]:1};sv('nsent31',JSON.stringify(sent));vb([60,40,60]);let ok=0;try{if('Notification' in window&&Notification.permission==='granted'){const _o={body,lang:'ar',dir:'rtl',tag:k},_r=window.__swr;if(_r&&_r.showNotification)_r.showNotification(title,_o);else new Notification(title,_o);ok=1}}catch(e){}
- if(!ok||document.visibilityState==='visible'){if(window.apToast)apToast(title+(body?' — '+body:''),act&&act[0],act&&act[1]);else{bn.innerHTML=`<b>${title}</b><span>${body}</span>`;bn.classList.add('on');setTimeout(()=>bn.classList.remove('on'),7000)}}cb&&cb();return true};
+ if(!ok||document.visibilityState==='visible'){if(window.apToast)apToast(title+(body?' — '+body:''),act&&act[0],act&&act[1],{kind:'remind',key:k});else{bn.innerHTML=`<b>${title}</b><span>${body}</span>`;bn.classList.add('on');setTimeout(()=>bn.classList.remove('on'),7000)}}cb&&cb();return true};
 const inW=(t,m=0,w=90e3)=>{const d=Date.now()-(+t-m*6e4);return d>=0&&d<w};
 /* ===== تقرير اليوم: من بعد العشاء بساعة حتى الفجر ===== */
 const NFN=['السنن الرواتب','صلاة الضحى','الوتر','قيام الليل'];
@@ -4928,8 +4928,29 @@ body.fx-ui .sheet.open { will-change: auto; }
 
   /* تبويب «الصوتيات» في الإعدادات */
   var $=function(i){return d.getElementById(i)};
-  function show(){var st=$('oaSt');if(!st)return;
+    var CATS=[
+    ['oaAdh',function(){return uniq(urlsOf(function(){return adhkarList()}))}],
+    ['oaAdn',function(){return uniq(urlsOf(function(){return lib('adhan','').concat(lib('adhan_fajr',''))}))}],
+    ['oaQur',function(){return uniq(urlsOf(function(){return lib('quran','')}))}],
+    ['oaNsh',function(){return uniq(urlsOf(function(){return lib('anasheed','')}))}],
+    ['oaIbt',function(){return uniq(urlsOf(function(){return lib('ibtihalat','')}))}],
+    ['oaAmb',function(){return uniq(ambUrls())}],
+    ['oaRqy',function(){return uniq(urlsOf(function(){return lib('ruqyah','')}))}]];
+  function fmtMB(b){if(!b)return '—';var mb=b/1048576;return ar(mb>=100?Math.round(mb):Math.round(mb*10)/10)+' م.ب'}
+  async function fillTable(){
+    await refresh();var c=await caches.open(NAME);
+    for(var k=0;k<CATS.length;k++){
+      var id=CATS[k][0],cc=$(id+'c'),ss=$(id+'s'),bt=$(id);if(!cc)continue;
+      var urls=[];try{urls=CATS[k][1]()}catch(_){}
+      var saved=urls.filter(has),bytes=0;
+      for(var q=0;q<saved.length;q++){try{var r=await c.match(saved[q]),l=r&&+r.headers.get('content-length');if(l)bytes+=l}catch(_){}}
+      var full=urls.length>0&&saved.length===urls.length;
+      cc.textContent=ar(saved.length)+' / '+ar(urls.length);cc.classList.toggle('full',full);
+      ss.textContent=fmtMB(bytes);
+      if(bt&&!bt.dataset.busy){bt.disabled=!urls.length;bt.textContent=!urls.length?'—':full?'✓ محفوظ':'⬇ تحميل'}}}
+function show(){var st=$('oaSt');if(!st)return;
     if(!ok){st.textContent='الحفظ بدون نت غير متاح: افتح التطبيق عبر رابط https.';return}
+    fillTable().catch(function(){});
     stats().then(function(s){var mb=s.bytes/1048576,t='المحفوظ على الجهاز: '+ar(s.n)+' مقطع • '+ar(mb>=100?Math.round(mb):Math.round(mb*10)/10)+' م.ب';st.textContent=t;
       if(navigator.storage&&navigator.storage.estimate)navigator.storage.estimate().then(function(e){if(e&&e.quota)st.textContent=t+' • المتاح تقريبًا '+ar(Math.round((e.quota-(e.usage||0))/1048576))+' م.ب'}).catch(function(){})}).catch(function(){})}
   function urlsOf(f){try{return f().map(function(x){return x.url})}catch(_){return[]}}
@@ -4943,7 +4964,7 @@ body.fx-ui .sheet.open { will-change: auto; }
     if(!urls.length){T('كل ده محفوظ بالفعل ✓');return}
     if(navigator.onLine===false){T('محتاج نت عشان التحميل');return}
     btn.disabled=true;var pr=$('oaPr');
-    download(urls,function(dn,n){if(pr)pr.textContent=label+': '+ar(dn)+' من '+ar(n)}).then(function(r){btn.disabled=false;if(pr)pr.textContent='';show();
+    btn.dataset.busy='1';download(urls,function(dn,n){if(pr)pr.textContent=label+': '+ar(dn)+' من '+ar(n);var cc=$(btn.id+'c');if(cc)cc.textContent=ar(dn)+' من '+ar(n);btn.textContent='⏳'}).then(function(r){btn.disabled=false;delete btn.dataset.busy;if(pr)pr.textContent='';show();
       T(r.fail?('اتحفظ '+ar(r.ok)+' وتعذّر '+ar(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+ar(r.ok)+' مقطع للتشغيل بدون نت ✓'))})}
   d.addEventListener('click',function(e){
     var b=e.target.closest&&e.target.closest('#oaAdh,#oaAdn,#oaQur,#oaNsh,#oaIbt,#oaAmb,#oaRqy,#oaClr');
@@ -4966,5 +4987,270 @@ body.fx-ui .sheet.open { will-change: auto; }
   show();
 })();
 </script>
+<style id="ntf-css">
+/* ===== مدير الإشعارات: حاوية واحدة تكدّس الإشعارات بدل ما تركب فوق بعض ===== */
+#toast,.nt31{display:none!important}
+#nstack{position:fixed;z-index:90;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 64px);display:flex;flex-direction:column;pointer-events:none;transition:top .3s}
+body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px) + 100px)}
+.ntw{max-height:0;margin-bottom:0;overflow:hidden;transition:max-height .28s ease,margin-bottom .28s ease}
+.ntw.in{max-height:var(--h,120px);margin-bottom:8px}
+.nt{pointer-events:auto;display:flex;align-items:center;gap:9px;padding:9px 10px 9px 8px;border-radius:16px;background:rgba(8,14,28,.96);border:1.5px solid var(--line);color:var(--ink);font-size:.86rem;line-height:1.55;touch-action:pan-y;opacity:0;transform:translateY(-12px);transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer}
+.ntw.in .nt{opacity:1;transform:none}
+.nt.remind{border-color:var(--ac)}
+.nt.error{border-color:rgba(255,138,122,.7)}
+.nti{flex:none;font-size:1.05rem;line-height:1}
+.ntt{flex:1;min-width:0;overflow-wrap:anywhere}
+.ntb{flex:none;height:30px;padding:0 12px;border-radius:99px;border:1.5px solid var(--ac);background:color-mix(in srgb,var(--ac) 16%,transparent);color:var(--ac);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+.ntx{flex:none;width:30px;height:30px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:inherit;font:inherit;font-size:.8rem;line-height:1;cursor:pointer}
+#ntmore{pointer-events:auto;align-self:flex-start;height:28px;padding:0 12px;border-radius:99px;border:1.5px solid var(--line);background:rgba(8,14,28,.96);color:var(--ink);font:inherit;font-size:.72rem;cursor:pointer}
+#ntmore[hidden]{display:none}
+.ntov{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.ntov[hidden]{display:none}
+.ntcard{width:min(100%,520px);max-height:78vh;display:flex;flex-direction:column;gap:10px;padding:14px 14px calc(14px + env(safe-area-inset-bottom,0px));border-radius:22px 22px 0 0;background:rgba(10,16,32,.98);border:1.5px solid var(--line);border-bottom:0;color:var(--ink)}
+.nthd{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.nthd b{font-size:1rem}
+.ntl{overflow:auto;display:flex;flex-direction:column;gap:6px;min-height:0}
+.nthi{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.05);font-size:.84rem;line-height:1.55}
+.nthi time{flex:none;color:var(--mut);font-size:.72rem;padding-top:2px;min-width:44px}
+.nthi.new{border-inline-start:3px solid var(--ac)}
+#ntbadge{position:fixed;top:calc(env(safe-area-inset-top,0px) + 64px);left:18px;z-index:60;display:flex;align-items:center;gap:6px;padding:3px 11px 3px 4px;border-radius:99px;background:linear-gradient(135deg,rgba(8,14,28,.96),rgba(16,24,44,.96));color:var(--ink);border:1px solid color-mix(in srgb,var(--ac) 55%,transparent);box-shadow:0 4px 14px rgba(0,0,0,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font:inherit;cursor:pointer;transform:translateY(-150%);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1.15),opacity .3s}
+#ntbadge.show{transform:translateY(0);opacity:1}
+#ntbadge[hidden]{display:none}
+#ntbadge .ntbi{position:relative;flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:.68rem;line-height:1;background:color-mix(in srgb,var(--ac) 20%,transparent)}
+#ntbadge .ntbi::after{content:'';position:absolute;inset:-3px;border-radius:50%;border:1.5px solid color-mix(in srgb,var(--ac) 55%,transparent);animation:oap 1.8s ease-out infinite}
+#ntbadge .ntbt{font-size:.68rem;font-weight:700;white-space:nowrap}
+@media(prefers-reduced-motion:reduce){#ntbadge,#ntbadge .ntbi::after{transition:none;animation:none}}
+.nthe{text-align:center;color:var(--mut);padding:18px 0;font-size:.86rem}
+.ntft{display:flex;gap:8px;justify-content:center}
+.ctb{display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:16px;font:inherit;font-size:1rem;font-weight:700;text-decoration:none;border:1.5px solid var(--line);color:var(--ink);background:rgba(255,255,255,.06)}
+.ctb.wa{background:#1f9d57;border-color:#1f9d57;color:#fff}
+.cts{color:var(--mut);font-size:.84rem;text-align:center;margin:0}
+#aboutMail,#aboutWa{color:var(--ink)!important}
+#aboutWa{border-color:#1f9d57!important;background:rgba(31,157,87,.14)!important}
+@media(prefers-reduced-motion:reduce){.ntw,.nt,#nstack{transition:none}}
+</style>
+<script>window.HISN_WA='201140904391';/* رقم واتساب بالصيغة الدولية بدون + (مثال: 201001234567): لو اتحط، الزرار بيفتح المحادثة مباشرة. */window.HISN_WA_USER='mahmoud_abdelazeem0';/* اسم مستخدم واتساب بدون @: بيتنسخ ويلصقه المستخدم في «محادثة جديدة». */</script>
+<script id="ntf-js">
+(function () {
+  'use strict';
+  var d = document, MAX = 3, HKEY = 'ntHist', vis = [], q = [], seq = 0, seen = {}, hist = [];
+  function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+  try { hist = JSON.parse(ls(HKEY) || '[]') || []; } catch (e) { hist = []; }
+  function ar(n) { return String(n).replace(/\d/g, function (x) { return '٠١٢٣٤٥٦٧٨٩'[x]; }); }
+  function mk(tag, cls, html) { var e = d.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  var box = mk('div'); box.id = 'nstack'; box.setAttribute('role', 'region'); box.setAttribute('aria-live', 'polite'); box.setAttribute('aria-label', 'الإشعارات');
+  var more = mk('button'); more.type = 'button'; more.id = 'ntmore'; more.hidden = true; box.appendChild(more);
+  d.body.appendChild(box);
+  var badge = mk('button', '', '<span class="ntbi" aria-hidden="true">🔔</span><span class="ntbt"></span>');
+  badge.id = 'ntbadge'; badge.type = 'button'; badge.hidden = true; badge.setAttribute('aria-label', 'إشعارات غير مقروءة: افتح السجل');
+  d.body.appendChild(badge);
+  function save() { ls(HKEY, JSON.stringify(hist)); }
+  function updBadge() {
+    var n = hist.filter(function (h) { return !h.r; }).length;
+    if (n) { badge.querySelector('.ntbt').textContent = ar(n) + (n === 1 ? ' جديد' : ' جديدة'); badge.hidden = false; void badge.offsetWidth; badge.classList.add('show'); }
+    else { badge.classList.remove('show'); setTimeout(function () { if (!badge.classList.contains('show')) badge.hidden = true; }, 400); }
+  }
+
+  var ICON = { remind: '🔔', error: '⚠️', info: 'ℹ️' };
+  function kindOf(o) { return o.kind || (/تعذّر|تعذر|فشل|خطأ|لم يتم|لم نتمكن|غير متاح/.test(o.text) ? 'error' : 'info'); }
+  function prioOf(o) { return o.kind === 'remind' ? 3 : o.kind === 'error' ? 2 : o.label ? 2 : 1; }
+  function ttlOf(o) { var t = Math.min(11000, Math.max(4500, 3500 + o.text.length * 55)); if (o.label) t = Math.max(t, 9000); if (o.kind === 'remind') t = Math.max(t, 10000); return t; }
+
+  function record(o) {
+    o.h = { t: o.text, k: o.kind, at: Date.now(), r: o.kind === 'info' ? 1 : 0 };   // التنبيهات والأخطاء تعتبر «غير مقروءة» لحد ما تتفاعل معاها أو تفتح السجل
+    hist.push(o.h);
+    if (hist.length > 30) hist = hist.slice(-30);
+    save(); updBadge();
+  }
+  function updMore() {
+    more.hidden = !q.length;
+    more.textContent = q.length === 1 ? '+١ إشعار آخر' : '+' + ar(q.length) + ' إشعارات أخرى';
+  }
+  function sortVis() {
+    vis.sort(function (a, b) { return b.prio - a.prio || a.id - b.id; });
+    vis.forEach(function (o) { box.insertBefore(o.w, more); });
+  }
+  function arm(o) { clearTimeout(o.tm); o.left = ttlOf(o); o.t0 = Date.now(); o.tm = setTimeout(function () { dismiss(o); }, o.left); }
+  function pause(o) { clearTimeout(o.tm); o.left -= Date.now() - o.t0; }
+  function resume(o) { clearTimeout(o.tm); o.t0 = Date.now(); o.tm = setTimeout(function () { dismiss(o); }, Math.max(2000, o.left)); }
+
+  function show(o) {
+    var w = mk('div', 'ntw'), el = mk('div', 'nt ' + o.kind);
+    el.innerHTML = '<span class="nti" aria-hidden="true">' + ICON[o.kind] + '</span><span class="ntt">' + esc(o.text) + '</span>' +
+      (o.label ? '<button type="button" class="ntb">' + esc(o.label) + '</button>' : '') +
+      '<button type="button" class="ntx" aria-label="إغلاق">✕</button>';
+    w.appendChild(el); o.w = w; o.el = el; vis.push(o); box.insertBefore(w, more); sortVis();
+    w.style.setProperty('--h', (el.offsetHeight + 4) + 'px');
+    requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add('in'); }); });
+    if (o.kind !== 'remind') try { navigator.vibrate && navigator.vibrate(30); } catch (e) {}
+
+    var b = el.querySelector('.ntb'), x = el.querySelector('.ntx');
+    if (b) b.addEventListener('click', function (e) { e.stopPropagation(); dismiss(o, 0, 1); try { o.fn && o.fn(); } catch (er) {} });
+    x.addEventListener('click', function (e) { e.stopPropagation(); dismiss(o, 0, 1); });
+    var sx = 0, dx = 0, drag = false, moved = false;
+    el.addEventListener('pointerdown', function (e) {
+      if (e.target.closest('button')) return;
+      sx = e.clientX; dx = 0; drag = true; moved = false; pause(o);
+      try { el.setPointerCapture(e.pointerId); } catch (_) {}
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!drag) return; dx = e.clientX - sx; if (Math.abs(dx) > 8) moved = true;
+      el.style.transition = 'none'; el.style.transform = 'translateX(' + dx + 'px)'; el.style.opacity = String(1 - Math.min(1, Math.abs(dx) / 220));
+    });
+    function end() {
+      if (!drag) return; drag = false; el.style.transition = '';
+      if (Math.abs(dx) > 70) dismiss(o, dx > 0 ? 1 : -1, 1);
+      else { el.style.transform = ''; el.style.opacity = ''; resume(o); }
+    }
+    el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
+    el.addEventListener('click', function (e) { if (e.target.closest('button')) return; if (moved) { moved = false; return; } dismiss(o, 0, 1); });
+    el.addEventListener('mouseenter', function () { if (!drag) pause(o); });
+    el.addEventListener('mouseleave', function () { if (!drag) resume(o); });
+    arm(o); updMore();
+  }
+  function dismiss(o, dir, by) {
+    var i = vis.indexOf(o); if (i < 0) return;
+    if (by && o.h) { o.h.r = 1; save(); updBadge(); }
+    vis.splice(i, 1); clearTimeout(o.tm);
+    if (dir) { o.el.style.transition = 'transform .25s,opacity .25s'; o.el.style.transform = 'translateX(' + dir * 120 + '%)'; }
+    o.w.classList.remove('in'); o.el.style.opacity = '0';
+    setTimeout(function () { o.w.remove(); }, 320);
+    next();
+  }
+  function next() {
+    while (vis.length < MAX && q.length) {
+      q.sort(function (a, b) { return b.prio - a.prio || a.id - b.id; });
+      show(q.shift());
+    }
+    updMore();
+  }
+  function push(m, label, fn, opt) {
+    opt = opt || {};
+    var text = String(m == null ? '' : m).trim(); if (!text) return;
+    var o = { id: ++seq, text: text, label: label || '', fn: fn || null, kind: opt.kind, key: opt.key || text };
+    o.kind = kindOf(o); o.prio = prioOf(o);
+    var i, now = Date.now();
+    for (i = 0; i < vis.length; i++) if (vis[i].key === o.key) { arm(vis[i]); return; }       // نفس الإشعار ظاهر: نجدد مدته بس
+    for (i = 0; i < q.length; i++) if (q[i].key === o.key) return;
+    if (seen[o.key] && now - seen[o.key] < 8000) return;                                       // اتعرض من لحظات
+    seen[o.key] = now; record(o);
+    if (vis.length < MAX) { show(o); return; }
+    var low = vis.reduce(function (a, b) { return (b.prio < a.prio || (b.prio === a.prio && b.id > a.id)) ? b : a; });
+    if (o.prio > low.prio) {                                                                    // الأهم يطلّع الأقل أهمية للطابور
+      vis.splice(vis.indexOf(low), 1); clearTimeout(low.tm); low.w.remove(); q.unshift(low); show(o);
+    } else { q.push(o); }
+    updMore();
+  }
+  window.apToast = function (m, label, fn, opt) { push(m, label, fn, opt); };
+  window.NS = { push: push, openHistory: openHist };
+
+  /* ---- نافذة سفلية بسيطة ---- */
+  function sheetEl(id, title) {
+    var ov = mk('div', 'ntov'); ov.id = id; ov.hidden = true;
+    ov.innerHTML = '<div class="ntcard" role="dialog" aria-modal="true" aria-label="' + title + '"><div class="nthd"><b>' + title + '</b><button type="button" class="ntx" aria-label="إغلاق">✕</button></div><div class="body"></div></div>';
+    d.body.appendChild(ov);
+    function close() { ov.hidden = true; }
+    ov.addEventListener('click', function (e) { if (e.target === ov || e.target.closest('.ntx')) close(); });
+    d.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    return { ov: ov, body: ov.querySelector('.body'), close: close };
+  }
+  var H;
+  function openHist() {
+    H = H || sheetEl('nthist', 'سجل الإشعارات');
+    var rows = hist.slice().reverse().map(function (h) {
+      var t = new Date(h.at);
+      return '<div class="nthi' + (h.r ? '' : ' new') + '"><time>' + ar(('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2)) + '</time><span>' + (ICON[h.k] || 'ℹ️') + ' ' + esc(h.t) + '</span></div>';
+    }).join('');
+    H.body.innerHTML = '<div class="ntl">' + (rows || '<div class="nthe">لا توجد إشعارات سابقة</div>') + '</div>' +
+      (rows ? '<div class="ntft" style="margin-top:10px"><button type="button" class="chip" id="ntclr">مسح السجل</button></div>' : '');
+    var c = H.body.querySelector('#ntclr');
+    if (c) c.onclick = function () { hist = []; ls(HKEY, '[]'); openHist(); };
+    H.ov.hidden = false;
+    hist.forEach(function (h) { h.r = 1; }); save(); updBadge();
+  }
+  more.addEventListener('click', openHist);
+  badge.addEventListener('click', openHist);
+  updBadge();
+  var ntg = d.getElementById('ntg');
+  if (ntg && ntg.parentNode) {
+    var row = mk('div', 'chips', '<button type="button" class="chip" id="ntHistBtn">🔔 سجل الإشعارات</button>');
+    row.style.marginTop = '8px'; ntg.parentNode.insertBefore(row, ntg.nextSibling);
+    row.firstChild.addEventListener('click', openHist);
+  }
+
+  /* ===== التواصل: واتساب + البريد (في «نبذة عنا» وفي «الإبلاغ عن خطأ») ===== */
+  var MAIL = 'hisn.elmuslim.tag@gmail.com';
+  var TEMPLATE = 'السلام عليكم،\n\nنوع الرسالة (خطأ في نص / اقتراح / تواصل):\nالقسم أو الموضوع:\nالتفاصيل:\n';
+  function wa() { return String(window.HISN_WA || '').replace(/\D/g, ''); }
+  function waLink(t) { return 'https://wa.me/' + wa() + '?text=' + encodeURIComponent(t); }
+  function mailLink(t, s) { return 'mailto:' + MAIL + '?subject=' + encodeURIComponent(s) + '&body=' + encodeURIComponent(t); }
+  function user() { return String(window.HISN_WA_USER || '').replace(/^@/, '').replace(/[^\w.]/g, ''); }
+  function waOn() { return !!(wa() || user()); }
+  function copy(t) {
+    try { if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t); } catch (e) {}
+    return new Promise(function (res, rej) {
+      try { var a = d.createElement('textarea'); a.value = t; a.style.cssText = 'position:fixed;opacity:0'; d.body.appendChild(a); a.select(); var ok = d.execCommand('copy'); a.remove(); ok ? res() : rej(); } catch (e) { rej(); }
+    });
+  }
+  function copyUser() {
+    copy('@' + user()).then(function () { push('تم نسخ @' + user() + '. افتح واتساب ← محادثة جديدة، والصقه في البحث.', '', null, { kind: 'info', key: 'wacu' }); },
+      function () { push('اسم المستخدم على واتساب: @' + user(), '', null, { key: 'wacu' }); });
+  }
+  var C;
+  function chooser(text, subj) {
+    C = C || sheetEl('ntcontact', 'تواصل معنا');
+    var waBtn = wa()
+      ? '<a class="ctb wa" id="ctWa" target="_blank" rel="noopener" href="' + waLink(text) + '">💬 واتساب</a>'
+      : '<button type="button" class="ctb wa" id="ctWa">💬 واتساب: نسخ الرسالة</button>';
+    C.body.innerHTML = '<div class="ntl" style="gap:10px"><p class="cts">اختر الطريقة الأنسب لك، وسنكتب لك رسالة جاهزة تكمّلها.</p>' + waBtn +
+      (wa() ? '' : '<p class="cts">حسابنا على واتساب: <b dir="ltr" style="unicode-bidi:plaintext">@' + user() + '</b><br>بعد النسخ افتح واتساب ← محادثة جديدة، وابحث عن الاسم والصق الرسالة.</p>') +
+      '<a class="ctb" id="ctMail" href="' + mailLink(text, subj) + '">✉️ البريد الإلكتروني</a></div>';
+    var bt = C.body.querySelector('button#ctWa');
+    if (bt) bt.onclick = function () {
+      copy(text).then(function () { push('تم نسخ الرسالة. افتح واتساب وابحث عن @' + user() + ' والصقها.', '', null, { key: 'wacm' }); C.close(); },
+        function () { push('تعذّر النسخ. اكتب لنا على @' + user() + ' في واتساب.', '', null, { key: 'wacm' }); });
+    };
+    C.body.addEventListener('click', function (e) { if (e.target.closest('a')) setTimeout(C.close, 50); }, { once: true });
+    C.ov.hidden = false;
+  }
+  if (waOn()) {
+    d.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('#rptb,#rpt'); if (!t) return;
+      e.preventDefault(); e.stopPropagation();
+      if (t.id === 'rpt') {
+        var v = prompt('اذكر اسم الذكر والخطأ أو التصحيح المقترح مع المصدر إن وُجد'); if (!v || !v.trim()) return;
+        chooser('بلاغ عن خطأ في تطبيق حصن:\n' + v.trim(), 'بلاغ خطأ - حصن');
+      } else chooser(TEMPLATE, 'حصن: إبلاغ عن خطأ / تواصل');
+    }, true);
+    var am = d.getElementById('aboutMail');
+    if (am && am.parentNode && !d.getElementById('aboutWa')) {
+      var a;
+      if (wa()) {
+        a = mk('a', 'chip', '💬 تواصل عبر واتساب'); a.setAttribute('aria-label', 'تواصل معنا عبر واتساب');
+        a.target = '_blank'; a.rel = 'noopener'; a.href = waLink('السلام عليكم، لدي رسالة بخصوص تطبيق حصن المسلم:');
+      } else {
+        a = mk('button', 'chip', '💬 واتساب <span dir="ltr" style="unicode-bidi:plaintext">@' + user() + '</span>');
+        a.type = 'button'; a.addEventListener('click', copyUser);
+      }
+      a.id = 'aboutWa'; a.style.textDecoration = 'none';
+      am.parentNode.insertBefore(a, am); am.parentNode.style.flexWrap = 'wrap'; am.parentNode.style.gap = '8px';
+    }
+  }
+})();
+</script>
+<style id="oatb-css">
+.oaw{overflow-x:auto;border:1.5px solid var(--line);border-radius:14px;margin:8px 0}
+.oatb{width:100%;border-collapse:collapse;font-size:.8rem;text-align:center}
+.oatb th{background:rgba(255,255,255,.07);font-weight:700;padding:8px 6px;white-space:nowrap}
+.oatb td{padding:7px 6px;border-top:1px solid var(--line);vertical-align:middle}
+.oatb .oan{text-align:start;white-space:nowrap;font-weight:600}
+.oatb .oac{white-space:nowrap;direction:ltr;unicode-bidi:plaintext}
+.oatb .oas{white-space:nowrap;color:var(--mut);font-size:.74rem}
+.oatb .oac.full{color:var(--ac);font-weight:700}
+.oatb .oadl{min-height:0;height:30px;padding:0 10px;font-size:.76rem;white-space:nowrap}
+.oatb .oadl:disabled{opacity:.55}
+</style>
 </body>
 </html>
