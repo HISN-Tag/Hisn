@@ -2934,6 +2934,7 @@ addEventListener('focus',nr);document.addEventListener('visibilitychange',()=>{i
 const bn=document.createElement('div');bn.className='nt31';document.body.appendChild(bn);
 if(!ld('bk_first'))sv('bk_first',String(Date.now()));
 let sent=J('nsent31',{});const fire=(id,title,body,act,cb)=>{const k=D()+id;if(sent[k])return false;sent={...Object.fromEntries(Object.entries(sent).filter(([x])=>x.startsWith(D()))),[k]:1};sv('nsent31',JSON.stringify(sent));vb([60,40,60]);let ok=0;try{if('Notification' in window&&Notification.permission==='granted'){const _o={body,lang:'ar',dir:'rtl',tag:k},_r=window.__swr;if(_r&&_r.showNotification)_r.showNotification(title,_o);else new Notification(title,_o);ok=1}}catch(e){}
+ if(ok&&document.visibilityState!=='visible'){try{window.NS&&NS.log&&NS.log(title+(body?' — '+body:''),'remind',k)}catch(e){}}
  if(!ok||document.visibilityState==='visible'){if(window.apToast)apToast(title+(body?' — '+body:''),act&&act[0],act&&act[1],{kind:'remind',key:k});else{bn.innerHTML=`<b>${title}</b><span>${body}</span>`;bn.classList.add('on');setTimeout(()=>bn.classList.remove('on'),7000)}}cb&&cb();return true};
 const inW=(t,m=0,w=90e3)=>{const d=Date.now()-(+t-m*6e4);return d>=0&&d<w};
 /* ===== تقرير اليوم: من بعد العشاء بساعة حتى الفجر ===== */
@@ -5143,8 +5144,18 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
     } else { q.push(o); }
     updMore();
   }
+  /* تسجيل بدون عرض: لما التذكير يطلع كإشعار نظام والتطبيق في الخلفية (الموبايل)، نسجّله «غير مقروء» عشان العلامة تظهر لما يرجع */
+  function logOnly(m, kind, key) {
+    var text = String(m == null ? '' : m).trim(); if (!text) return;
+    var k = key || text, now = Date.now();
+    if (seen[k] && now - seen[k] < 8000) return;
+    seen[k] = now;
+    hist.push({ t: text, k: kind || 'remind', at: now, r: 0 });
+    if (hist.length > 30) hist = hist.slice(-30);
+    save(); updBadge();
+  }
   window.apToast = function (m, label, fn, opt) { push(m, label, fn, opt); };
-  window.NS = { push: push, openHistory: openHist };
+  window.NS = { push: push, log: logOnly, openHistory: openHist };
 
   /* ---- نافذة سفلية بسيطة ---- */
   function sheetEl(id, title) {
