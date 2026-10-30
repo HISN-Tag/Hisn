@@ -2648,7 +2648,7 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
     $('wkm').textContent=m;wkText='تقريري الأسبوعي\n'+R2.map(([k,v])=>k+': '+v).join('\n')+'\n'+m};
   if($('wks'))$('wks').onclick=()=>{wkR();card(wkText,'')};
   window.apOpenWk=()=>{const q=(s,f)=>{const e=d.querySelector(s);e&&f(e);return e};
-    q('#svc',e=>e.click());setTimeout(()=>{q('.stabs [data-t="mor"],#stabs [data-t="mor"]',e=>e.click());setTimeout(()=>{const sc=d.querySelector('.sc[data-g="إنجازاتي"]');if(sc){if(sc.classList.contains('cl'))sc.click();const b=[...sc.querySelectorAll('.seg .chip')].find(x=>x.textContent.trim()==='الأسبوع');b&&b.click()}},200)},250)};
+    const shO=d.getElementById('sheet');if(!(shO&&shO.classList.contains('open')))q('#svc',e=>e.click());   /* لو لوحة الخدمات مفتوحة (السجل اتفتح من الإعدادات) الضغط على #svc كان بيقفلها */setTimeout(()=>{q('.stabs [data-t="mor"],#stabs [data-t="mor"]',e=>e.click());setTimeout(()=>{const sc=d.querySelector('.sc[data-g="إنجازاتي"]');if(sc){if(sc.classList.contains('cl'))sc.click();const b=[...sc.querySelectorAll('.seg .chip')].find(x=>x.textContent.trim()==='الأسبوع');b&&b.click()}},200)},250)};
   const sx=window.svx;if(typeof sx==='function')window.svx=()=>{sx();wkR();imR&&imR();pmM&&pmR()};
   wkR();
   /* ===== (4) جولة البداية ===== */
