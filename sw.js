@@ -4,7 +4,7 @@ const AUDIO='hisn-audio';   // كاش المقاطع الصوتية: ما بيت
 const AUDIO_RE=/\.(mp3|m4a|aac|ogg|oga|opus|wav|flac)$/i;
 const inflight=new Set();
 
-const VERSION='2026.1';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
+const VERSION='2026.2';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
 
 /* ما بنعملش skipWaiting تلقائي: النسخة الجديدة بتستنى لحد ما المستخدم يضغط «تحديث الآن» (الصفحة بتبعت SKIP_WAITING) */
 self.addEventListener('install',e=>{});

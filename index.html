@@ -298,6 +298,11 @@ body[data-wx=rain] #birds,body[data-wx=storm] #birds,body[data-wx=snow] #birds,b
 .why{padding:5px 16px;border-radius:99px;background:rgba(8,14,28,.5);color:var(--ac);font-size:1.05rem;line-height:1.5}
 .why::before{content:'۞ ';font-family:'Amiri',serif}
 .title.swap{animation:in .45s ease}
+/* وصف المقطع تحت الاسم: يظهر ثم يثبت ٣ ثوانٍ ثم يتلاشى تدريجيًا */
+.desc{margin:-2px 0 0;max-width:88%;font-family:'Aref Ruqaa','Amiri',serif;font-size:clamp(1rem,4.4vw,1.22rem);font-weight:700;letter-spacing:0;line-height:1.9;color:color-mix(in srgb,var(--ac) 80%,#fff);text-align:center;text-wrap:balance;opacity:0;pointer-events:none;text-shadow:0 0 14px color-mix(in srgb,var(--ac) 45%,transparent),0 2px 8px rgba(0,0,0,.4)}
+.desc[hidden]{display:none}
+.desc.go{animation:descLife 4.5s ease forwards}
+@keyframes descLife{0%{opacity:0;transform:translateY(-4px);filter:blur(3px)}9%{opacity:.92;transform:none;filter:none}76%{opacity:.92;transform:none;filter:none}100%{opacity:0;transform:translateY(3px);filter:blur(5px)}}
 @keyframes in{from{opacity:0;transform:translateY(10px)}}
 .hint{font-size:1.1rem;color:var(--ink);min-height:1.5em;text-shadow:0 1px 10px rgba(0,0,0,.55)}
 .ctl{display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -934,6 +939,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 </header>
 <section class="info">
 <h1 class="title" id="title">جاري التحضير</h1>
+<p class="desc" id="desc" hidden></p>
 <div class="sub" id="sub" hidden><button type="button" data-g="adhkar">أذكار</button><button type="button" data-g="ibtihalat">ابتهالات</button><button type="button" data-g="anasheed">أناشيد</button></div>
 </section>
 <div class="ctl-wrap">
@@ -1301,7 +1307,8 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
         audio/anasheed/   ← الأناشيد             type: 'anasheed'   ← زر «أناشيد»
         audio/adhan/      ← الأذان               type: 'adhan' و 'adhan_fajr'
    2) أضف سطرًا لكل ملف بهذا الشكل:
-        { title: 'الاسم الذي يظهر على الشاشة', file: 'audio/اسم-الملف.mp3', type: 'النوع' },
+        { title: 'الاسم الذي يظهر على الشاشة', file: 'audio/اسم-الملف.mp3', type: 'النوع', desc: 'وصف صغير (اختياري)' },
+         desc = وصف يظهر بخط صغير تحت الاسم ٣ ثوانٍ ثم يتلاشى. امسحه أو اتركه فاضي وما يظهرش وصف.
 
    الأنواع (type):
      'quran'      تلاوة أو سورة         ← تظهر في زر "قرآن" (بنفس ترتيبك)
@@ -1349,7 +1356,7 @@ const MY_AUDIO = [
 	{ title: 'سورة الانسان',					file: 'audio/quran/076.mp3',				type: 'quran' },
 	{ title: 'سورة الحاقه',					file: 'audio/quran/069.mp3',				type: 'quran' },
 	{ title: 'سورة الأعلى',					file: 'audio/quran/087.mp3',				type: 'quran' },
-	{ title: 'سورة البقره',			file: 'audio/quran/Quran_1.mp3',			type: 'quran' },
+	{ title: 'سورة البقره',			file: 'audio/quran/Quran_1.mp3',			type: 'quran', desc: 'من نوادر المنشاوي' },
 	{ title: 'سورة فاطر',			file: 'audio/quran/Quran_2.mp3', 			type: 'quran' },
    // adhkar
 	{ title: 'أذكار الصباح',				file: 'audio/adhkar/morning.mp3',			type: 'morning' },
@@ -1519,7 +1526,7 @@ const DEFAULTS=[
   tas('لا إله إلا الله ١٠٠ مرة','lailahahaillallah'),tas('أستغفر الله ١٠٠ مرة','astaghfirullah')
 ];
 const SURAHS=SUR.map((s,i)=>({type:'quran',title:'سورة '+s,file:online(i+1)}));
-const mk=(x,why)=>({key:x.file,title:x.title,why,url:/^https?:/.test(x.file)?x.file:encodeURI(x.file)});
+const mk=(x,why)=>({key:x.file,title:x.title,desc:x.desc||'',why,url:/^https?:/.test(x.file)?x.file:encodeURI(x.file)});
 const mine=t=>MY_AUDIO.filter(x=>x.type===t);
 const lib=(t,why)=>{let a=mine(t);if(!a.length)a=t==='quran'?SURAHS:DEFAULTS.filter(x=>x.type===t);return a.map(x=>mk(x,why))};
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
@@ -1633,6 +1640,10 @@ function pick(){
 
 /* ===== المشغل ===== */
 const audio=$('audio');
+/* وصف المقطع: يظهر تحت الاسم ٣ ثوانٍ ثم يتلاشى (المدة في CSS: descLife) */
+function showDesc(t){const e=$('desc');if(!e)return;e.classList.remove('go');
+  if(!t){e.hidden=true;e.textContent='';return}
+  e.textContent=t;e.hidden=false;void e.offsetWidth;e.classList.add('go')}
 const ring=p=>$('ring').style.strokeDashoffset=301.6*(1-p);
 function setState(on,msg){document.body.classList.toggle('playing',on);const t=msg||(on?'جاري التشغيل':'اضغط للبدء');$('hint').textContent=t;$('hint').classList.toggle('long',t.length>22)}
 async function lock(){try{await navigator.wakeLock?.request('screen')}catch(e){}}
@@ -1641,7 +1652,7 @@ function load(m,auto=true,noHist){
   cur=m;played.add(m.key);if(!noHist)hist.push(m);
   if(mode==='quran'){lastQ=m.key;try{localStorage.setItem('lastQ',m.key)}catch(e){}}
   $('why').textContent=m.why||'';$('why').style.display=m.why?'':'none';
-  const t=$('title');t.textContent=m.title;t.classList.remove('swap');void t.offsetWidth;t.classList.add('swap');
+  const t=$('title');t.textContent=m.title;t.classList.remove('swap');void t.offsetWidth;t.classList.add('swap');showDesc(m.desc);
   ring(0);$('time').textContent='0:00 / 0:00';
   audio.src=m.url;audio.load();
   if('mediaSession' in navigator)navigator.mediaSession.metadata=new MediaMetadata({title:m.title,artist:'حصن'});
@@ -1662,7 +1673,7 @@ function step(d){
 }
 function setGrp(g){grp=g;try{localStorage.setItem('grp',g)}catch(e){}const b=document.querySelector('#cat > [data-m="adhkar"]');if(b)b.textContent=PKN[g][0]}
 function mark(){const c=$('cat'),g=mode==='adhkar'||!!LISTM[mode],k=g?'adhkar':mode;c.style.setProperty('--i',MODES.indexOf(k));c.querySelectorAll(':scope > button').forEach(b=>b.classList.toggle('on',b.dataset.m===k));const s=$('sub');if(s){s.hidden=!g;if(g)s.style.setProperty('--i',SUBS.indexOf(mode));s.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g===mode))}if(g&&mode!==grp)setGrp(mode)}
-function emptyMode(m){audio.pause();audio.removeAttribute('src');audio.load();cur=null;$('why').style.display='none';$('title').textContent=LISTM[m];ring(0);$('time').textContent='0:00 / 0:00';setState(false,'لا توجد ملفات بعد — ضعها في مجلد audio/'+m)}
+function emptyMode(m){audio.pause();audio.removeAttribute('src');audio.load();cur=null;showDesc('');$('why').style.display='none';$('title').textContent=LISTM[m];ring(0);$('time').textContent='0:00 / 0:00';setState(false,'لا توجد ملفات بعد — ضعها في مجلد audio/'+m)}
 function setMode(m){
   mode=m;mark();const w=windows(new Date());
   if(m==='now')load(pick());
@@ -2296,7 +2307,7 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
 (function(){
   const d=document,a=d.getElementById('audio');if(!a)return;let last=0;
   const save=()=>{try{if(typeof cur==='undefined'||!cur||!a.duration||a.duration<120||a.currentTime<8)return;
-    localStorage.setItem('rsm',JSON.stringify({m:{key:cur.key,title:cur.title,url:cur.url,why:cur.why||''},t:Math.floor(a.currentTime),ts:Date.now(),md:mode,q:(PKQ&&PKQ.mode===mode)?PKQ.list.map(x=>x.key):null}))}catch(e){}};
+    localStorage.setItem('rsm',JSON.stringify({m:{key:cur.key,title:cur.title,url:cur.url,why:cur.why||'',desc:cur.desc||''},t:Math.floor(a.currentTime),ts:Date.now(),md:mode,q:(PKQ&&PKQ.mode===mode)?PKQ.list.map(x=>x.key):null}))}catch(e){}};
   a.addEventListener('timeupdate',()=>{const n=Date.now();if(n-last>4000){last=n;save()}});
   a.addEventListener('pause',save);addEventListener('pagehide',save);
   a.addEventListener('ended',()=>{try{localStorage.removeItem('rsm')}catch(e){}});
@@ -3036,8 +3047,8 @@ addEventListener('focus',nr);document.addEventListener('visibilitychange',()=>{i
 const bn=document.createElement('div');bn.className='nt31';document.body.appendChild(bn);
 if(!ld('bk_first'))sv('bk_first',String(Date.now()));
 let sent=J('nsent31',{});const fire=(id,title,body,act,cb)=>{const k=D()+id;if(sent[k])return false;sent={...Object.fromEntries(Object.entries(sent).filter(([x])=>x.startsWith(D()))),[k]:1};sv('nsent31',JSON.stringify(sent));vb([60,40,60]);let ok=0;try{if('Notification' in window&&Notification.permission==='granted'){const _o={body,lang:'ar',dir:'rtl',tag:k},_r=window.__swr;if(_r&&_r.showNotification)_r.showNotification(title,_o);else new Notification(title,_o);ok=1}}catch(e){}
- if(ok&&document.visibilityState!=='visible'){try{window.NS&&NS.log&&NS.log(title+(body?' — '+body:''),'remind',k)}catch(e){}}
- if(!ok||document.visibilityState==='visible'){if(window.apToast)apToast(title+(body?' — '+body:''),act&&act[0],act&&act[1],{kind:'remind',key:k});else{bn.innerHTML=`<b>${title}</b><span>${body}</span>`;bn.classList.add('on');setTimeout(()=>bn.classList.remove('on'),7000)}}cb&&cb();return true};
+ if(ok&&document.visibilityState!=='visible'){try{window.NS&&NS.log&&NS.log(title+(body?' — '+body:''),'remind',k,act&&act[0],act?id:'')}catch(e){}}
+ if(!ok||document.visibilityState==='visible'){if(window.apToast)apToast(title+(body?' — '+body:''),act&&act[0],act&&act[1],{kind:'remind',key:k,act:act?id:''});else{bn.innerHTML=`<b>${title}</b><span>${body}</span>`;bn.classList.add('on');setTimeout(()=>bn.classList.remove('on'),7000)}}cb&&cb();return true};
 const inW=(t,m=0,w=90e3)=>{const d=Date.now()-(+t-m*6e4);return d>=0&&d<w};
 /* ===== تقرير اليوم: من بعد العشاء بساعة حتى الفجر ===== */
 const NFN=['السنن الرواتب','صلاة الضحى','الوتر','قيام الليل'];
@@ -3083,6 +3094,8 @@ const drOpen=()=>{const R=drBuild(),esc=t=>String(t).replace(/&/g,'&amp;').repla
   +(R.tomo.length?'<p class="mutp sth">للغد</p><div class="qd"><div class="qr"><span>'+esc(R.tomo[0])+'</span></div></div>':'')
   +'<div class="chips" style="justify-content:center;margin-top:14px"><button class="chip" id="drx" type="button">إغلاق</button></div></div>';drEl.hidden=false;const n=drEl.querySelector('.drc');if(n)n.scrollTop=sc;vb(8)};
 const pl=(t,w)=>()=>{try{const a=lib(t,WHY[w]);a&&a[0]&&load(a[0])}catch(e){}};
+/* أزرار الإشعارات المحفوظة في «سجل الإشعارات»: الاسم → الدالة (لازم تتسجل هنا عشان تشتغل حتى بعد إغلاق التطبيق وفتحه) */
+window.NTACT=window.NTACT||{};NTACT.dr=drOpen;NTACT.wk=()=>{window.apOpenWk&&apOpenWk()};NTACT.bk=()=>{const b=$('bkc');b&&b.click()};
 const ntick=()=>{try{const iw=!!(typeof T!=='undefined'&&T&&drWin());if(iw!==ntick._w){ntick._w=iw;qr()}}catch(e){}
  if(!N.on||typeof T==='undefined'||typeof PR==='undefined'||document.getElementById('splash'))return;const n=new Date(),C=[];let w={};try{w=typeof windows==='function'?windows(n):{}}catch(e){}
  PR.forEach(([k,nm])=>{if(!T[k])return;if(N.adhan&&inW(T[k]))C.push(['a'+k,'حان وقت أذان '+nm,'حيّ على الصلاة']);const ms=T[k]-n;if(N.pre&&ms>0&&ms<=N.pm*6e4)C.push(['p'+k,'باقي '+ar(Math.max(1,Math.round(ms/6e4)))+' دقائق على '+nm,'تجهّز للصلاة'])});
@@ -3899,6 +3912,7 @@ sync();buildRows();render();
 
 #sheet .sh-h #sx,
 #sheet .sh-h #sqb,
+#sheet .sh-h #ntbb,
 #sheet .sh-h #rptb {
   width: 42px !important; height: 42px !important; min-height: 0 !important;
   padding: 0 !important; box-sizing: border-box !important;
@@ -3910,7 +3924,12 @@ sync();buildRows();render();
   border: 1.5px solid var(--line); background: rgba(255,255,255,.07);
   color: var(--ink); cursor: pointer;
 }
-#sqb:active, #sheet .sh-h #rptb:active { transform: scale(.92); }
+#sqb:active, #sheet .sh-h #ntbb:active, #sheet .sh-h #rptb:active { transform: scale(.92); }
+#sheet .sh-h #ntbb {
+  position: relative; border: 1.5px solid var(--line); background: rgba(255,255,255,.07);
+  color: var(--ink); cursor: pointer;
+}
+#ntbb .ntmk { position: absolute; top: -5px; inset-inline-end: -5px; margin: 0; box-shadow: 0 0 0 2px var(--bg, #0a1020); }
 #sqb[aria-expanded="true"] {
   background: color-mix(in srgb, var(--ac) 18%, transparent);
   border-color: color-mix(in srgb, var(--ac) 55%, transparent);
@@ -4288,6 +4307,14 @@ body.fx-ui .sheet.open { will-change: auto; }
     btn.setAttribute('aria-expanded', 'false');
     btn.textContent = '\uD83D\uDD0D';
     wrap.appendChild(btn);
+
+    /* ---- زر الإشعارات بجانب البحث: يفتح «سجل الإشعارات» وعليه عدّاد غير المقروء ---- */
+    var bell = d.createElement('button');
+    bell.id = 'ntbb'; bell.type = 'button';
+    bell.setAttribute('aria-label', 'سجل الإشعارات');
+    bell.textContent = '\uD83D\uDD14';
+    bell.addEventListener('click', function () { try { window.NS && NS.openHistory(); } catch (e) {} });
+    wrap.appendChild(bell);
     box.classList.add('sqc');
 
     function isOpen() { return btn.getAttribute('aria-expanded') === 'true'; }
@@ -5171,6 +5198,13 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
 .nthi{display:flex;gap:8px;align-items:flex-start;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.05);font-size:.84rem;line-height:1.55}
 .nthi time{flex:none;color:var(--mut);font-size:.72rem;padding-top:2px;min-width:44px}
 .nthi.new{border-inline-start:3px solid var(--ac)}
+.nthi>span{flex:1;min-width:0;overflow-wrap:anywhere}
+.ntmk{display:inline-grid;place-items:center;min-width:16px;height:16px;padding:0 4px;margin-inline-start:6px;border-radius:99px;background:var(--ac);color:#1a1408;font-style:normal;font-size:.64rem;font-weight:800;line-height:1;vertical-align:middle;box-shadow:0 0 0 2px color-mix(in srgb,var(--ac) 25%,transparent)}
+.chip.on .ntmk{background:#1a1408;color:var(--ac);box-shadow:none}
+.nthi .nthb{align-self:center;height:28px;padding:0 11px;font-size:.76rem;white-space:nowrap}
+.nthi .nthx{flex:none;align-self:center;width:26px;height:26px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:inherit;font:inherit;font-size:.72rem;line-height:1;cursor:pointer;opacity:.75}
+.nthi .nthx:active{transform:scale(.9);opacity:1}
+#nthist .nthd #ntclr{min-height:0;height:32px;padding:0 14px;font-size:.8rem}
 #ntbadge{position:fixed;top:calc(env(safe-area-inset-top,0px) + 64px);left:18px;z-index:60;display:flex;align-items:center;gap:6px;padding:3px 11px 3px 4px;border-radius:99px;background:linear-gradient(135deg,rgba(8,14,28,.96),rgba(16,24,44,.96));color:var(--ink);border:1px solid color-mix(in srgb,var(--ac) 55%,transparent);box-shadow:0 4px 14px rgba(0,0,0,.4);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);font:inherit;cursor:pointer;transform:translateY(-150%);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1.15),opacity .3s}
 #ntbadge.show{transform:translateY(0);opacity:1}
 #ntbadge[hidden]{display:none}
@@ -5205,8 +5239,24 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
   badge.id = 'ntbadge'; badge.type = 'button'; badge.hidden = true; badge.setAttribute('aria-label', 'إشعارات غير مقروءة: افتح السجل');
   d.body.appendChild(badge);
   function save() { ls(HKEY, JSON.stringify(hist)); }
+  /* علامة مختصرة (رقم غير المقروء) على «التنبيهات» وعلى مجموعة «الإعدادات» في قائمة الخدمات */
+  function setMk(host, n) {
+    if (!host) return;
+    var m = null, i; for (i = 0; i < host.children.length; i++) if (host.children[i].className === 'ntmk') m = host.children[i];
+    if (!n) { if (m) m.remove(); return; }
+    if (!m) { m = mk('i', 'ntmk'); m.setAttribute('aria-hidden', 'true'); m.title = 'إشعارات غير مقروءة'; host.appendChild(m); }
+    m.textContent = n > 9 ? ar(9) + '+' : ar(n);
+  }
+  function updMarks(n) {
+    var g = d.querySelector('#svcg .sc[data-g="الإعدادات"]'); if (!g) return;
+    setMk(g.querySelector('h3 > span:not(.ic)') || g.querySelector('h3'), n);
+    g.querySelectorAll('.seg .chip').forEach(function (c) {
+      if (c.firstChild && String(c.firstChild.nodeValue || '').trim() === 'التنبيهات') setMk(c, n);
+    });
+  }
   function updBadge() {
     var n = hist.filter(function (h) { return !h.r; }).length;
+    try { updMarks(n); setMk(d.getElementById('ntbb'), n); } catch (e) {}
     try { if (navigator.setAppBadge) { if (n) navigator.setAppBadge(n).catch(function () {}); else if (navigator.clearAppBadge) navigator.clearAppBadge().catch(function () {}); } } catch (e) {}   /* رقم على أيقونة التطبيق المثبّت */
     if (n) { badge.querySelector('.ntbt').textContent = ar(n) + (n === 1 ? ' جديد' : ' جديدة'); badge.hidden = false; void badge.offsetWidth; badge.classList.add('show'); }
     else { badge.classList.remove('show'); setTimeout(function () { if (!badge.classList.contains('show')) badge.hidden = true; }, 400); }
@@ -5218,7 +5268,8 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
   function ttlOf(o) { var t = Math.min(11000, Math.max(4500, 3500 + o.text.length * 55)); if (o.label) t = Math.max(t, 9000); if (o.kind === 'remind') t = Math.max(t, 10000); return t; }
 
   function record(o) {
-    o.h = { t: o.text, k: o.kind, at: Date.now(), r: o.kind === 'info' ? 1 : 0 };   // التنبيهات والأخطاء تعتبر «غير مقروءة» لحد ما تتفاعل معاها أو تفتح السجل
+    o.h = { t: o.text, k: o.kind, at: Date.now(), r: o.kind === 'info' ? 1 : 0 };
+    if (o.label) { o.h.l = o.label; if (o.act) o.h.a = o.act; o.h.fn = o.fn; }   // الدالة بتفضل في الذاكرة بس (JSON بيتجاهلها)، والاسم a بيتحفظ ويتحوّل لدالة من NTACT   // التنبيهات والأخطاء تعتبر «غير مقروءة» لحد ما تتفاعل معاها أو تفتح السجل
     hist.push(o.h);
     if (hist.length > 30) hist = hist.slice(-30);
     save(); updBadge();
@@ -5288,7 +5339,7 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
   function push(m, label, fn, opt) {
     opt = opt || {};
     var text = String(m == null ? '' : m).trim(); if (!text) return;
-    var o = { id: ++seq, text: text, label: label || '', fn: fn || null, kind: opt.kind, key: opt.key || text };
+    var o = { id: ++seq, text: text, label: label || '', fn: fn || null, kind: opt.kind, key: opt.key || text, act: opt.act || '' };
     o.kind = kindOf(o); o.prio = prioOf(o);
     var i, now = Date.now();
     for (i = 0; i < vis.length; i++) if (vis[i].key === o.key) { arm(vis[i]); return; }       // نفس الإشعار ظاهر: نجدد مدته بس
@@ -5303,17 +5354,18 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
     updMore();
   }
   /* تسجيل بدون عرض: لما التذكير يطلع كإشعار نظام والتطبيق في الخلفية (الموبايل)، نسجّله «غير مقروء» عشان العلامة تظهر لما يرجع */
-  function logOnly(m, kind, key) {
+  function logOnly(m, kind, key, label, aid) {
     var text = String(m == null ? '' : m).trim(); if (!text) return;
     var k = key || text, now = Date.now();
     if (seen[k] && now - seen[k] < 8000) return;
     seen[k] = now;
-    hist.push({ t: text, k: kind || 'remind', at: now, r: 0 });
+    var hh = { t: text, k: kind || 'remind', at: now, r: 0 }; if (label) { hh.l = label; if (aid) hh.a = aid; }
+    hist.push(hh);
     if (hist.length > 30) hist = hist.slice(-30);
     save(); updBadge();
   }
   window.apToast = function (m, label, fn, opt) { push(m, label, fn, opt); };
-  window.NS = { push: push, log: logOnly, openHistory: openHist };
+  window.NS = { push: push, log: logOnly, openHistory: function () { openHist(); } };
 
   /* ---- نافذة سفلية بسيطة ---- */
   function sheetEl(id, title) {
@@ -5326,27 +5378,48 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
     return { ov: ov, body: ov.querySelector('.body'), close: close };
   }
   var H;
-  function openHist() {
+  /* زر الإشعار داخل السجل: الدالة من الذاكرة (نفس الجلسة) أو من سجل NTACT (بعد إعادة الفتح) */
+  function actOf(h) { if (!h || !h.l) return null; var f = h.fn || (window.NTACT && h.a && window.NTACT[h.a]); return typeof f === 'function' ? f : null; }
+  function openHist(sc0) {
+    if (typeof sc0 !== 'number') sc0 = 0;
     H = H || sheetEl('nthist', 'سجل الإشعارات');
-    var rows = hist.slice().reverse().map(function (h) {
+    var rows = hist.slice().reverse().map(function (h, ri) {
       var t = new Date(h.at);
-      return '<div class="nthi' + (h.r ? '' : ' new') + '"><time>' + ar(('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2)) + '</time><span>' + (ICON[h.k] || 'ℹ️') + ' ' + esc(h.t) + '</span></div>';
+      return '<div class="nthi' + (h.r ? '' : ' new') + '"><time>' + ar(('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2)) + '</time><span>' + (ICON[h.k] || 'ℹ️') + ' ' + esc(h.t) + '</span>' +
+        (actOf(h) ? '<button type="button" class="ntb nthb" data-i="' + (hist.length - 1 - ri) + '">' + esc(h.l) + '</button>' : '') +
+        '<button type="button" class="nthx" data-i="' + (hist.length - 1 - ri) + '" aria-label="مسح هذا الإشعار">✕</button></div>';
     }).join('');
-    H.body.innerHTML = '<div class="ntl">' + (rows || '<div class="nthe">لا توجد إشعارات سابقة</div>') + '</div>' +
-      (rows ? '<div class="ntft" style="margin-top:10px"><button type="button" class="chip" id="ntclr">مسح السجل</button></div>' : '');
-    var c = H.body.querySelector('#ntclr');
-    if (c) c.onclick = function () { hist = []; ls(HKEY, '[]'); openHist(); };
+    H.body.innerHTML = '<div class="ntl">' + (rows || '<div class="nthe">لا توجد إشعارات سابقة</div>') + '</div>';
+    var lst = H.body.querySelector('.ntl');
+    if (lst) {
+      if (sc0) lst.scrollTop = sc0;
+      lst.addEventListener('click', function (e) {
+        var x = e.target.closest('.nthx');
+        if (x) { hist.splice(+x.dataset.i, 1); save(); updBadge(); openHist(lst.scrollTop); return; }   // مسح إشعار واحد
+        var b = e.target.closest('.nthb'); if (!b) return;
+        var f = actOf(hist[+b.dataset.i]); if (!f) return;
+        H.close(); try { f(); } catch (er) {}
+      });
+    }
+    /* «مسح السجل» في منتصف الرأس (بين العنوان وزر الإغلاق) */
+    var hd = H.ov.querySelector('.nthd'), oc = hd && hd.querySelector('#ntclr');
+    if (oc) oc.remove();
+    if (hd && hist.length) {
+      var c = mk('button', 'chip', 'مسح السجل'); c.type = 'button'; c.id = 'ntclr';
+      c.onclick = function () { hist = []; ls(HKEY, '[]'); openHist(); };
+      hd.insertBefore(c, hd.lastElementChild);
+    }
     H.ov.hidden = false;
     hist.forEach(function (h) { h.r = 1; }); save(); updBadge();
   }
-  more.addEventListener('click', openHist);
-  badge.addEventListener('click', openHist);
-  updBadge();
+  more.addEventListener('click', function () { openHist(); });
+  badge.addEventListener('click', function () { openHist(); });
+  updBadge(); setTimeout(updBadge, 800); setTimeout(updBadge, 3000);
   var ntg = d.getElementById('ntg');
   if (ntg && ntg.parentNode) {
     var row = mk('div', 'chips', '<button type="button" class="chip" id="ntHistBtn">🔔 سجل الإشعارات</button>');
     row.style.marginTop = '8px'; ntg.parentNode.insertBefore(row, ntg.nextSibling);
-    row.firstChild.addEventListener('click', openHist);
+    row.firstChild.addEventListener('click', function () { openHist(); });
   }
 
   /* ===== التواصل: واتساب + البريد (في «نبذة عنا» وفي «الإبلاغ عن خطأ») ===== */
