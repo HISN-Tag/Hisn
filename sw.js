@@ -1,15 +1,16 @@
 /* حصن — Service Worker (دمج: كاش الصفحة القديم + حفظ المقاطع الصوتية للتشغيل بدون نت) */
 const C='index';            // كاش الصفحة والملفات (زي ما كان)
+const FONTS='hisn-fonts';   // خطوط Google: عشان تظهر بنفس الشكل بدون نت
 const AUDIO='hisn-audio';   // كاش المقاطع الصوتية: ما بيتمسحش مع التحديث
 const AUDIO_RE=/\.(mp3|m4a|aac|ogg|oga|opus|wav|flac)$/i;
 const inflight=new Set();
 
-const VERSION='2026.2';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
+const VERSION='2026.3';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
 
 /* ما بنعملش skipWaiting تلقائي: النسخة الجديدة بتستنى لحد ما المستخدم يضغط «تحديث الآن» (الصفحة بتبعت SKIP_WAITING) */
 self.addEventListener('install',e=>{});
 self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x!==AUDIO).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
+self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x!==AUDIO&&x!==FONTS).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
 
 const isAudio=r=>{
   if(r.destination==='audio'||r.destination==='video')return true;
@@ -21,9 +22,38 @@ self.addEventListener('fetch',e=>{
   if(r.method!=='GET')return;
   if(r.headers.get('X-Hisn-Save')){e.respondWith(saveReq(r));return}   // طلب «حمّل للتشغيل بدون نت» من الصفحة
   if(isAudio(r)&&/^https?:$/.test(new URL(r.url).protocol)){e.respondWith(audio(e));return}
-  if(new URL(r.url).origin!==location.origin)return;
-  e.respondWith(fetch(r).then(res=>{const cp=res.clone();caches.open(C).then(c=>c.put(r,cp)).catch(()=>{});return res}).catch(()=>caches.match(r).then(m=>m||caches.match('./'))))
+  const u=new URL(r.url);
+  if(/(^|\.)fonts\.(googleapis|gstatic)\.com$/.test(u.hostname)){e.respondWith(swr(e,FONTS));return}
+  if(u.origin!==location.origin)return;
+  if(r.headers.has('range'))return;
+  e.respondWith(shell(e));
 });
+
+/* ===== فتح فوري: من الكاش ويتحدّث في الخلفية (stale-while-revalidate) ===== */
+async function swr(e,name){
+  const c=await caches.open(name),hit=await c.match(e.request);
+  const net=fetch(e.request).then(res=>{if(res&&(res.ok||res.type==='opaque'))c.put(e.request,res.clone());return res}).catch(()=>null);
+  if(hit){e.waitUntil(net);return hit}
+  return (await net)||new Response('',{status:504});
+}
+const sig=r=>r.headers.get('etag')||r.headers.get('last-modified')||r.headers.get('content-length')||'';
+async function shell(e){
+  const r=e.request,c=await caches.open(C),hit=await c.match(r);
+  const net=fetch(r).then(async res=>{
+    if(res&&res.ok){
+      const changed=hit&&r.mode==='navigate'&&sig(hit)&&sig(res)&&sig(hit)!==sig(res);
+      await c.put(r,res.clone());
+      if(changed)notify();   // الصفحة اتحدّثت في الخلفية: نبلّغ المستخدم يعمل تحديث
+    }
+    return res;
+  }).catch(()=>null);
+  if(hit){e.waitUntil(net);return hit}
+  return (await net)||(await caches.match('./'))||new Response('غير متصل',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
+}
+async function notify(){
+  const l=await self.clients.matchAll({type:'window'});
+  l.forEach(c=>c.postMessage({type:'APP_UPDATED'}));
+}
 
 /* ===== حفظ مقطع بطلب من الصفحة (زرار التحميل): تحميلة واحدة، وبترد 204 لما يتحفظ ===== */
 async function saveReq(r){

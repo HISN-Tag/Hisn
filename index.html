@@ -65,7 +65,7 @@
     bn.addEventListener('click',function(e){
       var t=e.target.closest?e.target.closest('[data-u]'):null;if(!t)return;
       if(t.getAttribute('data-u')==='x'){kill();return}
-      if(playing()&&!confirm('التحديث هيوقّف الصوت الشغّال دلوقتي. تكمل؟'))return;
+      if(playing()){hisnAsk('التحديث هيوقّف الصوت الشغّال دلوقتي. تكمل؟',apply);return}
       apply()});
     d.body.appendChild(bn);
     requestAnimationFrame(function(){requestAnimationFrame(function(){if(bn){bn.style.opacity='1';bn.style.transform='none'}})});
@@ -212,7 +212,7 @@
 <title>حِصْنٌ</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&amp;family=Aref+Ruqaa:wght@700&amp;family=IBM+Plex+Sans+Arabic:wght@500;600&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&amp;family=Aref+Ruqaa:wght@700&amp;family=IBM+Plex+Sans+Arabic:wght@500;600&amp;display=swap" rel="stylesheet"/></noscript>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&amp;family=Aref+Ruqaa:wght@700&amp;family=IBM+Plex+Sans+Arabic:wght@500;600&amp;display=swap" rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'"/><noscript><noscript><link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&amp;family=Aref+Ruqaa:wght@700&amp;family=IBM+Plex+Sans+Arabic:wght@500;600&amp;display=swap" rel="stylesheet"/></noscript></noscript>
 <style>
 @property --t{syntax:'<color>';inherits:true;initial-value:#0a1124}
 @property --b{syntax:'<color>';inherits:true;initial-value:#1d2c52}
@@ -1572,7 +1572,7 @@ const PR=[['fajr','الفجر'],['dhuhr','الظهر'],['asr','العصر'],['ma
 /* ===== معلومات القمر والمناسبات والقبلة ===== */
 let _hd=0;
 function moonInfo(n){const p=(moonAge(n)%SYN)/SYN,pc=Math.round((1-Math.cos(2*Math.PI*p))/2*100),nm=p<.03||p>.97?'محاق':p<.22?'هلال متزايد':p<.28?'تربيع أول':p<.47?'أحدب متزايد':p<.53?'بدر':p<.72?'أحدب متناقص':p<.78?'تربيع أخير':'هلال متناقص';return nm+' · '+pc.toLocaleString('ar-EG')+'٪'}
-function hijriMD(n){try{const p=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{day:'numeric',month:'numeric'}).formatToParts(n);return[+p.find(x=>x.type==='month').value,+p.find(x=>x.type==='day').value]}catch(e){return[0,0]}}
+var _hf,_hc={};function hijriMD(n){try{const k=n.getFullYear()*10000+n.getMonth()*100+n.getDate();let c=_hc[k];if(!c){_hf=_hf||new Intl.DateTimeFormat('en-u-ca-islamic-umalqura-nu-latn',{day:'numeric',month:'numeric'});const p=_hf.formatToParts(n);c=_hc[k]=[+p.find(x=>x.type==='month').value,+p.find(x=>x.type==='day').value]}return[c[0],c[1]]}catch(e){return[0,0]}}
 function occasions(n){const[m,d]=hijriMD(n),w=n.getDay(),o=[];
   if(m===1&&(d===9||d===10))o.push('تاسوعاء وعاشوراء — يُستحب الصيام');
   if(m===9)o.push(d>=21?'العشر الأواخر من رمضان':'شهر رمضان المبارك');
@@ -1753,9 +1753,9 @@ function pkDl(){const O=window.hisnOA,T=m=>{try{window.apToast&&apToast(m)}catch
   const L=pkItems(pkM).filter(x=>pkSel.has(x.key));if(!L.length){T('حدّد المقاطع اللي عايز تحمّلها الأول');return}
   const todo=L.filter(x=>!O.has(x.url));if(!todo.length){T('كل المحدد محفوظ بالفعل ✓');return}
   if(navigator.onLine===false){T('محتاج نت عشان التحميل');return}
-  if(todo.length>3&&!confirm('هتحمّل '+pkAr(todo.length)+' مقطع على جهازك، وممكن ياخدوا مساحة كبيرة. تكمل؟'))return;
+  const go=()=>{
   const b=pkEl.querySelector('#pkdl');b.disabled=true;
-  O.download(todo.map(x=>x.url),(d,n)=>{b.textContent='⬇ '+pkAr(d)+'/'+pkAr(n)}).then(r=>{b.disabled=false;b.textContent='⬇ تحميل بدون نت';pkDraw();T(r.fail?('اتحفظ '+pkAr(r.ok)+' وتعذّر '+pkAr(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+pkAr(r.ok)+' مقطع للتشغيل بدون نت ✓'))})}
+  O.download(todo.map(x=>x.url),(d,n)=>{b.textContent='⬇ '+pkAr(d)+'/'+pkAr(n)}).then(r=>{b.disabled=false;b.textContent='⬇ تحميل بدون نت';pkDraw();T(r.fail?('اتحفظ '+pkAr(r.ok)+' وتعذّر '+pkAr(r.fail)+' (الموقع المصدر ما بيسمحش بالحفظ)'):('اتحفظ '+pkAr(r.ok)+' مقطع للتشغيل بدون نت ✓'))})};if(todo.length>3)hisnAsk('هتحمّل '+pkAr(todo.length)+' مقطع على جهازك، وممكن ياخدوا مساحة كبيرة. تكمل؟',go);else go()}
 function pkGo(){const L=pkItems(pkM).filter(x=>pkSel.has(x.key)).map(x=>({...x,why:pkShuf?'من قائمتك • عشوائي':'من قائمتك'}));if(!L.length)return;
   if(pkShuf)for(let i=L.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[L[i],L[j]]=[L[j],L[i]]}
   try{localStorage.setItem('pk_'+pkM,JSON.stringify(L.map(x=>x.key)))}catch(e){}
@@ -2171,7 +2171,7 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
   const evR=()=>{const t0=new Date();t0.setHours(12,0,0,0);const L=EV.map((x,i)=>[i,x,Math.round((new Date(x.d+'T12:00:00')-t0)/864e5)]).sort((a,b)=>Math.abs(a[2])-Math.abs(b[2])).sort((a,b)=>(a[2]<0)-(b[2]<0));
     $('evl').innerHTML=L.length?L.map(([i,x,n])=>`<div class="qr" data-i="${i}" style="cursor:pointer"><span>${esc(x.t)}</span><b style="font-size:.85rem;min-width:0">${n>0?'بعد '+ar(n)+' يومًا':n===0?'اليوم':'مضى '+ar(-n)+' يومًا'}</b></div>`).join(''):'<p class="mutp">لا مواعيد بعد</p>'};
   $('eva').onclick=()=>{const t=$('evt').value.trim(),d=$('evd').value;if(!t||!d||EV.length>=30)return;EV.push({t,d});sv('evs',JSON.stringify(EV));$('evt').value='';vb(10);evR()};
-  $('evl').onclick=e=>{const r=e.target.closest('[data-i]');if(!r)return;if(confirm('حذف هذا الموعد؟')){EV.splice(+r.dataset.i,1);sv('evs',JSON.stringify(EV));evR()}};
+  $('evl').onclick=e=>{const r=e.target.closest('[data-i]');if(!r)return;hisnAsk('حذف هذا الموعد؟',()=>{EV.splice(+r.dataset.i,1);sv('evs',JSON.stringify(EV));evR()})};
   evR();
   const GR=[
    /* ٥ أقسام رئيسية (الصلاة، الصيام، الزكاة، الذكر، القرآن) + المزيد. تظهر مقفولة، وتفتح موضوعاتها عند الضغط على القسم */
@@ -2418,10 +2418,10 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
  const ck=(id,items,key,dayScoped=true)=>{const el=$(id);if(!el)return;const k=key+(dayScoped?'-'+day():'');let vals=get(k,[]);const render=()=>{el.innerHTML=items.map((t,i)=>`<button type="button" class="${vals.includes(i)?'on':''}" data-i="${i}"><span>${t}</span><em>${vals.includes(i)?'تم':'لم يتم'}</em></button>`).join('');put(k,vals)};el.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;const i=+b.dataset.i;vals=vals.includes(i)?vals.filter(x=>x!==i):[...vals,i];render();const st=$(id+'Status');if(st)st.textContent=`أُنجز ${ar(vals.length)} من ${ar(items.length)}`});render();return {render,get:()=>vals};};
  // Favorite adhkar, user-managed
  let fav=get('favorites',[]);function favR(){const el=$('favdhList');if(!el)return;el.innerHTML=fav.length?fav.map((x,i)=>`<button type="button" data-i="${i}"><span>${x.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}</span><em>نسخ / حذف</em></button>`).join(''):'<p class="mutp">لا توجد أذكار محفوظة بعد.</p>';put('favorites',fav)}
- $('favdhAdd')?.addEventListener('click',()=>{const v=$('favdhIn').value.trim();if(!v)return;fav.unshift(v);$('favdhIn').value='';favR()});$('favdhList')?.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;const i=+b.dataset.i;if(e.shiftKey){fav.splice(i,1);favR();return}const v=fav[i];if(navigator.clipboard?.writeText)navigator.clipboard.writeText(v).catch(()=>{});else{const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(_){}t.remove()}if(confirm('تم طلب نسخ الذكر. هل تريد حذفه من المفضلة؟')){fav.splice(i,1);favR()}});favR();
+ $('favdhAdd')?.addEventListener('click',()=>{const v=$('favdhIn').value.trim();if(!v)return;fav.unshift(v);$('favdhIn').value='';favR()});$('favdhList')?.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;const i=+b.dataset.i;if(e.shiftKey){fav.splice(i,1);favR();return}const v=fav[i];if(navigator.clipboard?.writeText)navigator.clipboard.writeText(v).catch(()=>{});else{const t=document.createElement('textarea');t.value=v;document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(_){}t.remove()}hisnAsk('تم طلب نسخ الذكر. هل تريد حذفه من المفضلة؟',()=>{fav.splice(i,1);favR()})});favR();
  // Quran memorization log
  let hlog=get('hifzlog',[]);function hifzR(){if(!$('hifzLog'))return;$('hifzSummary').textContent=`إجمالي الصفحات المسجلة: ${ar(hlog.reduce((a,x)=>a+x.p,0))} صفحة · عدد الجلسات: ${ar(hlog.length)}`;$('hifzLog').innerHTML=hlog.slice(0,12).map((x,i)=>`<button data-i="${i}"><span>${x.s} — ${ar(x.p)} صفحة <small>${x.d}</small></span><em>حذف</em></button>`).join('');put('hifzlog',hlog)}
- $('hifzAdd')?.addEventListener('click',()=>{const s=$('hifzSurah').value.trim()||'حفظ قرآن',p=Math.floor(+$('hifzPages').value);if(!p||p<1)return;hlog.unshift({s,p,d:day()});$('hifzPages').value='';hifzR()});$('hifzLog')?.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b){hlog.splice(+b.dataset.i,1);hifzR()}});$('hifzClear')?.addEventListener('click',()=>{if(confirm('مسح سجل الحفظ بالكامل؟')){hlog=[];hifzR()}});hifzR();
+ $('hifzAdd')?.addEventListener('click',()=>{const s=$('hifzSurah').value.trim()||'حفظ قرآن',p=Math.floor(+$('hifzPages').value);if(!p||p<1)return;hlog.unshift({s,p,d:day()});$('hifzPages').value='';hifzR()});$('hifzLog')?.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b){hlog.splice(+b.dataset.i,1);hifzR()}});$('hifzClear')?.addEventListener('click',()=>{hisnAsk('مسح سجل الحفظ بالكامل؟',()=>{hlog=[];hifzR()})});hifzR();
  // Review list
  const reviewItems=['الفاتحة','قصار السور','ما حفظته هذا الأسبوع'];let reviewCustom=get('reviewCustom',[]);let reviewState=get('review-'+day(),[]);function reviewR(){const all=reviewItems.concat(reviewCustom);$('reviewList').innerHTML=all.map((x,i)=>`<button class="${reviewState.includes(i)?'on':''}" data-i="${i}"><span>${x}</span><em>${reviewState.includes(i)?'تمت المراجعة':'مراجعة'}</em></button>`).join('');$('reviewStatus').textContent=`تمت مراجعة ${ar(reviewState.length)} من ${ar(all.length)}`;put('review-'+day(),reviewState)}$('reviewList')?.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;const i=+b.dataset.i;reviewState=reviewState.includes(i)?reviewState.filter(x=>x!==i):reviewState.concat(i);reviewR()});$('reviewAdd')?.addEventListener('click',()=>{const v=$('reviewIn').value.trim();if(v){reviewCustom.push(v);put('reviewCustom',reviewCustom);$('reviewIn').value='';reviewR()}});reviewR();
  // Tadabbur notes
@@ -2638,10 +2638,10 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
       setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){}setTimeout(()=>f.remove(),2000)},300)};
     imR()}
   /* ===== (3) أبلغ عن خطأ ===== */
-  if($('rpt'))$('rpt').onclick=()=>{const t=prompt('اذكر اسم الذكر والخطأ أو التصحيح المقترح مع المصدر إن وُجد');if(!t||!t.trim())return;const b='بلاغ عن خطأ في تطبيق حصن:\n'+t.trim();
+  if($('rpt'))$('rpt').onclick=()=>{hisnPrompt('اذكر اسم الذكر والخطأ أو التصحيح المقترح مع المصدر إن وُجد',t=>{const b='بلاغ عن خطأ في تطبيق حصن:\n'+t.trim();
     if(REPORT_EMAIL)location.href='mailto:'+REPORT_EMAIL+'?subject='+encodeURIComponent('بلاغ خطأ - حصن')+'&body='+encodeURIComponent(b);
     else if(navigator.share)navigator.share({title:'بلاغ خطأ',text:b}).catch(()=>{});
-    else navigator.clipboard&&navigator.clipboard.writeText(b).then(()=>toast('نُسخ البلاغ، أرسله لمسؤول التطبيق')).catch(()=>{})};
+    else navigator.clipboard&&navigator.clipboard.writeText(b).then(()=>toast('نُسخ البلاغ، أرسله لمسؤول التطبيق')).catch(()=>{})})};
   /* ===== (5) بطاقات المشاركة ===== */
   const card=async(text,sub)=>{const W=1080,H=1350,c=d.createElement('canvas');c.width=W;c.height=H;const x=c.getContext('2d');
     const gr=x.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#0a1124');gr.addColorStop(1,'#1d2c52');x.fillStyle=gr;x.fillRect(0,0,W,H);
@@ -2826,9 +2826,8 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
     $('exhba').onclick=add;
     $('exhbi').onkeydown=e=>{if(e.key==='Enter')add()};
     $('exhbl').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const i=+b.dataset.i,p=P[i];if(!p)return;
-      if(b.dataset.a==='r'){if(!confirm('هل تريد بدء العدّاد من جديد لمسار «'+p.n+'»؟'))return;
-        p.b=Math.max(p.b||0,days(p));p.r=(p.r||0)+1;p.s=Date.now();save();draw();toast('لا تيأس، فالله يحب التوابين. ابدأ من جديد')}
-      else{if(!confirm('حذف مسار «'+p.n+'»؟'))return;P.splice(i,1);save();draw()}};
+      if(b.dataset.a==='r'){hisnAsk('هل تريد بدء العدّاد من جديد لمسار «'+p.n+'»؟',()=>{p.b=Math.max(p.b||0,days(p));p.r=(p.r||0)+1;p.s=Date.now();save();draw();toast('لا تيأس، فالله يحب التوابين. ابدأ من جديد')})}
+      else{hisnAsk('حذف مسار «'+p.n+'»؟',()=>{P.splice(i,1);save();draw()})}};
     draw();
   })();
 
@@ -2846,7 +2845,7 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
       if(!i&&$('exsjt').value==='أخرى'){toast('اكتب تفاصيل الصدقة');return}
       if(A.length>=200){toast('امتلأ السجل');return}
       A.unshift({t:$('exsjt').value,i,w,d:new Date().toLocaleDateString('ar-EG')});save();$('exsji').value='';$('exsjw').value='';draw();toast('تقبّل الله منك')};
-    $('exsjl').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;if(!confirm('حذف هذا السجل؟'))return;A.splice(+b.dataset.i,1);save();draw()};
+    $('exsjl').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;hisnAsk('حذف هذا السجل؟',()=>{A.splice(+b.dataset.i,1);save();draw()})};
     draw();
   })();
 
@@ -5176,11 +5175,11 @@ function show(){var st=$('oaSt');if(!st)return;
       if(b.id==='oaWifi'){toggleWifi();return}
       if(b.id==='oaPer'){askPersist();return}
       if(b.id==='oaJpa'){if(job){job.pause=!job.pause;paintJob()}return}
-      if(b.id==='oaJx'){if(job&&confirm('تلغي التحميل؟ اللي اتحفظ هيفضل محفوظ وتقدر تستكمل بعدين.')){job.cancel=true;job.pause=false;paintJob()}return}
+      if(b.id==='oaJx'){if(job)hisnAsk('تلغي التحميل؟ اللي اتحفظ هيفضل محفوظ وتقدر تستكمل بعدين.',()=>{if(job){job.cancel=true;job.pause=false;paintJob()}});return}
       if(b.id==='oaAdh')bulk(b,urlsOf(function(){return adhkarList()}),'الأذكار');
       else if(b.id==='oaAdn')bulk(b,urlsOf(function(){return lib('adhan','').concat(lib('adhan_fajr',''))}),'الأذان');
       else if(b.id==='oaQur'){var qu=uniq(urlsOf(function(){return lib('quran','')})),qn=qu.filter(function(u){return !has(u)}).length;
-        if(qn>1&&!confirm('هتحمّل '+ar(qn)+' سورة. حجم القرآن كامل كبير (غالبًا مئات الميجابايت أو أكثر)'+(cellular()?'، وإنت دلوقتي على بيانات الموبايل':'')+'، ويفضّل تكون على واي فاي ومساحة الجهاز تكفي. تكمل؟'))return;
+        if(qn>1){hisnAsk('هتحمّل '+ar(qn)+' سورة. حجم القرآن كامل كبير (غالبًا مئات الميجابايت أو أكثر)'+(cellular()?'، وإنت دلوقتي على بيانات الموبايل':'')+'، ويفضّل تكون على واي فاي ومساحة الجهاز تكفي. تكمل؟',()=>bulk(b,qu,'القرآن'));return}
         bulk(b,qu,'القرآن')}
       else if(b.id==='oaNsh')bulk(b,uniq(urlsOf(function(){return lib('anasheed','')})),'الأناشيد');
       else if(b.id==='oaIbt')bulk(b,uniq(urlsOf(function(){return lib('ibtihalat','')})),'الابتهالات');
@@ -5188,7 +5187,7 @@ function show(){var st=$('oaSt');if(!st)return;
       else if(b.id==='oaRqy'){var rq=uniq(urlsOf(function(){return lib('ruqyah','')}));
         if(!rq.length){try{window.apToast&&apToast('مفيش ملفات رقية مضافة لسه')}catch(_){}return}
         bulk(b,rq,'الرقية الشرعية')}
-      else if(confirm('تمسح كل المقاطع المحفوظة على الجهاز؟ هتحتاج نت لتشغيلها تاني.'))clear().then(show);
+      else hisnAsk('تمسح كل المقاطع المحفوظة على الجهاز؟ هتحتاج نت لتشغيلها تاني.',()=>clear().then(show));
       return}
     if(e.target.closest&&e.target.closest('#svcg'))setTimeout(function(){var st=$('oaSt');if(st&&st.offsetParent)show()},120)
   });
@@ -5485,8 +5484,7 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
       var t = e.target.closest && e.target.closest('#rptb,#rpt'); if (!t) return;
       e.preventDefault(); e.stopPropagation();
       if (t.id === 'rpt') {
-        var v = prompt('اذكر اسم الذكر والخطأ أو التصحيح المقترح مع المصدر إن وُجد'); if (!v || !v.trim()) return;
-        chooser('بلاغ عن خطأ في تطبيق حصن:\n' + v.trim(), 'بلاغ خطأ - حصن');
+        hisnPrompt('اذكر اسم الذكر والخطأ أو التصحيح المقترح مع المصدر إن وُجد', function (v) { chooser('بلاغ عن خطأ في تطبيق حصن:\n' + v.trim(), 'بلاغ خطأ - حصن'); });
       } else chooser(TEMPLATE, 'حصن: إبلاغ عن خطأ / تواصل');
     }, true);
     var am = d.getElementById('aboutMail');
@@ -5524,5 +5522,73 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
 @media(prefers-reduced-motion:reduce){.oabr i{transition:none}}
 .oatb .oadl:disabled{opacity:.55}
 </style>
+<style id="perf-css">
+/* ===== أداء: تقليل شغل الخلفية والرسم ===== */
+.sheet:not(.open) #svcg,.sheet:not(.open) #stabs{content-visibility:hidden}
+body:not([data-bg=anime]):not([data-bg=plush]) #stars i:not(:nth-child(4n)){animation:none;opacity:.55}
+#aur{animation-play-state:paused}
+body[data-bg=aurora] #aur{animation-play-state:running}
+body.pz #stars i,body.pz #wxfog,body.pz #sun,body.pz #aur,body.pz .drift,body.pz .cel{animation-play-state:paused!important}
+#oabar .oai::after,#ntbadge .ntbi::after{animation-iteration-count:4}
+#oabar,#ntbadge,.nt,#ntmore{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* نوافذ التأكيد والإدخال */
+.hdov{position:fixed;inset:0;z-index:130;display:flex;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.6)}
+.hdov[hidden]{display:none}
+.hdc{width:min(100%,360px);display:flex;flex-direction:column;gap:12px;padding:16px;border-radius:20px;background:rgba(10,16,32,.99);border:1.5px solid var(--line);color:var(--ink);box-shadow:0 18px 50px rgba(0,0,0,.55)}
+.hdm{margin:0;font-size:.95rem;line-height:1.7;white-space:pre-line}
+.hdt{width:100%;box-sizing:border-box;min-height:96px;resize:vertical;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:rgba(255,255,255,.06);color:inherit;font:inherit;font-size:.9rem}
+.hdb{display:flex;gap:8px}
+.hdb button{flex:1;height:44px;border-radius:14px;font:inherit;font-size:.95rem;font-weight:700;cursor:pointer;border:1.5px solid var(--line);background:rgba(255,255,255,.07);color:inherit}
+.hdb button:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.hdb .hdy{border-color:var(--ac);background:color-mix(in srgb,var(--ac) 22%,transparent);color:var(--ac)}
+.hdb .hdy.dg{border-color:#ff8a7a;background:rgba(255,100,80,.16);color:#ffb3a8}
+</style>
+<script id="perf-js">
+(function () {
+  var d = document, ov, cur;
+  /* حوار تأكيد/إدخال داخل التطبيق (بديل confirm/prompt) */
+  function build() {
+    if (ov) return;
+    ov = d.createElement('div'); ov.className = 'hdov'; ov.hidden = true;
+    ov.innerHTML = '<div class="hdc" role="alertdialog" aria-modal="true"><p class="hdm"></p><textarea class="hdt" rows="4" hidden></textarea><div class="hdb"><button type="button" class="hdn">إلغاء</button><button type="button" class="hdy">تأكيد</button></div></div>';
+    d.body.appendChild(ov);
+    ov.addEventListener('click', function (e) { if (e.target === ov) done(false); });
+    ov.querySelector('.hdn').onclick = function () { done(false); };
+    ov.querySelector('.hdy').onclick = function () { done(true); };
+    d.addEventListener('keydown', function (e) { if (!ov.hidden && e.key === 'Escape') done(false); });
+  }
+  function open(o) {
+    build(); cur = o;
+    ov.querySelector('.hdm').textContent = o.msg;
+    var t = ov.querySelector('.hdt'); t.hidden = !o.prompt; t.value = '';
+    var y = ov.querySelector('.hdy'); y.textContent = o.prompt ? 'إرسال' : 'تأكيد'; y.className = 'hdy' + (o.danger ? ' dg' : '');
+    ov.hidden = false; setTimeout(function () { (o.prompt ? t : o.danger ? ov.querySelector('.hdn') : y).focus(); }, 30);
+  }
+  function done(ok) {
+    if (!cur) return;
+    var c = cur, t = ov.querySelector('.hdt'), v = t.value.trim();
+    if (ok && c.prompt && !v) { t.focus(); return; }
+    cur = null; ov.hidden = true;
+    if (ok && c.fn) { try { c.fn(c.prompt ? v : undefined); } catch (e) { console.error(e); } }
+  }
+  window.hisnAsk = function (msg, onOk) { open({ msg: msg, fn: onOk, danger: /^(حذف|مسح|تمسح|تلغي)/.test(msg) }); };
+  window.hisnPrompt = function (msg, onOk) { open({ msg: msg, fn: onOk, prompt: true }); };
+
+  /* إيقاف حركة الخلفية لما لوحة الخدمات تغطي الشاشة (توفير بطارية) */
+  var sh = d.getElementById('sheet');
+  if (sh && window.MutationObserver) {
+    var sync = function () { d.body.classList.toggle('pz', sh.classList.contains('open')); };
+    new MutationObserver(sync).observe(sh, { attributes: true, attributeFilter: ['class'] }); sync();
+  }
+
+  /* نسخة جديدة من الصفحة اتحمّلت في الخلفية */
+  try {
+    navigator.serviceWorker && navigator.serviceWorker.addEventListener('message', function (e) {
+      if (e.data && e.data.type === 'APP_UPDATED' && window.apToast)
+        apToast('في نسخة جديدة من التطبيق جاهزة', 'تحديث الآن', function () { location.reload(); }, { key: 'appupd' });
+    });
+  } catch (_) {}
+})();
+</script>
 </body>
 </html>
