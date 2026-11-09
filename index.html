@@ -1100,14 +1100,18 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <div class="chips" id="mwG"><button class="chip on" data-g="m" type="button">رجل</button><button class="chip" data-g="f" type="button">امرأة</button></div>
 <div id="mwRows"></div>
 <div class="chips" style="margin-top:12px"><button aria-pressed="false" class="chip" id="mwFar" type="button">يوجد عاصب أبعد (عم أو ابن أخ…)</button></div>
-<p class="mutp sth">التركة (اختياري)</p>
-<div class="zr"><label for="mwE">قيمة التركة</label><input autocomplete="off" id="mwE" inputmode="decimal" placeholder="٠"/></div>
+<p class="mutp sth">مكونات التركة (اختياري)</p>
+<p class="mutp" style="margin-top:0">أضف كل أصل تركه المتوفى: منزل، نصف منزل، عدة منازل، عمارة، محل، أرض مبانٍ، أرض زراعية، مواشي، أغنام… وحدّد حصته منه.</p>
+<div id="mwAssets"></div>
+<div class="zr"><select aria-label="نوع الأصل" class="pmsel" id="mwAT"><option value="house">🏠 منزل / شقة</option><option value="bldg">🏢 عمارة</option><option value="shop">🏪 محل تجاري</option><option value="fact">🏭 مصنع / ورشة / مشروع</option><option value="plot">📐 أرض مبانٍ (أرض بناء)</option><option value="farm">🌾 أرض زراعية</option><option value="cattle">🐄 مواشي (أبقار / جاموس)</option><option value="sheep">🐑 أغنام وماعز</option><option value="camel">🐪 إبل وخيول وحمير</option><option value="poul">🐔 دواجن / مزرعة</option><option value="car">🚗 سيارة / مركبة</option><option value="gold">🪙 ذهب وفضة</option><option value="oth">📦 أصل آخر</option></select><button class="chip" id="mwAddA" type="button">＋ إضافة أصل</button></div>
+<p class="mutp sth">النقد والتركة</p>
+<div class="zr"><label for="mwE">نقد وأموال أخرى (أو إجمالي التركة)</label><input autocomplete="off" id="mwE" inputmode="decimal" placeholder="٠"/></div>
 <div class="zr"><label for="mwC">تجهيز ودفن</label><input autocomplete="off" id="mwC" inputmode="decimal" placeholder="٠"/></div>
 <div class="zr"><label for="mwD">ديون على المتوفى</label><input autocomplete="off" id="mwD" inputmode="decimal" placeholder="٠"/></div>
 <div class="zr"><label for="mwW">وصية (لغير وارث)</label><input autocomplete="off" id="mwW" inputmode="decimal" placeholder="٠"/></div>
 <div id="mwOut" aria-live="polite"></div>
 <div class="chips" style="justify-content:center;margin-top:12px"><button class="chip" id="mwCopy" type="button">نسخ النتيجة</button><button class="chip" id="mwReset" type="button">مسح</button></div>
-<p class="mutp">تُقسَّم التركة بعد التجهيز وسداد الديون وتنفيذ الوصية (في حدود الثلث). تغطي الحاسبة الحالات الشائعة (الزوجية والأصول والفروع والإخوة) مع العَوْل والرَّد، ولا تغطي ذوي الأرحام ولا الجد مع الإخوة. هي للاسترشاد فقط، وللقسمة الفعلية راجع دار الإفتاء أو المحكمة المختصة.</p></section>
+<p class="mutp">تُقسَّم التركة بعد التجهيز وسداد الديون وتنفيذ الوصية (في حدود الثلث). تغطي الحاسبة الحالات الشائعة (الزوجية والأصول والفروع والإخوة) مع العَوْل والرَّد، ولا تغطي ذوي الأرحام ولا الجد مع الإخوة. الأصول المدخلة (عقار، أرض، مواشي…) تُوزَّع بنفس الأنصبة، ولا يُحتسب منها إلا حصة المتوفى. هي للاسترشاد فقط، وللقسمة الفعلية راجع دار الإفتاء أو المحكمة المختصة.</p></section>
 <section class="sc" data-p="m"><h3>سجل إنجازات العبادة</h3><div class="zr"><label for="worshipDate">التاريخ</label><input id="worshipDate" type="date"/></div><textarea id="worshipJournal" maxlength="2000" placeholder="دوّن ما أنجزته وما تريد الاستمرار عليه…" rows="4" style="width:100%;box-sizing:border-box;border-radius:16px;border:1.5px solid var(--line);background:rgba(0,0,0,.18);color:inherit;padding:10px 12px;font:inherit;resize:vertical"></textarea><p class="mutp">يُحفظ السجل محليًا على هذا الجهاز.</p></section>
 
 <section class="sc" data-p="m"><h3>اتجاه القبلة</h3><div style="display:flex;flex-direction:column;align-items:center;gap:10px;padding:8px 0"><div id="qiblaDial" style="width:190px;height:190px;border:2px solid var(--line);border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,rgba(255,255,255,.08),rgba(0,0,0,.16))"><span style="position:absolute;top:8px;font-weight:700;color:var(--ac)">N</span><span style="position:absolute;bottom:8px">S</span><span style="position:absolute;left:10px">W</span><span style="position:absolute;right:10px">E</span><div id="qiblaArrow" style="font-size:3.6rem;color:#e45b53;transform:rotate(0deg);transition:transform .2s;line-height:1">➤</div></div><p class="duat" id="qiblaInfo">اضغط لتحديد موقعك وحساب اتجاه القبلة.</p><div class="chips" style="justify-content:center"><button class="chip" id="qiblaLocate">تحديد الموقع</button><button class="chip" id="qiblaCompass">تفعيل البوصلة</button></div></div><p class="mutp">تحتاج إلى السماح بالموقع وحساس الاتجاه. قد تتأثر الدقة بمعايرة الهاتف أو وجود معادن ومغناطيس قريب.</p></section>
@@ -3320,10 +3324,28 @@ const LBL={husband:['الزوج','الزوج'],wives:['الزوجة','الزوج
 const IN={husband:'الزوج',wives:'الزوجات (حتى ٤)',father:'الأب',mother:'الأم',gf:'الجد (أبو الأب)',gmm:'الجدة (أم الأم)',gmp:'الجدة (أم الأب)',son:'الأبناء',dau:'البنات',gson:'أبناء الابن',gdau:'بنات الابن',bf:'الإخوة الأشقاء',sf:'الأخوات الشقيقات',bp:'الإخوة لأب',sp:'الأخوات لأب',bm:'الإخوة لأم',sm:'الأخوات لأم'};
 const MAX={husband:1,wives:4,father:1,mother:1,gf:1,gmm:1,gmp:1};
 const GROUPS=[['الزوجية',['husband','wives']],['الأصول',['father','mother','gf','gmm','gmp']],['الفروع',['son','dau','gson','gdau']],['الإخوة والأخوات',['bf','sf','bp','sp','bm','sm']]];
+const mwT={house:['منزل / شقة','re','🏠',''],bldg:['عمارة','re','🏢',''],shop:['محل تجاري','re','🏪',''],fact:['مصنع / ورشة / مشروع','re','🏭',''],plot:['أرض مبانٍ (أرض بناء)','land','📐',''],farm:['أرض زراعية','land','🌾',''],cattle:['مواشي (أبقار / جاموس)','live','🐄','رأس'],sheep:['أغنام وماعز','live','🐑','رأس'],camel:['إبل وخيول وحمير','live','🐪','رأس'],poul:['دواجن / مزرعة','live','🐔','طائر'],car:['سيارة / مركبة','item','🚗',''],gold:['ذهب وفضة','item','🪙',''],oth:['أصل آخر','item','📦','']};
+const mwFr={'1':['كامل',F(1)],'1/2':['النصف ½',F(1,2)],'1/3':['الثلث ⅓',F(1,3)],'1/4':['الربع ¼',F(1,4)],'1/6':['السدس ⅙',F(1,6)],'1/8':['الثمن ⅛',F(1,8)],'2/3':['الثلثان ⅔',F(2,3)],'3/4':['ثلاثة أرباع ¾',F(3,4)],'q':['قراريط (من ٢٤)',null],'c':['كسر آخر',null]};
+const mwAU={f:['فدان',576],q:['قيراط',24],s:['سهم',1],m:['م²',1]};
+const mwDg=s=>String(s==null?'':s).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/٫/g,'.');
+const mwEsc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function mwFrac(a){
+  if(a.f==='q'){const q=Math.min(24,parseFloat(mwDg(a.x))||0);return q>0?F(Math.round(q*100),2400):ZERO}
+  if(a.f==='c'){const m=mwDg(a.x).match(/^\s*(\d+(?:\.\d+)?)\s*[\/÷]\s*(\d+(?:\.\d+)?)\s*$/);if(!m)return ZERO;const n=+m[1],d=+m[2];return d>0&&n>0&&n<=d?F(Math.round(n*100),Math.round(d*100)):ZERO}
+  return (mwFr[a.f]||mwFr['1'])[1];
+}
+function mwArea(v,au){
+  if(au==='m')return fm(v)+' م²';
+  const t=Math.round(v*100)/100;let fed=Math.floor(t/576+1e-9),rem=t-fed*576,q=Math.floor(rem/24+1e-9),s=Math.round((rem-q*24)*100)/100;
+  if(s>=24){s-=24;q++}if(q>=24){q-=24;fed++}
+  const p=[];if(fed)p.push(ar(fed)+' فدان');if(q)p.push(ar(q)+' قيراط');if(s)p.push(fm(s)+' سهم');
+  return p.length?p.join(' و'):'٠';
+}
 const KEY='hisn-mw';
-let st={g:'m',h:{},far:false,e:'',c:'',d:'',w:''};
+let st={g:'m',h:{},far:false,e:'',c:'',d:'',w:'',a:[]};
 try{const o=JSON.parse(localStorage.getItem(KEY));if(o&&typeof o==='object'){st=Object.assign(st,o);if(!o.h||typeof o.h!=='object')st.h={}}}catch(e){}
 if(st.g!=='m'&&st.g!=='f')st.g='m';
+if(!Array.isArray(st.a))st.a=[];st.a=st.a.filter(a=>a&&mwT[a.t]).slice(0,30);
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
 const cnt=k=>Math.max(0,Math.min(MAX[k]||30,parseInt(st.h[k])||0));
 const num=s=>{s=String(s||'').replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[۰-۹]/g,d=>'۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٬,\s]/g,'').replace(/٫/g,'.');const v=parseFloat(s);return isFinite(v)&&v>0?v:0};
@@ -3341,6 +3363,34 @@ function buildRows(){
       qd.appendChild(r)});
     box.appendChild(qd)});
 }
+function mwBuildA(){
+  const box=$('mwAssets');
+  box.innerHTML=st.a.map((a,i)=>{
+    const T=mwT[a.t],k=T[1],cu=a.f==='q'||a.f==='c';
+    const fo=Object.keys(mwFr).map(f=>`<option value="${f}"${a.f===f?' selected':''}>${mwFr[f][0]}</option>`).join('');
+    const ao=Object.keys(mwAU).map(u=>`<option value="${u}"${a.au===u?' selected':''}>${mwAU[u][0]}</option>`).join('');
+    return `<div class="mwr" data-i="${i}"><div class="mwt"><span>${T[2]} ${T[0]}</span><button aria-label="حذف الأصل" class="chip" data-del="${i}" type="button">✕</button></div>`
+    +`<div class="zr"><label>وصف (اختياري)</label><input data-f="nm" maxlength="40" placeholder="مثال: بيت العيلة" value="${mwEsc(a.nm)}"/></div>`
+    +`<div class="zr"><label>${k==='live'?'عدد الرؤوس':'العدد'}</label><input autocomplete="off" data-f="n" inputmode="numeric" placeholder="١" value="${mwEsc(a.n)}"/></div>`
+    +`<div class="zr"><label>حصة المتوفى منه</label><select class="pmsel" data-f="f">${fo}</select></div>`
+    +(cu?`<div class="zr"><label>${a.f==='q'?'عدد القراريط':'الكسر'}</label><input autocomplete="off" data-f="x" inputmode="decimal" placeholder="${a.f==='q'?'مثال: ٦':'مثال: ٥/٢٤'}" value="${mwEsc(a.x)}"/></div>`:'')
+    +(k==='land'?`<div class="zr"><label>المساحة (اختياري)</label><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><input autocomplete="off" data-f="a" inputmode="decimal" placeholder="٠" value="${mwEsc(a.a)}"/><select class="pmsel" data-f="au">${ao}</select></div></div>`:'')
+    +`<div class="zr"><label>${k==='live'?'سعر الرأس':'قيمته كاملًا (اختياري)'}</label><input autocomplete="off" data-f="v" inputmode="decimal" placeholder="٠" value="${mwEsc(a.v)}"/></div></div>`;
+  }).join('');
+}
+function mwList(info){
+  const L=[];
+  st.a.forEach(a=>{
+    const T=mwT[a.t];if(!T)return;
+    const n=Math.max(1,Math.floor(parseFloat(mwDg(a.n))||1)),f=mwFrac(a),frv=f.n/f.d;
+    const nm=(a.nm||'').trim();
+    if(frv<=0){info.push('الكسر المدخل لحصة المتوفى في «'+T[0]+(nm?' – '+nm:'')+'» غير صالح (اكتبه مثل ٥/٢٤)، فلم يُحتسب هذا الأصل.');return}
+    const unit=num(a.v),au=a.au||'f',area=num(a.a)*(mwAU[au]?mwAU[au][1]:1);
+    L.push({t:a.t,T,k:T[1],n,f,frv,unit,val:n*unit*frv,au,area,
+      title:T[2]+' '+T[0]+(nm?' ('+nm+')':'')+(n>1?' ×'+ar(n):'')});
+  });
+  return L;
+}
 let lastText='';
 function render(){
   const out=$('mwOut');lastText='';
@@ -3350,15 +3400,23 @@ function render(){
   if(!any&&!st.far){out.innerHTML='<p class="mutp">اختر الورثة الموجودين لتظهر القسمة.</p>';return}
   const r=solve(st.g,h,st.far);
   if(r.unsupported){out.innerHTML=`<div class="mwa w">${r.unsupported}</div>`;return}
-  const E=num(st.e),C=num(st.c),Dd=num(st.d),W=num(st.w);
-  let net=null,sum=[],info=[],T=[];
+  const info0=[],AL=mwList(info0),AV=AL.reduce((q,x)=>q+x.val,0),E=num(st.e)+AV,C=num(st.c),Dd=num(st.d),W=num(st.w);
+  let net=null,sum=[],info=info0,T=[];
   if(E>0){
     const after=E-C-Dd;
     if(after<=0){net=0;info.push('التجهيز والديون تستغرق التركة، فلا يبقى شيء للوصية أو للورثة.')}
     else{const wu=Math.min(W,after/3);if(W>after/3)info.push('الوصية لا تنفذ إلا في حدود ثلث الباقي بعد التجهيز والديون، وما زاد عليه يتوقف على إجازة الورثة. حُسب الثلث فقط.');net=after-wu;
-      sum=[['التركة',E]];if(C+Dd>0)sum.push(['التجهيز والديون',C+Dd]);if(wu>0)sum.push(['الوصية',wu]);sum.push(['الصافي للورثة',net])}
+      sum=[];if(AV>0){AL.forEach(x=>{if(x.val>0)sum.push([x.title,x.val])});if(num(st.e)>0)sum.push(['نقد وأموال أخرى',num(st.e)])}sum.push([AV>0?'إجمالي التركة':'التركة',E]);if(C+Dd>0)sum.push(['التجهيز والديون',C+Dd]);if(wu>0)sum.push(['الوصية',wu]);sum.push(['الصافي للورثة',net])}
   }
   if(W>0)info.push('الوصية تكون لغير الوارث، ولا وصية لوارث إلا بإجازة بقية الورثة.');
+  const ratio=(net!=null&&E>0)?net/E:null;
+  if(AL.length){
+    if(AL.some(x=>x.k==='re'||x.k==='land'))info.push('العقارات والأراضي تبقى مشاعة بين الورثة بحسب أنصبتهم إلى أن تُقسَّم أو تُباع، أو يتراضوا على من يتملكها ويعوّض الباقين بالمال.');
+    if(AL.some(x=>x.k==='live'))info.push('إذا خرج نصيب أحد الورثة كسرًا من رأس أو طائر فيُباع الحيوان ويُقسم ثمنه، أو يُتراضى على تعويض فرق القيمة.');
+    if(AL.some(x=>x.frv<1))info.push('لا يدخل في التركة إلا حصة المتوفى من الأصل، أما حصص شركائه فهي لهم.');
+    if(E>0&&AL.some(x=>x.val===0))info.push('الأصول التي لم تُدخل قيمتها تظهر أنصبتها كسورًا وأعدادًا فقط، ولا تدخل في المبالغ.');
+    if(ratio!=null&&ratio<0.9999)info.push('المبالغ والأعداد في توزيع الأصول بعد خصم التجهيز والديون والوصية بالتناسب على كل الأصول، أما الكسور فهي من الأصل قبل الخصم.');
+  }
   let H='';
   if(sum.length){H+='<div class="qd">'+sum.map(([a,b])=>`<div class="qr"><span>${a}</span><b>${fm(b)}</b></div>`).join('')+'</div>';T.push(...sum.map(([a,b])=>a+': '+fm(b)))}
   H+='<p class="mutp sth">نتيجة القسمة</p>';T.push('نتيجة القسمة:');
@@ -3373,6 +3431,29 @@ function render(){
     H+=`<div class="mwr"><div class="mwt"><span>${nm}${x.count>1?` <em>×${ar(x.count)}</em>`:''}</span><b>${fr(x.share)}</b></div><div class="mwm">${m.join(' · ')}</div></div>`;
     T.push('- '+nm+(x.count>1?' ×'+ar(x.count):'')+': '+frT(x.share)+(net!=null&&!zero?' ('+fm(v*net)+')':''));
   });
+  if(AL.length){
+    H+='<p class="mutp sth">توزيع الأصول على الورثة</p>';T.push('توزيع الأصول:');
+    const rt=ratio==null?1:ratio;
+    AL.forEach(x=>{
+      const meta=['حصة المتوفى: '+(x.frv===1?'كامل':frT(x.f))];
+      if(x.k==='land'&&x.area>0)meta.push('المساحة: '+mwArea(x.area*x.n*x.frv,x.au));
+      if(x.val>0)meta.push('القيمة: '+fm(x.val));
+      H+=`<div class="mwr"><div class="mwt"><span>${x.title}</span></div><div class="mwm">${meta.join(' · ')}</div><div class="qd" style="margin-top:6px">`;
+      T.push('- '+x.title+' ('+meta.join('، ')+')');
+      r.rows.forEach(w=>{
+        if(w.share.n===0)return;
+        const v=w.share.n/w.share.d,nm=w.k==='far'?LBL.far[0]:(w.count>1?LBL[w.k][1]:LBL[w.k][0]);
+        const p=[],eff=x.n*x.frv;
+        if(x.k==='live'){const u=v*eff*rt;p.push(fm(u)+' '+(x.T[3]||'رأس'));if(w.count>1)p.push('لكل واحد '+fm(u/w.count))}
+        else{p.push(fr(mul(w.share,x.f))+(x.n>1?' من كل واحد':''));
+          if(x.k==='land'&&x.area>0){const a=v*x.area*x.n*x.frv*rt;p.push(mwArea(a,x.au))}}
+        if(x.val>0){const m=v*x.val*rt;p.push(fm(m));if(w.count>1)p.push('لكل واحد '+fm(m/w.count))}
+        H+=`<div class="qr"><span>${nm}</span><span style="font-size:.85rem;text-align:start">${p.join(' · ')}</span></div>`;
+        T.push('   · '+nm+': '+p.join(' · ').replace(/<[^>]+>/g,''));
+      });
+      H+='</div></div>';
+    });
+  }
   if(r.leftover.n>0){
     H+=`<div class="mwa w">يبقى من التركة <b>${fr(r.leftover)}</b> لا يستحقه أحد ممن أدخلتهم. ينتقل إلى العصبة الأبعد (الأعمام وأبناء الإخوة…) إن وُجدوا، وإلا فإلى ذوي الأرحام أو الزوج/الزوجة أو بيت المال بحسب القانون المعمول به. إن كان هناك عاصب أبعد فعِّل الخيار أعلاه.</div>`;
     T.push('الباقي: '+frT(r.leftover)+' (يُنظر فيه حسب القانون)')}
@@ -3392,12 +3473,16 @@ $('mwG').onclick=e=>{const b=e.target.closest('[data-g]');if(!b)return;st.g=b.da
 $('mwRows').onclick=e=>{const b=e.target.closest('[data-d]');if(!b)return;const r=b.closest('[data-k]'),k=r.dataset.k,n=Math.max(0,Math.min(MAX[k]||30,cnt(k)+(+b.dataset.d)));st.h[k]=n;r.querySelector('b').textContent=ar(n);save();render()};
 $('mwFar').onclick=()=>{st.far=!st.far;save();sync();render()};
 [['mwE','e'],['mwC','c'],['mwD','d'],['mwW','w']].forEach(([id,k])=>$(id).addEventListener('input',()=>{st[k]=$(id).value;save();render()}));
-$('mwReset').onclick=()=>{st={g:'m',h:{},far:false,e:'',c:'',d:'',w:''};save();sync();buildRows();render()};
+$('mwAddA').onclick=()=>{if(st.a.length>=30)return;st.a.push({t:$('mwAT').value,n:'1',f:'1',x:'',v:'',a:'',au:'f',nm:''});save();mwBuildA();render()};
+$('mwAssets').addEventListener('input',e=>{const el=e.target.closest('[data-f]');if(!el||el.tagName==='SELECT')return;const c=el.closest('[data-i]'),a=c&&st.a[+c.dataset.i];if(!a)return;a[el.dataset.f]=el.value;save();render()});
+$('mwAssets').addEventListener('change',e=>{const el=e.target.closest('[data-f]');if(!el||el.tagName!=='SELECT')return;const c=el.closest('[data-i]'),a=c&&st.a[+c.dataset.i];if(!a)return;a[el.dataset.f]=el.value;save();mwBuildA();render()});
+$('mwAssets').addEventListener('click',e=>{const b=e.target.closest('[data-del]');if(!b)return;st.a.splice(+b.dataset.del,1);save();mwBuildA();render()});
+$('mwReset').onclick=()=>{st={g:'m',h:{},far:false,e:'',c:'',d:'',w:'',a:[]};save();sync();buildRows();mwBuildA();render()};
 $('mwCopy').onclick=async()=>{
   const b=$('mwCopy'),old=b.textContent;if(!lastText)return;
   try{await navigator.clipboard.writeText(lastText)}catch(e){const t=document.createElement('textarea');t.value=lastText;t.style.cssText='position:fixed;opacity:0';document.body.appendChild(t);t.select();try{document.execCommand('copy')}catch(x){}t.remove()}
   b.textContent='تم النسخ ✓';setTimeout(()=>{b.textContent=old},1500)};
-sync();buildRows();render();
+sync();buildRows();mwBuildA();render();
 })();
 </script>
 <style id="tas3d">
@@ -4927,7 +5012,18 @@ body.fx-ui .sheet.open { will-change: auto; }
     function center() {
       d.querySelectorAll('.sc[data-g]>.seg .chip.on').forEach(function (c) {
         if (c.offsetParent === null) return;            /* مخفي */
-        try { c.scrollIntoView({ inline: 'center', block: 'nearest' }); } catch (e) {}
+        try {
+          /* توسيط أفقي فقط داخل شريط التبويبات — بدون تحريك قائمة الخدمات رأسيًا */
+          var cr = c.getBoundingClientRect(), dx = 0, el = c.parentElement;
+          for (; el && el.id !== 'sheet' && el !== d.body; el = el.parentElement) {
+            if (el.scrollWidth > el.clientWidth + 1) {
+              var er = el.getBoundingClientRect();
+              dx = (cr.left + cr.width / 2) - (er.left + er.width / 2);
+              if (Math.abs(dx) > 1) el.scrollBy({ left: dx, behavior: 'auto' });
+              break;
+            }
+          }
+        } catch (e) {}
       });
     }
     d.addEventListener('click', function (e) {
