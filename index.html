@@ -7508,5 +7508,152 @@ updRes();
   try{if(window.ResizeObserver){var ro=new ResizeObserver(function(){clearTimeout(stT);stT=setTimeout(relayout,120)});ro.observe(stg)}}catch(e){}
 })();
 </script>
+<script id="qradio-js">
+/* إذاعات القرآن الكريم: بث مباشر. عليها علامة 🌐، وتعمل فقط عند وجود إنترنت (تتعطّل وتتعتّم بدون نت). */
+(function(){
+  var d=document,svc=d.getElementById('svcg'),tabs=d.getElementById('stabs');
+  if(!svc||!tabs||d.getElementById('qrad'))return;
+  var API='https://www.mp3quran.net/api/v3/radios?language=ar';
+  var FB=[{n:'إذاعة القرآن الكريم من القاهرة',u:'https://stream.radiojar.com/8s5u5tpdtwzuv'}];
+  function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function toast(m){try{window.apToast&&apToast(m)}catch(e){}}
+  function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function an(s){return String(s).replace(/[0-9]/g,function(c){return '٠١٢٣٤٥٦٧٨٩'.charAt(+c)})}
+  function nz(t){return String(t).replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[إأآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase().trim()}
+  function off(){return navigator.onLine===false}
+
+  var css=d.createElement('style');
+  css.textContent=
+  '#qrad{position:relative}'
+  +'#qrad .rdb{position:absolute;top:4px;inset-inline-end:4px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:.62rem;font-style:normal;line-height:1;background:rgba(0,0,0,.42);border:1px solid var(--line);pointer-events:none}'
+  +'#qrad.cl .rdb{top:2px;inset-inline-end:2px;width:16px;height:16px;font-size:.55rem}'
+  +'#qrad.rdoff{opacity:.45;filter:grayscale(1);cursor:not-allowed!important}'
+  +'#qrad.rdoff .rdb{background:rgba(180,40,40,.75)}'
+  +'#qrad .rdn{display:flex;align-items:center;gap:8px;margin:10px 0;padding:10px 12px;border-radius:16px;border:1.5px solid var(--line);background:rgba(255,255,255,.07)}'
+  +'#qrad .rdn[hidden]{display:none}'
+  +'#qrad .rdn b{flex:1;font-size:.92rem;line-height:1.5}'
+  +'#qrad .rdn small{display:block;font-weight:400;color:var(--mut);font-size:.74rem}'
+  +'#qrad .rdq{width:100%;box-sizing:border-box;border-radius:16px;border:1.5px solid var(--line);background:rgba(0,0,0,.18);color:inherit;padding:10px 12px;font:inherit;margin-bottom:8px}'
+  +'#qrad .rdl{display:flex;flex-direction:column;gap:6px;max-height:52vh;overflow:auto;-webkit-overflow-scrolling:touch}'
+  +'#qrad .rdl button{display:flex;align-items:center;gap:8px;text-align:start;padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:rgba(255,255,255,.05);color:inherit;font:inherit;cursor:pointer}'
+  +'#qrad .rdl button.on{background:rgba(232,204,142,.32);border-color:rgba(232,204,142,.7)}'
+  +'#qrad.rdoff .rdl button{pointer-events:none}'
+  +'#qrad .rdnt{font-size:.8rem;color:var(--mut);text-align:center;margin:8px 0 0}';
+  d.head.appendChild(css);
+
+  var card=d.createElement('section');
+  card.className='sc cl';card.id='qrad';card.dataset.p='qur';card.dataset.g='إذاعات القرآن الكريم';
+  card.dataset.kw='إذاعات القرآن الكريم راديو اذاعة بث مباشر إنترنت اذاعات';
+  card.innerHTML='<h3><span class="ic" aria-hidden="true">📻</span><span>إذاعات القرآن</span><i class="rdb" id="rdBadge" aria-hidden="true">🌐</i></h3>'
+  +'<p class="mutp">بث مباشر لإذاعات القرآن الكريم على مدار الساعة. 🌐 تحتاج اتصالًا بالإنترنت ولا تعمل بدونه.</p>'
+  +'<div class="rdn" id="rdNow" hidden><span aria-hidden="true">📻</span><b id="rdNm"></b><button class="chip" type="button" id="rdStop">⏹ إيقاف</button></div>'
+  +'<input class="rdq" id="rdQ" type="search" placeholder="ابحث عن إذاعة" aria-label="بحث عن إذاعة" autocomplete="off">'
+  +'<div class="rdl" id="rdL" role="list"></div>'
+  +'<p class="rdnt" id="rdMsg"></p>';
+  svc.appendChild(card);
+  try{
+    tabs.querySelectorAll('button').forEach(function(b){
+      var n=[].filter.call(svc.children,function(x){return x.classList.contains('sc')&&x.dataset.p===b.dataset.t}).length,m=b.querySelector('small');
+      if(m)m.textContent=n===1?'خدمة واحدة':an(n)+(n<=10?' خدمات':' خدمة');
+    });
+  }catch(e){}
+
+  var A=new Audio();A.preload='none';
+  var ST=[],cur=-1,q='';
+  function g(id){return d.getElementById(id)}
+  function normList(a){
+    var seen={},o=[];
+    (a||[]).forEach(function(r){
+      var n=(r.n||r.name||'').trim(),u=(r.u||r.url||'').trim();
+      if(!n||!/^https?:\/\//.test(u)||seen[u])return;
+      seen[u]=1;o.push({n:n,u:u});
+    });
+    return o;
+  }
+  try{var c0=JSON.parse(ld('qrad_list')||'null');ST=normList(c0)}catch(e){}
+  if(!ST.length)ST=normList(FB);
+
+  function render(){
+    var L=g('rdL'),k=nz(q),h='';
+    ST.forEach(function(s,i){
+      if(k&&nz(s.n).indexOf(k)<0)return;
+      h+='<button type="button" role="listitem" data-i="'+i+'"'+(i===cur?' class="on"':'')+'><span aria-hidden="true">'+(i===cur&&!A.paused?'🔊':'📻')+'</span><span>'+esc(s.n)+'</span></button>';
+    });
+    L.innerHTML=h||'<p class="rdnt">لا توجد نتائج</p>';
+  }
+  function msg(t){g('rdMsg').textContent=t||''}
+  function now(){
+    var box=g('rdNow'),on=cur>=0&&ST[cur]&&!A.paused;
+    box.hidden=!(cur>=0&&ST[cur]);
+    if(cur>=0&&ST[cur])g('rdNm').innerHTML=esc(ST[cur].n)+'<small>'+(on?'بث مباشر':'جارٍ الاتصال…')+'</small>';
+  }
+  function stop(){
+    try{A.pause();A.removeAttribute('src');A.load()}catch(e){}
+    cur=-1;now();render();
+  }
+  function play(i){
+    if(off()){toast('إذاعات القرآن تحتاج إنترنت');return}
+    var s=ST[i];if(!s)return;
+    try{var m=g('audio');if(m&&!m.paused)m.pause()}catch(e){}
+    cur=i;A.src=s.u;now();render();
+    var p=A.play();if(p&&p.catch)p.catch(function(){if(cur===i){toast('تعذّر تشغيل هذه الإذاعة، جرّب إذاعة أخرى');stop()}});
+    try{if('mediaSession' in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:s.n,artist:'إذاعات القرآن الكريم'});navigator.mediaSession.setActionHandler('pause',stop);navigator.mediaSession.setActionHandler('stop',stop)}}catch(e){}
+  }
+  A.addEventListener('playing',function(){now();render()});
+  A.addEventListener('error',function(){if(cur<0)return;toast(off()?'انقطع الإنترنت، توقفت الإذاعة':'تعذّر تشغيل هذه الإذاعة، جرّب إذاعة أخرى');stop()});
+  var mainA=g('audio');
+  if(mainA)mainA.addEventListener('play',function(){if(cur>=0)stop()});
+
+  g('rdL').addEventListener('click',function(e){
+    var b=e.target.closest('button[data-i]');if(!b)return;
+    var i=+b.dataset.i;if(i===cur&&!A.paused){stop();return}
+    play(i);
+  });
+  g('rdStop').addEventListener('click',stop);
+  g('rdQ').addEventListener('input',function(){q=this.value;render()});
+
+  var loading=false;
+  function loadList(){
+    if(off()||loading)return;loading=true;
+    var done=function(){loading=false};
+    try{
+      fetch(API).then(function(r){return r.json()}).then(function(j){
+        var l=normList((j&&j.radios||[]).map(function(r){return{n:r.name,u:r.url}}));
+        if(l.length){
+          var fbu=normList(FB)[0];
+          if(fbu&&!l.some(function(x){return x.u===fbu.u}))l.unshift(fbu);
+          var curU=cur>=0&&ST[cur]?ST[cur].u:null;
+          ST=l;sv('qrad_list',JSON.stringify(l));
+          cur=curU?ST.map(function(x){return x.u}).indexOf(curU):-1;
+          render();
+        }
+        done();
+      }).catch(function(){done()});
+    }catch(e){done()}
+  }
+
+  function upd(){
+    var o=off();
+    card.classList.toggle('rdoff',o);
+    card.setAttribute('aria-disabled',o?'true':'false');
+    g('rdBadge').title=o?'تحتاج إنترنت':'تعمل بالإنترنت';
+    if(o){if(cur>=0){stop();toast('انقطع الإنترنت، توقفت الإذاعة')}msg('لا يوجد اتصال بالإنترنت. الإذاعات تعمل فقط عند توفّر الإنترنت.')}
+    else{msg('');loadList()}
+  }
+  /* عند عدم وجود إنترنت: امنع فتح البطاقة أو تشغيل أي إذاعة واعرض تنبيهًا */
+  d.addEventListener('click',function(e){
+    if(!off())return;
+    var t=e.target,c=t&&t.closest&&t.closest('#qrad');
+    if(!c)return;
+    if(c.classList.contains('cl')||t.closest('.rdl button')){
+      e.stopImmediatePropagation();e.preventDefault();
+      toast('إذاعات القرآن تحتاج إنترنت');
+    }
+  },true);
+  addEventListener('offline',upd);addEventListener('online',upd);
+  render();upd();
+})();
+</script>
 </body>
 </html>
