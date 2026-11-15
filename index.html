@@ -2613,7 +2613,9 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
  // Personal worship plan
  let wp=get('worship-plan', ['صلاة الفجر في وقتها','ورد يومي من القرآن','أذكار الصباح والمساء','صلة الرحم','صدقة أو عمل خير'].map(t=>({t,done:false})));function wpR(){$('worshipPlan').innerHTML=wp.map((x,i)=>`<button class="${x.done?'on':''}" data-i="${i}"><span>${x.t.replace(/</g,'&lt;')}</span><em>${x.done?'تم':'لم يتم'}</em></button>`).join('');$('worshipStatus').textContent=`أنجزت ${ar(wp.filter(x=>x.done).length)} من ${ar(wp.length)}`;put('worship-plan',wp)}$('worshipPlan')?.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b){wp[+b.dataset.i].done=!wp[+b.dataset.i].done;wpR()}});$('worshipAdd')?.addEventListener('click',()=>{const v=$('worshipIn').value.trim();if(v){wp.push({t:v,done:false});$('worshipIn').value='';wpR()}});wpR();
  // Repentance counter
- let rep=get('rep-'+day(),0),rg=get('repgoal',100);function repR(){$('repentCount').textContent=ar(rep);$('repentGoal').textContent='الهدف: '+ar(rg);$('repentBar').style.width=Math.min(100,rep/rg*100)+'%';put('rep-'+day(),rep)}$('repentTap')?.addEventListener('click',()=>{rep++;repR()});$('repentUndo')?.addEventListener('click',()=>{rep=Math.max(0,rep-1);repR()});$('repentReset')?.addEventListener('click',()=>{rep=0;repR()});$('repentGoal')?.addEventListener('click',()=>{rg=rg===100?300:rg===300?1000:100;put('repgoal',rg);repR()});repR();
+ let rep=get('rep-'+day(),0),rg=get('repgoal',100);function repR(){$('repentCount').textContent=ar(rep);$('repentGoal').textContent='الهدف: '+ar(rg);$('repentBar').style.width=Math.min(100,rep/rg*100)+'%';put('rep-'+day(),rep)}$('repentTap')?.addEventListener('click',()=>{rep++;repR()});$('repentUndo')?.addEventListener('click',()=>{rep=Math.max(0,rep-1);repR()});$('repentReset')?.addEventListener('click',()=>{rep=0;repR()});if(window.hisnLP)hisnLP.bind('#repentTap','#repentTap',{key:'repent',fire:()=>{const u=$('repentUndo');if(u){u.click();window.apToast&&apToast('تراجعت خطوة')}}});
+ {const rb=$('repentTap');if(rb)rb.title='اضغط مطوّلًا للتراجع خطوة'}
+ $('repentGoal')?.addEventListener('click',()=>{rg=rg===100?300:rg===300?1000:100;put('repgoal',rg);repR()});repR();
  // Weekly reading tracker
  const wd=['السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];let wk=get('weeklyread-'+new Date().getFullYear()+'-'+Math.ceil((Date.now()-new Date(new Date().getFullYear(),0,1))/604800000),[]);function wkR(){$('weeklyRead').innerHTML=wd.map((x,i)=>`<button class="${wk.includes(i)?'on':''}" data-i="${i}">${x}</button>`).join('');$('weeklyReadStatus').textContent=`أتممت الورد في ${ar(wk.length)} من ٧ أيام`;put('weeklyread-'+new Date().getFullYear()+'-'+Math.ceil((Date.now()-new Date(new Date().getFullYear(),0,1))/604800000),wk)}$('weeklyRead')?.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(b){const i=+b.dataset.i;wk=wk.includes(i)?wk.filter(x=>x!==i):wk.concat(i);wkR()}});$('weeklyReadReset')?.addEventListener('click',()=>{wk=[];wkR()});wkR();
  // Prayer preparation checklist
@@ -3906,7 +3908,10 @@ sync();buildRows();mwBuildA();render();
   const setV=(e,v)=>{v=Math.max(0,Math.min(1,v));if(VOL_OK)e.volume=v;else e.muted=v<.15};
 
   /* ===== اختيار الصوت: الوقت (data-p) + الطقس (WXS) ===== */
+  /* اختيار يدوي (ضغطة مطوّلة على زر الهلال): يُحفظ، و'auto' يرجّع الاختيار التلقائي حسب الوقت والطقس */
+  let FORCE='';try{FORCE=localStorage.getItem('qt_force')||''}catch(_){}
   function scene(){
+    if(FORCE&&NAME[FORCE]&&files(FORCE).length){const o=new Map([[FORCE,1]]);return{out:o,label:NAME[FORCE][0]+' '+NAME[FORCE][1]+' (مختار)',key:FORCE+'1.00'}}
     const W=window.WXS||{},k=W.key||'clear',ws=+W.ws||0,rn=+W.rain||0,p=B.dataset.p||'day',wind=ws>=30;
     const base=p==='night'?[[['frogs'],.8],[['crickets'],.7]]:p==='maghrib'?[[['crickets'],.9]]:[[['birds'],1]];
     let L;
@@ -3979,6 +3984,15 @@ sync();buildRows();mwBuildA();render();
     layers.forEach(L=>{L.v=0});if(d.hidden)[...layers.values()].forEach(kill);
     if(!layers.size&&timer){clearInterval(timer);timer=0}}
   btn.addEventListener('click',enter);
+  /* ضغطة مطوّلة على الهلال: قائمة اختيار الصوت (تلقائي + كل صوت له ملفات) */
+  if(window.hisnLP){
+    const setF=v=>{FORCE=v;try{v?localStorage.setItem('qt_force',v):localStorage.removeItem('qt_force')}catch(_){}};
+    hisnLP.bind(btn,'#quietB',{key:'quiet',fire:b=>{
+      const its=[{label:'تلقائي (حسب الوقت والجو)',on:!FORCE,run:()=>{setF('');enter();refresh(true)}}];
+      Object.keys(NAME).forEach(id=>{if(files(id).length)its.push({label:NAME[id][0]+' '+NAME[id][1],on:FORCE===id,run:()=>{setF(id);if(on){cur='';refresh(true)}else enter()}})});
+      hisnLP.menu(b,'صوت وضع السكون',its)}});
+    btn.title='وضع السكون — اضغط مطوّلًا لتختار الصوت';btn.setAttribute('aria-haspopup','menu');
+  }
   d.addEventListener('click',e=>{if(!on)return;e.preventDefault();e.stopPropagation();exit()},true);
   d.addEventListener('keydown',e=>{if(e.key==='Escape'&&on)exit()});
   d.addEventListener('wxchange',()=>refresh());
@@ -3999,7 +4013,7 @@ sync();buildRows();mwBuildA();render();
   const S=[
     {g:MAIN,sel:'#hbtn',ic:'📅',t:'التاريخ الهجري',p:'اضغط عليه لتفتح بطاقة التاريخ:',li:['اليوم والتاريخ الميلادي','التاريخ القبطي والهجري الشمسي','طور القمر','المناسبات الإسلامية القريبة']},
     {g:MAIN,sel:'#immB',ic:'🖼️',t:'وضع إخفاء الأزرار',p:'يُخفي كل الأزرار والقوائم ويُبقي الخلفية واسم المقطع فقط، والصوت يواصل التشغيل كما هو. مناسب لتتأمل المشهد أثناء الاستماع.',p2:'اضغط في أي مكان للرجوع.'},
-    {g:MAIN,sel:'#quietB',ic:'🌙',t:'وضع السكون',p:'يعرض الخلفية فقط بلا أي أزرار أو أسماء، ويوقف المشغّل، ويشغّل صوتًا من الطبيعة يناسب وقتك وطقسك الحقيقيين ويتكرر تلقائيًا ما دامت الصفحة مفتوحة:',li:['🐦 عصافير في الفجر والنهار','🦗 صراصير الحقل عند المغرب، ومعها 🐸 الضفادع في الليل','🌬️ رياح عند اشتدادها','🌦️ مطر خفيف، 🌧️ مطر، ومطر غزير','⛈️ عاصفة رعدية'],p2:'يتبدّل الصوت وحده لو تغيّر الجو أو دخل وقت جديد. اضغط في أي مكان للخروج.'},
+    {g:MAIN,sel:'#quietB',ic:'🌙',t:'وضع السكون',p:'يعرض الخلفية فقط بلا أي أزرار أو أسماء، ويوقف المشغّل، ويشغّل صوتًا من الطبيعة يناسب وقتك وطقسك الحقيقيين ويتكرر تلقائيًا ما دامت الصفحة مفتوحة:',li:['🐦 عصافير في الفجر والنهار','🦗 صراصير الحقل عند المغرب، ومعها 🐸 الضفادع في الليل','🌬️ رياح عند اشتدادها','🌦️ مطر خفيف، 🌧️ مطر، ومطر غزير','⛈️ عاصفة رعدية','👆 اضغط مطوّلًا على الهلال لتختار الصوت بنفسك'],p2:'يتبدّل الصوت وحده لو تغيّر الجو أو دخل وقت جديد. اضغط في أي مكان للخروج.'},
     {g:MAIN,sel:'#rdHome',ic:'📻',t:'إذاعة القرآن',p:'زر «راديو» في شريط التنقل قبل «خدمات»: ضغطة تشغّل آخر إذاعة اخترتها (وأول مرة إذاعة القرآن الكريم من القاهرة) وتحل محل المقطع في المشغّل الرئيسي. وضغطة ثانية توقفها مؤقتًا وتبقى العلامة مختارة (زر التشغيل الكبير يفعل نفس الشيء)، والتالي والسابق يبدّلان الإذاعة. لإنهاء الإذاعة اختر أي قسم آخر من الشريط. واضغط مطوّلًا على الزر لفتح قائمة الإذاعات، وعلّم ★ على إذاعاتك المفضلة لتظهر في أول القائمة. ولو إذاعة لم تعمل بعد محاولتين يجرّب التطبيق التي بعدها تلقائيًا، وبعد الأذان ترجع الإذاعة من نفسها، ومؤقت النوم يوقفها أيضًا.',p2:'تظهر نقطة خضراء بجانب الاسم عند وجود نت، ويصير رماديًا ومشطوبًا بدونه.'},
     {g:MAIN,sel:'#pbtn',ic:'🕌',t:'الصلاة القادمة',p:'عدّاد تنازلي لأقرب صلاة. اضغط عليه لتظهر مواقيت اليوم كاملة مع اتجاه القبلة، وتُضبط المواقيت من «الإعدادات».'},
     {g:MAIN,sel:'#title',ic:'🎧',t:'اسم المقطع',p:'يظهر هنا اسم الذكر أو السورة أو المقطع الشغّال. وفي قسم «أذكار» يظهر تحته شريط للتبديل بين: الأذكار والابتهالات والأناشيد.'},
@@ -7656,6 +7670,17 @@ updRes();
   window.addEventListener('resize',function(){clearTimeout(stT);stT=setTimeout(relayout,200)});
   try{if(window.ResizeObserver){var ro=new ResizeObserver(function(){clearTimeout(stT);stT=setTimeout(relayout,120)});ro.observe(stg)}}catch(e){}
 })();
+</script>
+<script>
+/* ضغطة مطوّلة على زر التاريخ العلوي = نسخ التاريخ (هجري + ميلادي) للمشاركة */
+(function(){var b=document.getElementById('hbtn');if(!b||!window.hisnLP)return;
+  hisnLP.bind(b,'#hbtn',{key:'hijri',fire:function(){
+    var h=(document.getElementById('hijri')||{}).textContent||'';
+    var g=new Date().toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+    var t=(h?(/هـ\s*$/.test(h)?h:h+' هـ'):'')+(h?' • الموافق ':'')+g+' م';
+    var ok=function(){window.apToast&&apToast('تم نسخ التاريخ')};
+    try{navigator.clipboard.writeText(t).then(ok,function(){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy');ok()}catch(e){}a.remove()})}catch(e){}}});
+  b.title='اضغط مطوّلًا لنسخ التاريخ'})();
 </script>
 <script id="qradio-js" src="radio.js"></script>
 </body>
