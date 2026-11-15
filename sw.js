@@ -5,13 +5,15 @@ const AUDIO='hisn-audio';   // كاش المقاطع الصوتية: ما بيت
 const AUDIO_RE=/\.(mp3|m4a|aac|ogg|oga|opus|wav|flac)$/i;
 const inflight=new Set();
 
-const VERSION='2026.3';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
+const VERSION='2026.4';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
 
 /* ما بنعملش skipWaiting تلقائي: النسخة الجديدة بتستنى لحد ما المستخدم يضغط «تحديث الآن» (الصفحة بتبعت SKIP_WAITING) */
 self.addEventListener('install',e=>{});
 self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x!==AUDIO&&x!==FONTS).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
 
+const isFile=r=>{try{return AUDIO_RE.test(new URL(r.url).pathname)}catch(_){return false}};
+const MAX_SAVE=150*1024*1024;   // أكبر ملف نحفظه تلقائيًا: أكبر من كده غالبًا بث أو ملف ضخم
 const isAudio=r=>{
   if(r.destination==='audio'||r.destination==='video')return true;
   try{return AUDIO_RE.test(new URL(r.url).pathname)}catch(_){return false}
@@ -21,7 +23,10 @@ self.addEventListener('fetch',e=>{
   const r=e.request;
   if(r.method!=='GET')return;
   if(r.headers.get('X-Hisn-Save')){e.respondWith(saveReq(r));return}   // طلب «حمّل للتشغيل بدون نت» من الصفحة
-  if(isAudio(r)&&/^https?:$/.test(new URL(r.url).protocol)){e.respondWith(audio(e));return}
+  if(isAudio(r)&&/^https?:$/.test(new URL(r.url).protocol)){
+    /* مهم: البث المباشر (إذاعات القرآن) رابطه غالبًا بلا امتداد ملف وبلا نهاية. لو اعترضناه كنا نفتح اتصالًا تانيًا لنفس البث لحفظه (وده بيطلع للأبد) فالسيرفر بيقفل أو يرفض، والإذاعة تتعطل في الموبايل. فنعترض الملفات الصوتية المعروفة فقط */
+    if(!isFile(r))return;
+    e.respondWith(audio(e));return}
   const u=new URL(r.url);
   if(/(^|\.)fonts\.(googleapis|gstatic)\.com$/.test(u.hostname)){e.respondWith(swr(e,FONTS));return}
   if(u.origin!==location.origin)return;
@@ -82,7 +87,9 @@ async function fill(cache,key){
   try{
     const same=new URL(key).origin===location.origin;
     const res=await fetch(key,{mode:same?'same-origin':'cors',credentials:'omit'});
-    if(res.ok&&res.status===200)await cache.put(key,res);
+    const len=parseInt(res.headers.get('content-length')||'',10);
+    if(!(res.ok&&res.status===200)||!(len>0)||len>MAX_SAVE){try{res.body&&res.body.cancel()}catch(_){}return}   // بث مباشر أو حجم غير معروف: لا نحفظ ونقفل الاتصال فورًا
+    await cache.put(key,res);
   }catch(_){/* موقع خارجي بدون CORS أو النت قطع: ما نحفظش */}
   finally{inflight.delete(key)}
 }
