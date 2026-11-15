@@ -27,7 +27,7 @@
   +'#qrad .rdl{display:flex;flex-direction:column;gap:6px;max-height:52vh;overflow:auto;-webkit-overflow-scrolling:touch}'
   +'#qrad .rdl button{display:flex;align-items:center;gap:8px;text-align:start;padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:rgba(255,255,255,.05);color:inherit;font:inherit;cursor:pointer}'
   +'#qrad .rdl button.on{background:rgba(232,204,142,.32);border-color:rgba(232,204,142,.7)}'
-  +'#qrad.rdoff .rdl button{pointer-events:none}'
+  +'#qrad.rdoff .rdl button{pointer-events:none}#qrad.rdoff .rdl button.rdf{pointer-events:auto}'
   +'#qrad .rdnt{font-size:.8rem;color:var(--mut);text-align:center;margin:8px 0 0}'
   +'nav.cat button[data-m="quran"]::after{content:none!important;display:none!important;animation:none!important}'
   +'nav.cat .rdh{display:grid;place-items:center;padding:0;color:var(--ink);cursor:pointer;background:none;border:0;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none;touch-action:manipulation}'
@@ -60,7 +60,9 @@
   +'#rpk .pkw{display:flex;gap:5px;align-items:stretch}'
   +'#rpk .pkw>.pkr{flex:1;min-width:0}'
   +'#rpk .pkf{flex:none;width:44px;min-height:44px;border-radius:12px;border:1px solid transparent;background:rgba(255,255,255,.06);color:var(--mut);font:inherit;font-size:1.1rem;line-height:1;cursor:pointer}'
-  +'#qrad .rdl button.rdf.fv,#rpk .pkf.fv{color:#f5c542}'
+  +'#qrad .rdl button.rdf,#rpk .pkf{display:grid;place-items:center;opacity:1;visibility:visible}'
+  +'#qrad .rdf svg,#rpk .pkf svg{display:block;pointer-events:none;fill:#8d93a0;stroke:rgba(0,0,0,.25);stroke-width:.6;stroke-linejoin:round}'
+  +'#qrad .rdf.rfv svg,#rpk .pkf.rfv svg{fill:#f5c542;stroke:#b8860b}'
   ;
   d.head.appendChild(css);
 
@@ -112,7 +114,7 @@
   var FAV=[];try{FAV=JSON.parse(ld('qrad_fav')||'[]');if(!Array.isArray(FAV))FAV=[]}catch(e){FAV=[]}
   function isFav(u){return FAV.indexOf(u)>=0}
   function order(k){var f=[],o=[];ST.forEach(function(s,i){if(k&&nz(s.n).indexOf(k)<0)return;(isFav(s.u)?f:o).push(i)});return f.concat(o)}
-  function favBtn(cls,i,s){var f=isFav(s.u);return '<button type="button" class="'+cls+(f?' fv':'')+'" data-f="'+i+'" aria-pressed="'+f+'" aria-label="'+(f?'إزالة من المفضلة: ':'إضافة إلى المفضلة: ')+esc(s.n)+'">'+(f?'★':'☆')+'</button>'}
+  function favBtn(cls,i,s){var f=isFav(s.u);return '<button type="button" class="'+cls+(f?' rfv':'')+'" data-fav="'+i+'" aria-pressed="'+f+'" aria-label="'+(f?'إزالة من المفضلة: ':'إضافة إلى المفضلة: ')+esc(s.n)+'">'+'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></button>'}
   function toggleFav(i){var s=ST[i];if(!s)return;var k=FAV.indexOf(s.u);if(k>=0)FAV.splice(k,1);else FAV.push(s.u);sv('qrad_fav',JSON.stringify(FAV));render()}
   function render(){
     var L=g('rdL'),k=nz(q),h='';
@@ -254,7 +256,7 @@
   });
 
   g('rdL').addEventListener('click',function(e){
-    var fb=e.target.closest('button[data-f]');if(fb){toggleFav(+fb.dataset.f);return}
+    var fb=e.target.closest('button[data-fav]');if(fb){toggleFav(+fb.dataset.fav);return}
     var b=e.target.closest('button[data-i]');if(!b)return;
     var i=+b.dataset.i;if(i===cur&&!A.paused){stop();return}
     play(i);
@@ -289,7 +291,7 @@
       rp.addEventListener('click',function(e){
         if(e.target===rp||e.target.closest('.rpx')){rpClose();return}
         if(e.target.closest('.pkg')){stop();rpClose();return}
-        var fb=e.target.closest('.pkf');if(fb){toggleFav(+fb.dataset.f);return}
+        var fb=e.target.closest('.pkf');if(fb){toggleFav(+fb.dataset.fav);return}
         var b=e.target.closest('.pkr');if(!b)return;
         var i=+b.dataset.i;
         if(i===cur&&!A.paused){rpClose();return}
@@ -378,6 +380,7 @@
     if(!off())return;
     var t=e.target,c=t&&t.closest&&t.closest('#qrad');
     if(!c)return;
+    if(t.closest('[data-fav]'))return;
     if(c.classList.contains('cl')||t.closest('.rdl button')){
       e.stopImmediatePropagation();e.preventDefault();
       toast('إذاعات القرآن تحتاج إنترنت');
