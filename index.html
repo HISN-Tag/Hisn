@@ -345,7 +345,7 @@ body[data-wx=rain] #birds,body[data-wx=storm] #birds,body[data-wx=snow] #birds,b
 .cat button{font-size:clamp(.98rem,4.5vw,1.12rem);min-height:56px}
 .sub{width:max-content;max-width:100%;margin:12px auto 0;padding:4px;border-radius:99px;background:var(--card);border:1.5px solid var(--line)}
 .sub[hidden]{display:none}
-.sub button{min-height:0;padding:7px 16px;border-radius:99px;font-size:.95rem;font-weight:600;white-space:nowrap;color:var(--ink)}
+.sub button{min-height:0;padding:7px 10px;border-radius:99px;font-size:.9rem;font-weight:600;white-space:nowrap;color:var(--ink)}
 .cat button.svc.active{color:var(--ac)}
 .sbd{position:fixed;inset:0;z-index:19;background:rgba(4,8,18,.55);opacity:0;pointer-events:none;transition:opacity .3s}
 .sbd.open{opacity:1;pointer-events:auto}
@@ -681,8 +681,8 @@ body:not(.pk-used) .cat button[data-m="quran"]::after,body:not(.pk-used) .cat bu
 .cat button[data-m="quran"]:active::after,.cat button[data-m="adhkar"]:active::after{transform:scale(.85)}
 @keyframes pkpulse{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,currentColor 55%,transparent)}60%{box-shadow:0 0 0 7px transparent}}
 @keyframes pkbars{0%,100%{background-size:8px 1.5px,5px 1.5px,7px 1.5px}33%{background-size:4px 1.5px,8px 1.5px,5px 1.5px}66%{background-size:6px 1.5px,4px 1.5px,8px 1.5px}}
-.sub{position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;min-width:min(100%,270px)}
-.sub::before{content:'';position:absolute;top:4px;bottom:4px;inset-inline-start:4px;width:calc((100% - 16px)/3);border-radius:99px;background:var(--ac);box-shadow:0 3px 14px color-mix(in srgb,var(--ac) 50%,transparent);transform:translateX(calc(var(--i,0) * (-100% - 4px)));transition:transform .4s cubic-bezier(.3,1.25,.4,1)}
+.sub{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;min-width:min(100%,300px)}
+.sub::before{content:'';position:absolute;top:4px;bottom:4px;inset-inline-start:4px;width:calc((100% - 20px)/4);border-radius:99px;background:var(--ac);box-shadow:0 3px 14px color-mix(in srgb,var(--ac) 50%,transparent);transform:translateX(calc(var(--i,0) * (-100% - 4px)));transition:transform .4s cubic-bezier(.3,1.25,.4,1)}
 .sub button{position:relative;z-index:1;transition:color .3s}
 .sub button.on{background:none;color:#1a1408}
 .sub:not([hidden]){animation:subIn .4s cubic-bezier(.2,.9,.3,1) both}
@@ -975,7 +975,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="info">
 <h1 class="title" id="title">جاري التحضير</h1>
 <p class="desc" id="desc" hidden></p>
-<div class="sub" id="sub" hidden><button type="button" data-g="adhkar">أذكار</button><button type="button" data-g="ibtihalat">ابتهالات</button><button type="button" data-g="anasheed">أناشيد</button></div>
+<div class="sub" id="sub" hidden><button type="button" data-g="quran">قرآن</button><button type="button" data-g="adhkar">أذكار</button><button type="button" data-g="ibtihalat">ابتهالات</button><button type="button" data-g="anasheed">أناشيد</button></div>
 </section>
 <div class="ctl-wrap">
 <audio id="audio" preload="metadata"></audio>
@@ -997,8 +997,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 </div>
 <nav class="cat" id="cat">
 <button class="on" data-m="now">الآن</button>
-<button data-m="quran">قرآن</button>
-<button data-m="adhkar">أذكار</button>
+<button data-m="quran">قرآن وأذكار</button>
 <button aria-label="الخدمات" class="svc" id="svc">خدمات</button>
 </nav>
 </main>
@@ -1583,7 +1582,7 @@ const WHY={kahf:'سنة الجمعة: سورة الكهف',m:'وقت أذكار 
 const MODES=['now','quran','adhkar'];
 let grp='adhkar';try{grp=localStorage.getItem('grp')||'adhkar'}catch(e){}if(grp!=='ibtihalat'&&grp!=='anasheed')grp='adhkar';
 const LISTM={ibtihalat:'الابتهالات',anasheed:'الأناشيد'};
-const PKM=['quran','adhkar','ibtihalat','anasheed'];const SUBS=['adhkar','ibtihalat','anasheed'];
+const PKM=['quran','adhkar','ibtihalat','anasheed'];const SUBS=['quran','adhkar','ibtihalat','anasheed'];
 function swapFx(c){['title','why'].forEach(id=>{const e=$(id);if(!e)return;e.classList.remove('sw-n','sw-p');void e.offsetWidth;e.classList.add(c);e.addEventListener('animationend',()=>e.classList.remove(c),{once:true})})}
 const PKN={quran:['قرآن','القرآن'],adhkar:['أذكار','الأذكار'],ibtihalat:['ابتهالات','الابتهالات'],anasheed:['أناشيد','الأناشيد']};
 
@@ -1745,7 +1744,9 @@ function step(d){
   if(hist.length>1){hist.pop();load(hist[hist.length-1],true,true)}else{audio.currentTime=0;play()}
 }
 function setGrp(g){grp=g;try{localStorage.setItem('grp',g)}catch(e){}const b=document.querySelector('#cat > [data-m="adhkar"]');if(b)b.textContent=PKN[g][0]}
-function mark(){const c=$('cat'),g=mode==='adhkar'||!!LISTM[mode],k=g?'adhkar':mode;c.style.setProperty('--i',MODES.indexOf(k));c.querySelectorAll(':scope > button').forEach(b=>b.classList.toggle('on',b.dataset.m===k));const s=$('sub');if(s){s.hidden=!g;if(g)s.style.setProperty('--i',SUBS.indexOf(mode));s.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g===mode))}if(g&&mode!==grp)setGrp(mode)}
+let navM='quran';try{const v=localStorage.getItem('navm');if(PKM.includes(v))navM=v}catch(e){}
+function setNavM(m){navM=m;try{localStorage.setItem('navm',m)}catch(e){}const b=document.querySelector('#cat > [data-m="quran"]');if(b)b.textContent=PKN[m][0]}
+function mark(){const c=$('cat'),g=mode==='quran'||mode==='adhkar'||!!LISTM[mode],k=g?'quran':mode;c.style.setProperty('--i',MODES.indexOf(k));c.querySelectorAll(':scope > button').forEach(b=>b.classList.toggle('on',b.dataset.m===k));const s=$('sub');if(s){s.hidden=!g;if(g)s.style.setProperty('--i',SUBS.indexOf(mode));s.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.g===mode))}if(g&&mode!=='quran'&&mode!==grp)setGrp(mode);if(PKM.includes(mode)&&mode!==navM)setNavM(mode)}
 function emptyMode(m){audio.pause();audio.removeAttribute('src');audio.load();cur=null;showDesc('');$('why').style.display='none';$('title').textContent=LISTM[m];ring(0);$('time').textContent='0:00 / 0:00';setState(false,'لا توجد ملفات بعد — ضعها في مجلد audio/'+m)}
 function setMode(m){
   mode=m;mark();const w=windows(new Date());
@@ -1758,13 +1759,27 @@ $('b-play').onclick=()=>audio.paused?play():(audio.pause(),setState(false,'مت�
 $('b-next').onclick=()=>step(1);
 $('b-prev').onclick=()=>step(-1);
 let lastCat={m:'',t:0};
-$('cat').onclick=e=>{const b=e.target.closest('button');if(!b||!b.dataset.m)return;let m=b.dataset.m;if(m==='adhkar')m=grp;const t=Date.now();
-  if(PKM.includes(m)&&((lastCat.m===m&&t-lastCat.t<450)||mode===m)){lastCat.t=0;try{localStorage.setItem('pk_used','1')}catch(x){}document.body.classList.add('pk-used');openPk(m);return}
+$('cat').onclick=e=>{const b=e.target.closest('button');if(!b||!b.dataset.m)return;let m=b.dataset.m;if(m==='quran')m=navM;const t=Date.now();
   lastCat={m,t};PKQ=null;setMode(m);
-  if(PKM.includes(m)&&!localStorage.getItem('pk_used')){let n=0;try{n=+localStorage.getItem('pk_hint')||0}catch(x){}if(n<3){try{localStorage.setItem('pk_hint',String(n+1))}catch(x){}setTimeout(()=>window.apToast&&apToast('اضغط على «'+PKN[m][0]+'» مرة ثانية ☰ لتختار ما تريد تشغيله'),1200)}}};
+  if(PKM.includes(m)&&!localStorage.getItem('pk_used')){let n=0;try{n=+localStorage.getItem('pk_hint')||0}catch(x){}if(n<3){try{localStorage.setItem('pk_hint',String(n+1))}catch(x){}setTimeout(()=>window.apToast&&apToast('اضغط مطوّلًا على «'+PKN[m][0]+'» لتختار ما تريد تشغيله'),1200)}}};
 try{if(localStorage.getItem('pk_used'))document.body.classList.add('pk-used')}catch(x){}
-setGrp(grp);$('sub').onclick=e=>{const b=e.target.closest('button[data-g]');if(!b)return;e.stopPropagation();PKQ=null;{const f=SUBS.indexOf(mode),t=SUBS.indexOf(b.dataset.g);if(t>-1&&f!==t)swapFx(t>f?'sw-n':'sw-p')}setGrp(b.dataset.g);setMode(b.dataset.g)};
-PKM.forEach(m=>{const b=document.querySelector('#cat [data-m="'+m+'"]');if(b)b.title='اضغط مرة ثانية لاختيار ما تريد تشغيله';if(b)b.setAttribute('aria-haspopup','dialog')});
+setGrp(grp);setNavM(navM);$('sub').onclick=e=>{const b=e.target.closest('button[data-g]');if(!b)return;e.stopPropagation();PKQ=null;{const f=SUBS.indexOf(mode),t=SUBS.indexOf(b.dataset.g);if(t>-1&&f!==t)swapFx(t>f?'sw-n':'sw-p')}if(b.dataset.g!=='quran')setGrp(b.dataset.g);setMode(b.dataset.g)};
+PKM.forEach(m=>{const b=document.querySelector('#cat [data-m="'+m+'"]');if(b)b.title='اضغط مطوّلًا لاختيار ما تريد تشغيله';if(b)b.setAttribute('aria-haspopup','dialog');const c=document.querySelector('#sub [data-g="'+m+'"]');if(c){c.title='اضغط مطوّلًا لاختيار ما تريد تشغيله';c.setAttribute('aria-haspopup','dialog')}});
+/* ضغطة مطوّلة على «قرآن وأذكار» أو على أي زر في الصف الفرعي (قرآن/أذكار/ابتهالات/أناشيد) تفتح قائمة الاختيار */
+{let lt=0,ld=false;const stp=()=>clearTimeout(lt);
+  [['cat','button[data-m="quran"]'],['sub','button[data-g]']].forEach(([id,sel])=>{
+    const cn=$(id);if(!cn)return;
+    cn.style.webkitTouchCallout='none';cn.style.webkitUserSelect='none';cn.style.userSelect='none';
+    cn.addEventListener('pointerdown',e=>{const b=e.target.closest(sel);if(!b)return;
+      ld=false;stp();
+      lt=setTimeout(()=>{ld=true;
+        let m=b.dataset.g||(b.dataset.m==='quran'?navM:b.dataset.m);
+        try{localStorage.setItem('pk_used','1')}catch(x){}document.body.classList.add('pk-used');
+        try{navigator.vibrate&&navigator.vibrate(20)}catch(x){}
+        openPk(m)},550)});
+    ['pointerup','pointercancel','pointerleave'].forEach(ev=>cn.addEventListener(ev,stp));
+    cn.addEventListener('contextmenu',e=>{if(e.target.closest(sel))e.preventDefault()});
+    cn.addEventListener('click',e=>{if(ld){ld=false;e.stopImmediatePropagation();e.preventDefault()}},true)})}
 /* ===== قائمة الاختيار المتعدد للقرآن والأذكار ===== */
 const pkEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pkNz=x=>String(x).replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي');
@@ -1811,7 +1826,7 @@ function pkGo(){const L=pkItems(pkM).filter(x=>pkSel.has(x.key)).map(x=>({...x,w
   try{localStorage.setItem('pk_'+pkM,JSON.stringify(L.map(x=>x.key)))}catch(e){}
   PKQ={mode:pkM,list:L};mode=pkM;mark();pkClose();load(L[0])}
 audio.ontimeupdate=()=>{if(!audio.duration)return;ring(audio.currentTime/audio.duration);$('time').textContent=`${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;errs=0};
-audio.onended=()=>step(1);
+audio.onended=()=>{try{if(window.__rdAfterAdhan&&window.__rdAfterAdhan())return}catch(e){}step(1)};
 audio.onerror=()=>{const off=navigator.onLine===false;setState(false,off?'المقطع ده لازم يتحمّل بنت أول مرة':'تعذر تشغيل الملف، تأكد من اسمه ومساره');if(off&&window.apToast&&!window.__oaT){window.__oaT=1;setTimeout(()=>{window.__oaT=0},15000);try{apToast('المقطع ده لم يُحفظ بعد، يحتاج نت أول مرة')}catch(e){}}if(++errs<3)setTimeout(()=>step(1),2000)};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!audio.paused)lock()});
 if('mediaSession' in navigator){const ms=navigator.mediaSession;ms.setActionHandler('play',play);ms.setActionHandler('pause',()=>{audio.pause();setState(false,'متوقف مؤقتًا')});ms.setActionHandler('nexttrack',()=>step(1));ms.setActionHandler('previoustrack',()=>step(-1))}
@@ -1828,7 +1843,7 @@ function tick(){
   const pv=[...PR].reverse().find(([k])=>T[k]<=n),pt=pv?T[pv[0]]:new Date(T.isha.getTime()-864e5);
   $('pbtn').style.setProperty('--pg',Math.min(1,Math.max(0,(n-pt)/(nt-pt))).toFixed(3));
   const ad=PR.find(([k])=>n-T[k]>=0&&n-T[k]<4000);
-  if(ad&&!window.NOADHAN&&!played.has(ADHAN(ad).key)){mode='now';mark();load(ADHAN(ad))}
+  if(ad&&!window.NOADHAN&&!played.has(ADHAN(ad).key)){window.__adhanAt=Date.now();mode='now';mark();load(ADHAN(ad))}
 }
 /* ===== نوافذ التاريخ ومواعيد الصلاة ===== */
 (function(){
@@ -2014,8 +2029,8 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
   window.__rfA=()=>{try{wr();fs();prayers();tr()}catch(e){}};
   /* مؤقت النوم: يخفض الصوت تدريجيًا ثم يتوقف */
   let st=0,se=0,fd=0;
-  const stop=()=>{clearInterval(st);st=0;sv('sle',0);audio.volume=1;$('sst').textContent='';$('sl').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'))};
-  const sTick=()=>{const r=se-Date.now();if(r<=0){audio.pause();stop();setState(false,'انتهى مؤقت النوم')}else{if(r<=3e4)audio.volume=Math.max(.02,r/3e4);$('sst').textContent='يتوقف بعد '+Math.floor(r/6e4)+':'+String(Math.floor(r%6e4/1e3)).padStart(2,'0')}}; function fade(){let v=audio.volume;clearInterval(fd);fd=setInterval(()=>{v-=.05;if(v<=0){clearInterval(fd);audio.pause();audio.volume=1;setState(false,'انتهى مؤقت النوم')}else audio.volume=v},300)}
+  const stop=()=>{clearInterval(st);st=0;sv('sle',0);audio.volume=1;try{window.__rdSleep&&window.__rdSleep(-1)}catch(e){}$('sst').textContent='';$('sl').querySelectorAll('.chip').forEach(c=>c.classList.remove('on'))};
+  const sTick=()=>{const r=se-Date.now();if(r<=0){audio.pause();try{window.__rdSleep&&window.__rdSleep(0)}catch(e){}stop();setState(false,'انتهى مؤقت النوم')}else{if(r<=3e4){audio.volume=Math.max(.02,r/3e4);try{window.__rdSleep&&window.__rdSleep(r)}catch(e){}}$('sst').textContent='يتوقف بعد '+Math.floor(r/6e4)+':'+String(Math.floor(r%6e4/1e3)).padStart(2,'0')}}; function fade(){let v=audio.volume;clearInterval(fd);fd=setInterval(()=>{v-=.05;if(v<=0){clearInterval(fd);audio.pause();audio.volume=1;setState(false,'انتهى مؤقت النوم')}else audio.volume=v},300)}
   $('sl').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;const was=b.classList.contains('on');stop();if(was)return;
     b.classList.add('on');se=Date.now()+b.dataset.m*6e4;sv('slm',b.dataset.m);sv('sle',se);
     st=setInterval(window.__bg(sTick),1000)};
@@ -3853,10 +3868,11 @@ sync();buildRows();mwBuildA();render();
     {g:MAIN,sel:'#hbtn',ic:'📅',t:'التاريخ الهجري',p:'اضغط عليه لتفتح بطاقة التاريخ:',li:['اليوم والتاريخ الميلادي','التاريخ القبطي والهجري الشمسي','طور القمر','المناسبات الإسلامية القريبة']},
     {g:MAIN,sel:'#immB',ic:'🖼️',t:'وضع إخفاء الأزرار',p:'يُخفي كل الأزرار والقوائم ويُبقي الخلفية واسم المقطع فقط، والصوت يواصل التشغيل كما هو. مناسب لتتأمل المشهد أثناء الاستماع.',p2:'اضغط في أي مكان للرجوع.'},
     {g:MAIN,sel:'#quietB',ic:'🌙',t:'وضع السكون',p:'يعرض الخلفية فقط بلا أي أزرار أو أسماء، ويوقف المشغّل، ويشغّل صوتًا من الطبيعة يناسب وقتك وطقسك الحقيقيين ويتكرر تلقائيًا ما دامت الصفحة مفتوحة:',li:['🐦 عصافير في الفجر والنهار','🦗 صراصير الحقل عند المغرب، ومعها 🐸 الضفادع في الليل','🌬️ رياح عند اشتدادها','🌦️ مطر خفيف، 🌧️ مطر، ومطر غزير','⛈️ عاصفة رعدية'],p2:'يتبدّل الصوت وحده لو تغيّر الجو أو دخل وقت جديد. اضغط في أي مكان للخروج.'},
+    {g:MAIN,sel:'#rdHome',ic:'📻',t:'إذاعة القرآن',p:'زر «راديو» في شريط التنقل قبل «خدمات»: ضغطة تشغّل آخر إذاعة اخترتها (وأول مرة إذاعة القرآن الكريم من القاهرة) وتحل محل المقطع في المشغّل الرئيسي. وضغطة ثانية توقفها مؤقتًا وتبقى العلامة مختارة (زر التشغيل الكبير يفعل نفس الشيء)، والتالي والسابق يبدّلان الإذاعة. لإنهاء الإذاعة اختر أي قسم آخر من الشريط. واضغط مطوّلًا على الزر لفتح قائمة الإذاعات، وعلّم ★ على إذاعاتك المفضلة لتظهر في أول القائمة. ولو إذاعة لم تعمل بعد محاولتين يجرّب التطبيق التي بعدها تلقائيًا، وبعد الأذان ترجع الإذاعة من نفسها، ومؤقت النوم يوقفها أيضًا.',p2:'تظهر نقطة خضراء بجانب الاسم عند وجود نت، ويصير رماديًا ومشطوبًا بدونه.'},
     {g:MAIN,sel:'#pbtn',ic:'🕌',t:'الصلاة القادمة',p:'عدّاد تنازلي لأقرب صلاة. اضغط عليه لتظهر مواقيت اليوم كاملة مع اتجاه القبلة، وتُضبط المواقيت من «الإعدادات».'},
     {g:MAIN,sel:'#title',ic:'🎧',t:'اسم المقطع',p:'يظهر هنا اسم الذكر أو السورة أو المقطع الشغّال. وفي قسم «أذكار» يظهر تحته شريط للتبديل بين: الأذكار والابتهالات والأناشيد.'},
     {g:MAIN,sel:'.ctl',ic:'▶️',t:'أزرار التحكم',li:['الدائرة الذهبية: تشغيل وإيقاف مؤقت، وحولها حلقة تقدّم والوقت تحتها','السابق والتالي: للانتقال بين المقاطع','رجوع ١٠ ثوانٍ وتقديم ١٠ ثوانٍ: على جانبي الدائرة']},
-    {g:MAIN,sel:'#cat',ic:'🧭',t:'أقسام التشغيل',li:['الآن: يختار لك الأنسب للوقت: أذكار الصباح أو المساء، وسورة الكهف يوم الجمعة، أو ورد هادئ','قرآن: سور القرآن الكريم','أذكار: الأذكار والابتهالات والأناشيد'],p2:'والأذان يُشغَّل تلقائيًا عند دخول كل صلاة ما دام التطبيق مفتوحًا.'},
+    {g:MAIN,sel:'#cat',ic:'🧭',t:'أقسام التشغيل',li:['الآن: يختار لك الأنسب للوقت: أذكار الصباح أو المساء، وسورة الكهف يوم الجمعة، أو ورد هادئ','القسم الثاني: اسم الزر يتغير حسب ما اخترت (قرآن أو أذكار أو ابتهالات أو أناشيد)، ويظهر فوقه صف تنتقل منه بينها، واضغط مطوّلًا لتختار ما تريد تشغيله','الراديو: بث مباشر لإذاعات القرآن الكريم، ويحتاج إنترنت'],p2:'والأذان يُشغَّل تلقائيًا عند دخول كل صلاة ما دام التطبيق مفتوحًا.'},
     {g:MAIN,sel:'#svc',ic:'🗂️',t:'زر الخدمات',p:'يفتح قائمة الخدمات: أدوات وأحكام ومتابعات للعبادة مقسّمة على ستة أقسام. سنفتحها الآن لنتعرّف عليها.'},
     {g:SV,sheet:1,sel:'#stabs',ic:'🗂️',t:'أقسام الخدمات الستة',p:'اضغط على أي قسم لتظهر موضوعاته، وزر الرجوع يعيدك إلى كل الأقسام. وفيها أكثر من ١٥٠ حكمًا شرعيًا مبسّطًا موزّعة على الأقسام، إضافةً إلى حاسبات ودفاتر ومتابعات.'},
     {g:SV,sheet:1,sel:'#stabs [data-t="dhk"]',ic:'📿',t:'الذكر',li:['المسبحة: عدّاد تسبيح بملء الشاشة','أذكار اليوم: الصباح والمساء، بعد الصلاة، النوم، الاستيقاظ','أذكار المناسبات: المناسبات، الاستخارة، دخول المنزل، مفضلتي','الرقية الشرعية: آيات، أدعية، استماع، آداب','نفحة اليوم: ذكر، دعاء، حديث، أسماء الله الحسنى']},
@@ -7508,152 +7524,6 @@ updRes();
   try{if(window.ResizeObserver){var ro=new ResizeObserver(function(){clearTimeout(stT);stT=setTimeout(relayout,120)});ro.observe(stg)}}catch(e){}
 })();
 </script>
-<script id="qradio-js">
-/* إذاعات القرآن الكريم: بث مباشر. عليها علامة 🌐، وتعمل فقط عند وجود إنترنت (تتعطّل وتتعتّم بدون نت). */
-(function(){
-  var d=document,svc=d.getElementById('svcg'),tabs=d.getElementById('stabs');
-  if(!svc||!tabs||d.getElementById('qrad'))return;
-  var API='https://www.mp3quran.net/api/v3/radios?language=ar';
-  var FB=[{n:'إذاعة القرآن الكريم من القاهرة',u:'https://stream.radiojar.com/8s5u5tpdtwzuv'}];
-  function ld(k){try{return localStorage.getItem(k)}catch(e){return null}}
-  function sv(k,v){try{localStorage.setItem(k,v)}catch(e){}}
-  function toast(m){try{window.apToast&&apToast(m)}catch(e){}}
-  function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-  function an(s){return String(s).replace(/[0-9]/g,function(c){return '٠١٢٣٤٥٦٧٨٩'.charAt(+c)})}
-  function nz(t){return String(t).replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[إأآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase().trim()}
-  function off(){return navigator.onLine===false}
-
-  var css=d.createElement('style');
-  css.textContent=
-  '#qrad{position:relative}'
-  +'#qrad .rdb{position:absolute;top:4px;inset-inline-end:4px;width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-size:.62rem;font-style:normal;line-height:1;background:rgba(0,0,0,.42);border:1px solid var(--line);pointer-events:none}'
-  +'#qrad.cl .rdb{top:2px;inset-inline-end:2px;width:16px;height:16px;font-size:.55rem}'
-  +'#qrad.rdoff{opacity:.45;filter:grayscale(1);cursor:not-allowed!important}'
-  +'#qrad.rdoff .rdb{background:rgba(180,40,40,.75)}'
-  +'#qrad .rdn{display:flex;align-items:center;gap:8px;margin:10px 0;padding:10px 12px;border-radius:16px;border:1.5px solid var(--line);background:rgba(255,255,255,.07)}'
-  +'#qrad .rdn[hidden]{display:none}'
-  +'#qrad .rdn b{flex:1;font-size:.92rem;line-height:1.5}'
-  +'#qrad .rdn small{display:block;font-weight:400;color:var(--mut);font-size:.74rem}'
-  +'#qrad .rdq{width:100%;box-sizing:border-box;border-radius:16px;border:1.5px solid var(--line);background:rgba(0,0,0,.18);color:inherit;padding:10px 12px;font:inherit;margin-bottom:8px}'
-  +'#qrad .rdl{display:flex;flex-direction:column;gap:6px;max-height:52vh;overflow:auto;-webkit-overflow-scrolling:touch}'
-  +'#qrad .rdl button{display:flex;align-items:center;gap:8px;text-align:start;padding:10px 12px;border-radius:14px;border:1.5px solid var(--line);background:rgba(255,255,255,.05);color:inherit;font:inherit;cursor:pointer}'
-  +'#qrad .rdl button.on{background:rgba(232,204,142,.32);border-color:rgba(232,204,142,.7)}'
-  +'#qrad.rdoff .rdl button{pointer-events:none}'
-  +'#qrad .rdnt{font-size:.8rem;color:var(--mut);text-align:center;margin:8px 0 0}';
-  d.head.appendChild(css);
-
-  var card=d.createElement('section');
-  card.className='sc cl';card.id='qrad';card.dataset.p='qur';card.dataset.g='إذاعات القرآن الكريم';
-  card.dataset.kw='إذاعات القرآن الكريم راديو اذاعة بث مباشر إنترنت اذاعات';
-  card.innerHTML='<h3><span class="ic" aria-hidden="true">📻</span><span>إذاعات القرآن</span><i class="rdb" id="rdBadge" aria-hidden="true">🌐</i></h3>'
-  +'<p class="mutp">بث مباشر لإذاعات القرآن الكريم على مدار الساعة. 🌐 تحتاج اتصالًا بالإنترنت ولا تعمل بدونه.</p>'
-  +'<div class="rdn" id="rdNow" hidden><span aria-hidden="true">📻</span><b id="rdNm"></b><button class="chip" type="button" id="rdStop">⏹ إيقاف</button></div>'
-  +'<input class="rdq" id="rdQ" type="search" placeholder="ابحث عن إذاعة" aria-label="بحث عن إذاعة" autocomplete="off">'
-  +'<div class="rdl" id="rdL" role="list"></div>'
-  +'<p class="rdnt" id="rdMsg"></p>';
-  svc.appendChild(card);
-  try{
-    tabs.querySelectorAll('button').forEach(function(b){
-      var n=[].filter.call(svc.children,function(x){return x.classList.contains('sc')&&x.dataset.p===b.dataset.t}).length,m=b.querySelector('small');
-      if(m)m.textContent=n===1?'خدمة واحدة':an(n)+(n<=10?' خدمات':' خدمة');
-    });
-  }catch(e){}
-
-  var A=new Audio();A.preload='none';
-  var ST=[],cur=-1,q='';
-  function g(id){return d.getElementById(id)}
-  function normList(a){
-    var seen={},o=[];
-    (a||[]).forEach(function(r){
-      var n=(r.n||r.name||'').trim(),u=(r.u||r.url||'').trim();
-      if(!n||!/^https?:\/\//.test(u)||seen[u])return;
-      seen[u]=1;o.push({n:n,u:u});
-    });
-    return o;
-  }
-  try{var c0=JSON.parse(ld('qrad_list')||'null');ST=normList(c0)}catch(e){}
-  if(!ST.length)ST=normList(FB);
-
-  function render(){
-    var L=g('rdL'),k=nz(q),h='';
-    ST.forEach(function(s,i){
-      if(k&&nz(s.n).indexOf(k)<0)return;
-      h+='<button type="button" role="listitem" data-i="'+i+'"'+(i===cur?' class="on"':'')+'><span aria-hidden="true">'+(i===cur&&!A.paused?'🔊':'📻')+'</span><span>'+esc(s.n)+'</span></button>';
-    });
-    L.innerHTML=h||'<p class="rdnt">لا توجد نتائج</p>';
-  }
-  function msg(t){g('rdMsg').textContent=t||''}
-  function now(){
-    var box=g('rdNow'),on=cur>=0&&ST[cur]&&!A.paused;
-    box.hidden=!(cur>=0&&ST[cur]);
-    if(cur>=0&&ST[cur])g('rdNm').innerHTML=esc(ST[cur].n)+'<small>'+(on?'بث مباشر':'جارٍ الاتصال…')+'</small>';
-  }
-  function stop(){
-    try{A.pause();A.removeAttribute('src');A.load()}catch(e){}
-    cur=-1;now();render();
-  }
-  function play(i){
-    if(off()){toast('إذاعات القرآن تحتاج إنترنت');return}
-    var s=ST[i];if(!s)return;
-    try{var m=g('audio');if(m&&!m.paused)m.pause()}catch(e){}
-    cur=i;A.src=s.u;now();render();
-    var p=A.play();if(p&&p.catch)p.catch(function(){if(cur===i){toast('تعذّر تشغيل هذه الإذاعة، جرّب إذاعة أخرى');stop()}});
-    try{if('mediaSession' in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:s.n,artist:'إذاعات القرآن الكريم'});navigator.mediaSession.setActionHandler('pause',stop);navigator.mediaSession.setActionHandler('stop',stop)}}catch(e){}
-  }
-  A.addEventListener('playing',function(){now();render()});
-  A.addEventListener('error',function(){if(cur<0)return;toast(off()?'انقطع الإنترنت، توقفت الإذاعة':'تعذّر تشغيل هذه الإذاعة، جرّب إذاعة أخرى');stop()});
-  var mainA=g('audio');
-  if(mainA)mainA.addEventListener('play',function(){if(cur>=0)stop()});
-
-  g('rdL').addEventListener('click',function(e){
-    var b=e.target.closest('button[data-i]');if(!b)return;
-    var i=+b.dataset.i;if(i===cur&&!A.paused){stop();return}
-    play(i);
-  });
-  g('rdStop').addEventListener('click',stop);
-  g('rdQ').addEventListener('input',function(){q=this.value;render()});
-
-  var loading=false;
-  function loadList(){
-    if(off()||loading)return;loading=true;
-    var done=function(){loading=false};
-    try{
-      fetch(API).then(function(r){return r.json()}).then(function(j){
-        var l=normList((j&&j.radios||[]).map(function(r){return{n:r.name,u:r.url}}));
-        if(l.length){
-          var fbu=normList(FB)[0];
-          if(fbu&&!l.some(function(x){return x.u===fbu.u}))l.unshift(fbu);
-          var curU=cur>=0&&ST[cur]?ST[cur].u:null;
-          ST=l;sv('qrad_list',JSON.stringify(l));
-          cur=curU?ST.map(function(x){return x.u}).indexOf(curU):-1;
-          render();
-        }
-        done();
-      }).catch(function(){done()});
-    }catch(e){done()}
-  }
-
-  function upd(){
-    var o=off();
-    card.classList.toggle('rdoff',o);
-    card.setAttribute('aria-disabled',o?'true':'false');
-    g('rdBadge').title=o?'تحتاج إنترنت':'تعمل بالإنترنت';
-    if(o){if(cur>=0){stop();toast('انقطع الإنترنت، توقفت الإذاعة')}msg('لا يوجد اتصال بالإنترنت. الإذاعات تعمل فقط عند توفّر الإنترنت.')}
-    else{msg('');loadList()}
-  }
-  /* عند عدم وجود إنترنت: امنع فتح البطاقة أو تشغيل أي إذاعة واعرض تنبيهًا */
-  d.addEventListener('click',function(e){
-    if(!off())return;
-    var t=e.target,c=t&&t.closest&&t.closest('#qrad');
-    if(!c)return;
-    if(c.classList.contains('cl')||t.closest('.rdl button')){
-      e.stopImmediatePropagation();e.preventDefault();
-      toast('إذاعات القرآن تحتاج إنترنت');
-    }
-  },true);
-  addEventListener('offline',upd);addEventListener('online',upd);
-  render();upd();
-})();
-</script>
+<script id="qradio-js" src="radio.js"></script>
 </body>
 </html>
