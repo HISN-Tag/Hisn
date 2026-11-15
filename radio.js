@@ -11,6 +11,10 @@
   function an(s){return String(s).replace(/[0-9]/g,function(c){return '٠١٢٣٤٥٦٧٨٩'.charAt(+c)})}
   function nz(t){return String(t).replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,'').replace(/[إأآٱ]/g,'ا').replace(/ى/g,'ي').replace(/ة/g,'ه').toLowerCase().trim()}
   function off(){return navigator.onLine===false}
+  /* الصفحة https: المتصفح في الموبايل يحجب روابط http (mixed content) فنرقّيها إلى https. ملفات القوائم (pls/m3u) لا يشغّلها <audio> فنستبعدها */
+  function nu(u){u=String(u||'').trim();if(location.protocol==='https:'&&/^http:\/\//i.test(u))u='https://'+u.slice(7);return u}
+  function unplayable(u){return /\.(pls|m3u|asx|xspf)(\?|#|$)/i.test(u)}
+  function isHls(u){return /\.m3u8(\?|#|$)/i.test(u)}
 
   var css=d.createElement('style');
   css.textContent=
@@ -101,8 +105,8 @@
   function normList(a){
     var seen={},o=[];
     (a||[]).forEach(function(r){
-      var n=(r.n||r.name||'').trim(),u=(r.u||r.url||'').trim();
-      if(!n||!/^https?:\/\//.test(u)||seen[u])return;
+      var n=(r.n||r.name||'').trim(),u=nu(r.u||r.url||'');
+      if(!n||!/^https?:\/\//.test(u)||unplayable(u)||seen[u])return;
       seen[u]=1;o.push({n:n,u:u});
     });
     return o;
@@ -112,6 +116,13 @@
 
   /* الإذاعات المفضّلة: نجمة على الإذاعة وتظهر في أول القائمة */
   var FAV=[];try{FAV=JSON.parse(ld('qrad_fav')||'[]');if(!Array.isArray(FAV))FAV=[]}catch(e){FAV=[]}
+  FAV=FAV.map(nu);
+  /* إذاعات تعذّر تشغيلها: نعلّم عليها ⚠️ ونتخطاها عند التبديل التلقائي، وتُنسى بعد يوم أو أول ما تشتغل */
+  var BAD={};try{BAD=JSON.parse(ld('qrad_bad')||'{}')||{}}catch(e){BAD={}}
+  (function(){var t=Date.now(),k;for(k in BAD)if(!(t-BAD[k]<864e5))delete BAD[k]})();
+  function isBad(u){return !!BAD[u]}
+  function markBad(u){BAD[u]=Date.now();sv('qrad_bad',JSON.stringify(BAD))}
+  function clearBad(u){if(BAD[u]){delete BAD[u];sv('qrad_bad',JSON.stringify(BAD))}}
   function isFav(u){return FAV.indexOf(u)>=0}
   function order(k){var f=[],o=[];ST.forEach(function(s,i){if(k&&nz(s.n).indexOf(k)<0)return;(isFav(s.u)?f:o).push(i)});return f.concat(o)}
   function favBtn(cls,i,s){var f=isFav(s.u);return '<button type="button" class="'+cls+(f?' rfv':'')+'" data-fav="'+i+'" aria-pressed="'+f+'" aria-label="'+(f?'إزالة من المفضلة: ':'إضافة إلى المفضلة: ')+esc(s.n)+'">'+'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true" focusable="false"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17.3l-5.9 3.3 1.3-6.6L2.5 9.4l6.6-.8z"/></svg></button>'}
@@ -120,7 +131,7 @@
     var L=g('rdL'),k=nz(q),h='';
     order(k).forEach(function(i){
       var s=ST[i];
-      h+='<div class="rdw" role="listitem"><button type="button" data-i="'+i+'"'+(i===cur?' class="on"':'')+'><span aria-hidden="true">'+(i===cur&&!A.paused?'🔊':'📻')+'</span><span>'+esc(s.n)+'</span></button>'+favBtn('rdf',i,s)+'</div>';
+      h+='<div class="rdw" role="listitem"><button type="button" data-i="'+i+'"'+(i===cur?' class="on"':'')+'><span aria-hidden="true">'+(i===cur&&!A.paused?'🔊':'📻')+'</span><span>'+(isBad(s.u)?'⚠️ ':'')+esc(s.n)+'</span></button>'+favBtn('rdf',i,s)+'</div>';
     });
     L.innerHTML=h||'<p class="rdnt">لا توجد نتائج</p>';
     if(rp&&!rp.hidden)rpDraw();
@@ -200,9 +211,27 @@
       ms.setActionHandler('previoustrack',function(){click('b-prev')});
     }}catch(e){}
   }
+  var hlsI=null,ct=0,hlsQ=null;
+  var HLS_URLS=['hls.min.js','https://cdn.jsdelivr.net/npm/hls.js@1.5.17/dist/hls.min.js'];
+  function detach(){if(hlsI){try{hlsI.destroy()}catch(e){}hlsI=null}}
+  function killSrc(){clearTimeout(ct);detach();try{A.pause();A.removeAttribute('src');A.load()}catch(e){}}
+  /* بث HLS (m3u8): سفاري/آيفون يشغّله مباشرة، أما كروم/أندرويد فيحتاج مكتبة hls.js (نجرّب الملف المحلي أولًا ثم CDN) */
+  function loadHls(cb){
+    if(window.Hls){cb(true);return}
+    if(hlsQ){hlsQ.push(cb);return}
+    hlsQ=[cb];
+    var k=0,done=function(ok){var a=hlsQ;hlsQ=null;a.forEach(function(f){f(ok)})};
+    (function next(){
+      if(k>=HLS_URLS.length){done(false);return}
+      var sc=d.createElement('script');sc.async=true;sc.src=HLS_URLS[k++];
+      sc.onload=function(){if(window.Hls)done(true);else next()};
+      sc.onerror=function(){next()};
+      d.head.appendChild(sc);
+    })();
+  }
   function stop(keep){
     seq++;rpz=false;
-    try{A.pause();A.removeAttribute('src');A.load()}catch(e){}
+    killSrc();
     cur=-1;
     if(keep===true)saved=null; /* المشغّل الرئيسي بدأ مقطعًا جديدًا: لا نرجّع القديم فوقه */
     now();render();mediaRestore();
@@ -210,36 +239,74 @@
   function pauseR(){
     if(cur<0)return;
     seq++;rpz=true;
-    try{A.pause();A.removeAttribute('src');A.load()}catch(e){}
+    killSrc();
     now();render();
   }
+  function nextGood(i){
+    var od=order(''),p=od.indexOf(i),k,j;
+    for(k=1;k<od.length;k++){j=od[(p+k)%od.length];if(j!==i&&ST[j]&&!isBad(ST[j].u))return j}
+    return -1;
+  }
+  var failFor=-1,failAt=0;
   function fail(){
     if(cur<0||rpz)return;
-    var i=cur;
+    var i=cur,tn=Date.now();
+    /* الخطأ الواحد يصلنا مرتين (حدث error ورفض play)، فنحسبه مرة واحدة لكل محاولة */
+    if(failFor===seq&&tn-failAt<1500)return;
+    failFor=seq;failAt=tn;
+    try{(window.__rdLog=window.__rdLog||[]).push({n:ST[i]&&ST[i].n,u:ST[i]&&ST[i].u,code:A.error&&A.error.code,t:Date.now()})}catch(e){}
     if(off()){toast('انقطع الإنترنت، توقفت الإذاعة');pauseR();return}
     if(tries<1){tries++;setTimeout(function(){if(cur===i&&!rpz&&!off())play(i,true)},1200);return}
-    /* بعد محاولتين: نجرّب الإذاعة اللي بعدها بدل ما نقف عند رسالة الخطأ (حتى ٤ إذاعات) */
-    var od=order(''),p=od.indexOf(i),nx=(od.length>1&&hops<Math.min(4,od.length-1))?od[(p+1)%od.length]:-1;
-    if(nx>=0&&nx!==i&&ST[nx]){hops++;tries=0;toast('تعذّر تشغيل «'+ST[i].n+'»، جارٍ تجربة «'+ST[nx].n+'»');play(nx,true,true);return}
+    if(ST[i])markBad(ST[i].u);
+    /* بعد محاولتين: نجرّب أقرب إذاعة سليمة بدل ما نقف عند رسالة الخطأ (حتى ٦ إذاعات) */
+    var nx=hops<6?nextGood(i):-1;
+    if(nx>=0&&ST[nx]){hops++;tries=0;toast('تعذّر تشغيل «'+ST[i].n+'»، جارٍ تجربة «'+ST[nx].n+'»');play(nx,true,true);return}
     toast('تعذّر تشغيل الإذاعات المتاحة. اضغط للمحاولة مرة أخرى أو اختر إذاعة أخرى');
     pauseR();
   }
   function resumeR(){if(cur>=0&&ST[cur])play(cur)}
   function stepR(dir){var od=order('');if(!od.length)return;var p=od.indexOf(cur);play(od[p<0?0:(p+dir+od.length)%od.length])}
+  function startPlay(my,i){
+    var p=A.play();
+    if(p&&p.catch)p.catch(function(e){
+      if(my!==seq||cur!==i)return;                       /* طلب قديم اتلغى بضغطة أحدث */
+      if(e&&e.name==='AbortError')return;                /* تم إلغاؤه بإيقاف/تبديل، مش خطأ حقيقي */
+      if(e&&e.name==='NotAllowedError'){toast('اضغط زر التشغيل لبدء الإذاعة');pauseR();return} /* المتصفح منع التشغيل التلقائي: ليس عيبًا في الإذاعة */
+      fail()});
+  }
+  function startStream(u,my,i){
+    clearTimeout(ct);detach();
+    /* بث لا يردّ ولا يعطي خطأ (شائع في الموبايل): بعد ١٥ ثانية نعتبره فاشلًا */
+    ct=setTimeout(function(){if(my===seq&&cur===i&&!rpz&&(A.paused||A.readyState<3))fail()},15000);
+    if(isHls(u)&&!A.canPlayType('application/vnd.apple.mpegurl')){
+      try{A.pause();A.removeAttribute('src')}catch(e){}
+      loadHls(function(ok){
+        if(my!==seq||cur!==i)return;
+        if(!ok||!window.Hls||!window.Hls.isSupported()){fail();return}
+        try{
+          hlsI=new window.Hls({enableWorker:true,lowLatencyMode:false});
+          hlsI.on(window.Hls.Events.ERROR,function(ev,data){
+            if(my!==seq||!data||!data.fatal)return;
+            if(data.type===window.Hls.ErrorTypes.MEDIA_ERROR){try{hlsI.recoverMediaError();return}catch(e){}}
+            fail()});
+          hlsI.loadSource(u);hlsI.attachMedia(A);
+          startPlay(my,i);
+        }catch(e){fail()}
+      });
+    }else{A.src=u;startPlay(my,i)}
+  }
   function play(i,retry,hop){
     if(off()){toast('إذاعات القرآن تحتاج إنترنت');return}
     var s=ST[i];if(!s)return;
     if(!retry){tries=0;hops=0}pend=null;
     try{var m=g('audio');if(m){mainSrc0=m.currentSrc||m.src||'';if(!m.paused)m.pause()}}catch(e){}
     var my=++seq;
-    rpz=false;cur=i;if(!hop)sv('qrad_last',s.u);try{A.volume=1}catch(e){}A.src=s.u;now();render();
-    var p=A.play();if(p&&p.catch)p.catch(function(e){
-      if(my!==seq||cur!==i)return;                       /* طلب قديم اتلغى بضغطة أحدث */
-      if(e&&e.name==='AbortError')return;                /* تم إلغاؤه بإيقاف/تبديل، مش خطأ حقيقي */
-      fail()});
+    rpz=false;cur=i;if(!hop)sv('qrad_last',s.u);try{A.volume=1}catch(e){}
+    now();render();
+    startStream(s.u,my,i);
     try{if('mediaSession' in navigator){navigator.mediaSession.metadata=new MediaMetadata({title:s.n,artist:'إذاعات القرآن الكريم'});var ms=navigator.mediaSession;ms.setActionHandler('play',resumeR);ms.setActionHandler('pause',pauseR);ms.setActionHandler('stop',stop);ms.setActionHandler('nexttrack',function(){stepR(1)});ms.setActionHandler('previoustrack',function(){stepR(-1)})}}catch(e){}
   }
-  A.addEventListener('playing',function(){tries=0;hops=0;now();render()});
+  A.addEventListener('playing',function(){clearTimeout(ct);tries=0;hops=0;if(cur>=0&&ST[cur])clearBad(ST[cur].u);now();render()});
   A.addEventListener('error',function(){if(cur<0||rpz||!A.getAttribute('src'))return;fail()});
   var mainA=g('audio');
   if(mainA)mainA.addEventListener('play',function(){
@@ -269,7 +336,7 @@
     var k=nz(rp.querySelector('input').value),h='';
     order(k).forEach(function(i){
       var s=ST[i],on=i===cur;
-      h+='<div class="pkw" role="listitem"><button type="button" class="pkr'+(on?' on':'')+'" data-i="'+i+'"><i class="pkk" aria-hidden="true">'+(on?(A.paused?'⏳':'🔊'):'📻')+'</i><span>'+esc(s.n)+'</span></button>'+favBtn('pkf',i,s)+'</div>';
+      h+='<div class="pkw" role="listitem"><button type="button" class="pkr'+(on?' on':'')+'" data-i="'+i+'"><i class="pkk" aria-hidden="true">'+(on?(A.paused?'⏳':'🔊'):'📻')+'</i><span>'+(isBad(s.u)?'⚠️ ':'')+esc(s.n)+'</span></button>'+favBtn('pkf',i,s)+'</div>';
     });
     rp.querySelector('.pkl').innerHTML=h||'<p class="rpm">لا نتائج مطابقة.</p>';
     rp.querySelector('.rpm.top').textContent=off()?'لا يوجد اتصال بالإنترنت. الإذاعات تعمل فقط عند توفّر الإنترنت.':'';
@@ -325,7 +392,7 @@
     /* الراديو شغّال: الضغطة تعمل إيقاف مؤقت/استئناف وتبقى العلامة مختارة، ولا نرجع للزر السابق */
     if(cur>=0){if(rpz||A.paused)resumeR();else pauseR();return}
     if(off()){toast('إذاعات القرآن تحتاج إنترنت');return}
-    var u=ld('qrad_last')||(normList(FB)[0]||{}).u,i=-1,k;
+    var u=nu(ld('qrad_last')||(normList(FB)[0]||{}).u),i=-1,k;
     for(k=0;k<ST.length;k++)if(ST[k].u===u){i=k;break}
     if(i<0)i=0;
     play(i);rdHint();
