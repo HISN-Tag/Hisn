@@ -916,6 +916,26 @@ body.sv #clouds3 .cloud3{animation-play-state:paused!important}
 body.lite .fxi *,body.lite .fxi,body.lite .eq i,body.lite #qrd #qrPl{animation:none!important}
 @media (prefers-reduced-motion:reduce){.fxi *,.fxi,.eq i,#qrd #qrPl,#qrd .qdp i{animation:none!important}}
 </style>
+<style id="lp-css">
+/* ضغط مطوّل موحّد: حلقة التقدّم + القائمة + النقطة */
+#lpRing{position:fixed;z-index:9000;box-sizing:border-box;pointer-events:none;border:2.5px solid var(--ac);opacity:0;will-change:transform,opacity}
+#lpRing.on{animation:lpgrow .35s cubic-bezier(.2,.8,.2,1) forwards}
+#lpRing.fire{animation:lpfire .32s ease-out forwards}
+@keyframes lpgrow{from{opacity:0;transform:scale(.92)}to{opacity:.95;transform:scale(1.07)}}
+@keyframes lpfire{from{opacity:.95;transform:scale(1.07)}to{opacity:0;transform:scale(1.28)}}
+.lp-ing{filter:brightness(1.15)}
+#lpMenu{position:fixed;z-index:9001;min-width:176px;max-width:calc(100vw - 16px);padding:8px;border-radius:22px;direction:rtl;display:flex;flex-direction:column;gap:6px;color:var(--ink);border:1.5px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 60%),var(--t);box-shadow:0 14px 40px rgba(0,0,0,.45);animation:lpin .16s ease-out}
+#lpMenu .lph{margin:2px 6px 0;font-size:.78rem;color:var(--mut);text-align:center}
+#lpMenu .chip{width:100%;min-height:44px;display:flex;align-items:center;justify-content:center}
+@keyframes lpin{from{opacity:0;transform:translateY(6px) scale(.97)}to{opacity:1;transform:none}}
+.lpd{position:absolute;z-index:3;width:7px;height:7px;border-radius:50%;background:#fff;box-shadow:0 0 0 1.5px rgba(26,20,8,.6);pointer-events:none}
+body.lpu-now .lpd[data-k="now"],body.lpu-play .lpd[data-k="play"],body.lpu-zk #zkh{display:none}
+.sc.cl{-webkit-touch-callout:none}
+@media(prefers-reduced-motion:reduce){
+@keyframes lpgrow{from{opacity:0}to{opacity:.95}}
+@keyframes lpfire{from{opacity:.95}to{opacity:0}}
+@keyframes lpin{from{opacity:0}to{opacity:1}}}
+</style>
 </head>
 <body data-p="night">
 <style>
@@ -1007,7 +1027,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <nav aria-label="أقسام الخدمات" class="stabs" id="stabs"><button aria-controls="svcg" aria-expanded="false" data-t="sal" type="button"><i aria-hidden="true">🕌</i><span>الصلاة</span><small></small></button><button aria-controls="svcg" aria-expanded="false" data-t="siy" type="button"><i aria-hidden="true">🌙</i><span>الصيام</span><small></small></button><button aria-controls="svcg" aria-expanded="false" data-t="zak" type="button"><i aria-hidden="true">💰</i><span>الزكاة</span><small></small></button><button aria-controls="svcg" aria-expanded="false" data-t="dhk" type="button"><i aria-hidden="true">📿</i><span>الذكر</span><small></small></button><button aria-controls="svcg" aria-expanded="false" data-t="qur" type="button"><i aria-hidden="true"><svg class="fxi fxi-bk" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.8C10 5.2 7 4.7 3.5 5.2v12.6c3.5-.5 6.5 0 8.5 1.6 2-1.6 5-2.1 8.5-1.6V5.2c-3.5-.5-6.5 0-8.5 1.6z"/><path d="M12 6.8v12.6"/><path class="st" d="M18.6 1.4l.7 1.7 1.7.7-1.7.7-.7 1.7-.7-1.7-1.7-.7 1.7-.7z" fill="currentColor" stroke="none"/></svg></i><span>الوحي</span><small></small></button><button aria-controls="svcg" aria-expanded="false" data-t="mor" type="button"><i aria-hidden="true">☰</i><span>المزيد</span><small></small></button></nav>
 <button class="stback" hidden id="stBack" type="button"><span aria-hidden="true">→</span><b></b><em>كل الأقسام</em></button>
 <p class="tabhint" id="tabhint">اضغط على أي قسم لتظهر لك موضوعاته</p>
-<section class="sc" data-p="d"><h3>ذكر اليوم</h3><p class="zk" id="zk"></p><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="zc">نسخ</button></div></section>
+<section class="sc" data-p="d"><h3>ذكر اليوم</h3><p class="zk" id="zk"></p><p class="mutp" id="zkh" style="text-align:center;margin-top:8px">اضغط مطوّلًا على الذكر لنسخه</p><div class="chips" hidden><button class="chip" id="zc" type="button">نسخ</button></div></section>
 <section class="sc" data-p="t"><h3>المسبحة</h3><div class="wheelw"><div class="wheel" id="dz" role="listbox" tabindex="0" aria-label="قائمة الأذكار"></div></div>
 <div class="add"><input aria-label="ذكر جديد" id="tin" maxlength="60" placeholder="أضف ذكرًا خاصًا بك…"/><button class="chip" id="tadd">إضافة</button></div>
 <div class="tas" id="tas"><button aria-label="تسبيحة" id="tbtn"><b id="tn">٠</b><small id="tp"></small></button></div>
@@ -1697,6 +1717,7 @@ const recurring=x=>{const s=String(x.title).replace(/[\u064B-\u0652\u0640]/g,'')
   if(OCCASION.some(k=>s.includes(k)))return false;
   return RECUR_OK.some(k=>s.includes(k))||(RECUR_COUNTED.some(k=>s.includes(k))&&/[\d٠-٩]|مره/.test(s))};
 function pick(){
+  if(window.__nowForce){const f=window.__nowForce;window.__nowForce=null;return f}
   const n=new Date(),w=windows(n),c=[];
   if(w.adhan)c.push(ADHAN(w.adhan));
   if(w.kahf)c.push(...lib('kahf',WHY.kahf));
@@ -1765,21 +1786,95 @@ $('cat').onclick=e=>{const b=e.target.closest('button');if(!b||!b.dataset.m)retu
 try{if(localStorage.getItem('pk_used'))document.body.classList.add('pk-used')}catch(x){}
 setGrp(grp);setNavM(navM);$('sub').onclick=e=>{const b=e.target.closest('button[data-g]');if(!b)return;e.stopPropagation();PKQ=null;{const f=SUBS.indexOf(mode),t=SUBS.indexOf(b.dataset.g);if(t>-1&&f!==t)swapFx(t>f?'sw-n':'sw-p')}if(b.dataset.g!=='quran')setGrp(b.dataset.g);setMode(b.dataset.g)};
 PKM.forEach(m=>{const b=document.querySelector('#cat [data-m="'+m+'"]');if(b)b.title='اضغط مطوّلًا لاختيار ما تريد تشغيله';if(b)b.setAttribute('aria-haspopup','dialog');const c=document.querySelector('#sub [data-g="'+m+'"]');if(c){c.title='اضغط مطوّلًا لاختيار ما تريد تشغيله';c.setAttribute('aria-haspopup','dialog')}});
-/* ضغطة مطوّلة على «قرآن وأذكار» أو على أي زر في الصف الفرعي (قرآن/أذكار/ابتهالات/أناشيد) تفتح قائمة الاختيار */
-{let lt=0,ld=false;const stp=()=>clearTimeout(lt);
-  [['cat','button[data-m="quran"]'],['sub','button[data-g]']].forEach(([id,sel])=>{
-    const cn=$(id);if(!cn)return;
-    cn.style.webkitTouchCallout='none';cn.style.webkitUserSelect='none';cn.style.userSelect='none';
-    cn.addEventListener('pointerdown',e=>{const b=e.target.closest(sel);if(!b)return;
-      ld=false;stp();
-      lt=setTimeout(()=>{ld=true;
-        let m=b.dataset.g||(b.dataset.m==='quran'?navM:b.dataset.m);
-        try{localStorage.setItem('pk_used','1')}catch(x){}document.body.classList.add('pk-used');
-        try{navigator.vibrate&&navigator.vibrate(20)}catch(x){}
-        openPk(m)},550)});
-    ['pointerup','pointercancel','pointerleave'].forEach(ev=>cn.addEventListener(ev,stp));
-    cn.addEventListener('contextmenu',e=>{if(e.target.closest(sel))e.preventDefault()});
-    cn.addEventListener('click',e=>{if(ld){ld=false;e.stopImmediatePropagation();e.preventDefault()}},true)})}
+/* ===== الضغط المطوّل الموحّد (دالة واحدة لكل الأزرار): حلقة تقدّم بعد ٢٠٠ مللي ثانية، تنفيذ بعد ٥٥٠، وتُلغى لو تحرّك الإصبع أكتر من ١٠ بكسل.
+   بدائل بدون إصبع: زر الماوس الأيمن (contextmenu) وShift+Enter يفتحان نفس الإجراء.
+   للاستعمال من أي ملف آخر (مثل radio.js): hisnLP.bind(container, selector, {fire:(btn,ev)=>{…}, key:'اسم', ring:(btn)=>عنصر_الحلقة}) و hisnLP.menu(anchor,title,[{label,on,run}]) ===== */
+window.hisnLP=(function(){
+  const DELAY=550,FEED=200,SLOP=10,d=document;
+  const used=()=>{try{return JSON.parse(localStorage.getItem('lp_used')||'{}')||{}}catch(e){return{}}};
+  Object.keys(used()).forEach(k=>d.body.classList.add('lpu-'+k));
+  const markUsed=k=>{if(!k)return;const u=used();if(u[k])return;u[k]=1;try{localStorage.setItem('lp_used',JSON.stringify(u))}catch(e){}d.body.classList.add('lpu-'+k)};
+  const vib=p=>{try{!window.NOVIB&&navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+  let rg=null,rgEl=null;
+  function ringOn(b){if(!b)return;const r=b.getBoundingClientRect();if(!r.width)return;
+    if(!rg){rg=d.createElement('i');rg.id='lpRing';rg.setAttribute('aria-hidden','true');d.body.appendChild(rg)}
+    Object.assign(rg.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',borderRadius:getComputedStyle(b).borderRadius});
+    rg.className='';void rg.offsetWidth;rg.className='on';rgEl=b;b.classList.add('lp-ing')}
+  function ringOff(){if(rgEl){rgEl.classList.remove('lp-ing');rgEl=null}if(rg&&rg.className!=='fire')rg.className=''}
+  function ringFire(){if(rg&&rg.className==='on')rg.className='fire'}
+  function bind(cn,sel,o){
+    o=o||{};if(typeof cn==='string')cn=d.querySelector(cn);if(!cn)return;
+    let t=0,f=0,x0=0,y0=0,el=null,fired=false;
+    cn.style.webkitTouchCallout='none';
+    const stop=()=>{clearTimeout(t);clearTimeout(f);t=f=0};
+    const clear=()=>{stop();el=null;ringOff()};
+    const hit=e=>{const b=e.target&&e.target.closest&&e.target.closest(sel);return b&&cn.contains(b)&&(!o.when||o.when(b))?b:null};
+    const run=(b,e)=>{stop();fired=true;ringFire();vib(20);markUsed(o.key);try{o.fire(b,e)}catch(x){}};
+    cn.addEventListener('pointerdown',e=>{
+      if(e.button>0)return;const b=hit(e);if(!b)return;
+      clear();fired=false;el=b;x0=e.clientX;y0=e.clientY;
+      f=setTimeout(()=>{if(el)ringOn(o.ring?o.ring(b):b)},FEED);
+      t=setTimeout(()=>{t=0;if(!el)return;o.feedbackOnly?ringFire():run(el,e)},DELAY)});
+    cn.addEventListener('pointermove',e=>{if(el&&Math.hypot(e.clientX-x0,e.clientY-y0)>SLOP)clear()});
+    ['pointerup','pointercancel'].forEach(ev=>cn.addEventListener(ev,()=>{clear();setTimeout(()=>{fired=false},60)}));
+    cn.addEventListener('pointerleave',clear);
+    if(!o.feedbackOnly){
+      cn.addEventListener('contextmenu',e=>{const b=hit(e);if(!b)return;e.preventDefault();if(!fired)run(b,e)});
+      cn.addEventListener('keydown',e=>{if(e.key!=='Enter'||!e.shiftKey||e.repeat)return;const b=hit(e);if(!b)return;e.preventDefault();e.stopPropagation();run(b,e);fired=false});
+      cn.addEventListener('click',e=>{if(fired&&hit(e)){fired=false;e.stopImmediatePropagation();e.preventDefault()}},true);
+      cn.querySelectorAll(sel).forEach(x=>x.setAttribute('aria-keyshortcuts','Shift+Enter'))}
+  }
+  /* قائمة صغيرة عائمة فوق الزر */
+  let mn=null,mh=null,mkd=null,prev=null;
+  function closeMenu(){if(!mn)return;mn.remove();mn=null;d.removeEventListener('pointerdown',mh,true);d.removeEventListener('keydown',mkd,true);removeEventListener('resize',closeMenu);try{prev&&prev.focus&&prev.focus({preventScroll:true})}catch(e){}prev=null}
+  function menu(anchor,title,items){
+    closeMenu();prev=d.activeElement;
+    mn=d.createElement('div');mn.id='lpMenu';mn.setAttribute('role','menu');
+    if(title){const h=d.createElement('div');h.className='lph';h.textContent=title;mn.appendChild(h)}
+    items.forEach(it=>{const x=d.createElement('button');x.type='button';x.className='chip'+(it.on?' on':'');x.setAttribute('role','menuitem');x.textContent=it.label;x.onclick=()=>{prev=null;closeMenu();it.run&&it.run()};mn.appendChild(x)});
+    mn.style.visibility='hidden';d.body.appendChild(mn);
+    const r=anchor.getBoundingClientRect(),w=mn.offsetWidth,h=mn.offsetHeight;
+    let top=r.top-h-10;if(top<8)top=Math.min(innerHeight-h-8,r.bottom+10);
+    mn.style.top=Math.max(8,top)+'px';mn.style.left=Math.max(8,Math.min(innerWidth-w-8,r.left+r.width/2-w/2))+'px';mn.style.visibility='';
+    mh=e=>{if(mn&&!mn.contains(e.target))closeMenu()};
+    mkd=e=>{if(!mn)return;if(e.key==='Escape'){e.preventDefault();e.stopPropagation();closeMenu();return}
+      if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();const bs=[...mn.querySelectorAll('button')],i=bs.indexOf(d.activeElement);bs[(i+(e.key==='ArrowDown'?1:-1)+bs.length)%bs.length].focus()}};
+    d.addEventListener('pointerdown',mh,true);d.addEventListener('keydown',mkd,true);addEventListener('resize',closeMenu);
+    const first=mn.querySelector('.chip.on')||mn.querySelector('button');first&&first.focus({preventScroll:true})}
+  return{bind,menu,closeMenu,markUsed}
+})();
+/* قرآن وأذكار + أزرار الصف الفرعي: قائمة اختيار ما تريد تشغيله */
+const pkFire=b=>{const m=b.dataset.g||(b.dataset.m==='quran'?navM:b.dataset.m);try{localStorage.setItem('pk_used','1')}catch(x){}document.body.classList.add('pk-used');openPk(m)};
+hisnLP.bind('#cat','button[data-m="quran"]',{fire:pkFire});
+hisnLP.bind('#sub','button[data-g]',{fire:pkFire});
+/* راديو: التنفيذ في radio.js، وهنا حلقة التقدّم فقط (نفس الزمن) */
+hisnLP.bind('#cat','#rdHome',{feedbackOnly:true});
+/* «الآن»: اختيار يدوي بدل الاختيار التلقائي */
+{const NOWC=[['morning','أذكار الصباح'],['evening','أذكار المساء'],['kahf','سورة الكهف'],['mix','ورد هادئ']];
+  const nowPick=k=>{let L=[];
+    if(k==='morning')L=lib('morning',WHY.m);else if(k==='evening')L=lib('evening',WHY.e);else if(k==='kahf')L=lib('kahf',WHY.kahf);
+    else{const fav=mine('quran').length?lib('quran',WHY.mix):[67,55,2,36,56,19].map(i=>mk(SURAHS[i-1],WHY.mix));L=fav.concat(lib('adhkar',WHY.mix).filter(recurring))}
+    if(!L.length){window.apToast&&apToast('لا توجد ملفات لهذا الاختيار بعد');return}
+    window.__nowForce=k==='mix'?rnd(L):L[0];
+    const b=document.querySelector('#cat [data-m="now"]');if(b)b.click();
+    setTimeout(()=>{window.__nowForce=null},0)};
+  hisnLP.bind('#cat','button[data-m="now"]',{key:'now',fire:b=>hisnLP.menu(b,'اختر ما تريد سماعه الآن',NOWC.map(([k,n])=>({label:n,run:()=>nowPick(k)})))});
+  const nb=document.querySelector('#cat [data-m="now"]');if(nb)nb.title='اضغط مطوّلًا لتختار بنفسك'}
+/* زر التشغيل: ضغطة مطوّلة = مؤقت النوم السريع */
+hisnLP.bind('.orb','#b-play',{key:'play',fire:b=>{const sl=document.getElementById('sl');if(!sl)return;
+  const act=sl.querySelector('.chip.on'),st=document.getElementById('sst'),T=c=>c.textContent.trim();
+  const its=[...sl.querySelectorAll('.chip')].slice(0,3).map(c=>({label:T(c),on:c.classList.contains('on'),run:()=>{if(!c.classList.contains('on')){c.click();window.apToast&&apToast('مؤقت النوم: '+T(c))}}}));
+  if(act)its.push({label:'إلغاء المؤقت',run:()=>{act.click();window.apToast&&apToast('أُلغي مؤقت النوم')}});
+  hisnLP.menu(b,act&&st&&st.textContent?st.textContent:'مؤقت النوم',its)}});
+{const pb=document.getElementById('b-play');if(pb)pb.title='اضغط مطوّلًا لمؤقت النوم'}
+/* نقطة صغيرة تدل على الضغط المطوّل، وتختفي بعد أول استخدام */
+(function(){const L=[],d=document;
+  const add=(hostSel,key,place)=>{const h=d.querySelector(hostSel);if(!h)return;const i=d.createElement('i');i.className='lpd';i.dataset.k=key;i.setAttribute('aria-hidden','true');h.appendChild(i);L.push([i,place]);place(i)};
+  add('#cat','now',i=>{const b=d.querySelector('#cat [data-m="now"]');if(!b)return;i.style.left=(b.offsetLeft+b.offsetWidth/2-3)+'px';i.style.top=(b.offsetTop+6)+'px'});
+  add('.orb','play',i=>{const p=d.getElementById('b-play');if(!p)return;i.style.left=(p.offsetLeft+p.offsetWidth*.78)+'px';i.style.top=(p.offsetTop+p.offsetHeight*.16)+'px'});
+  const upd=()=>L.forEach(([i,p])=>p(i));
+  addEventListener('resize',upd);setTimeout(upd,900);try{d.fonts&&d.fonts.ready.then(upd)}catch(e){}
+  try{const ro=new ResizeObserver(upd);['#cat','.orb'].forEach(x=>{const e=d.querySelector(x);e&&ro.observe(e)})}catch(e){}})();
 /* ===== قائمة الاختيار المتعدد للقرآن والأذكار ===== */
 const pkEsc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const pkNz=x=>String(x).replace(/[\u064B-\u0652\u0640]/g,'').replace(/[أإآٱ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي');
@@ -1915,6 +2010,12 @@ for(let i=0;i<48;i++){const s=document.createElement('i');s.style.cssText=`left:
   const Z=['سبحان الله وبحمده، سبحان الله العظيم','لا حول ولا قوة إلا بالله','أستغفر الله العظيم وأتوب إليه','حسبنا الله ونعم الوكيل','اللهم صلِّ وسلم على نبينا محمد','لا إله إلا أنت سبحانك إني كنت من الظالمين','رب اشرح لي صدري ويسر لي أمري'];
   const zi=Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5)%Z.length;$('zk').textContent=Z[zi];
   $('zc').onclick=async()=>{try{await navigator.clipboard.writeText(Z[zi]);$('zc').textContent='تم النسخ ✓'}catch(e){$('zc').textContent='تعذر النسخ'}setTimeout(()=>$('zc').textContent='نسخ',1800)};
+  /* ذكر اليوم: ضغطة مطوّلة (أو Shift+Enter / Enter) تنسخ النص مباشرة */
+  {const zk=$('zk'),cp=async()=>{let ok=false,t=Z[zi];try{await navigator.clipboard.writeText(t);ok=true}catch(e){try{const x=document.createElement('textarea');x.value=t;x.style.cssText='position:fixed;top:0;opacity:0';document.body.appendChild(x);x.select();ok=document.execCommand('copy');x.remove()}catch(y){}}
+      window.apToast&&apToast(ok?'تم نسخ الذكر ✓':'تعذر النسخ')};
+    zk.setAttribute('tabindex','0');zk.setAttribute('role','button');zk.setAttribute('aria-label','ذكر اليوم: '+Z[zi]+'. اضغط مطوّلًا أو Shift+Enter للنسخ');zk.title='اضغط مطوّلًا للنسخ';
+    hisnLP.bind(zk,'#zk',{key:'zk',fire:cp});
+    zk.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();cp()}})}
   /* المسبحة: أذكار مخصصة تُحفظ في المتصفح حتى بعد إغلاق الصفحة */
   const D0=['سبحان الله','الحمد لله','الله أكبر','أستغفر الله','الصلاة على النبي ﷺ'],G=[33,99,100],esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   let cu=[],TC={};try{cu=JSON.parse(ld('cu'))||[]}catch(e){}try{TC=JSON.parse(ld('tcs'))||{}}catch(e){}
@@ -1989,6 +2090,14 @@ for(let i=0;i<48;i++){const s=document.createElement('i');s.style.cssText=`left:
   $('trs').onclick=()=>{if(!rsT){rsB.textContent='اضغط للتأكيد';rsB.classList.add('on');rsT=setTimeout(()=>{rsT=0;rsB.textContent='تصفير';rsB.classList.remove('on')},3000);return}
     clearTimeout(rsT);rsT=0;rsB.textContent='تصفير';rsB.classList.remove('on');UND.length=0;TC[dn]=0;tr()};
   $('tundo').onclick=()=>{const u=UND.pop();if(!u)return;clearTimeout(pend);pend=0;dn=u.d;TC[dn]=u.p;const k=tdk();sv(k,Math.max(0,(+ld(k)||0)-1));DDadd(dn,-1);vb(8);tr()};
+  /* المسبحة: ضغطة مطوّلة تلغي لمسة العدّ الحالية وتتراجع خطوة (−١). العدّ بالحبات بيحصل عند اللمس، والزر نفسه عند الرفع، فبنحفظ الحالة قبل اللمس ونرجع لها */
+  {let tsnap=null;
+    $('tas').addEventListener('pointerdown',e=>{if(e.button>0)return;tsnap={d:dn,c:TC[dn]||0,t:+ld(tdk())||0,x:DDm()[dn]||0,u:UND.length}});
+    hisnLP.bind('#tas','#tas',{key:'tas',ring:()=>$('tbtn'),fire:()=>{const s=tsnap;if(!s||s.d!==dn)return;
+      clearTimeout(pend);pend=0;const keep=s.c>0;
+      TC[dn]=keep?s.c-1:0;sv(tdk(),Math.max(0,s.t-(keep?1:0)));
+      const m=DDm();m[dn]=Math.max(0,s.x-(keep?1:0));sv(ddk(),JSON.stringify(m));
+      UND.length=Math.min(UND.length,s.u);vb(keep?[18,30]:30);tr();if(keep)nxLabel('−'+ar(1))}})}
   const DG=[0,100,300,500,1000];
   function dgR(){const v=+ld('tdg')||0;$('tdgC').innerHTML=DG.map(x=>`<button class="chip${x===v?' on':''}" data-v="${x}" type="button">${x?ar(x):'بدون'}</button>`).join('')}
   $('tdgC').onclick=e=>{const b=e.target.closest('.chip');if(!b)return;sv('tdg',b.dataset.v);dgR();tr()};dgR();
@@ -2940,6 +3049,27 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
 })();
 </script>
 <script>
+/* v39: ضغط مستمر على ±١٠: يكرّر القفز ويسرّع (١٠ ثم ٣٠ ثم ٦٠ ثانية). الضغطة العادية كما هي */
+(function(){
+  const d=document,a=d.getElementById('audio'),ar=n=>(+n).toLocaleString('ar-EG');if(!a)return;
+  const vib=p=>{try{!window.NOVIB&&navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
+  [['b-back',-1],['b-fwd',1]].forEach(([id,s])=>{const b=d.getElementById(id);if(!b)return;
+    let t=0,iv=0,n=0,held=false;
+    const stop=()=>{clearTimeout(t);clearInterval(iv);t=iv=0};
+    const ok=()=>isFinite(a.duration)&&a.duration>0;
+    const tick=()=>{if(!ok()){stop();return}
+      const amt=n>=7?60:n>=3?30:10;n++;
+      a.currentTime=Math.max(0,Math.min(a.duration-.2,a.currentTime+s*amt));vib(6);
+      const r=b.getBoundingClientRect(),l=d.createElement('b');l.className='sk';l.dir='ltr';l.textContent=(s>0?'+':'−')+ar(amt);
+      l.style.left=(r.left+r.width/2)+'px';l.style.top=r.top+'px';d.body.appendChild(l);setTimeout(()=>l.remove(),800)};
+    b.style.webkitTouchCallout='none';
+    b.addEventListener('pointerdown',e=>{if(e.button>0)return;stop();held=false;n=0;if(!ok())return;t=setTimeout(()=>{held=true;tick();iv=setInterval(tick,320)},450)});
+    ['pointerup','pointercancel','pointerleave'].forEach(ev=>b.addEventListener(ev,stop));
+    b.addEventListener('click',e=>{if(held){held=false;e.stopImmediatePropagation();e.preventDefault()}},true);
+    b.title='اضغط باستمرار للقفز بسرعة أكبر'})
+})();
+</script>
+<script>
 /* v35: تخصيص لون زر المسبحة ولون الأرقام من الإعدادات */
 (function(){
   const d=document,R=d.documentElement,K={b:'ap_tbc',n:'ap_tnc'};
@@ -3159,6 +3289,8 @@ let F=J('fav31',[]),R=J('rec31',[]).slice(0,3);
 const sl=()=>cards().forEach(c=>{const h=c.querySelector(':scope>h3');if(!h||h.querySelector('.fv'))return;h.insertAdjacentHTML('beforeend','<span class="fv" role="button" aria-label="مفضلة">☆</span>')}),st=()=>cards().forEach(c=>{const f=c.querySelector('.fv'),on=F.includes(key(c));if(f){f.textContent=on?'★':'☆';f.classList.toggle('on',on)}});
 svc.addEventListener('click',e=>{const f=e.target.closest('.fv');if(!f)return;e.stopPropagation();const k=key(f.closest('.sc'));F=F.includes(k)?F.filter(x=>x!==k):[k,...F].slice(0,12);sv('fav31',JSON.stringify(F));vb(8);st();qr()},true);
 svc.addEventListener('click',e=>{const c=e.target.closest('.sc');if(!c)return;setTimeout(()=>{if(!c.classList.contains('cl')){R=[key(c),...R.filter(x=>x!==key(c))].slice(0,3);sv('rec31',JSON.stringify(R))}},0)});
+/* ضغطة مطوّلة على بطاقة خدمة = إضافة/إزالة من المفضلة */
+window.hisnLP&&hisnLP.bind(svc,'.sc.cl',{key:'card',fire:c=>{const k=key(c),was=F.includes(k);F=was?F.filter(x=>x!==k):[k,...F].slice(0,12);sv('fav31',JSON.stringify(F));vb([14,24]);st();qr();window.apToast&&apToast(was?'أُزيلت من المفضلة':'أُضيفت إلى المفضلة ★')}});
 const qa=document.createElement('div');qa.id='qacc';$('tabhint').after(qa);
 const strk=()=>{let n=0,d=new Date();const f=x=>cnt('pt'+D(x))>=5;if(!f(d))d.setDate(d.getDate()-1);while(n<400&&f(d)){n++;d.setDate(d.getDate()-1)}return n};
 function qr(){const by=k=>cards().find(c=>key(c)===k),ic=c=>(c.querySelector('.ic')||{}).textContent||'',L=[];F.forEach(k=>{const c=by(k);c&&L.push(['★',c])});R.forEach(k=>{const c=by(k);c&&!F.includes(k)&&L.push(['🕘',c])});const s=strk();
@@ -3871,8 +4003,9 @@ sync();buildRows();mwBuildA();render();
     {g:MAIN,sel:'#rdHome',ic:'📻',t:'إذاعة القرآن',p:'زر «راديو» في شريط التنقل قبل «خدمات»: ضغطة تشغّل آخر إذاعة اخترتها (وأول مرة إذاعة القرآن الكريم من القاهرة) وتحل محل المقطع في المشغّل الرئيسي. وضغطة ثانية توقفها مؤقتًا وتبقى العلامة مختارة (زر التشغيل الكبير يفعل نفس الشيء)، والتالي والسابق يبدّلان الإذاعة. لإنهاء الإذاعة اختر أي قسم آخر من الشريط. واضغط مطوّلًا على الزر لفتح قائمة الإذاعات، وعلّم ★ على إذاعاتك المفضلة لتظهر في أول القائمة. ولو إذاعة لم تعمل بعد محاولتين يجرّب التطبيق التي بعدها تلقائيًا، وبعد الأذان ترجع الإذاعة من نفسها، ومؤقت النوم يوقفها أيضًا.',p2:'تظهر نقطة خضراء بجانب الاسم عند وجود نت، ويصير رماديًا ومشطوبًا بدونه.'},
     {g:MAIN,sel:'#pbtn',ic:'🕌',t:'الصلاة القادمة',p:'عدّاد تنازلي لأقرب صلاة. اضغط عليه لتظهر مواقيت اليوم كاملة مع اتجاه القبلة، وتُضبط المواقيت من «الإعدادات».'},
     {g:MAIN,sel:'#title',ic:'🎧',t:'اسم المقطع',p:'يظهر هنا اسم الذكر أو السورة أو المقطع الشغّال. وفي قسم «أذكار» يظهر تحته شريط للتبديل بين: الأذكار والابتهالات والأناشيد.'},
-    {g:MAIN,sel:'.ctl',ic:'▶️',t:'أزرار التحكم',li:['الدائرة الذهبية: تشغيل وإيقاف مؤقت، وحولها حلقة تقدّم والوقت تحتها','السابق والتالي: للانتقال بين المقاطع','رجوع ١٠ ثوانٍ وتقديم ١٠ ثوانٍ: على جانبي الدائرة']},
-    {g:MAIN,sel:'#cat',ic:'🧭',t:'أقسام التشغيل',li:['الآن: يختار لك الأنسب للوقت: أذكار الصباح أو المساء، وسورة الكهف يوم الجمعة، أو ورد هادئ','القسم الثاني: اسم الزر يتغير حسب ما اخترت (قرآن أو أذكار أو ابتهالات أو أناشيد)، ويظهر فوقه صف تنتقل منه بينها، واضغط مطوّلًا لتختار ما تريد تشغيله','الراديو: بث مباشر لإذاعات القرآن الكريم، ويحتاج إنترنت'],p2:'والأذان يُشغَّل تلقائيًا عند دخول كل صلاة ما دام التطبيق مفتوحًا.'},
+    {g:MAIN,sel:'.ctl',ic:'▶️',t:'أزرار التحكم',li:['الدائرة الذهبية: تشغيل وإيقاف مؤقت، وحولها حلقة تقدّم والوقت تحتها','السابق والتالي: للانتقال بين المقاطع','رجوع ١٠ ثوانٍ وتقديم ١٠ ثوانٍ: على جانبي الدائرة، واستمر بالضغط عليهما ليتسارع القفز (١٠ ثم ٣٠ ثم ٦٠ ثانية)','اضغط مطوّلًا على الدائرة الذهبية لتختار مؤقت النوم بسرعة']},
+    {g:MAIN,sel:'#cat',ic:'🧭',t:'أقسام التشغيل',li:['الآن: يختار لك الأنسب للوقت: أذكار الصباح أو المساء، وسورة الكهف يوم الجمعة، أو ورد هادئ، واضغط مطوّلًا لتختار بنفسك','القسم الثاني: اسم الزر يتغير حسب ما اخترت (قرآن أو أذكار أو ابتهالات أو أناشيد)، ويظهر فوقه صف تنتقل منه بينها، واضغط مطوّلًا لتختار ما تريد تشغيله','الراديو: بث مباشر لإذاعات القرآن الكريم، ويحتاج إنترنت'],p2:'والأذان يُشغَّل تلقائيًا عند دخول كل صلاة ما دام التطبيق مفتوحًا.'},
+    {g:MAIN,sel:'#cat',ic:'👆',t:'الضغط المطوّل',p:'اضغط مطوّلًا (نحو نصف ثانية) على هذه الأزرار لتفتح خيارات إضافية. تظهر حلقة حول الزر للتأكيد، ويُلغى الضغط لو حرّكت إصبعك:',li:['الآن: اختيار أذكار الصباح أو المساء أو الكهف أو ورد هادئ','قرآن وأذكار وأزرار الصف الفرعي: قائمة اختيار ما تريد تشغيله','راديو: قائمة الإذاعات','الدائرة الذهبية: مؤقت النوم السريع','رجوع وتقديم ١٠ ثوانٍ: استمر بالضغط ليتسارع القفز','في الخدمات: المسبحة تتراجع −١، وذكر اليوم يُنسخ، وبطاقة الخدمة تُضاف إلى المفضلة'],p2:'تظهر نقطة صغيرة على «الآن» وزر التشغيل حتى تجرّبهما أول مرة. وبالكيبورد: Shift+Enter، أو زر الماوس الأيمن.'},
     {g:MAIN,sel:'#svc',ic:'🗂️',t:'زر الخدمات',p:'يفتح قائمة الخدمات: أدوات وأحكام ومتابعات للعبادة مقسّمة على ستة أقسام. سنفتحها الآن لنتعرّف عليها.'},
     {g:SV,sheet:1,sel:'#stabs',ic:'🗂️',t:'أقسام الخدمات الستة',p:'اضغط على أي قسم لتظهر موضوعاته، وزر الرجوع يعيدك إلى كل الأقسام. وفيها أكثر من ١٥٠ حكمًا شرعيًا مبسّطًا موزّعة على الأقسام، إضافةً إلى حاسبات ودفاتر ومتابعات.'},
     {g:SV,sheet:1,sel:'#stabs [data-t="dhk"]',ic:'📿',t:'الذكر',li:['المسبحة: عدّاد تسبيح بملء الشاشة','أذكار اليوم: الصباح والمساء، بعد الصلاة، النوم، الاستيقاظ','أذكار المناسبات: المناسبات، الاستخارة، دخول المنزل، مفضلتي','الرقية الشرعية: آيات، أدعية، استماع، آداب','نفحة اليوم: ذكر، دعاء، حديث، أسماء الله الحسنى']},
