@@ -3086,7 +3086,7 @@ const mp=mk('qur','🗺️','خريطة الحفظ','<div class="zr" style="grid
 let H=(ld('hf31')||'').padEnd(114,'0').slice(0,114).split('');const mr=()=>{$('mpg').innerHTML=H.map((v,i)=>`<button class="mc s${v}" data-i="${i}" aria-label="سورة ${i+1}">${ar(i+1)}</button>`).join('');$('mpc').textContent='محفوظ '+ar(H.filter(x=>x==='2').length)+' من ١١٤ · قيد الحفظ '+ar(H.filter(x=>x==='1').length)};
 $('mpg').onclick=e=>{const b=e.target.closest('.mc');if(!b)return;const i=+b.dataset.i;H[i]=String((+H[i]+1)%3);sv('hf31',H.join(''));vb(8);mr()};mr();
 /* التنبيهات والتذكير (ضمن الإعدادات) */
-let N=Object.assign({on:(()=>{try{return ld('ap_nud')==='0'&&!ld('ntf31')?0:1}catch(e){return 1}})(),adhan:0,pre:1,pm:10,sab:1,mas:1,kahf:1,wk:1,dr:1,bk:1,mt:0,wb:0,zk:1},J('ntf31',{}));
+let N=Object.assign({on:(()=>{try{return ld('ap_nud')==='0'&&!ld('ntf31')?0:1}catch(e){return 1}})(),adhan:0,qt:1,pre:1,pm:10,sab:1,mas:1,kahf:1,wk:1,dr:1,bk:1,mt:0,wb:0,zk:1},J('ntf31',{}));
 if(N.pre>1){N.pm=N.pre;N.pre=1}if(![5,10,15,30].includes(N.pm))N.pm=10;
 const NG=$('ntg'),nb=(k,t)=>`<button class="chip ${N[k]?'on':''}" data-k="${k}">${t}</button>`,nh=t=>`<p class="mutp sth">${t}</p>`;
 let npm='';
@@ -3098,6 +3098,7 @@ const nr=()=>{if(!NG)return;const sup='Notification' in window,p=sup?Notificatio
   PM=[5,10,15,30],nx=PM[(PM.indexOf(N.pm)+1)%PM.length];
  NG.innerHTML='<div class="stb" style="--c:3">'
   +ce('التنبيهات','<button class="chip '+(N.on?'on':'')+'" data-k="on">'+(N.on?'مفعّلة ✓':'متوقفة')+'</button>')
+  +ce('الإشعارات السريعة','<button class="chip '+(N.qt?'on':'')+'" data-k="qt">'+(N.qt?'مفعّلة ✓':'متوقفة')+'</button>')
   +ce('إشعارات الجهاز',pbtn(p))
   +'<div class="ti" id="oaSlot"><span class="tl">الأذان تلقائيًا</span></div>'
   +tb('adhan','إشعار الأذان')+tb('pre','تذكير قبل الصلاة')
@@ -3105,7 +3106,7 @@ const nr=()=>{if(!NG)return;const sup='Notification' in window,p=sup?Notificatio
   +tb('sab','أذكار الصباح')+tb('mas','أذكار المساء')+tb('kahf','سورة الكهف')+tb('mt','الاثنين والخميس')+tb('wb','الأيام البيض')+tb('zk','حول الزكاة')+tb('wk','التقرير الأسبوعي')+tb('dr','تقرير اليوم')+tb('bk','نسخ احتياطي')
   +'</div>'
   +(npm?'<p class="mutp" style="margin:6px 0 0;text-align:start">'+npm+'</p>':'')
-  +'<p class="mutp" style="margin-top:6px">الأذان التلقائي يشغّل الصوت عند دخول وقت كل صلاة. تظهر التنبيهات داخل التطبيق، وكإشعارات للجهاز إن سمحت بها، وتعمل ما دام التطبيق مفتوحًا (ولو في الخلفية)، ولا يستطيع ملف HTML وحده إرسال إشعار والتطبيق مغلق. «تقرير اليوم» يصل بعد العشاء بساعة.</p>';
+  +'<p class="mutp" style="margin-top:6px">الأذان التلقائي يشغّل الصوت عند دخول وقت كل صلاة. تظهر التنبيهات داخل التطبيق، وكإشعارات للجهاز إن سمحت بها، وتعمل ما دام التطبيق مفتوحًا (ولو في الخلفية)، ولا يستطيع ملف HTML وحده إرسال إشعار والتطبيق مغلق. «تقرير اليوم» يصل بعد العشاء بساعة. «الإشعارات السريعة» هي رسائل زي «تم النسخ» و«أُضيفت إلى المفضلة»؛ لو أوقفتها تفضل التذكيرات والأخطاء شغالة.</p>';
  const sl=NG.querySelector('#oaSlot');if(sl&&oaBtn)sl.appendChild(oaBtn)};
 if(NG)NG.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b||(!b.dataset.k&&!b.dataset.m))return;const k=b.dataset.k;
  if(b.dataset.m)N.pm=+b.dataset.m;
@@ -5361,11 +5362,11 @@ function show(){var st=$('oaSt');if(!st)return;
 <style id="ntf-css">
 /* ===== مدير الإشعارات: حاوية واحدة تكدّس الإشعارات بدل ما تركب فوق بعض ===== */
 #toast,.nt31{display:none!important}
-#nstack{position:fixed;z-index:90;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 64px);display:flex;flex-direction:column;pointer-events:none;transition:top .3s}
-body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px) + 100px)}
+#nstack{position:fixed;z-index:90;left:12px;right:12px;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);display:flex;flex-direction:column;pointer-events:none;transition:bottom .3s}
+body:has(#updBn) #nstack{bottom:calc(env(safe-area-inset-bottom,0px) + 84px)}
 .ntw{max-height:0;margin-bottom:0;overflow:hidden;transition:max-height .28s ease,margin-bottom .28s ease}
 .ntw.in{max-height:var(--h,120px);margin-bottom:8px}
-.nt{pointer-events:auto;display:flex;flex-direction:row;flex-wrap:nowrap;direction:rtl;align-items:center;gap:8px;padding:6px 8px;border-radius:20px;background:rgba(8,14,28,.96);border:1.5px solid var(--line);color:var(--ink);font-size:.82rem;line-height:1.4;touch-action:pan-y;opacity:0;transform:translateY(-12px);transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer}
+.nt{pointer-events:auto;display:flex;flex-direction:row;flex-wrap:nowrap;direction:rtl;align-items:center;gap:8px;padding:6px 8px;border-radius:20px;background:rgba(8,14,28,.96);border:1.5px solid var(--line);color:var(--ink);font-size:.82rem;line-height:1.4;touch-action:pan-y;opacity:0;transform:translateY(12px);position:relative;transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer}
 .ntw.in .nt{opacity:1;transform:none}
 .nt.remind{border-color:var(--ac)}
 .nt.error{border-color:rgba(255,138,122,.7)}
@@ -5373,6 +5374,14 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
 .ntt{flex:1;min-width:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
 .ntb{flex:none;white-space:nowrap;height:28px;padding:0 12px;border-radius:99px;border:1.5px solid var(--ac);background:color-mix(in srgb,var(--ac) 16%,transparent);color:var(--ac);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
 .ntx{flex:none;order:99;width:28px;height:28px;border-radius:50%;border:0;background:#e5484d;color:#fff;font:inherit;font-size:.75rem;line-height:1;cursor:pointer}
+.ntp{position:absolute;left:16px;right:16px;bottom:2px;height:2px;border-radius:2px;background:var(--ac);opacity:.55;transform-origin:right center;animation:ntp linear forwards;pointer-events:none}
+.nt.hold .ntp{animation-play-state:paused}
+@keyframes ntp{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.ntt.open{display:block;-webkit-line-clamp:unset;line-clamp:unset;overflow:visible}
+.ntx,.ntb,#instBn [data-i="x"],#inappBn [data-a="x"]{position:relative}
+.ntx::after,#instBn [data-i="x"]::after,#inappBn [data-a="x"]::after{content:'';position:absolute;inset:-8px}
+.ntb::after{content:'';position:absolute;inset:-8px 0}
+@media(prefers-reduced-motion:reduce){.ntp{display:none}}
 #ntmore{pointer-events:auto;align-self:flex-start;height:28px;padding:0 12px;border-radius:99px;border:1.5px solid var(--line);background:rgba(8,14,28,.96);color:var(--ink);font:inherit;font-size:.72rem;cursor:pointer}
 #ntmore[hidden]{display:none}
 .ntov{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
@@ -5468,15 +5477,26 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
     vis.sort(function (a, b) { return b.prio - a.prio || a.id - b.id; });
     vis.forEach(function (o) { box.insertBefore(o.w, more); });
   }
-  function arm(o) { clearTimeout(o.tm); o.left = ttlOf(o); o.t0 = Date.now(); o.tm = setTimeout(function () { dismiss(o); }, o.left); }
-  function pause(o) { clearTimeout(o.tm); o.left -= Date.now() - o.t0; }
-  function resume(o) { clearTimeout(o.tm); o.t0 = Date.now(); o.tm = setTimeout(function () { dismiss(o); }, Math.max(2000, o.left)); }
+  function arm(o, ms) {
+    clearTimeout(o.tm);
+    if (o.kind === 'remind') return;                       // التذكيرات تفضل ظاهرة لحد ما تقفلها
+    o.left = ms || ttlOf(o); o.t0 = Date.now();
+    var p = o.el && o.el.querySelector('.ntp');
+    if (p) { p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; p.style.animationDuration = o.left + 'ms'; }
+    o.tm = setTimeout(function () { dismiss(o); }, o.left);
+  }
+  function pause(o) { clearTimeout(o.tm); if (o.kind === 'remind') return; o.left -= Date.now() - o.t0; o.el && o.el.classList.add('hold'); }
+  function resume(o) {
+    clearTimeout(o.tm); if (o.kind === 'remind') return;
+    o.t0 = Date.now(); o.el && o.el.classList.remove('hold');
+    o.tm = setTimeout(function () { dismiss(o); }, Math.max(2000, o.left));
+  }
 
   function show(o) {
     var w = mk('div', 'ntw'), el = mk('div', 'nt ' + o.kind);
     el.innerHTML = '<span class="nti" aria-hidden="true">' + ICON[o.kind] + '</span><span class="ntt">' + esc(o.text) + '</span>' +
       (o.label ? '<button type="button" class="ntb">' + esc(o.label) + '</button>' : '') +
-      '<button type="button" class="ntx" aria-label="إغلاق">✕</button>';
+      '<button type="button" class="ntx" aria-label="إغلاق">✕</button>' + (o.kind === 'remind' ? '' : '<i class="ntp" aria-hidden="true"></i>');
     w.appendChild(el); o.w = w; o.el = el; vis.push(o); box.insertBefore(w, more); sortVis();
     w.style.setProperty('--h', (el.offsetHeight + 4) + 'px');
     requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add('in'); }); });
@@ -5501,7 +5521,16 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
       else { el.style.transform = ''; el.style.opacity = ''; resume(o); }
     }
     el.addEventListener('pointerup', end); el.addEventListener('pointercancel', end);
-    el.addEventListener('click', function (e) { if (e.target.closest('button')) return; if (moved) { moved = false; return; } dismiss(o, 0, 1); });
+    el.addEventListener('click', function (e) {
+      if (e.target.closest('button')) return; if (moved) { moved = false; return; }
+      var tt = el.querySelector('.ntt');
+      if (!o.open && tt.scrollHeight > tt.clientHeight + 1) {      // الرسالة مقصوصة: أول ضغطة تفتحها كاملة
+        o.open = 1; tt.classList.add('open'); w.style.setProperty('--h', (el.offsetHeight + 4) + 'px');
+        if (o.h) { o.h.r = 1; save(); updBadge(); }
+        el.classList.remove('hold'); arm(o, 9000); return;
+      }
+      dismiss(o, 0, 1);
+    });
     el.addEventListener('mouseenter', function () { if (!drag) pause(o); });
     el.addEventListener('mouseleave', function () { if (!drag) resume(o); });
     arm(o); updMore();
@@ -5522,11 +5551,13 @@ body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px
     }
     updMore();
   }
+  function quietInfo() { try { return JSON.parse(ls('ntf31') || '{}').qt === 0; } catch (e) { return false; } }   /* إعدادات ← التنبيهات ← الإشعارات السريعة */
   function push(m, label, fn, opt) {
     opt = opt || {};
     var text = String(m == null ? '' : m).trim(); if (!text) return;
     var o = { id: ++seq, text: text, label: label || '', fn: fn || null, kind: opt.kind, key: opt.key || text, act: opt.act || '' };
     o.kind = kindOf(o); o.prio = prioOf(o);
+    if (o.kind === 'info' && !o.label && quietInfo()) return;     // الإشعارات العادية متوقفة: التذكيرات والأخطاء والإشعارات اللي فيها زرار تفضل شغالة
     var i, now = Date.now();
     for (i = 0; i < vis.length; i++) if (vis[i].key === o.key) { arm(vis[i]); return; }       // نفس الإشعار ظاهر: نجدد مدته بس
     for (i = 0; i < q.length; i++) if (q[i].key === o.key) return;
