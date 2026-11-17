@@ -687,6 +687,41 @@ body:not(.pk-used) .cat button[data-m="quran"]::after,body:not(.pk-used) .cat bu
 .sub button.on{background:none;color:#1a1408}
 .sub:not([hidden]){animation:subIn .4s cubic-bezier(.2,.9,.3,1) both}
 @keyframes subIn{from{opacity:0;transform:translateY(-8px) scale(.94)}}
+
+/* ===== قوس متصل (قرآن/أذكار/ابتهالات/أناشيد) فوق زر التشغيل، والأسماء على انحناء القوس ===== */
+.ctl-wrap{--o:clamp(150px,46vw,220px)}
+.ctl-wrap .sub{--i:0;position:relative;z-index:4;display:block;width:var(--o);height:calc(var(--o) * .3111);min-width:0;max-width:none;margin:0 auto;padding:0;border:0;border-radius:0;background:none;box-shadow:none;animation:none;filter:drop-shadow(0 6px 10px rgba(0,0,0,.28))}
+.ctl-wrap .sub[hidden]{display:none}
+.ctl-wrap .sub::before{display:none}
+.ctl-wrap .sub svg.arc{position:absolute;inset:auto;top:0;right:auto;bottom:auto;left:calc(50% - var(--o) * .7333);width:calc(var(--o) * 1.4667);height:calc(var(--o) * .5);overflow:visible;transform-origin:50% 162%}
+.ctl-wrap .sub svg.arcbg{pointer-events:none}
+.ctl-wrap .sub .arcbase{fill:var(--card);stroke:none}
+.ctl-wrap .sub .arcol{pointer-events:none;fill:none;stroke:var(--line);stroke-width:1.5;stroke-linejoin:round}
+/* المؤشر المتحرك: نفس حركة شريط «الآن / قرآن / خدمات» لكن بدوران على القوس */
+.ctl-wrap .sub .archl{transform:rotate(calc(28deg - var(--i) * 28deg));transition:transform .35s cubic-bezier(.3,.8,.3,1)}
+.ctl-wrap .sub .archl path{fill:var(--ac);filter:drop-shadow(0 0 6px color-mix(in srgb,var(--ac) 55%,transparent))}
+.ctl-wrap .sub button{position:absolute;inset:0;min-height:0;padding:0;margin:0;border:0;border-radius:0;background:none;box-shadow:none;color:var(--ink);pointer-events:none;-webkit-tap-highlight-color:transparent}
+.ctl-wrap .sub button.on{background:none}
+.ctl-wrap .sub .arcseg{pointer-events:auto;cursor:pointer;fill:rgba(0,0,0,0);stroke:none}
+.ctl-wrap .sub .arclb{pointer-events:none;fill:currentColor;font:700 14px 'IBM Plex Sans Arabic','Amiri',system-ui,sans-serif;transition:fill .3s}
+.ctl-wrap .sub button.on .arclb{fill:#1a1408}
+.ctl-wrap .sub button:active .arclb{opacity:.7}
+.ctl-wrap .sub button:focus-visible{outline:none}
+.ctl-wrap .sub button:focus-visible .arcseg{fill:color-mix(in srgb,var(--ac) 22%,transparent)}
+.ctl-wrap .sub:not([hidden]) svg.arc{animation:arcIn .5s cubic-bezier(.2,.9,.3,1) backwards}
+@keyframes arcIn{from{opacity:0;transform:scale(.6)}}
+/* ===== الضغطة المطوّلة: تعبئة تدريجية للقطعة + انتفاخ وتوهّج ===== */
+.ctl-wrap .sub .arcg{transform:scale(1);filter:drop-shadow(0 0 0 transparent);transition:transform .25s cubic-bezier(.3,.8,.3,1),filter .25s}
+.ctl-wrap .sub .arcfill{fill:none;stroke:var(--hf,var(--ac));stroke-width:44;stroke-dasharray:100;stroke-dashoffset:100;opacity:0;pointer-events:none;transition:stroke-dashoffset .2s ease,opacity .2s ease}
+.ctl-wrap .sub button.on{--hf:color-mix(in srgb,var(--ac) 45%,#fff)}
+.ctl-wrap .sub button.lp-hold .arcfill{stroke-dashoffset:0;opacity:.7;transition:stroke-dashoffset .55s linear,opacity .2s ease}
+.ctl-wrap .sub button.lp-hold .arcg{transform:scale(1.05);filter:drop-shadow(0 0 9px color-mix(in srgb,var(--ac) 75%,transparent));transition:transform .55s cubic-bezier(.3,.7,.4,1),filter .55s}
+.ctl-wrap .sub button.lp-hold .arclb{fill:#1a1408;transition:fill .2s .3s}
+.ctl-wrap .sub button.lp-pop .arcg{animation:arcPop .45s cubic-bezier(.2,.9,.3,1)}
+.ctl-wrap .sub button.lp-pop .arcfill{animation:arcFlash .45s ease-out forwards}
+@keyframes arcPop{0%{transform:scale(1.05)}35%{transform:scale(1.13)}100%{transform:scale(1.05)}}
+@keyframes arcFlash{0%{opacity:.7}30%{opacity:1}100%{opacity:0}}
+@media (orientation:landscape) and (max-height:540px){.ctl-wrap{--o:150px}.ctl-wrap .sub{margin-top:-12px}}
 #title.sw-n,#why.sw-n{animation:swN .45s cubic-bezier(.2,.9,.3,1) both}
 #title.sw-p,#why.sw-p{animation:swP .45s cubic-bezier(.2,.9,.3,1) both}
 @keyframes swN{from{opacity:0;transform:translateX(-34px);filter:blur(4px)}}
@@ -918,10 +953,15 @@ body.lite .fxi *,body.lite .fxi,body.lite .eq i,body.lite #qrd #qrPl{animation:n
 </style>
 <style id="lp-css">
 /* ضغط مطوّل موحّد: حلقة التقدّم + القائمة + النقطة */
-#lpRing{position:fixed;z-index:9000;box-sizing:border-box;pointer-events:none;border:2.5px solid var(--ac);opacity:0;will-change:transform,opacity}
-#lpRing.on{animation:lpgrow .35s cubic-bezier(.2,.8,.2,1) forwards}
+#lpRing{position:fixed;z-index:9000;box-sizing:border-box;pointer-events:none;border:2.5px solid var(--ac);opacity:0;will-change:transform,opacity;box-shadow:0 0 14px color-mix(in srgb,var(--ac) 65%,transparent)}
+#lpRing::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--ac);opacity:.4;clip-path:inset(0 0 0 100%)}
+#lpRing.on::before{animation:lpfill .55s linear forwards}
+#lpRing.fire::before{animation:lpflash .32s ease-out forwards}
+@keyframes lpfill{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+@keyframes lpflash{from{clip-path:inset(0);opacity:.7}to{clip-path:inset(0);opacity:0}}
+#lpRing.on{animation:lpgrow .55s cubic-bezier(.2,.8,.2,1) forwards}
 #lpRing.fire{animation:lpfire .32s ease-out forwards}
-@keyframes lpgrow{from{opacity:0;transform:scale(.92)}to{opacity:.95;transform:scale(1.07)}}
+@keyframes lpgrow{0%{opacity:0;transform:scale(.96)}12%{opacity:.95}100%{opacity:.95;transform:scale(1.07)}}
 @keyframes lpfire{from{opacity:.95;transform:scale(1.07)}to{opacity:0;transform:scale(1.28)}}
 .lp-ing{filter:brightness(1.15)}
 #lpMenu{position:fixed;z-index:9001;min-width:176px;max-width:calc(100vw - 16px);padding:8px;border-radius:22px;direction:rtl;display:flex;flex-direction:column;gap:6px;color:var(--ink);border:1.5px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 60%),var(--t);box-shadow:0 14px 40px rgba(0,0,0,.45);animation:lpin .16s ease-out}
@@ -1019,10 +1059,10 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="info">
 <h1 class="title" id="title">جاري التحضير</h1>
 <p class="desc" id="desc" hidden></p>
-<div class="sub" id="sub" hidden><button type="button" data-g="quran">قرآن</button><button type="button" data-g="adhkar">أذكار</button><button type="button" data-g="ibtihalat">ابتهالات</button><button type="button" data-g="anasheed">أناشيد</button></div>
 </section>
 <div class="ctl-wrap">
 <audio id="audio" preload="metadata"></audio>
+<div class="sub" id="sub" hidden><svg class="arc arcbg" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><clipPath id="arcc"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g clip-path="url(#arcc)"><path class="arcbase" d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/><g class="archl"><path d="M0.00 -142.00A142 142 0 0 1 66.66 -125.38L48.83 -91.83A104 104 0 0 0 0.00 -104.00Z"/></g></g><path class="arcol" d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></svg><button type="button" data-g="quran" aria-label="قرآن"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-quran" d="M55.87 -105.07A119 119 0 0 1 96.56 -69.55"/><clipPath id="arcc-quran"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-quran)" d="M101.97 -68.78A123.0 123.0 0 0 0 57.75 -108.60"/><path class="arcseg" clip-path="url(#arcc-quran)" d="M66.66 -125.38A142 142 0 0 1 133.44 -48.57L97.73 -35.57A104 104 0 0 0 48.83 -91.83Z"/><text class="arclb"><textPath href="#arcp-quran" startOffset="50%" text-anchor="middle">قرآن</textPath></text></g></svg></button><button type="button" data-g="adhkar" aria-label="أذكار"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-adhkar" d="M0.00 -119.00A119 119 0 0 1 55.87 -105.07"/><clipPath id="arcc-adhkar"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-adhkar)" d="M57.75 -108.60A123.0 123.0 0 0 0 0.00 -123.00"/><path class="arcseg" clip-path="url(#arcc-adhkar)" d="M0.00 -142.00A142 142 0 0 1 66.66 -125.38L48.83 -91.83A104 104 0 0 0 0.00 -104.00Z"/><text class="arclb"><textPath href="#arcp-adhkar" startOffset="50%" text-anchor="middle">أذكار</textPath></text></g></svg></button><button type="button" data-g="ibtihalat" aria-label="ابتهالات"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-ibtihalat" d="M-55.87 -105.07A119 119 0 0 1 0.00 -119.00"/><clipPath id="arcc-ibtihalat"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-ibtihalat)" d="M0.00 -123.00A123.0 123.0 0 0 0 -57.75 -108.60"/><path class="arcseg" clip-path="url(#arcc-ibtihalat)" d="M-66.66 -125.38A142 142 0 0 1 0.00 -142.00L0.00 -104.00A104 104 0 0 0 -48.83 -91.83Z"/><text class="arclb"><textPath href="#arcp-ibtihalat" startOffset="50%" text-anchor="middle">ابتهالات</textPath></text></g></svg></button><button type="button" data-g="anasheed" aria-label="أناشيد"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-anasheed" d="M-96.56 -69.55A119 119 0 0 1 -55.87 -105.07"/><clipPath id="arcc-anasheed"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-anasheed)" d="M-57.75 -108.60A123.0 123.0 0 0 0 -101.97 -68.78"/><path class="arcseg" clip-path="url(#arcc-anasheed)" d="M-133.44 -48.57A142 142 0 0 1 -66.66 -125.38L-48.83 -91.83A104 104 0 0 0 -97.73 -35.57Z"/><text class="arclb"><textPath href="#arcp-anasheed" startOffset="50%" text-anchor="middle">أناشيد</textPath></text></g></svg></button></div>
 <div class="ctl">
 <div class="big big2"><button aria-label="السابق" class="hf" id="b-prev"><svg viewbox="0 0 24 24"><path d="M5 5.5v13L16 12z"></path><rect height="13" rx="1" width="2.4" x="17.3" y="5.5"></rect></svg></button><button aria-label="رجوع ١٠ ثوانٍ" class="hf hs" id="b-back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><g class="rg"><g transform="translate(24 0) scale(-1 1)"><path d="M5 13a7 7 0 1 0 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polygon points="12,2.4 7.6,6 12,9.6" fill="currentColor"/></g></g><text x="12" y="16.4" text-anchor="middle" font-size="7.4" font-weight="700" fill="currentColor" stroke="none" font-family="system-ui,sans-serif">10</text></svg></button></div>
 <div class="orb">
@@ -1602,21 +1642,24 @@ PKM.forEach(m=>{const b=document.querySelector('#cat [data-m="'+m+'"]');if(b)b.t
    بدائل بدون إصبع: زر الماوس الأيمن (contextmenu) وShift+Enter يفتحان نفس الإجراء.
    للاستعمال من أي ملف آخر (مثل data/radio-data.js): hisnLP.bind(container, selector, {fire:(btn,ev)=>{…}, key:'اسم', ring:(btn)=>عنصر_الحلقة}) و hisnLP.menu(anchor,title,[{label,on,run}]) ===== */
 window.hisnLP=(function(){
-  const DELAY=550,FEED=200,SLOP=10,d=document;
+  const DELAY=1050,FEED=500,SLOP=10,d=document;
   const used=()=>{try{return JSON.parse(localStorage.getItem('lp_used')||'{}')||{}}catch(e){return{}}};
   Object.keys(used()).forEach(k=>d.body.classList.add('lpu-'+k));
   const markUsed=k=>{if(!k)return;const u=used();if(u[k])return;u[k]=1;try{localStorage.setItem('lp_used',JSON.stringify(u))}catch(e){}d.body.classList.add('lpu-'+k)};
   const vib=p=>{try{!window.NOVIB&&navigator.vibrate&&navigator.vibrate(p)}catch(e){}};
-  let rg=null,rgEl=null;
+  let rg=null,rgEl=null,swA=null,swB=null,swK=1;
   function ringOn(b){if(!b)return;const r=b.getBoundingClientRect();if(!r.width)return;
     if(!rg){rg=d.createElement('i');rg.id='lpRing';rg.setAttribute('aria-hidden','true');d.body.appendChild(rg)}
     Object.assign(rg.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',borderRadius:getComputedStyle(b).borderRadius});
-    rg.className='';void rg.offsetWidth;rg.className='on';rgEl=b;b.classList.add('lp-ing')}
-  function ringOff(){if(rgEl){rgEl.classList.remove('lp-ing');rgEl=null}if(rg&&rg.className!=='fire')rg.className=''}
-  function ringFire(){if(rg&&rg.className==='on')rg.className='fire'}
+    rg.className='';void rg.offsetWidth;rg.className='on';rgEl=b;b.classList.add('lp-ing');
+    try{if(b.animate){swK=1+Math.min(.05,9/Math.max(r.width,r.height));swB=b;swA=b.animate([{scale:'1'},{scale:String(swK)}],{duration:550,easing:'cubic-bezier(.3,.7,.4,1)',fill:'forwards'})}}catch(e){swA=null}}
+  function swOff(){if(!swA)return;const a=swA;swA=null;try{a.onfinish=()=>a.cancel();a.updatePlaybackRate(-3)}catch(e){try{a.cancel()}catch(x){}}}
+  function ringOff(){if(rgEl){rgEl.classList.remove('lp-ing');rgEl=null}swOff();if(rg&&rg.className!=='fire')rg.className=''}
+  function ringFire(){if(rg&&rg.className==='on')rg.className='fire';
+    if(swA&&swB){const a=swA,e=swB,k=swK;swA=null;try{a.cancel();e.animate([{scale:String(k)},{scale:String(k+.07),offset:.35},{scale:'1'}],{duration:380,easing:'cubic-bezier(.2,.9,.3,1)'})}catch(x){}}}
   function bind(cn,sel,o){
     o=o||{};if(typeof cn==='string')cn=d.querySelector(cn);if(!cn)return;
-    let t=0,f=0,x0=0,y0=0,el=null,fired=false;
+    let t=0,f=0,x0=0,y0=0,el=null,fired=false,pt='';
     cn.style.webkitTouchCallout='none';
     const stop=()=>{clearTimeout(t);clearTimeout(f);t=f=0};
     const clear=()=>{stop();el=null;ringOff()};
@@ -1624,14 +1667,14 @@ window.hisnLP=(function(){
     const run=(b,e)=>{stop();fired=true;ringFire();vib(20);markUsed(o.key);try{o.fire(b,e)}catch(x){}};
     cn.addEventListener('pointerdown',e=>{
       if(e.button>0)return;const b=hit(e);if(!b)return;
-      clear();fired=false;el=b;x0=e.clientX;y0=e.clientY;
+      pt=e.pointerType;clear();fired=false;el=b;x0=e.clientX;y0=e.clientY;
       f=setTimeout(()=>{if(el)ringOn(o.ring?o.ring(b):b)},FEED);
-      t=setTimeout(()=>{t=0;if(!el)return;o.feedbackOnly?ringFire():run(el,e)},DELAY)});
+      t=setTimeout(()=>{t=0;if(!el)return;o.feedbackOnly?ringFire():run(el,e)},o.delay||DELAY)});
     cn.addEventListener('pointermove',e=>{if(el&&Math.hypot(e.clientX-x0,e.clientY-y0)>SLOP)clear()});
     ['pointerup','pointercancel'].forEach(ev=>cn.addEventListener(ev,()=>{clear();setTimeout(()=>{fired=false},60)}));
     cn.addEventListener('pointerleave',clear);
     if(!o.feedbackOnly){
-      cn.addEventListener('contextmenu',e=>{const b=hit(e);if(!b)return;e.preventDefault();if(!fired)run(b,e)});
+      cn.addEventListener('contextmenu',e=>{const b=hit(e);if(!b)return;e.preventDefault();if(!fired&&pt!=='touch'&&pt!=='pen')run(b,e)});
       cn.addEventListener('keydown',e=>{if(e.key!=='Enter'||!e.shiftKey||e.repeat)return;const b=hit(e);if(!b)return;e.preventDefault();e.stopPropagation();run(b,e);fired=false});
       cn.addEventListener('click',e=>{if(fired&&hit(e)){fired=false;e.stopImmediatePropagation();e.preventDefault()}},true);
       cn.querySelectorAll(sel).forEach(x=>x.setAttribute('aria-keyshortcuts','Shift+Enter'))}
@@ -1658,7 +1701,16 @@ window.hisnLP=(function(){
 /* قرآن وأذكار + أزرار الصف الفرعي: قائمة اختيار ما تريد تشغيله */
 const pkFire=b=>{const m=b.dataset.g||(b.dataset.m==='quran'?navM:b.dataset.m);try{localStorage.setItem('pk_used','1')}catch(x){}document.body.classList.add('pk-used');openPk(m)};
 hisnLP.bind('#cat','button[data-m="quran"]',{fire:pkFire});
-hisnLP.bind('#sub','button[data-g]',{fire:pkFire});
+hisnLP.bind('#sub','button[data-g]',{fire:pkFire,ring:()=>null});
+(function(){const sub=document.getElementById('sub');if(!sub)return;
+const WAIT=500,HOLD=1050,SLOP=10;let b=null,t=0,w=0,x0=0,y0=0;
+const clear=()=>{clearTimeout(t);clearTimeout(w);t=w=0;if(b){b.classList.remove('lp-hold');b=null}};
+sub.addEventListener('pointerdown',e=>{if(e.button>0)return;const k=e.target.closest&&e.target.closest('button[data-g]');if(!k||!sub.contains(k))return;
+ clear();b=k;x0=e.clientX;y0=e.clientY;w=setTimeout(()=>{w=0;if(b===k)k.classList.add('lp-hold')},WAIT);
+ t=setTimeout(()=>{t=0;if(!b)return;const k2=b;b=null;k2.classList.add('lp-pop');setTimeout(()=>k2.classList.remove('lp-hold','lp-pop'),460)},HOLD)});
+sub.addEventListener('pointermove',e=>{if(b&&Math.hypot(e.clientX-x0,e.clientY-y0)>SLOP)clear()});
+['pointerup','pointercancel','pointerleave'].forEach(ev=>sub.addEventListener(ev,clear));
+})();
 /* راديو: التنفيذ في data/radio-data.js، وهنا حلقة التقدّم فقط (نفس الزمن) */
 hisnLP.bind('#cat','#rdHome',{feedbackOnly:true});
 /* «الآن»: اختيار يدوي بدل الاختيار التلقائي */
