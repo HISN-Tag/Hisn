@@ -29,7 +29,7 @@
     bn.style.cssText='position:fixed;z-index:46;left:10px;right:10px;max-width:480px;margin:0 auto;top:calc(8px + env(safe-area-inset-top,0px));padding:12px 14px;border-radius:18px;background:rgba(40,22,10,.96);border:1.5px solid rgba(255,180,90,.6);color:#fff8e8;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(-14px);transition:opacity .35s,transform .35s;touch-action:manipulation';
     var hint=ios?'اضغط «⋯» أو زر المشاركة واختر «فتح في Safari»، أو انسخ الرابط وافتحه هناك.':'افتح الصفحة من كروم عشان كل المزايا تشتغل.';
     var btn='border-radius:12px;font-weight:700;font-size:.85rem;padding:9px 14px;border:0;text-decoration:none;display:inline-block;';
-    bn.innerHTML='<div style="display:flex;gap:10px;align-items:flex-start"><span aria-hidden="true" style="font-size:1.4rem;flex:none">⚠️</span><div style="flex:1;min-width:0"><b style="display:block;font-size:.93rem;color:#ffd08a;margin-bottom:2px">افتح «حصن» من المتصفح</b><span style="display:block;font-size:.8rem;line-height:1.7;opacity:.95">إنت فاتح الصفحة من داخل تطبيق، وبعض المزايا (التثبيت، الإشعارات، التحميل بدون نت) ممكن ما تشتغلش هنا. '+hint+'</span></div><button type="button" data-a="x" aria-label="إغلاق" style="flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,248,232,.3);color:#fff8e8;font-size:.8rem;background:transparent">✕</button></div>'+
+    bn.innerHTML='<div style="display:flex;gap:10px;align-items:flex-start"><span aria-hidden="true" style="font-size:1.4rem;flex:none">⚠️</span><div style="flex:1;min-width:0"><b style="display:block;font-size:.93rem;color:#ffd08a;margin-bottom:2px">افتح «حصن» من المتصفح</b><span style="display:block;font-size:.8rem;line-height:1.7;opacity:.95">إنت فاتح الصفحة من داخل تطبيق، وبعض المزايا (التثبيت، الإشعارات، التحميل بدون نت) ممكن ما تشتغلش هنا. '+hint+'</span></div><button type="button" data-a="x" aria-label="إغلاق" style="flex:none;width:30px;height:30px;border-radius:50%;border:0;color:#fff;font-size:.8rem;background:#e5484d">✕</button></div>'+
       '<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">'+(android?'<a href="'+intent()+'" style="'+btn+'background:#ffd08a;color:#1a1408">افتح في كروم</a>':'')+'<button type="button" data-a="copy" style="'+btn+'background:rgba(255,255,255,.12);color:#fff8e8">نسخ الرابط</button></div>';
     bn.addEventListener('click',function(e){
       var t=e.target.closest?e.target.closest('[data-a]'):null;if(!t)return;
@@ -178,11 +178,11 @@
   function show(){
     if(bn||g(DONE)||standalone||w.__hisnInApp)return;
     bn=d.createElement('div');bn.id='instBn';bn.setAttribute('role','region');bn.setAttribute('aria-label','تثبيت التطبيق');
-    bn.style.cssText='position:fixed;z-index:45;left:10px;right:10px;max-width:480px;margin:0 auto;top:calc(8px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:18px;background:rgba(8,14,28,.95);border:1.5px solid rgba(232,204,142,.45);color:#fff8e8;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(-14px);transition:opacity .35s,transform .35s;touch-action:manipulation';
-    bn.innerHTML=(w.HISN_LOGO?'<img alt="" src="'+w.HISN_LOGO+'" style="width:44px;height:44px;border-radius:12px;flex:none">':'<span style="font-size:1.9rem;flex:none">🕌</span>')+
-      '<div style="flex:1;min-width:0"><b style="display:block;font-size:.95rem;margin-bottom:2px;color:#e8cc8e">ثبّت «حصن» على شاشتك</b><span style="display:block;font-size:.8rem;line-height:1.7;opacity:.95">اختصار على الشاشة الرئيسية يفتح بضغطة واحدة وبكامل الشاشة.</span></div>'+
-      '<button type="button" data-i="go" style="flex:none;padding:10px 18px;border-radius:12px;background:#e8cc8e;color:#1a1408;font-weight:700;font-size:.9rem;border:0">تثبيت</button>'+
-      '<button type="button" data-i="x" aria-label="إغلاق" style="flex:none;width:30px;height:30px;border-radius:50%;border:1.5px solid rgba(255,248,232,.3);color:#fff8e8;font-size:.8rem;background:transparent">✕</button>';
+    bn.style.cssText='position:fixed;z-index:45;left:10px;right:10px;max-width:480px;margin:0 auto;top:calc(8px + env(safe-area-inset-top,0px));display:flex;flex-direction:row;flex-wrap:nowrap;direction:rtl;align-items:center;gap:8px;padding:6px 8px;border-radius:20px;background:rgba(8,14,28,.95);border:1.5px solid rgba(232,204,142,.45);color:#fff8e8;box-shadow:0 10px 30px rgba(0,0,0,.45);opacity:0;transform:translateY(-14px);transition:opacity .35s,transform .35s;touch-action:manipulation';
+    bn.innerHTML=(w.HISN_LOGO?'<img alt="" src="'+w.HISN_LOGO+'" style="width:32px;height:32px;border-radius:9px;flex:none">':'<span style="font-size:1.4rem;line-height:1;flex:none">🕌</span>')+
+      '<div style="flex:1;min-width:0;overflow-wrap:anywhere;font-size:.8rem;line-height:1.5"><b style="color:#e8cc8e;font-size:.85rem">ثبّت «حصن» على شاشتك</b><span style="opacity:.85"> — بضغطة واحدة وبكامل الشاشة</span></div>'+
+      '<button type="button" data-i="go" style="flex:none;white-space:nowrap;padding:6px 14px;border-radius:99px;background:#e8cc8e;color:#1a1408;font-weight:700;font-size:.8rem;border:0">تثبيت</button>'+
+      '<button type="button" data-i="x" aria-label="إغلاق" style="flex:none;width:28px;height:28px;border-radius:50%;border:0;color:#fff;font-size:.75rem;background:#e5484d">✕</button>';
     bn.addEventListener('click',function(e){var t=e.target.closest?e.target.closest('[data-i="x"]'):null;if(t)kill()});
     d.body.appendChild(bn);
     requestAnimationFrame(function(){requestAnimationFrame(function(){if(bn){bn.style.opacity='1';bn.style.transform='none'}})});
@@ -5365,14 +5365,14 @@ function show(){var st=$('oaSt');if(!st)return;
 body:has(#oabar.show,#ntbadge.show) #nstack{top:calc(env(safe-area-inset-top,0px) + 100px)}
 .ntw{max-height:0;margin-bottom:0;overflow:hidden;transition:max-height .28s ease,margin-bottom .28s ease}
 .ntw.in{max-height:var(--h,120px);margin-bottom:8px}
-.nt{pointer-events:auto;display:flex;align-items:center;gap:9px;padding:9px 10px 9px 8px;border-radius:16px;background:rgba(8,14,28,.96);border:1.5px solid var(--line);color:var(--ink);font-size:.86rem;line-height:1.55;touch-action:pan-y;opacity:0;transform:translateY(-12px);transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer}
+.nt{pointer-events:auto;display:flex;flex-direction:row;flex-wrap:nowrap;direction:rtl;align-items:center;gap:8px;padding:6px 8px;border-radius:20px;background:rgba(8,14,28,.96);border:1.5px solid var(--line);color:var(--ink);font-size:.82rem;line-height:1.4;touch-action:pan-y;opacity:0;transform:translateY(-12px);transition:opacity .25s,transform .3s cubic-bezier(.2,.9,.3,1.1);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);cursor:pointer}
 .ntw.in .nt{opacity:1;transform:none}
 .nt.remind{border-color:var(--ac)}
 .nt.error{border-color:rgba(255,138,122,.7)}
 .nti{flex:none;font-size:1.05rem;line-height:1}
-.ntt{flex:1;min-width:0;overflow-wrap:anywhere}
-.ntb{flex:none;height:30px;padding:0 12px;border-radius:99px;border:1.5px solid var(--ac);background:color-mix(in srgb,var(--ac) 16%,transparent);color:var(--ac);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
-.ntx{flex:none;width:30px;height:30px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:inherit;font:inherit;font-size:.8rem;line-height:1;cursor:pointer}
+.ntt{flex:1;min-width:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+.ntb{flex:none;white-space:nowrap;height:28px;padding:0 12px;border-radius:99px;border:1.5px solid var(--ac);background:color-mix(in srgb,var(--ac) 16%,transparent);color:var(--ac);font:inherit;font-size:.8rem;font-weight:700;cursor:pointer}
+.ntx{flex:none;order:99;width:28px;height:28px;border-radius:50%;border:0;background:#e5484d;color:#fff;font:inherit;font-size:.75rem;line-height:1;cursor:pointer}
 #ntmore{pointer-events:auto;align-self:flex-start;height:28px;padding:0 12px;border-radius:99px;border:1.5px solid var(--line);background:rgba(8,14,28,.96);color:var(--ink);font:inherit;font-size:.72rem;cursor:pointer}
 #ntmore[hidden]{display:none}
 .ntov{position:fixed;inset:0;z-index:120;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
