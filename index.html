@@ -7688,7 +7688,6 @@ body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:
     if('mediaSession' in navigator&&a.duration&&isFinite(a.duration)){try{navigator.mediaSession.setPositionState({duration:a.duration,position:Math.min(t,a.duration),playbackRate:a.playbackRate||1})}catch(e){}}});
   /* 4) تحكم الشاشة المقفلة */
   if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(n,f)=>{try{ms.setActionHandler(n,f)}catch(e){}};
-    h('seekbackward',x=>a.currentTime=Math.max(0,a.currentTime-((x&&x.seekOffset)||10)));h('seekforward',x=>a.currentTime=Math.min(a.duration||1e9,a.currentTime+((x&&x.seekOffset)||10)));
     h('seekto',x=>{if(x&&x.seekTime!=null)a.currentTime=x.seekTime})}
   /* 5) عجلة الدائرة: لفّ الإصبع حولها للتقديم والتأخير */
   const orb=d.querySelector('.orb'),ang=e=>{const r=orb.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI};
