@@ -7692,11 +7692,10 @@ body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:
     h('seekto',x=>{if(x&&x.seekTime!=null)a.currentTime=x.seekTime})}
   /* 5) عجلة الدائرة: لفّ الإصبع حولها للتقديم والتأخير */
   const orb=d.querySelector('.orb'),ang=e=>{const r=orb.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI};
-  if(orb){let p=null,acc=0,wh=0,md='',y0=0,v0=1,x0=0,y1=0;
+  if(orb){let p=null,acc=0,wh=0;
     orb.addEventListener('pointerdown',e=>{const r=orb.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
-      md=Math.hypot(dx,dy)>r.width*.3?'w':'v';p=ang(e);acc=0;wh=0;x0=e.clientX;y0=e.clientY;v0=a.volume;try{orb.setPointerCapture(e.pointerId)}catch(x){}});
+      if(Math.hypot(dx,dy)<=r.width*.3){p=null;return}p=ang(e);acc=0;wh=0;try{orb.setPointerCapture(e.pointerId)}catch(x){}});
     orb.addEventListener('pointermove',e=>{if(p===null)return;
-      if(md==='v'){const dy=y0-e.clientY;if(Math.abs(dy)>12||wh){wh=1;a.volume=Math.max(0,Math.min(1,v0+dy/180));toast('الصوت '+Math.round(a.volume*100)+'%')}return}
       const n=ang(e);let dl=n-p;if(dl>180)dl-=360;if(dl<-180)dl+=360;p=n;acc+=dl;
       if(Math.abs(acc)>14){wh=1;if(a.duration){a.currentTime=Math.max(0,Math.min(a.duration,a.currentTime+dl*.6));try{navigator.vibrate&&Math.abs(dl)>2&&navigator.vibrate(4)}catch(x){}}}});
     const up=()=>{p=null;setTimeout(()=>wh=0,60)};orb.addEventListener('pointerup',up);orb.addEventListener('pointercancel',up);
@@ -7710,6 +7709,104 @@ body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:
       if(df>=0&&df<30*6e4&&L('rdSg'+k)!==n.toDateString()&&a.paused&&!d.getElementById('splash')){L('rdSg'+k,n.toDateString());
         toast('حان وقت أذكار '+nm+' — تشغّلها؟',()=>{d.querySelector('#cat button[data-m="quran"]').click();setTimeout(()=>{const b=d.querySelector('#sub button[data-g="adhkar"]');b&&b.click();setTimeout(()=>{try{const l=lib(ls,WHY[w]);l&&l[0]&&load(l[0])}catch(e){}},400)},300)});break}}}catch(e){}};
   setInterval(chk,30000);setTimeout(chk,4000);
+})();
+</script>
+<style>
+.rdDemo{display:flex;align-items:center;justify-content:center;gap:14px;margin:10px 0 2px;padding:10px 12px;border-radius:14px;background:color-mix(in srgb,var(--ac) 8%,transparent);border:1px dashed color-mix(in srgb,var(--ac) 40%,transparent);color:var(--ink);font-size:.85rem;line-height:1.5}
+.rdDemo b{color:var(--ac)}
+.rdw{transform-origin:60px 60px;animation:rdsp 3.2s ease-in-out infinite}
+@keyframes rdsp{0%{transform:rotate(-70deg)}50%{transform:rotate(70deg)}100%{transform:rotate(-70deg)}}
+.rdtl{position:relative;flex:1;height:8px;border-radius:4px;background:color-mix(in srgb,var(--ink) 18%,transparent);margin:16px 6px}
+.rdtl i{position:absolute;top:-5px;width:2px;height:18px;background:var(--ac)}
+.rdtl i::after{content:attr(data-l);position:absolute;top:-17px;left:-4px;font-size:.75rem;color:var(--ac);font-style:normal}
+.rdtl u{position:absolute;top:-3px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:var(--ink);animation:rdlp 2.6s linear infinite}
+@keyframes rdlp{0%{left:30%}100%{left:70%}}
+.rdbars{display:flex;align-items:flex-end;gap:5px;height:34px}
+.rdbars s{display:block;width:8px;height:100%;border-radius:3px;background:var(--ac);transform-origin:bottom;animation:rdfd 3.6s ease-in infinite}
+@keyframes rdfd{0%,25%{transform:scaleY(1)}90%,100%{transform:scaleY(.08)}}
+.rdarc{animation:rdbr 4.5s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.rdw,.rdtl u,.rdbars s,.rdarc{animation:none}}
+</style>
+<script>
+/* جولة: شرح الميزات الجديدة مع رسوم توضيحية متحركة */
+(function(){
+  const d=document,T=window.__tour;if(!T||!T.steps)return;const S=T.steps;
+  const H='الشاشة الرئيسية',V='الخدمات';
+  const home=[
+   {g:H,ic:'🎡',t:'عجلة الدائرة',sel:'.orb',p:'لفّ إصبعك حول حافة الدائرة الذهبية للتقديم والتأخير بسلاسة.',li:['مع اتجاه عقارب الساعة: تقديم','عكس الاتجاه: تأخير','ابدأ اللفّ من الحلقة الخارجية للدائرة','ضغطة واحدة عادية على الدائرة تشغّل وتوقّف كما اعتدت'],k:'wheel'},
+   {g:H,ic:'🌗',t:'القوس الحيّ والشاشة المقفلة',sel:'.ctl-wrap',p:'أثناء التشغيل تلمع حافة القوس بإيقاع هادئ، وتتوقف عند الإيقاف أو عند تفعيل «تخفيف التأثيرات».',p2:'ومن شاشة القفل وإشعار الجوال تقدر تتحكم في التشغيل وتسحب شريط التقدّم.',k:'arc'},
+   {g:H,ic:'🕌',t:'اقتراح أذكار الوقت',sel:'#pbtn',p:'بعد الفجر بنصف ساعة يظهر شريط يقترح أذكار الصباح، وبعد العصر أذكار المساء — مرة واحدة يوميًا.',li:['«تشغيل» يفتح قسم الأذكار ويبدأ أول مقطع','«لاحقًا» يخفيه حتى اليوم التالي','لا يعمل شيء من تلقاء نفسه، بموافقتك فقط'],k:'sug'}];
+  const svc=[
+   {g:V,ic:'🔁',t:'تكرار مقطع وعلامة مرجعية',sheet:1,sel:'#stabs [data-t="mor"]',p:'من «المزيد ← ⚙️ الإعدادات» تحت السرعة:',li:['اضغط «أ» عند بداية الجزء و«ب» عند نهايته فيتكرر بينهما للحفظ، و«✖ إلغاء» يوقفه','«🔖 علامة» تحفظ المقطع والدقيقة، و«↩ للعلامة» ترجعك إليها لاحقًا'],k:'ab'},
+   {g:V,ic:'🌙',t:'النوم لآخر المقطع',sheet:1,sel:'#stabs [data-t="mor"]',p:'بجانب مؤقت النوم خيار «آخر المقطع»: يخفت الصوت في آخر ٨ ثوانٍ ثم يتوقف بدل الانتقال للتالي.',li:['اضغطه للتفعيل وأعد الضغط للإلغاء','اختيار مدة أخرى يلغيه'],k:'sleep'}];
+  let i=S.findIndex(s=>s.t==='زر الخدمات');if(i<0)i=S.length-1;S.splice(i,0,...home);
+  let j=-1;S.forEach((s,n)=>{if(s.sheet)j=n});S.splice(j<0?S.length-1:j+1,0,...svc);
+  const DEMO={
+   wheel:()=>'<svg viewBox="0 0 120 120" width="92" aria-hidden="true"><circle cx="60" cy="60" r="38" fill="none" stroke="currentColor" opacity=".25" stroke-width="12"/><g class="rdw"><circle cx="60" cy="22" r="8" fill="var(--ac)"/></g></svg><div>⟳ تقديم<br>⟲ تأخير<br><b class="rdt">٠:٢٠</b></div>',
+   arc:()=>'<svg viewBox="0 0 160 60" width="130" aria-hidden="true"><path class="rdarc" d="M10 55A70 70 0 0 1 150 55" fill="none" stroke="var(--ac)" stroke-width="8" stroke-linecap="round"/></svg><div>⏪ ⏯ ⏩<br><small>شاشة القفل</small></div>',
+   sug:()=>'<div style="display:flex;gap:10px;align-items:center;justify-content:space-between;width:100%"><span>حان وقت أذكار الصباح — تشغّلها؟</span><span style="padding:4px 10px;border-radius:10px;background:var(--ac);color:#1a1408;font-weight:700">تشغيل</span></div>',
+   ab:()=>'<div class="rdtl"><i style="left:30%" data-l="أ"></i><i style="left:70%" data-l="ب"></i><u></u></div><div>🔁</div>',
+   sleep:()=>'<div class="rdbars"><s></s><s style="animation-delay:.15s"></s><s style="animation-delay:.3s"></s><s style="animation-delay:.45s"></s></div><div>يخفت ثم <b>يتوقف</b></div>'};
+  const ar=n=>String(n).replace(/\d/g,x=>'٠١٢٣٤٥٦٧٨٩'[x]);
+  const add=card=>{if(card.querySelector('.rdDemo'))return;const h=card.querySelector('h2');if(!h)return;
+    const s=[...home,...svc].find(x=>h.textContent.includes(x.t));if(!s)return;
+    const b=d.createElement('div');b.className='rdDemo';b.innerHTML=DEMO[s.k]();const t=card.querySelector('.tbody')||card;t.after?t.after(b):t.appendChild(b);
+    const tm=b.querySelector('.rdt');if(tm){let v=20,dr=1;const iv=setInterval(()=>{if(!b.isConnected)return clearInterval(iv);v+=dr*3;if(v>=50||v<=20)dr=-dr;tm.textContent=ar(Math.floor(v/60)+':'+String(v%60).padStart(2,'0'))},160)}};
+  new MutationObserver(()=>{const c=d.getElementById('tourCard');if(c&&!c.__rd){c.__rd=1;new MutationObserver(()=>add(c)).observe(c,{childList:true});add(c)}}).observe(d.body,{childList:true});
+})();
+</script>
+<style>
+.rdLive{display:flex;align-items:center;justify-content:center;gap:16px}
+.rdPad{width:112px;flex:none;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.rdPad svg{display:block;width:100%;height:auto;overflow:visible}
+.rdPad .rr{fill:none;stroke:currentColor;stroke-width:12;opacity:.22}
+.rdPad .rc{fill:color-mix(in srgb,var(--ac) 22%,transparent);stroke:var(--ac);stroke-width:2}
+.rdSide{display:flex;flex-direction:column;gap:4px;align-items:flex-start;font-size:.85rem}
+.rdSide b{font-size:1.3rem;color:var(--ac);font-variant-numeric:tabular-nums}
+.rdTb{width:84px;height:84px;border-radius:50%;border:0;font:inherit;font-size:1.6rem;font-weight:700;color:#1a1408;cursor:pointer;background:radial-gradient(circle at 36% 30%,#fff,var(--ac) 62%,color-mix(in srgb,var(--ac) 70%,#5a3500))}
+.rdTb:active{transform:scale(.95)}
+</style>
+<script>
+/* جولة v2: عجلة الدائرة بتجربة حيّة، المسبحة، وملخّص كل الحركات */
+(function(){
+  const d=document,T=window.__tour;if(!T||!T.steps)return;const S=T.steps;
+  const V='الخدمات',ar=n=>String(n).replace(/\d/g,x=>'٠١٢٣٤٥٦٧٨٩'[x]);
+  const w=S.find(s=>s.t==='عجلة الدائرة');
+  if(w){w.p='العجلة تقدّم المقطع وتؤخّره فقط. الصوت لا يتأثر بأي حركة عليها، واضبطه من أزرار جهازك.';
+    w.li=['ضع إصبعك على حافة الدائرة (الحلقة الخارجية) ولفّ مع اتجاه عقارب الساعة: تقديم','لفّ عكس اتجاه العقارب: تأخير. وكلما زاد اللفّ زاد القفز','اللمس أو السحب في وسط الدائرة لا يحرّك شيئًا','ضغطة عادية على الوسط: تشغيل وإيقاف مؤقت'];
+    w.p2='جرّب بنفسك في المربع التالي: لفّ على الحافة وشاهد الوقت يتغيّر، واضغط الوسط للتشغيل.'}
+  const c=S.find(s=>s.t==='أزرار التحكم');
+  if(c&&c.li)c.li.push('لفّ على حافة الدائرة الذهبية: تقديم وتأخير (شرحها في الخطوة التالية)');
+  const tas={g:V,sheet:1,sel:'#stabs [data-t="dhk"]',ic:'📿',t:'المسبحة: جرّبها',
+    p:'تجدها في «الذكر ← المسبحة». طريقة الاستعمال:',
+    li:['اختر الذكر من العجلة الرأسية فوق الزر: مرّر لأعلى وأسفل حتى يتوسّط الخط، أو أضف ذكرًا خاصًا بك من خانة «أضف ذكرًا»','اضغط الزر الكبير لتسبّح، ويظهر العدّاد داخله','«الهدف» يغيّر العدد (٣٣ أو ١٠٠ أو عددًا تحدّده)، و«التالي تلقائيًا» ينقلك للذكر التالي عند بلوغ الهدف','اضغط مطوّلًا على الزر للتراجع −١، أو زر «↩ تراجع»، و«تصفير» يبدأ من الصفر','زر ملء الشاشة للتسبيح براحة','الألوان والصوت والاهتزاز: «المزيد ← الإعدادات ← المسبحة»'],
+    p2:'جرّب الزر التالي: اضغط ٣٣ مرة وشاهد الإنجاز.'};
+  let i=S.findIndex(s=>s.t==='الذكر');S.splice(i<0?S.length-1:i+1,0,tas);
+  const sum={g:'ملخّص',ic:'🧾',t:'ملخّص الحركات',
+    li:['ضغطة عادية: تشغيل وإيقاف، وفتح الأقسام والبطاقات','ضغطة مطوّلة (نصف ثانية): خيارات إضافية على «الآن» وقرآن وأذكار وراديو، ومؤقت النوم على الدائرة','لفّ على حافة الدائرة: تقديم وتأخير فقط','ضغط مستمر على ±١٠ ثوانٍ: قفز متسارع','ضغطة مطوّلة على الهلال: اختيار صوت وضع السكون','الصوت: من أزرار جهازك، وليس بالسحب على الدائرة','أي خطوة من الجولة تعيدها من «المظهر ← الجولة ▶ إعادة»']};
+  i=S.length-1;S.splice(i,0,sum);
+  const live=b=>{
+    b.dataset.live='1';
+    b.innerHTML='<div class="rdLive"><div class="rdPad"><svg viewBox="0 0 120 120" aria-hidden="true"><circle class="rr" cx="60" cy="60" r="50"/><circle class="rc" cx="60" cy="60" r="36"/><g class="rk"><circle cx="60" cy="10" r="6" fill="var(--ac)"/></g><text class="ri" x="60" y="69" text-anchor="middle" font-size="24" fill="currentColor">▶</text></svg></div><div class="rdSide"><b class="rt">٠:٣٠</b><span class="rl">لفّ على الحافة</span></div></div>';
+    const pad=b.querySelector('.rdPad'),k=b.querySelector('.rk'),ic=b.querySelector('.ri'),tm=b.querySelector('.rt'),lb=b.querySelector('.rl');
+    let t=30,rot=0,p=null,acc=0,wh=0,ctr=0,on=0;
+    const ang=e=>{const r=pad.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI};
+    const show=()=>{tm.textContent=ar(Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0'));k.setAttribute('transform','rotate('+rot+' 60 60)')};
+    pad.addEventListener('pointerdown',e=>{const r=pad.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);wh=0;
+      if(Math.hypot(dx,dy)<=r.width*.3){p=null;ctr=1;return}ctr=0;p=ang(e);acc=0;try{pad.setPointerCapture(e.pointerId)}catch(x){}});
+    pad.addEventListener('pointermove',e=>{if(p===null)return;const n=ang(e);let dl=n-p;if(dl>180)dl-=360;if(dl<-180)dl+=360;p=n;acc+=dl;
+      if(Math.abs(acc)>14){wh=1;t=Math.max(0,Math.min(300,t+dl*.6));rot+=dl;lb.textContent=dl>0?'⟳ تقديم':'⟲ تأخير';show()}});
+    const up=()=>{if(ctr&&!wh){on=!on;ic.textContent=on?'⏸':'▶';lb.textContent=on?'يعمل':'متوقف'}p=null;ctr=0};
+    pad.addEventListener('pointerup',up);pad.addEventListener('pointercancel',()=>{p=null;ctr=0});show()};
+  const tasb=b=>{
+    b.dataset.live='1';
+    b.innerHTML='<div class="rdLive"><button type="button" class="rdTb">٠</button><div class="rdSide"><b class="rt">٠ / ٣٣</b><span class="rl">اضغط الزر</span></div></div>';
+    const bt=b.querySelector('.rdTb'),tt=b.querySelector('.rt'),lb=b.querySelector('.rl');let n=0;
+    bt.onclick=()=>{n++;if(n>33)n=1;bt.textContent=ar(n);tt.textContent=ar(n)+' / '+ar(33);lb.textContent=n===33?'✔ بلغت الهدف، وينتقل للذكر التالي':'سبحان الله'};};
+  const fix=card=>{const h=card.querySelector('h2');if(!h)return;let b=card.querySelector('.rdDemo');
+    if(h.textContent.includes('عجلة الدائرة')){if(b&&b.dataset.live!=='1')live(b)}
+    else if(h.textContent.includes('المسبحة: جرّبها')){if(!b){b=d.createElement('div');b.className='rdDemo';const t=card.querySelector('.tbody')||card;t.after?t.after(b):t.appendChild(b)}if(b.dataset.live!=='1')tasb(b)}};
+  new MutationObserver(()=>{const x=d.getElementById('tourCard');if(x&&!x.__rd2){x.__rd2=1;new MutationObserver(()=>fix(x)).observe(x,{childList:true});fix(x)}}).observe(d.body,{childList:true});
 })();
 </script>
 </body>
