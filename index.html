@@ -7652,6 +7652,7 @@ updRes();
 .rdx{position:fixed;inset:auto 12px calc(14px + env(safe-area-inset-bottom,0px)) 12px;z-index:60;display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:16px;background:var(--card);border:1px solid color-mix(in srgb,var(--ac) 40%,var(--line));color:var(--ink);backdrop-filter:blur(10px);font-size:.95rem}
 .rdx button{border:0;border-radius:12px;padding:6px 12px;background:var(--ac);color:#1a1408;font:inherit;font-weight:700}
 .rdx button.x{background:transparent;color:inherit;opacity:.7}
+.orb,#b-play{touch-action:none}
 .ctl-wrap.plv .arcsheen{animation:rdbr 4.5s ease-in-out infinite}
 @keyframes rdbr{50%{opacity:.35}}
 body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:none}
@@ -7691,10 +7692,13 @@ body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:
     h('seekto',x=>{if(x&&x.seekTime!=null)a.currentTime=x.seekTime})}
   /* 5) عجلة الدائرة: لفّ الإصبع حولها للتقديم والتأخير */
   const orb=d.querySelector('.orb'),ang=e=>{const r=orb.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI};
-  if(orb){let p=null,acc=0,wh=0;
-    orb.addEventListener('pointerdown',e=>{p=ang(e);acc=0;wh=0});
-    orb.addEventListener('pointermove',e=>{if(p===null||!(e.buttons||e.pointerType==='touch'))return;const n=ang(e);let dl=n-p;if(dl>180)dl-=360;if(dl<-180)dl+=360;p=n;acc+=dl;
-      if(Math.abs(acc)>14){wh=1;if(a.duration){a.currentTime=Math.max(0,Math.min(a.duration,a.currentTime+dl*.6));try{!window.NOVIB&&navigator.vibrate&&Math.abs(dl)>2&&navigator.vibrate(4)}catch(x){}}}});
+  if(orb){let p=null,acc=0,wh=0,md='',y0=0,v0=1,x0=0,y1=0;
+    orb.addEventListener('pointerdown',e=>{const r=orb.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2);
+      md=Math.hypot(dx,dy)>r.width*.3?'w':'v';p=ang(e);acc=0;wh=0;x0=e.clientX;y0=e.clientY;v0=a.volume;try{orb.setPointerCapture(e.pointerId)}catch(x){}});
+    orb.addEventListener('pointermove',e=>{if(p===null)return;
+      if(md==='v'){const dy=y0-e.clientY;if(Math.abs(dy)>12||wh){wh=1;a.volume=Math.max(0,Math.min(1,v0+dy/180));toast('الصوت '+Math.round(a.volume*100)+'%')}return}
+      const n=ang(e);let dl=n-p;if(dl>180)dl-=360;if(dl<-180)dl+=360;p=n;acc+=dl;
+      if(Math.abs(acc)>14){wh=1;if(a.duration){a.currentTime=Math.max(0,Math.min(a.duration,a.currentTime+dl*.6));try{navigator.vibrate&&Math.abs(dl)>2&&navigator.vibrate(4)}catch(x){}}}});
     const up=()=>{p=null;setTimeout(()=>wh=0,60)};orb.addEventListener('pointerup',up);orb.addEventListener('pointercancel',up);
     orb.addEventListener('click',e=>{if(wh){e.stopImmediatePropagation();e.preventDefault()}},true)}
   /* 6) القوس يتنفّس مع التشغيل */
