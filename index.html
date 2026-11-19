@@ -722,6 +722,30 @@ body:not(.pk-used) .cat button[data-m="quran"]::after,body:not(.pk-used) .cat bu
 @keyframes arcPop{0%{transform:scale(1.05)}35%{transform:scale(1.13)}100%{transform:scale(1.05)}}
 @keyframes arcFlash{0%{opacity:.7}30%{opacity:1}100%{opacity:0}}
 @media (orientation:landscape) and (max-height:540px){.ctl-wrap{--o:150px}.ctl-wrap .sub{margin-top:-12px}}
+/* ===== سماعة الرأس: القوس (قرآن/أذكار/ابتهالات/أناشيد) متصل بزرّي التقديم والتأخير، وزر التشغيل هو «الرأس» ===== */
+.ctl-wrap{--o:min(clamp(140px,46vw,220px),calc((100vw - 40px) / 1.96))}
+.ctl-wrap .ctl{width:calc(var(--o) * 1.96);max-width:100%;margin:0 auto;gap:0}
+.ctl-wrap .orb{width:var(--o)}
+.ctl-wrap .big2{width:calc(var(--o) * .44);height:calc(var(--o) * .72);border-radius:calc(var(--o) * .13) calc(var(--o) * .13) calc(var(--o) * .19) calc(var(--o) * .19)}
+.ctl-wrap .sub{height:calc(var(--o) * .4556)}
+.ctl-wrap .sub svg.arc{left:calc(50% - var(--o) * .9444);width:calc(var(--o) * 1.8889);height:calc(var(--o) * 0.5956);transform-origin:50% 160.45%}
+.ctl-wrap .sub .arcol{stroke-linecap:butt}
+.ctl-wrap .sub .archl{transform:rotate(calc(34deg - var(--i) * 34deg))}
+@media (orientation:landscape) and (max-height:540px){.ctl-wrap{--o:min(150px,calc((50vw - 34px) / 1.96))}}
+
+/* ===== القوس: نفس لون وإطار زرّي التقديم والتأخير (.big2)، متصل بهما، بتدرج لمعة واحد ===== */
+.ctl-wrap .sub .arcbase{fill:var(--card);stroke:none;pointer-events:none}
+.ctl-wrap .sub .arcsheen{fill:url(#arcsh);stroke:none;pointer-events:none}
+#arcsh .s1{stop-color:#fff;stop-opacity:.07}
+#arcsh .s2{stop-color:#fff;stop-opacity:.2}
+.ctl-wrap .sub .arcol{stroke:color-mix(in srgb,var(--ac) 40%,var(--line))}
+/* المقطع المختار: ذهبي شفاف + حدّ ذهبي رفيع + توهّج، والاسم فاتح وواضح */
+.ctl-wrap .sub .archl path{fill:color-mix(in srgb,var(--ac) 42%,transparent);filter:drop-shadow(0 0 7px color-mix(in srgb,var(--ac) 60%,transparent))}
+.ctl-wrap .sub .archl path.archs{fill:none;stroke:var(--ac);stroke-width:3;filter:none}
+.ctl-wrap .sub button.on .arclb{fill:#fffaf0;paint-order:stroke;stroke:rgba(8,14,28,.6);stroke-width:2.2px;stroke-linejoin:round}
+.ctl-wrap .sub button.on.lp-hold .arclb{fill:#1a1408;stroke:none}
+body.fx-ctl .ctl-wrap .sub .arcsheen{display:none!important}
+
 #title.sw-n,#why.sw-n{animation:swN .45s cubic-bezier(.2,.9,.3,1) both}
 #title.sw-p,#why.sw-p{animation:swP .45s cubic-bezier(.2,.9,.3,1) both}
 @keyframes swN{from{opacity:0;transform:translateX(-34px);filter:blur(4px)}}
@@ -1062,7 +1086,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 </section>
 <div class="ctl-wrap">
 <audio id="audio" preload="metadata"></audio>
-<div class="sub" id="sub" hidden><svg class="arc arcbg" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><clipPath id="arcc"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g clip-path="url(#arcc)"><path class="arcbase" d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/><g class="archl"><path d="M0.00 -142.00A142 142 0 0 1 66.66 -125.38L48.83 -91.83A104 104 0 0 0 0.00 -104.00Z"/></g></g><path class="arcol" d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></svg><button type="button" data-g="quran" aria-label="قرآن"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-quran" d="M55.87 -105.07A119 119 0 0 1 96.56 -69.55"/><clipPath id="arcc-quran"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-quran)" d="M101.97 -68.78A123.0 123.0 0 0 0 57.75 -108.60"/><path class="arcseg" clip-path="url(#arcc-quran)" d="M66.66 -125.38A142 142 0 0 1 133.44 -48.57L97.73 -35.57A104 104 0 0 0 48.83 -91.83Z"/><text class="arclb" text-anchor="middle" transform="translate(79.63 -88.43) rotate(42)">قرآن</text></g></svg></button><button type="button" data-g="adhkar" aria-label="أذكار"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-adhkar" d="M0.00 -119.00A119 119 0 0 1 55.87 -105.07"/><clipPath id="arcc-adhkar"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-adhkar)" d="M57.75 -108.60A123.0 123.0 0 0 0 0.00 -123.00"/><path class="arcseg" clip-path="url(#arcc-adhkar)" d="M0.00 -142.00A142 142 0 0 1 66.66 -125.38L48.83 -91.83A104 104 0 0 0 0.00 -104.00Z"/><text class="arclb" text-anchor="middle" transform="translate(28.79 -115.47) rotate(14)">أذكار</text></g></svg></button><button type="button" data-g="ibtihalat" aria-label="ابتهالات"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-ibtihalat" d="M-55.87 -105.07A119 119 0 0 1 0.00 -119.00"/><clipPath id="arcc-ibtihalat"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-ibtihalat)" d="M0.00 -123.00A123.0 123.0 0 0 0 -57.75 -108.60"/><path class="arcseg" clip-path="url(#arcc-ibtihalat)" d="M-66.66 -125.38A142 142 0 0 1 0.00 -142.00L0.00 -104.00A104 104 0 0 0 -48.83 -91.83Z"/><text class="arclb" text-anchor="middle" transform="translate(-28.79 -115.47) rotate(-14)">ابتهالات</text></g></svg></button><button type="button" data-g="anasheed" aria-label="أناشيد"><svg class="arc" viewBox="-132 -146 264 90" aria-hidden="true" focusable="false"><defs><path id="arcp-anasheed" d="M-96.56 -69.55A119 119 0 0 1 -55.87 -105.07"/><clipPath id="arcc-anasheed"><path d="M-102.15 -98.64A142 142 0 0 1 102.15 -98.64A19.0 19.0 0 0 1 74.81 -72.24A104 104 0 0 0 -74.81 -72.24A19.0 19.0 0 0 1 -102.15 -98.64Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-anasheed)" d="M-57.75 -108.60A123.0 123.0 0 0 0 -101.97 -68.78"/><path class="arcseg" clip-path="url(#arcc-anasheed)" d="M-133.44 -48.57A142 142 0 0 1 -66.66 -125.38L-48.83 -91.83A104 104 0 0 0 -97.73 -35.57Z"/><text class="arclb" text-anchor="middle" transform="translate(-79.63 -88.43) rotate(-42)">أناشيد</text></g></svg></button></div>
+<div class="sub" id="sub" hidden><svg class="arc arcbg" viewBox="-170 -172 340 107.20" aria-hidden="true" focusable="false"><defs><linearGradient id="arcsh" gradientUnits="userSpaceOnUse" x1="0" y1="-168" x2="0" y2="-64.8"><stop offset="0" class="s1"/><stop offset="1" class="s2"/></linearGradient><clipPath id="arcc-hit"><path d="M-163.64 -64.80A176.0 176.0 0 0 1 163.64 -64.80L105.72 -64.80A124.0 124.0 0 0 0 -105.72 -64.80Z"/></clipPath><clipPath id="arcc"><path d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80L117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80Z"/></clipPath></defs><g clip-path="url(#arcc)"><path class="arcbase" d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80L117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80Z"/><path class="arcsheen" d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80L117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80Z"/><g class="archl"><path d="M0.00 -168.00A168.0 168.0 0 0 1 93.94 -139.28L74.93 -111.09A134.0 134.0 0 0 0 0.00 -134.00Z"/><path class="archs" d="M0.00 -168.00A168.0 168.0 0 0 1 93.94 -139.28M74.93 -111.09A134.0 134.0 0 0 0 0.00 -134.00"/></g></g><path class="arcol" d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80M117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80"/></svg><button type="button" data-g="quran" aria-label="قرآن"><svg class="arc" viewBox="-170 -172 340 107.20" aria-hidden="true" focusable="false"><defs><path id="arcp-quran" d="M85.07 -119.27A146.50 146.50 0 0 1 134.35 -58.42"/><clipPath id="arcc-quran"><path d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80L117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-quran)" d="M140.00 -56.57A151.00 151.00 0 0 0 84.44 -125.18"/><path class="arcseg" clip-path="url(#arcc-hit)" d="M98.41 -145.91A176.0 176.0 0 0 1 174.29 -24.49L122.79 -17.26A124.0 124.0 0 0 0 69.34 -102.80Z"/><text class="arclb"><textPath href="#arcp-quran" startOffset="50%" text-anchor="middle">قرآن</textPath></text></g></svg></button><button type="button" data-g="adhkar" aria-label="أذكار"><svg class="arc" viewBox="-170 -172 340 107.20" aria-hidden="true" focusable="false"><defs><path id="arcp-adhkar" d="M3.83 -146.45A146.50 146.50 0 0 1 78.71 -123.56"/><clipPath id="arcc-adhkar"><path d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80L117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-adhkar)" d="M84.44 -125.18A151.00 151.00 0 0 0 0.00 -151.00"/><path class="arcseg" clip-path="url(#arcc-hit)" d="M0.00 -176.00A176.0 176.0 0 0 1 98.41 -145.91L69.34 -102.80A124.0 124.0 0 0 0 0.00 -124.00Z"/><text class="arclb"><textPath href="#arcp-adhkar" startOffset="50%" text-anchor="middle">أذكار</textPath></text></g></svg></button><button type="button" data-g="ibtihalat" aria-label="ابتهالات"><svg class="arc" viewBox="-170 -172 340 107.20" aria-hidden="true" focusable="false"><defs><path id="arcp-ibtihalat" d="M-78.71 -123.56A146.50 146.50 0 0 1 -3.83 -146.45"/><clipPath id="arcc-ibtihalat"><path d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80L117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-ibtihalat)" d="M0.00 -151.00A151.00 151.00 0 0 0 -84.44 -125.18"/><path class="arcseg" clip-path="url(#arcc-hit)" d="M-98.41 -145.91A176.0 176.0 0 0 1 0.00 -176.00L0.00 -124.00A124.0 124.0 0 0 0 -69.34 -102.80Z"/><text class="arclb"><textPath href="#arcp-ibtihalat" startOffset="50%" text-anchor="middle">ابتهالات</textPath></text></g></svg></button><button type="button" data-g="anasheed" aria-label="أناشيد"><svg class="arc" viewBox="-170 -172 340 107.20" aria-hidden="true" focusable="false"><defs><path id="arcp-anasheed" d="M-134.35 -58.42A146.50 146.50 0 0 1 -85.07 -119.27"/><clipPath id="arcc-anasheed"><path d="M-155.00 -64.80A168.0 168.0 0 0 1 155.00 -64.80L117.29 -64.80A134.0 134.0 0 0 0 -117.29 -64.80Z"/></clipPath></defs><g class="arcg"><path class="arcfill" pathLength="100" clip-path="url(#arcc-anasheed)" d="M-84.44 -125.18A151.00 151.00 0 0 0 -140.00 -56.57"/><path class="arcseg" clip-path="url(#arcc-hit)" d="M-174.29 -24.49A176.0 176.0 0 0 1 -98.41 -145.91L-69.34 -102.80A124.0 124.0 0 0 0 -122.79 -17.26Z"/><text class="arclb"><textPath href="#arcp-anasheed" startOffset="50%" text-anchor="middle">أناشيد</textPath></text></g></svg></button></div>
 <div class="ctl">
 <div class="big big2"><button aria-label="السابق" class="hf" id="b-prev"><svg viewbox="0 0 24 24"><path d="M5 5.5v13L16 12z"></path><rect height="13" rx="1" width="2.4" x="17.3" y="5.5"></rect></svg></button><button aria-label="رجوع ١٠ ثوانٍ" class="hf hs" id="b-back" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><g class="rg"><g transform="translate(24 0) scale(-1 1)"><path d="M5 13a7 7 0 1 0 7-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><polygon points="12,2.4 7.6,6 12,9.6" fill="currentColor"/></g></g><text x="12" y="16.4" text-anchor="middle" font-size="7.4" font-weight="700" fill="currentColor" stroke="none" font-family="system-ui,sans-serif">10</text></svg></button></div>
 <div class="orb">
@@ -1470,7 +1494,7 @@ const DEFAULTS=[
   tas('لا إله إلا الله ١٠٠ مرة','lailahahaillallah'),tas('أستغفر الله ١٠٠ مرة','astaghfirullah')
 ];
 const SURAHS=SUR.map((s,i)=>({type:'quran',title:'سورة '+s,file:online(i+1)}));
-const mk=(x,why)=>({key:x.file,title:x.title,desc:x.desc||'',why,url:/^https?:/.test(x.file)?x.file:encodeURI(x.file)});
+const mk=(x,why)=>{const rp=Math.max(1,parseInt(x.repeat,10)||1);return {key:x.file,title:x.title,desc:x.desc||(rp>1?String(rp).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d])+' مرة':''),why,rep:rp,url:/^https?:/.test(x.file)?x.file:encodeURI(x.file)}};
 const mine=t=>MY_AUDIO.filter(x=>x.type===t);
 const lib=(t,why)=>{let a=mine(t);if(!a.length)a=t==='quran'?SURAHS:DEFAULTS.filter(x=>x.type===t);return a.map(x=>mk(x,why))};
 const rnd=a=>a[Math.floor(Math.random()*a.length)];
@@ -1560,7 +1584,8 @@ const ADHAN=([k,nm])=>{
   const f=mine('adhan_fajr'),pool=(k==='fajr'&&f.length)?f.map(x=>mk(x)):lib('adhan'),b=pool[0];
   return {...b,key:'adhan'+k+Tday,title:'حي على الصلاة',why:'دخل وقت صلاة '+nm};
 };
-const played=new Set(),hist=[];let mode='now',cur=null,errs=0,lastQ='',PKQ=null;
+const played=new Set(),hist=[];let mode='now',cur=null,errs=0,lastQ='',PKQ=null,repLeft=1,repTot=1;
+const arN=v=>String(v).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]),repMsg=()=>repTot>1?'التكرار '+arN(repTot-repLeft+1)+' / '+arN(repTot):'';
 try{lastQ=localStorage.getItem('lastQ')||''}catch(e){}
 /* «الآن» لا يشغّل إلا الأذكار المتكررة: التسبيح والتهليل والاستغفار ونحوها، لا أذكار المناسبات القليلة */
 const RECUR_OK=['تسبيح','سبحان','تهليل','لا اله','استغفار','استغفر','تحميد','صلاه علي النبي','الصلاه علي النبي'],RECUR_COUNTED=['الحمد','اكبر'],
@@ -1592,9 +1617,9 @@ function showDesc(t){const e=$('desc');if(!e)return;e.classList.remove('go');
 const ring=p=>$('ring').style.strokeDashoffset=301.6*(1-p);
 function setState(on,msg){document.body.classList.toggle('playing',on);const t=msg||(on?'جاري التشغيل':'اضغط للبدء');$('hint').textContent=t;$('hint').classList.toggle('long',t.length>22)}
 async function lock(){try{await navigator.wakeLock?.request('screen')}catch(e){}}
-function play(){return audio.play().then(()=>{setState(true);lock()}).catch(()=>setState(false))}
+function play(){return audio.play().then(()=>{setState(true,repMsg()||undefined);lock()}).catch(()=>setState(false))}
 function load(m,auto=true,noHist){
-  cur=m;played.add(m.key);if(!noHist)hist.push(m);
+  cur=m;repTot=repLeft=m.rep||1;played.add(m.key);if(!noHist)hist.push(m);
   if(mode==='quran'){lastQ=m.key;try{localStorage.setItem('lastQ',m.key)}catch(e){}}
   $('why').textContent=m.why||'';$('why').style.display=m.why?'':'none';
   const t=$('title');t.textContent=m.title;t.classList.remove('swap');void t.offsetWidth;t.classList.add('swap');showDesc(m.desc);
@@ -1823,7 +1848,7 @@ function pkGo(){const L=pkItems(pkM).filter(x=>pkSel.has(x.key)).map(x=>({...x,w
   try{localStorage.setItem('pk_'+pkM,JSON.stringify(L.map(x=>x.key)))}catch(e){}
   PKQ={mode:pkM,list:L};mode=pkM;mark();pkClose();load(L[0])}
 audio.ontimeupdate=()=>{if(!audio.duration)return;ring(audio.currentTime/audio.duration);$('time').textContent=`${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;errs=0};
-audio.onended=()=>{try{if(window.__rdAfterAdhan&&window.__rdAfterAdhan())return}catch(e){}step(1)};
+audio.onended=()=>{if(repLeft>1){repLeft--;window.__repNoFade=1;audio.currentTime=0;audio.play().then(()=>setState(true,repMsg())).catch(()=>setState(false));return}try{if(window.__rdAfterAdhan&&window.__rdAfterAdhan())return}catch(e){}step(1)};
 audio.onerror=()=>{const off=navigator.onLine===false;setState(false,off?'المقطع ده لازم يتحمّل بنت أول مرة':'تعذر تشغيل الملف، تأكد من اسمه ومساره');if(off&&window.apToast&&!window.__oaT){window.__oaT=1;setTimeout(()=>{window.__oaT=0},15000);try{apToast('المقطع ده لم يُحفظ بعد، يحتاج نت أول مرة')}catch(e){}}if(++errs<3)setTimeout(()=>step(1),2000)};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!audio.paused)lock()});
 if('mediaSession' in navigator){const ms=navigator.mediaSession;ms.setActionHandler('play',play);ms.setActionHandler('pause',()=>{audio.pause();setState(false,'متوقف مؤقتًا')});ms.setActionHandler('nexttrack',()=>step(1));ms.setActionHandler('previoustrack',()=>step(-1))}
@@ -2409,7 +2434,7 @@ if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>{lat=p.coor
   a.addEventListener('timeupdate',()=>{const n=Date.now();if(n-last>4000){last=n;save()}});
   a.addEventListener('pause',save);addEventListener('pagehide',save);
   a.addEventListener('ended',()=>{try{localStorage.removeItem('rsm')}catch(e){}});
-  a.addEventListener('play',()=>{try{a.volume=0;let v=0;const iv=setInterval(()=>{v=Math.min(1,v+.08);a.volume=v;if(v>=1)clearInterval(iv)},100)}catch(e){}});
+  a.addEventListener('play',()=>{if(window.__repNoFade){window.__repNoFade=0;return}try{a.volume=0;let v=0;const iv=setInterval(()=>{v=Math.min(1,v+.08);a.volume=v;if(v>=1)clearInterval(iv)},100)}catch(e){}});
   let sx=0,sy=0,st=0,sk=false;
   const busy=()=>{const sh=d.getElementById('sheet');return d.getElementById('splash')||(sh&&sh.classList.contains('open'))};
   ['.info','.ctl-wrap'].forEach(q=>{const z=d.querySelector(q);if(!z)return;
@@ -7623,5 +7648,66 @@ updRes();
   b.title='اضغط مطوّلًا لنسخ التاريخ'})();
 </script>
 <script id="qradio-js" src="data/radio-data.js"></script>
+<style>
+.rdx{position:fixed;inset:auto 12px calc(14px + env(safe-area-inset-bottom,0px)) 12px;z-index:60;display:flex;gap:8px;align-items:center;justify-content:space-between;padding:10px 14px;border-radius:16px;background:var(--card);border:1px solid color-mix(in srgb,var(--ac) 40%,var(--line));color:var(--ink);backdrop-filter:blur(10px);font-size:.95rem}
+.rdx button{border:0;border-radius:12px;padding:6px 12px;background:var(--ac);color:#1a1408;font:inherit;font-weight:700}
+.rdx button.x{background:transparent;color:inherit;opacity:.7}
+.ctl-wrap.plv .arcsheen{animation:rdbr 4.5s ease-in-out infinite}
+@keyframes rdbr{50%{opacity:.35}}
+body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:none}
+@media (prefers-reduced-motion:reduce){.ctl-wrap.plv .arcsheen{animation:none}}
+</style>
+<script>
+/* ميزات إضافية: نوم لآخر المقطع، تكرار أ-ب، علامة مرجعية، تحكم الشاشة المقفلة، عجلة الدائرة، اقتراح أذكار الوقت، قوس يتنفس */
+(function(){
+  const d=document,a=d.getElementById('audio'),g=id=>d.getElementById(id);if(!a)return;
+  const L=(k,v)=>{try{return v===undefined?localStorage.getItem(k):localStorage.setItem(k,v)}catch(e){}};
+  const toast=(t,ok,okT)=>{const o=d.querySelector('.rdx');o&&o.remove();const b=d.createElement('div');b.className='rdx';b.setAttribute('role','status');
+    b.innerHTML='<span></span><span style="display:flex;gap:6px"></span>';b.firstChild.textContent=t;const w=b.lastChild;
+    if(ok){const y=d.createElement('button');y.textContent=okT||'تشغيل';y.onclick=()=>{b.remove();ok()};w.appendChild(y)}
+    const n=d.createElement('button');n.className='x';n.textContent=ok?'لاحقًا':'حسنًا';n.onclick=()=>b.remove();w.appendChild(n);d.body.appendChild(b);setTimeout(()=>b.remove(),ok?25000:3500)};
+  /* 1) نوم: لحد آخر المقطع */
+  let eof=0;const sl=g('sl');
+  if(sl){const c=d.createElement('button');c.className='chip';c.dataset.m='eof';c.textContent='آخر المقطع';sl.appendChild(c);
+    sl.addEventListener('click',e=>{const b=e.target.closest('.chip');if(!b||b!==c){if(b){eof=0;c.classList.remove('on')}return}
+      e.stopImmediatePropagation();const was=eof;sl.querySelectorAll('.chip.on').forEach(x=>x!==c&&x.click());eof=was?0:1;c.classList.toggle('on',!!eof)},true)}
+  /* 2) تكرار أ-ب + 3) علامة مرجعية */
+  let A=null,B=null;const row=d.createElement('div');row.className='ti';row.innerHTML='<span class="tl">تكرار مقطع وعلامة</span><div class="chips"></div>';const cs=row.lastChild;
+  const mk=(t,f)=>{const b=d.createElement('button');b.className='chip';b.textContent=t;b.onclick=()=>f(b);cs.appendChild(b);return b};
+  const fm=t=>Math.floor(t/60)+':'+String(Math.floor(t%60)).padStart(2,'0');
+  const ui=()=>{bA.textContent='أ: '+(A===null?'—':fm(A));bB.textContent='ب: '+(B===null?'—':fm(B));bA.classList.toggle('on',A!==null);bB.classList.toggle('on',B!==null)};
+  const bA=mk('أ: —',()=>{A=a.currentTime;if(B!==null&&B<=A)B=null;ui()}),bB=mk('ب: —',()=>{if(A===null||a.currentTime<=A+1)return toast('حدّد «أ» أولًا ثم «ب» بعده');B=a.currentTime;ui()});
+  mk('✖ إلغاء',()=>{A=B=null;ui()});
+  mk('🔖 علامة',()=>{if(typeof cur==='undefined'||!cur)return toast('شغّل مقطعًا أولًا');L('rdBm',JSON.stringify({m:cur,t:Math.floor(a.currentTime)}));toast('تم حفظ العلامة عند '+fm(a.currentTime))});
+  mk('↩ للعلامة',()=>{let z;try{z=JSON.parse(L('rdBm'))}catch(e){}if(!z)return toast('لا توجد علامة محفوظة');
+    const go=()=>{a.removeEventListener('loadedmetadata',go);a.currentTime=z.t};if(typeof cur!=='undefined'&&cur&&cur.key===z.m.key){a.currentTime=z.t;a.paused&&a.play().catch(()=>{})}else{a.addEventListener('loadedmetadata',go);load(z.m)}});
+  const sp=g('sp');sp&&sp.closest('.stb')&&sp.closest('.stb').appendChild(row);
+  a.addEventListener('timeupdate',()=>{const t=a.currentTime;
+    if(A!==null&&B!==null&&t>=B){a.currentTime=A;return}
+    if(eof&&a.duration){const r=a.duration-t;if(r<8)a.volume=Math.max(.05,r/8);if(r<.5){eof=0;a.pause();a.volume=1;const c=sl&&sl.querySelector('[data-m=eof]');c&&c.classList.remove('on');toast('انتهى المقطع وتوقّف التشغيل')}}
+    if('mediaSession' in navigator&&a.duration&&isFinite(a.duration)){try{navigator.mediaSession.setPositionState({duration:a.duration,position:Math.min(t,a.duration),playbackRate:a.playbackRate||1})}catch(e){}}});
+  /* 4) تحكم الشاشة المقفلة */
+  if('mediaSession' in navigator){const ms=navigator.mediaSession,h=(n,f)=>{try{ms.setActionHandler(n,f)}catch(e){}};
+    h('seekbackward',x=>a.currentTime=Math.max(0,a.currentTime-((x&&x.seekOffset)||10)));h('seekforward',x=>a.currentTime=Math.min(a.duration||1e9,a.currentTime+((x&&x.seekOffset)||10)));
+    h('seekto',x=>{if(x&&x.seekTime!=null)a.currentTime=x.seekTime})}
+  /* 5) عجلة الدائرة: لفّ الإصبع حولها للتقديم والتأخير */
+  const orb=d.querySelector('.orb'),ang=e=>{const r=orb.getBoundingClientRect();return Math.atan2(e.clientY-(r.top+r.height/2),e.clientX-(r.left+r.width/2))*180/Math.PI};
+  if(orb){let p=null,acc=0,wh=0;
+    orb.addEventListener('pointerdown',e=>{p=ang(e);acc=0;wh=0});
+    orb.addEventListener('pointermove',e=>{if(p===null||!(e.buttons||e.pointerType==='touch'))return;const n=ang(e);let dl=n-p;if(dl>180)dl-=360;if(dl<-180)dl+=360;p=n;acc+=dl;
+      if(Math.abs(acc)>14){wh=1;if(a.duration){a.currentTime=Math.max(0,Math.min(a.duration,a.currentTime+dl*.6));try{!window.NOVIB&&navigator.vibrate&&Math.abs(dl)>2&&navigator.vibrate(4)}catch(x){}}}});
+    const up=()=>{p=null;setTimeout(()=>wh=0,60)};orb.addEventListener('pointerup',up);orb.addEventListener('pointercancel',up);
+    orb.addEventListener('click',e=>{if(wh){e.stopImmediatePropagation();e.preventDefault()}},true)}
+  /* 6) القوس يتنفّس مع التشغيل */
+  const cw=d.querySelector('.ctl-wrap'),pv=()=>cw&&cw.classList.toggle('plv',!a.paused&&!a.ended);
+  ['play','playing','pause','ended'].forEach(v=>a.addEventListener(v,pv));
+  /* 7) اقتراح أذكار الصباح بعد الفجر والمساء بعد العصر */
+  const chk=()=>{try{const n=new Date();
+    for(const [k,nm,ls,w] of [['fajr','الصباح','morning','m'],['asr','المساء','evening','e']]){const t=T[k];if(!t)continue;const df=n-t;
+      if(df>=0&&df<30*6e4&&L('rdSg'+k)!==n.toDateString()&&a.paused&&!d.getElementById('splash')){L('rdSg'+k,n.toDateString());
+        toast('حان وقت أذكار '+nm+' — تشغّلها؟',()=>{d.querySelector('#cat button[data-m="quran"]').click();setTimeout(()=>{const b=d.querySelector('#sub button[data-g="adhkar"]');b&&b.click();setTimeout(()=>{try{const l=lib(ls,WHY[w]);l&&l[0]&&load(l[0])}catch(e){}},400)},300)});break}}}catch(e){}};
+  setInterval(chk,30000);setTimeout(chk,4000);
+})();
+</script>
 </body>
 </html>
