@@ -2075,8 +2075,33 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
   /* متتبع الصلوات */
   const dk=()=>'pt'+new Date().toDateString();
   function streak(){let n=0,d=new Date();const full=x=>(ld('pt'+x.toDateString())||'').split(',').filter(Boolean).length>=5;if(!full(d))d.setDate(d.getDate()-1);while(n<400&&full(d)){n++;d.setDate(d.getDate()-1)}$('ps').textContent=n?'سلسلة المحافظة على الصلوات: '+ar(n)+' يوم':'أكمل الصلوات الخمس اليوم لتبدأ سلسلتك'}
-  function prayers(){streak();const s=(ld(dk())||'').split(',');$('pt').innerHTML=PR.map(([k,n])=>`<button class="${s.includes(k)?'on':''}" data-k="${k}" aria-pressed="${s.includes(k)}">${n}</button>`).join('');$('pc').textContent=ar(PR.filter(([k])=>s.includes(k)).length)+' من ٥'}
-  $('pt').onclick=e=>{const b=e.target.closest('button');if(!b)return;const s=(ld(dk())||'').split(',').filter(Boolean),i=s.indexOf(b.dataset.k);i<0?s.push(b.dataset.k):s.splice(i,1);sv(dk(),s.join(','));vb(10);prayers()};
+  const fmT=d=>d.toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit',hour12:true});
+  const pEnd=k=>k==='fajr'?T.sunrise:k==='isha'?new Date(T.fajr.getTime()+864e5):T[PR[PR.findIndex(x=>x[0]===k)+1][0]];
+  const hms=ms=>{const s=Math.max(0,Math.floor(ms/1e3)),z=v=>String(v).padStart(2,'0');return (z(Math.floor(s/3600))+':'+z(Math.floor(s%3600/60))+':'+z(s%60)).replace(/[0-9]/g,x=>'٠١٢٣٤٥٦٧٨٩'[x])};
+  const pqk=()=>'pq'+new Date().toDateString();
+  const qadaSet=(k,add)=>{try{const q=(ld(pqk())||'').split(',').filter(Boolean),i=q.indexOf(k);if(add&&i<0){q.push(k);QD[k]=qv(k)+1}else if(!add&&i>=0){q.splice(i,1);QD[k]=Math.max(0,qv(k)-1)}else return;sv(pqk(),q.join(','));sv('qd',JSON.stringify(QD));qdR()}catch(x){}};
+  function pState(){const n=new Date(),s=(ld(dk())||'').split(',').filter(Boolean),qs=(ld(pqk())||'').split(',').filter(Boolean);
+    return{n,s,qs,rows:PR.map(([k,nm])=>{const st=T[k],en=pEnd(k),dn=s.includes(k);return{k,nm,st,en,q:dn?'done':n<st?'later':n<en?'now':'missed'}})}}
+  function prayers(){streak();let {n,s,qs,rows}=pState();if(rows.some(r=>r.q==='missed'&&!qs.includes(r.k))){rows.forEach(r=>{if(r.q==='missed')qadaSet(r.k,1)});qs=(ld(pqk())||'').split(',').filter(Boolean)}const cur=rows.find(r=>r.q==='now'),nxt=rows.find(r=>r.q==='later');
+    const done=s.length>=5;let h;
+    if(cur){h=`<div class="ptH"><h4>حان وقت صلاة ${cur.nm}</h4><p>ينتهي وقتها بعد <b class="ptL" data-e="${+cur.en}">${hms(cur.en-n)}</b></p><div class="ptB"><i data-a="${+cur.st}" data-e="${+cur.en}"></i></div><button type="button" class="pt-now" data-k="${cur.k}">✓ صلّيت ${cur.nm}</button></div>`}
+    else if(done){h=`<div class="ptH done"><h4>ما شاء الله، أتممت صلوات اليوم ✓</h4><p>تقبّل الله منك</p></div>`}
+    else if(nxt){const pv=[...rows].reverse().find(r=>r.st<=n),a=pv?pv.st:new Date(n.getFullYear(),n.getMonth(),n.getDate());h=`<div class="ptH"><h4>القادمة: ${nxt.nm} · ${fmT(nxt.st)}</h4><p>بعد <b class="ptL" data-e="${+nxt.st}">${hms(nxt.st-n)}</b></p><div class="ptB"><i data-a="${+a}" data-e="${+nxt.st}"></i></div></div>`}
+    else h=`<div class="ptH"><h4>انتهت صلوات اليوم</h4><p>علّم ما صلّيته، وما فاتك يتحوّل تلقائيًا للقضاء</p></div>`;
+    const lb={done:'✓ تمّت',now:'الآن',missed:'فاتت · للقضاء',later:'لم يحن بعد'};
+    const li=rows.map(r=>`<div class="ptR"><button type="button" class="pr ${r.q}" data-k="${r.k}" aria-pressed="${r.q==='done'}"${r.q==='later'?' disabled aria-disabled="true"':''}><span class="pn">${r.nm}</span><span class="pm">${fmT(r.st)}</span><span class="pt-s">${lb[r.q]}</span></button>${r.q==='missed'?(qs.includes(r.k)?'<span class="pt-s">تحوّلت للقضاء</span>':`<button type="button" class="pq" data-q="1" data-k="${r.k}" aria-label="أضف صلاة ${r.nm} للقضاء">+ قضاء</button>`):''}</div>`).join('');
+    const all=rows.some(r=>r.q==='missed')?`<button type="button" class="ptAll" data-all="1">✓ علّمت كل ما مضى كمُصلّى</button>`:'';
+    const el=$('pt');el.dataset.st=rows.map(r=>r.q).join('');el.innerHTML=h+li+all;$('pc').textContent=ar(s.length)+' من ٥'}
+  function ptLive(){const el=$('pt');if(!el||!el.offsetParent)return;const n=Date.now();
+    el.querySelectorAll('.ptL').forEach(b=>{b.textContent=hms(+b.dataset.e-n)});
+    el.querySelectorAll('.ptB i').forEach(i=>{const a=+i.dataset.a,e=+i.dataset.e;i.style.width=Math.min(100,Math.max(0,(n-a)/(e-a)*100)).toFixed(1)+'%'});
+    if(pState().rows.map(r=>r.q).join('')!==el.dataset.st)prayers()}
+  setInterval(ptLive,1000);
+  $('pt').onclick=e=>{const b=e.target.closest('button');if(!b)return;const s=(ld(dk())||'').split(',').filter(Boolean);
+    if(b.dataset.q){const k=b.dataset.k,qs=(ld(pqk())||'').split(',').filter(Boolean);if(!qs.includes(k)){qs.push(k);sv(pqk(),qs.join(','));try{QD[k]=qv(k)+1;sv('qd',JSON.stringify(QD));qdR()}catch(x){}}vb(10);prayers();return}
+    if(b.dataset.all){const n=new Date();PR.forEach(([k])=>{if(T[k]<=n&&!s.includes(k)){s.push(k);qadaSet(k,0)}});sv(dk(),s.join(','));vb(10);prayers();return}
+    if(b.disabled||(T[b.dataset.k]&&T[b.dataset.k]>new Date()))return;
+    const i=s.indexOf(b.dataset.k);i<0?(s.push(b.dataset.k),qadaSet(b.dataset.k,0)):s.splice(i,1);sv(dk(),s.join(','));vb(10);prayers()};
   window.__rfA=()=>{try{wr();fs();prayers();tr()}catch(e){}};
   /* مؤقت النوم: يخفض الصوت تدريجيًا ثم يتوقف */
   let st=0,se=0,fd=0;
@@ -2292,9 +2317,7 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
   const GR=[
    /* ٥ أقسام رئيسية (الصلاة، الصيام، الزكاة، الذكر، القرآن) + المزيد. تظهر مقفولة، وتفتح موضوعاتها عند الضغط على القسم */
 ['@h','sal','المتابعة والعبادة'],
-['sal','الصلوات','🕌',[['اليوم','متتبع الصلوات اليوم'],['القضاء','قضاء الصلوات الفائتة'],['الاستعداد','الاستعداد للصلاة']]],
-['sal','المواقيت والقبلة','🧭',[['غدًا','مواقيت الغد'],['الضحى والليل','أوقات الليل'],['القبلة','اتجاه القبلة']]],
-['sal','النوافل والسنن','🌿',[['نوافل اليوم','نوافل اليوم'],['الرواتب','متابعة السنن الرواتب'],['الجمعة','سنن الجمعة'],['قيام الليل','خطة قيام الليل']]],
+['sal','الصلاة','🕌',[['اليوم',['متتبع الصلوات اليوم','الاستعداد للصلاة']],['المواقيت',['مواقيت الغد','أوقات الليل']],['القبلة','اتجاه القبلة'],['السنن',['نوافل اليوم','متابعة السنن الرواتب','سنن الجمعة','خطة قيام الليل']],['القضاء','قضاء الصلوات الفائتة']]],
 ['@h','sal','أحكام وتعلّم'],
 ['sal','أحكام الصلاة','🧎',[['في وقتها','حكم: الصلاة في وقتها'],['تارك الصلاة','حكم: ترك الصلاة'],['الجماعة','حكم: صلاة الجماعة'],['الجمعة','حكم: صلاة الجمعة'],['أخطاء شائعة','حكم: أخطاء شائعة في الصلاة'],['سجود السهو','حكم: سجود السهو'],['صلاة المريض','حكم: صلاة المريض']]],
 ['sal','الطهارة والنظافة','🚿',[['موجبات الغسل','حكم: موجبات الغسل'],['صفة الغسل','حكم: صفة الغسل'],['قضاء الحاجة','حكم: آداب قضاء الحاجة والاستنجاء'],['التيمم','حكم: التيمم'],['سنن الفطرة','حكم: سنن الفطرة'],['الختان','حكم: الختان'],['النجاسات','حكم: النجاسات وتطهيرها']]],
@@ -3967,7 +3990,7 @@ sync();buildRows();mwBuildA();render();
     {g:MAIN,sel:'#svc',ic:'🗂️',t:'زر الخدمات',p:'يفتح قائمة الخدمات: أدوات وأحكام ومتابعات للعبادة مقسّمة على ستة أقسام. سنفتحها الآن لنتعرّف عليها.'},
     {g:SV,sheet:1,sel:'#stabs',ic:'🗂️',t:'أقسام الخدمات الستة',p:'اضغط على أي قسم لتظهر موضوعاته، وزر الرجوع يعيدك إلى كل الأقسام. وفيها أكثر من ١٥٠ حكمًا شرعيًا مبسّطًا موزّعة على الأقسام، إضافةً إلى حاسبات ودفاتر ومتابعات.'},
     {g:SV,sheet:1,sel:'#stabs [data-t="dhk"]',ic:'📿',t:'الذكر',li:['المسبحة: عدّاد تسبيح بملء الشاشة','أذكار اليوم: الصباح والمساء، بعد الصلاة، النوم، الاستيقاظ','أذكار المناسبات: المناسبات، الاستخارة، دخول المنزل، مفضلتي','الرقية الشرعية: آيات، أدعية، استماع، آداب','نفحة اليوم: ذكر، دعاء، حديث، أسماء الله الحسنى']},
-    {g:SV,sheet:1,sel:'#stabs [data-t="sal"]',ic:'🕌',t:'الصلاة',li:['الصلوات: متتبع اليوم، القضاء، الاستعداد للصلاة','المواقيت والقبلة: مواقيت الغد، الضحى والليل، اتجاه القبلة','النوافل والسنن: نوافل اليوم، الرواتب، الجمعة، قيام الليل','أحكام الصلاة، الطهارة والنظافة، الحيض والنفاس','دروس الوضوء والركعات وصلاة المسافر']},
+    {g:SV,sheet:1,sel:'#stabs [data-t="sal"]',ic:'🕌',t:'الصلاة',li:['الصلاة في كارت واحد: اليوم والاستعداد، المواقيت، القبلة، السنن وقيام الليل، القضاء','أحكام الصلاة، الطهارة والنظافة، الحيض والنفاس','دروس الوضوء والركعات وصلاة المسافر']},
     {g:SV,sheet:1,sel:'#stabs [data-t="siy"]',ic:'🌙',t:'الصيام',li:['صيام الفرض: اليوم، رمضان، القضاء، الإمساكية، ساعات الصيام','صيام السنة: الصيام المستحب القادم، ست شوال، التطوع','أحكام الصيام']},
     {g:SV,sheet:1,sel:'#stabs [data-t="zak"]',ic:'💰',t:'الزكاة',li:['الزكاة والكفارات: زكاة المال، زكاة الفطر، الكفارات والفدية','الصدقات: سجل الصدقات، خطة شهرية، الصدقة الجارية','أحكام الزكاة، وحول الزكاة']},
     {g:SV,sheet:1,sel:'#stabs [data-t="qur"]',ic:'📖',t:'الوحي',li:['الحديث الشريف: قراءة وبحث في صحيحي البخاري ومسلم، وتتحمّل أول مرة ثم تشتغل بدون إنترنت','الأربعون النووية: بحث ومفضلة وتتبّع ما قرأته','القرآن الكريم: ٦٠٤ صفحة بحدود مصحف المدينة، مع البحث والعلامات وتقليب الصفحات','الورد والختمة والحفظ في لوحة واحدة مترابطة (زر 📊): ورد اليوم، خطة الختمة وسجلها، تقدّم الحفظ وهدفه وخريطة السور، ومراجعة اليوم','مؤقت التدبر والورد','علوم القرآن: التجويد، فهرس السور، الأنبياء، دفتر تدبر الآيات']},
@@ -7831,6 +7854,108 @@ body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:
   NTACT.sal=function(){try{const v=d.getElementById('svc'),sh=d.getElementById('sheet');if(v&&!(sh&&sh.classList.contains('open')))v.click();
     setTimeout(()=>{const t=d.querySelector('#stabs [data-t="dhk"]');t&&t.click();
       setTimeout(()=>{const w=d.getElementById('dz'),x=w&&[...w.querySelectorAll('.wi')].find(e=>e.textContent.indexOf('الصلاة على النبي')>-1);x&&x.click()},350)},350)}catch(e){}}})();
+</script>
+<style id="pt2-css">
+/* كارت متتبع الصلوات: بطاقة الحالة + قائمة بالأوقات + قضاء سريع */
+#pt.pt{display:flex;flex-direction:column;gap:8px}
+#pt .ptH{padding:14px;border-radius:20px;text-align:center;background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 20%,transparent),rgba(0,0,0,.18));border:1px solid var(--line)}
+#pt .ptH.done{background:linear-gradient(135deg,rgba(60,160,110,.3),rgba(0,0,0,.18))}
+#pt .ptH h4{margin:0 0 4px;font-size:1.05rem;font-weight:700}
+#pt .ptH p{margin:0;font-size:.88rem;color:var(--mut)}
+#pt .ptH b{color:var(--ac);font-variant-numeric:tabular-nums}
+#pt .ptB{height:6px;border-radius:9px;background:rgba(255,255,255,.14);margin:10px 0;overflow:hidden}
+#pt .ptB i{display:block;height:100%;width:0;background:var(--ac);border-radius:9px;transition:width 1s linear}
+#pt .pt-now{width:100%;min-height:48px;padding:12px;border-radius:16px;border:0;background:var(--ac);color:#1a1408;font-weight:700;font-size:1rem}
+#pt .ptR{display:flex;gap:6px;align-items:center}
+#pt .pr{flex:1;display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 14px;border-radius:16px;border:1.5px solid var(--line);font-size:.95rem;text-align:start}
+#pt .pr .pn{font-weight:600}
+#pt .pr .pm{color:var(--mut);font-size:.85rem;font-variant-numeric:tabular-nums}
+#pt .pt-s{margin-inline-start:auto;font-size:.8rem;color:var(--mut);white-space:nowrap}
+#pt .pr.done{background:rgba(60,160,110,.28);border-color:rgba(60,160,110,.6)}
+#pt .pr.done .pt-s{color:inherit;font-weight:600}
+#pt .pr.now{border-color:var(--ac);box-shadow:0 0 0 1px var(--ac) inset}
+#pt .pr.now .pt-s{color:var(--ac);font-weight:700}
+#pt .pr.missed{border-style:dashed}
+#pt .pr.later{opacity:.6;cursor:not-allowed}
+#pt .pq,#pt .ptAll{min-height:44px;padding:0 12px;border-radius:14px;border:1.5px solid var(--line);font-size:.82rem;white-space:nowrap}
+#pt .ptAll{width:100%;font-size:.9rem}
+</style>
+<style>
+.sunGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:start;margin:4px 0 14px}
+.sunC{min-width:0;padding:8px;border-radius:14px;border:1px solid var(--line);background:color-mix(in srgb,var(--card) 70%,transparent)}
+.sunC .ck{gap:6px}.sunC .ck button{min-width:0;font-size:.85rem;padding:7px 8px}
+.sunC .ck button em{font-size:.72rem}
+.sunC p.mutp{margin:4px 2px}
+#nf button:first-child{display:none}
+.sunRow{margin:0 0 14px}
+#rawatibList{display:grid!important;grid-template-columns:repeat(5,1fr);gap:6px}
+#rawatibList button{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;padding:8px 2px;text-align:center;font-size:.78rem;line-height:1.3}
+#rawatibList button em{font-size:.68rem;opacity:.75}
+.qtg{margin-inline-start:auto;font-size:.7rem;padding:2px 7px;border-radius:8px;border:1px solid var(--line);opacity:.9;white-space:nowrap}
+#qiyamBox{margin:8px 0 2px;padding:8px;border-radius:12px;border:1px dashed color-mix(in srgb,var(--ac) 40%,var(--line))}
+#qiyamBox[hidden]{display:none}
+#qiyamBox:not([hidden]){display:flex;flex-wrap:wrap;gap:3px 6px;align-items:center;max-height:200px;overflow:auto;padding:4px 6px;margin:6px 0 2px;box-sizing:border-box}
+#qiyamBox>*{margin:0!important;padding-top:0;padding-bottom:0}
+#qiyamBox .zr{display:flex;align-items:center;gap:6px;flex:1 1 100%;font-size:.72rem}
+#qiyamBox .zr label{font-size:.72rem;white-space:nowrap}
+#qiyamBox .zr input{width:52px;height:24px;padding:0 4px;font-size:.75rem;min-height:0}
+#qiyamBox #qiyamTime{flex:1 1 100%;font-size:.72rem;line-height:1.3;min-height:0}
+#qiyamBox .chips{flex:1 1 100%;gap:4px;justify-content:flex-start!important}
+#qiyamBox .chip{padding:3px 8px;font-size:.7rem;min-height:0;line-height:1.3}
+#qiyamBox #qiyamTotal{flex:1 1 100%;font-size:.68rem;line-height:1.3}
+#qiyamBox{gap:2px 4px}
+#qiyamBox .zr label{font-size:.66rem;white-space:normal;line-height:1.2}
+#qiyamBox .zr input{width:44px;height:22px}
+#qiyamBox .chips{flex-wrap:nowrap!important;gap:3px}
+#qiyamBox .chip{flex:1 1 0;min-width:0;padding:3px 2px;font-size:.62rem;text-align:center;white-space:nowrap}
+#qiyamBox #qiyamTime,#qiyamBox #qiyamTotal{font-size:.64rem}
+#qiyamBox:not([hidden]){padding:2px 6px;gap:1px 4px}
+#qiyamBox #qiyamTime,#qiyamBox #qiyamTotal{line-height:1.2}
+#qiyamBox .chip{padding:2px}
+/* تخطيط النوافل: الضحى والوتر جنب بعض، وتحتهم قيام الليل وخطته بأزرار أكبر */
+#nf{display:grid!important;grid-template-columns:1fr 1fr;gap:6px}
+#nf button:nth-child(4){grid-column:1/-1}
+.sunH{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:0 0 6px}
+.sunH p{margin:0!important}
+#qiyamBox:not([hidden]){padding:8px;gap:8px;max-height:200px}
+#qiyamBox .zr label{font-size:.8rem;white-space:normal}
+#qiyamBox .zr input{width:64px;height:34px;font-size:.95rem}
+#qiyamBox #qiyamTime{font-size:.85rem}
+#qiyamBox #qiyamTotal{font-size:.75rem}
+#qiyamBox .chips{display:grid!important;grid-template-columns:repeat(3,1fr);gap:6px}
+#qiyamBox .chip{min-height:38px;padding:0 2px;font-size:.85rem;display:flex;align-items:center;justify-content:center}
+
+</style>
+<script>
+/* السنن: النوافل والرواتب معًا (يمين) + سنن الجمعة (يسار)، وتحتهم خطة قيام الليل */
+(function(){const d=document;let n=0;const go=()=>{try{const r=d.getElementById('rawatibList');if(!r){if(n++<40)setTimeout(go,150);return}
+  const pane=r.closest('.sp');if(!pane||pane.querySelector('.sunGrid'))return;const gs=[];
+  [...pane.children].forEach(e=>{if(e.matches('p.mutp[style]'))gs.push([]);gs.length&&gs[gs.length-1].push(e)});
+  if(gs.length!==4)return;const [g1,g2,g3,g4]=gs,mk=a=>{const c=d.createElement('div');c.className='sunC';a.forEach(e=>c.appendChild(e));return c};
+  if(!g1[0].children.length)g1[0].textContent='نوافل اليوم';
+  const grid=d.createElement('div');grid.className='sunGrid';pane.insertBefore(grid,g4[0]);grid.appendChild(mk(g1));grid.appendChild(mk(g3));const rw=mk(g2);rw.classList.add('sunRow');pane.insertBefore(rw,g4[0]);const qb=d.createElement('div');qb.id='qiyamBox';qb.hidden=true;g4.slice(1).forEach(e=>qb.appendChild(e));g4[0].style.display='none';const nfl=d.getElementById('nf');nfl&&nfl.after(qb);[...d.querySelectorAll('.sunGrid > .sunC')].forEach(c=>{const h=c.children[0],k=c.children[1];if(h&&k&&k.querySelector('#nfc,#jmc')){const w=d.createElement('div');w.className='sunH';c.insertBefore(w,h);w.appendChild(h);w.appendChild(k)}})}catch(e){}};
+  go()})();
+</script>
+<script>
+/* السنن الرواتب: خمسة أزرار بتفاصيلها، وإتمام الخمسة يُعلّم «السنن الرواتب» في النوافل (للعدّاد والتقارير) */
+(function(){const d=document,DT=['ركعتان','٤ ركعات','ركعتان','ركعتان','ركعتان'],NM=['الفجر','قبل الظهر','بعد الظهر','المغرب','العشاء'];let n=0,bz=0;
+const fix=l=>{if(bz)return;bz=1;try{[...l.querySelectorAll('button')].forEach((b,i)=>{const e=b.querySelector('em'),t=b.querySelector('span');if(e&&e.textContent!==DT[i])e.textContent=DT[i];if(t&&t.textContent!==NM[i])t.textContent=NM[i]});
+  const all=l.querySelectorAll('button.on').length===5,nb=d.querySelector('#nf button');if(nb&&nb.classList.contains('on')!==all)nb.click()}catch(e){}bz=0};
+const go=()=>{const l=d.getElementById('rawatibList');if(!l){if(n++<40)setTimeout(go,150);return}
+  new MutationObserver(()=>fix(l)).observe(l,{childList:true,subtree:true,characterData:true});fix(l)};go()})();
+</script>
+<script>
+/* قيام الليل في النوافل: زر «⏱ الخطة» داخل الزر يفتح/يغلق خطة القيام تحته دون تعليم الزر */
+(function(){const d=document;let n=0,bz=0;
+/* الخطة لا تتجاوز 200px ولا تجعل عمود النوافل أطول من عمود سنن الجمعة */
+const fit=()=>{const q=d.getElementById('qiyamBox');if(!q||q.hidden)return;const R=q.closest('.sunC'),L=R&&[...R.parentElement.children].find(x=>x!==R&&x.classList.contains('sunC'));
+  q.style.maxHeight='200px';if(!R||!L)return;const av=L.offsetHeight-(R.offsetHeight-q.offsetHeight)-8;q.style.maxHeight=Math.max(70,Math.min(200,av))+'px'};
+addEventListener('resize',fit);
+const add=l=>{if(bz)return;bz=1;try{const b=l.querySelectorAll('button')[3];if(b&&!b.querySelector('.qtg')){const t=d.createElement('span');t.className='qtg';const q=d.getElementById('qiyamBox');t.textContent=(q&&!q.hidden?'⏱ الخطة ▴':'⏱ الخطة ▾');b.appendChild(t)}}catch(e){}bz=0};
+const go=()=>{const l=d.getElementById('nf');if(!l||!d.getElementById('qiyamBox')){if(n++<40)setTimeout(go,150);return}
+  [['qiyamStart','ابدأ'],['qiyamStop','سجّل'],['qiyamReset','إعادة']].forEach(([i,t])=>{const e=d.getElementById(i);if(e){e.title=e.textContent;e.setAttribute('aria-label',e.textContent);e.textContent=t}});
+  l.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.qtg');if(!t)return;e.stopPropagation();e.preventDefault();const q=d.getElementById('qiyamBox');q.hidden=!q.hidden;t.textContent=q.hidden?'⏱ الخطة ▾':'⏱ الخطة ▴';fit()},true);
+  new MutationObserver(()=>add(l)).observe(l,{childList:true,subtree:true});add(l)};go()})();
 </script>
 </body>
 </html>
