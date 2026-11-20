@@ -1541,7 +1541,7 @@ function recalc(){const n=new Date();Tday=n.getDate();T=calcTimes(n);const hj=n.
   $('ppop').innerHTML=PR.map(([k,nm])=>`<div class="row" data-k="${k}"><span>${nm}</span><span>${T[k].toLocaleTimeString('ar-EG',{hour:'numeric',minute:'2-digit',hour12:true})}</span></div>`).join('')+`<div class="row"><span>القبلة</span><span><b id="qd"></b> <i id="qa" aria-hidden="true">▲</i></span></div>`;setQ()
 }
 function phase(n){if(n<T.fajr||n>=T.isha)return'night';if(n<T.sunrise)return'fajr';if(n<T.dhuhr)return'morning';if(n<T.asr)return'day';if(n<T.maghrib)return'asr';return'maghrib'}
-function windows(n){const d=n.getDay();return{adhan:PR.find(([k])=>n-T[k]>=0&&n-T[k]<3e5),kahf:(d===4&&n>=T.maghrib)||(d===5&&n<T.maghrib),m:n>=T.fajr&&n<T.dhuhr,e:n>=T.asr&&n<T.isha}}
+function windows(n){const d=n.getDay();return{adhan:PR.find(([k])=>n-T[k]>=0&&n-T[k]<3e5),kahf:(d===4&&n>=T.maghrib)||(d===5&&n<T.maghrib),sal:(d===4&&n>=T.maghrib)||(d===5&&n<T.maghrib),m:n>=T.fajr&&n<T.dhuhr,e:n>=T.asr&&n<T.isha}}
 
 /* ===== الشمس والقمر يتحركان حسب الوقت الفعلي ===== */
 function place(el,t){
@@ -1635,6 +1635,7 @@ function cycle(list,d,fallbackKey){if(!list.length)return;
   load(list[(i+d+list.length)%list.length]);
 }
 function step(d){
+  if(kahfPair(d))return;
   if(PKQ&&PKQ.mode===mode&&PKQ.list.length)return cycle(PKQ.list,d,'');
   if(mode==='quran')return cycle(lib('quran',WHY.q),d,lastQ);
   if(LISTM[mode])return cycle(lib(mode,WHY[mode]),d,'');if(mode==='adhkar')return cycle(adhkarList(),d,'');
@@ -1848,7 +1849,21 @@ function pkGo(){const L=pkItems(pkM).filter(x=>pkSel.has(x.key)).map(x=>({...x,w
   try{localStorage.setItem('pk_'+pkM,JSON.stringify(L.map(x=>x.key)))}catch(e){}
   PKQ={mode:pkM,list:L};mode=pkM;mark();pkClose();load(L[0])}
 audio.ontimeupdate=()=>{if(!audio.duration)return;ring(audio.currentTime/audio.duration);$('time').textContent=`${fmt(audio.currentTime)} / ${fmt(audio.duration)}`;errs=0};
-audio.onended=()=>{if(repLeft>1){repLeft--;window.__repNoFade=1;audio.currentTime=0;audio.play().then(()=>setState(true,repMsg())).catch(()=>setState(false));return}try{if(window.__rdAfterAdhan&&window.__rdAfterAdhan())return}catch(e){}step(1)};
+/* بعد انتهاء سورة الكهف: تشغيل الملف المعلَّم في audio.js بالخاصية after:'kahf' تلقائيًا. للإيقاف: localStorage kahf_tsb = 0 */
+/* سنن الجمعة (قائمة «سنن الجمعة» في الخدمات): تتعلّم تلقائيًا عند انتهاء الكهف ثم الصلاة على النبي ﷺ */
+function jmTick(i){try{const k='jm'+Math.floor((Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5)-2)/7),a=(localStorage.getItem(k)||'').split(',').filter(Boolean);
+  if(!a.includes(String(i))){a.push(String(i));localStorage.setItem(k,a.join(','))}
+  const b=document.querySelector('#jm button[data-i="'+i+'"]');if(b){b.classList.add('on');b.setAttribute('aria-pressed','true')}
+  const c=document.getElementById('jmc');if(c)c.textContent=a.length.toLocaleString('ar-EG')+' من '+(5).toLocaleString('ar-EG')}catch(e){}}
+function afterKahf(nt){try{if(cur&&/بعد سورة الكهف/.test(cur.why||'')){if(windows(new Date()).kahf)jmTick(3);return false}
+  if(!cur||!(cur.why===WHY.kahf||/سورة الكهف/.test(cur.title||'')))return false;const fri=windows(new Date()).kahf;if(!fri)return false;if(!nt)jmTick(2);if(localStorage.getItem('kahf_tsb')==='0')return false;
+  const src=MY_AUDIO.find(x=>x&&x.after==='kahf'&&x.file),it=src&&mk(src,WHY.a);if(!it)return false;
+  const lq=lastQ;load({...it,why:'بعد سورة الكهف: الصلاة على النبي ﷺ'});if(lq){lastQ=lq;try{localStorage.setItem('lastQ',lq)}catch(e){}}return true}catch(e){return false}}
+/* ملفان منفصلان: في وقت الجمعة فقط يأتي بعد الكهف ملف الصلاة على النبي ﷺ (بالانتهاء أو بزر «التالي»)، وفي غيره التشغيل عادي */
+function kahfPair(d){try{if(!cur||!windows(new Date()).kahf||localStorage.getItem('kahf_tsb')==='0')return false;
+  const isS=/بعد سورة الكهف/.test(cur.why||''),isK=!isS&&(cur.why===WHY.kahf||/سورة الكهف/.test(cur.title||''));
+  if(d>0&&isK)return afterKahf(true)}catch(e){}return false}
+audio.onended=()=>{if(repLeft>1){repLeft--;window.__repNoFade=1;audio.currentTime=0;audio.play().then(()=>setState(true,repMsg())).catch(()=>setState(false));return}try{if(window.__rdAfterAdhan&&window.__rdAfterAdhan())return}catch(e){}if(afterKahf())return;step(1)};
 audio.onerror=()=>{const off=navigator.onLine===false;setState(false,off?'المقطع ده لازم يتحمّل بنت أول مرة':'تعذر تشغيل الملف، تأكد من اسمه ومساره');if(off&&window.apToast&&!window.__oaT){window.__oaT=1;setTimeout(()=>{window.__oaT=0},15000);try{apToast('المقطع ده لم يُحفظ بعد، يحتاج نت أول مرة')}catch(e){}}if(++errs<3)setTimeout(()=>step(1),2000)};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&!audio.paused)lock()});
 if('mediaSession' in navigator){const ms=navigator.mediaSession;ms.setActionHandler('play',play);ms.setActionHandler('pause',()=>{audio.pause();setState(false,'متوقف مؤقتًا')});ms.setActionHandler('nexttrack',()=>step(1));ms.setActionHandler('previoustrack',()=>step(-1))}
@@ -3111,7 +3126,7 @@ const mp=mk('qur','🗺️','خريطة الحفظ','<div class="zr" style="grid
 let H=(ld('hf31')||'').padEnd(114,'0').slice(0,114).split('');const mr=()=>{$('mpg').innerHTML=H.map((v,i)=>`<button class="mc s${v}" data-i="${i}" aria-label="سورة ${i+1}">${ar(i+1)}</button>`).join('');$('mpc').textContent='محفوظ '+ar(H.filter(x=>x==='2').length)+' من ١١٤ · قيد الحفظ '+ar(H.filter(x=>x==='1').length)};
 $('mpg').onclick=e=>{const b=e.target.closest('.mc');if(!b)return;const i=+b.dataset.i;H[i]=String((+H[i]+1)%3);sv('hf31',H.join(''));vb(8);mr()};mr();
 /* التنبيهات والتذكير (ضمن الإعدادات) */
-let N=Object.assign({on:(()=>{try{return ld('ap_nud')==='0'&&!ld('ntf31')?0:1}catch(e){return 1}})(),adhan:0,qt:1,pre:1,pm:10,sab:1,mas:1,kahf:1,wk:1,dr:1,bk:1,mt:0,wb:0,zk:1},J('ntf31',{}));
+let N=Object.assign({on:(()=>{try{return ld('ap_nud')==='0'&&!ld('ntf31')?0:1}catch(e){return 1}})(),adhan:0,qt:1,pre:1,pm:10,sab:1,mas:1,kahf:1,sal:1,wk:1,dr:1,bk:1,mt:0,wb:0,zk:1},J('ntf31',{}));
 if(N.pre>1){N.pm=N.pre;N.pre=1}if(![5,10,15,30].includes(N.pm))N.pm=10;
 const NG=$('ntg'),nb=(k,t)=>`<button class="chip ${N[k]?'on':''}" data-k="${k}">${t}</button>`,nh=t=>`<p class="mutp sth">${t}</p>`;
 let npm='';
@@ -3128,7 +3143,7 @@ const nr=()=>{if(!NG)return;const sup='Notification' in window,p=sup?Notificatio
   +'<div class="ti" id="oaSlot"><span class="tl">الأذان تلقائيًا</span></div>'
   +tb('adhan','إشعار الأذان')+tb('pre','تذكير قبل الصلاة')
   +(N.pre?ce('قبل الصلاة بـ','<button class="chip on" data-m="'+nx+'" aria-label="قبل الصلاة بـ '+ar(N.pm)+' دقيقة، اضغط للتغيير">'+ar(N.pm)+' د</button>',D):'')
-  +tb('sab','أذكار الصباح')+tb('mas','أذكار المساء')+tb('kahf','سورة الكهف')+tb('mt','الاثنين والخميس')+tb('wb','الأيام البيض')+tb('zk','حول الزكاة')+tb('wk','التقرير الأسبوعي')+tb('dr','تقرير اليوم')+tb('bk','نسخ احتياطي')
+  +tb('sab','أذكار الصباح')+tb('mas','أذكار المساء')+tb('kahf','سورة الكهف')+tb('sal','الصلاة على النبي ﷺ')+tb('mt','الاثنين والخميس')+tb('wb','الأيام البيض')+tb('zk','حول الزكاة')+tb('wk','التقرير الأسبوعي')+tb('dr','تقرير اليوم')+tb('bk','نسخ احتياطي')
   +'</div>'
   +(npm?'<p class="mutp" style="margin:6px 0 0;text-align:start">'+npm+'</p>':'')
   +'<p class="mutp" style="margin-top:6px">الأذان التلقائي يشغّل الصوت عند دخول وقت كل صلاة. تظهر التنبيهات داخل التطبيق، وكإشعارات للجهاز إن سمحت بها، وتعمل ما دام التطبيق مفتوحًا (ولو في الخلفية)، ولا يستطيع ملف HTML وحده إرسال إشعار والتطبيق مغلق. «تقرير اليوم» يصل بعد العشاء بساعة. «الإشعارات السريعة» هي رسائل زي «تم النسخ» و«أُضيفت إلى المفضلة»؛ لو أوقفتها تفضل التذكيرات والأخطاء شغالة.</p>';
@@ -3205,6 +3220,7 @@ const ntick=()=>{try{const iw=!!(typeof T!=='undefined'&&T&&drWin());if(iw!==nti
  PR.forEach(([k,nm])=>{if(!T[k])return;if(N.adhan&&inW(T[k]))C.push(['a'+k,'حان وقت أذان '+nm,'حيّ على الصلاة']);const ms=T[k]-n;if(N.pre&&ms>0&&ms<=N.pm*6e4)C.push(['p'+k,'باقي '+ar(Math.max(1,Math.round(ms/6e4)))+' دقائق على '+nm,'تجهّز للصلاة'])});
  if(N.wk&&n.getDay()===5&&n.getHours()>=8)C.push(['wk','تقريرك الأسبوعي جاهز','تابع تقدّمك هذا الأسبوع',['اعرض',()=>{window.apOpenWk&&apOpenWk()}]]);
  if(N.kahf&&w.kahf)C.push(['kahf','وقت سورة الكهف','سنة الجمعة',['استمع',pl('kahf','kahf')]]);
+ if(N.sal&&w.sal)C.push(['sal','وقت الصلاة على النبي ﷺ','أكثِر منها يوم الجمعة',['سبّح',()=>NTACT.sal&&NTACT.sal()]]);
  if(N.sab&&w.m)C.push(['sab','أذكار الصباح','حان وقت أذكار الصباح',['استمع',pl('morning','m')]]);
  if(N.mas&&w.e)C.push(['mas','أذكار المساء','حان وقت أذكار المساء',['استمع',pl('evening','e')]]);
  if(n.getHours()===20&&n.getMinutes()<2){const tm=new Date(n.getTime()+864e5);if(N.mt&&(tm.getDay()===1||tm.getDay()===4))C.push(['mt','صيام الغد','غدًا '+(tm.getDay()===1?'الاثنين':'الخميس')+': يوم صيام مستحب']);
@@ -7808,6 +7824,13 @@ body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:
     else if(h.textContent.includes('المسبحة: جرّبها')){if(!b){b=d.createElement('div');b.className='rdDemo';const t=card.querySelector('.tbody')||card;t.after?t.after(b):t.appendChild(b)}if(b.dataset.live!=='1')tasb(b)}};
   new MutationObserver(()=>{const x=d.getElementById('tourCard');if(x&&!x.__rd2){x.__rd2=1;new MutationObserver(()=>fix(x)).observe(x,{childList:true});fix(x)}}).observe(d.body,{childList:true});
 })();
+</script>
+<script>
+/* الصلاة على النبي ﷺ يوم الجمعة: زر الإشعار يفتح المسبحة على هذا الذكر */
+(function(){const d=document;window.NTACT=window.NTACT||{};
+  NTACT.sal=function(){try{const v=d.getElementById('svc'),sh=d.getElementById('sheet');if(v&&!(sh&&sh.classList.contains('open')))v.click();
+    setTimeout(()=>{const t=d.querySelector('#stabs [data-t="dhk"]');t&&t.click();
+      setTimeout(()=>{const w=d.getElementById('dz'),x=w&&[...w.querySelectorAll('.wi')].find(e=>e.textContent.indexOf('الصلاة على النبي')>-1);x&&x.click()},350)},350)}catch(e){}}})();
 </script>
 </body>
 </html>
