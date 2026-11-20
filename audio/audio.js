@@ -20,6 +20,13 @@
         { title: 'الاسم الذي يظهر على الشاشة', file: 'audio/اسم-الملف.mp3', type: 'النوع', desc: 'وصف صغير (اختياري)' },
          desc = وصف يظهر بخط صغير تحت الاسم ٣ ثوانٍ ثم يتلاشى. امسحه أو اتركه فاضي وما يظهرش وصف.
 
+   3) عدد مرات التكرار (اختياري): أضف  repeat: رقم  للسطر، والمقطع يتكرر العدد ده من المرات قبل ما ينتقل للي بعده.
+        مثال: { title: 'استغفار', file: 'audio/adhkar/istighfar_once.mp3', type: 'adhkar', repeat: 100 },
+        - الملف لازم يكون مرة واحدة بس (مثلاً «أستغفر الله» مرة واحدة)، لأن التطبيق هو اللي بيكرره.
+        - لو الملف نفسه مسجّل فيه التكرار (زي only_one_100.mp3) ما تحطش repeat وإلا هيتضاعف.
+        - لو ما كتبتش desc بيظهر تلقائيًا «١٠٠ مرة»، ولو كتبت desc بيظهر كلامك.
+        - تحت الزر بيظهر عدّاد «التكرار ٣ / ١٠٠»، والضغط على التالي أو السابق يلغي التكرار.
+
    الأنواع (type):
      'quran'      تلاوة أو سورة         ← تظهر في زر "قرآن" (بنفس ترتيبك)
      'adhkar'     أذكار وأدعية عامة     ← تظهر في زر "أذكار"
@@ -38,6 +45,8 @@
 var MY_AUDIO = [
 	// ابتهالات (مثال — شيل // وغيّر الاسم والملف):
 	// { title: 'مولاي إني ببابك', file: 'audio/ibtihalat/mawlaya.mp3', type: 'ibtihalat' },
+	// ذكر بملف مرة واحدة ويتكرر ١٠٠ مرة (شيل // وغيّر الاسم والملف):
+	// { title: 'أستغفر الله', file: 'audio/adhkar/istighfar_once.mp3', type: 'adhkar', repeat: 100 },
 	// أناشيد (مثال):
 	// { title: 'طلع البدر علينا', file: 'audio/anasheed/tala3.mp3', type: 'anasheed' },
 
@@ -79,16 +88,30 @@ var MY_AUDIO = [
 // adhkar
 	{ title: 'أذكار الصباح',				file: 'audio/adhkar/morning.mp3',			type: 'morning', desc: 'مشاري العفاسي' },
 	{ title: 'أذكار المساء',				file: 'audio/adhkar/evening.mp3',			type: 'evening', desc: 'مشاري العفاسي' },
-	{ title: 'تسبيح',				file: 'audio/adhkar/tasbeh.mp3',			type: 'adhkar', desc: '١٠٠ مره' },
-	{ title: 'استغفار',				file: 'audio/adhkar/istighfar1.mp3',		type: 'adhkar', desc: '١٠٠ مره' },
-	{ title: 'استغفار',				file: 'audio/adhkar/istighfar2.mp3',		type: 'adhkar', desc: '١٠٠ مره' },
 	{ title: 'دعاء دخول المنزل',			file: 'audio/adhkar/home-in.mp3',				type: 'adhkar', desc: 'مشاري العفاسي' },
 	{ title: 'دعاء الخروج من المنزل',			file: 'audio/adhkar/home-out.mp3',				type: 'adhkar', desc: 'مشاري العفاسي' },
 	{ title: 'دعاء السفر',					file: 'audio/adhkar/safar.mp3',			type: 'adhkar', desc: 'مشاري العفاسي' },
-	{ title: 'لا اله الا الله',			file: 'audio/adhkar/only_one_100.mp3',		type: 'adhkar', desc: '١٠٠ مره' },
-	{ title: 'لا اله الا الله',			file: 'audio/adhkar/only_one_1000.mp3',	type: 'adhkar', desc: '١٠٠٠ مره' },
 	{ title: 'الرقية الشرعية',		file: 'audio/ruqyah/ruqyah.mp3',			type: 'adhkar', desc: 'كامله' }, 
 	{ title: 'الرقية الشرعية',		file: 'audio/ruqyah/ruqyah.mp3',			type: 'ruqyah', desc: 'كامله' }, //  ← اختياري: يُظهر تبويب «استماع» في الرقية الشرعية
+
+	{ title: 'تسبيح',				file: 'audio/adhkar/tasbeh.mp3',			type: 'adhkar', desc: '١٠٠ مره' , repeat: 100  },
+	{ title: 'استغفار',				file: 'audio/adhkar/istighfar1.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'استغفار',				file: 'audio/adhkar/istighfar2.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'لا اله الا الله',			file: 'audio/adhkar/only_one_1000.mp3',	type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'لا اله الا الله',			file: 'audio/adhkar/only_one_100.mp3',		type: 'adhkar', desc: '١٠٠ مره' },
+	{ title: 'لا اله الا الله',			file: 'audio/adhkar/only_one_01.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'الباقيات الصالحات',			file: 'audio/adhkar/zkr001.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'الصلاة على النبي',			file: 'audio/adhkar/profetpray01.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100  , after: 'kahf' },
+	{ title: 'تسبيح',				file: 'audio/adhkar/taspeeh001.mp3',			type: 'adhkar', desc: '١٠٠ مره' , repeat: 100  },
+	{ title: 'لا اله الا الله',			file: 'audio/adhkar/only_one_02.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'لا اله الا الله',			file: 'audio/adhkar/only_one_04.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'لا حول ولا قوة الا بالله',			file: 'audio/adhkar/only_one_03.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'الله اكبر',			file: 'audio/adhkar/good_great.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'الحمد لله',			file: 'audio/adhkar/alhamdulellah_001.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'تسبيح',				file: 'audio/adhkar/taspeeh002.mp3',			type: 'adhkar', desc: '١٠٠ مره' , repeat: 100  },
+	{ title: 'استغفار',				file: 'audio/adhkar/istghphar003.mp3',		type: 'adhkar', desc: '١٠٠ مره' , repeat: 100 },
+	{ title: 'تسبيح',				file: 'audio/adhkar/taspeeh005.mp3',			type: 'adhkar', desc: '١٠٠ مره' , repeat: 100  },
+	{ title: 'تسبيح',				file: 'audio/adhkar/taspeeh006.mp3',			type: 'adhkar', desc: '١٠٠ مره' , repeat: 100  },
 
 
 // anasheed
@@ -103,6 +126,7 @@ var MY_AUDIO = [
 	{ title: 'دع لذيذ الكرى',			file: 'audio/anasheed/da-ladhid-alkara.mp3',	type: 'anasheed' },
 	{ title: 'يا نفس',			file: 'audio/anasheed/ya-nafs.mp3',	type: 'anasheed' },
 	{ title: 'إلهي',			file: 'audio/anasheed/abdullah-aljarallah-ilahi.mp3',	type: 'anasheed', desc: 'عبدالله الجارلله'  },
+	{ title: 'وقفت على القبور',			file: 'audio/anasheed/mali-waqft.mp3',	type: 'anasheed', desc: 'مشاري العفاسي'  },
 	{ title: 'فيَّ حُبٌّ',			file: 'audio/anasheed/aljarallah-alnafees-fiya-hubbun.mp3',	type: 'anasheed', desc: 'الجارلله و النفيس'  },
 	{ title: 'ليس الغريب',			file: 'audio/anasheed/laysa-alghareeb.mp3',	type: 'anasheed' },
 	{ title: 'السور المسبحة',			file: 'audio/anasheed/almusabbihat.mp3',	type: 'anasheed' },
@@ -116,6 +140,7 @@ var MY_AUDIO = [
 	{ title: 'هزتني', file: 'audio/anasheed/Hztny.mp3', type: 'anasheed' },
 	{ title: 'فيما الركون', file: 'audio/anasheed/Rukoon_Salman_Mulla.mp3', type: 'anasheed', desc: 'سلمان الملا' },
 	{ title: 'صلوا عليه', file: 'audio/anasheed/Sallu_Alayhi.mp3', type: 'anasheed', desc: 'صلوا عليه وسلموا تسليماً' },
+	{ title: 'أسماء الله الحسنى', file: 'audio/anasheed/god_names.mp3', type: 'anasheed', desc: 'النقشبندي' },
 	
 	
 	{ title: 'نونية القحطاني', file: 'audio/anasheed/Noniya_Al-Qahtani_Faris_Abbad.mp3', type: 'anasheed', desc: 'يا منزل الايات و الفرقان' },
