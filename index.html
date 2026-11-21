@@ -3191,7 +3191,7 @@ const mp=mk('qur','🗺️','خريطة الحفظ','<div class="zr" style="grid
 let H=(ld('hf31')||'').padEnd(114,'0').slice(0,114).split('');const mr=()=>{$('mpg').innerHTML=H.map((v,i)=>`<button class="mc s${v}" data-i="${i}" aria-label="سورة ${i+1}">${ar(i+1)}</button>`).join('');$('mpc').textContent='محفوظ '+ar(H.filter(x=>x==='2').length)+' من ١١٤ · قيد الحفظ '+ar(H.filter(x=>x==='1').length)};
 $('mpg').onclick=e=>{const b=e.target.closest('.mc');if(!b)return;const i=+b.dataset.i;H[i]=String((+H[i]+1)%3);sv('hf31',H.join(''));vb(8);mr()};mr();
 /* التنبيهات والتذكير (ضمن الإعدادات) */
-let N=Object.assign({on:(()=>{try{return ld('ap_nud')==='0'&&!ld('ntf31')?0:1}catch(e){return 1}})(),adhan:0,qt:1,pre:1,pm:10,sab:1,mas:1,kahf:1,sal:1,wk:1,dr:1,bk:1,mt:0,wb:0,zk:1},J('ntf31',{}));
+let N=Object.assign({on:(()=>{try{return ld('ap_nud')==='0'&&!ld('ntf31')?0:1}catch(e){return 1}})(),adhan:0,qt:1,pre:1,pm:5,sab:1,mas:1,kahf:1,sal:1,wk:1,dr:1,bk:1,mt:0,wb:0,zk:1},J('ntf31',{}));
 if(N.pre>1){N.pm=N.pre;N.pre=1}if(![5,10,15,30].includes(N.pm))N.pm=10;
 const NG=$('ntg'),nb=(k,t)=>`<button class="chip ${N[k]?'on':''}" data-k="${k}">${t}</button>`,nh=t=>`<p class="mutp sth">${t}</p>`;
 let npm='';
@@ -3282,7 +3282,7 @@ const pl=(t,w)=>()=>{try{const a=lib(t,WHY[w]);a&&a[0]&&load(a[0])}catch(e){}};
 window.NTACT=window.NTACT||{};NTACT.dr=drOpen;NTACT.wk=()=>{window.apOpenWk&&apOpenWk()};NTACT.bk=()=>{const b=$('bkc');b&&b.click()};
 const ntick=()=>{try{const iw=!!(typeof T!=='undefined'&&T&&drWin());if(iw!==ntick._w){ntick._w=iw;qr()}}catch(e){}
  if(!N.on||typeof T==='undefined'||typeof PR==='undefined'||document.getElementById('splash'))return;const n=new Date(),C=[];let w={};try{w=typeof windows==='function'?windows(n):{}}catch(e){}
- PR.forEach(([k,nm])=>{if(!T[k])return;if(N.adhan&&inW(T[k]))C.push(['a'+k,'حان وقت أذان '+nm,'حيّ على الصلاة']);const ms=T[k]-n;if(N.pre&&ms>0&&ms<=N.pm*6e4)C.push(['p'+k,'باقي '+ar(Math.max(1,Math.round(ms/6e4)))+' دقائق على '+nm,'تجهّز للصلاة'])});
+ PR.forEach(([k,nm])=>{if(!T[k])return;if(N.adhan&&inW(T[k]))C.push(['a'+k,'حان وقت أذان '+nm,'حيّ على الصلاة']);const ms=T[k]-n;if(N.pre&&ms>0&&ms<=N.pm*6e4)C.push(['p'+k,'باقي '+ar(Math.max(1,Math.round(ms/6e4)))+' دقائق على صلاة '+nm,'استعد للصلاة',['الاستعداد',()=>{window.NTACT&&NTACT.prep&&NTACT.prep()}],()=>{try{window.hisnPrepAuto&&hisnPrepAuto(k)}catch(e){}}])});
  if(N.wk&&n.getDay()===5&&n.getHours()>=8)C.push(['wk','تقريرك الأسبوعي جاهز','تابع تقدّمك هذا الأسبوع',['اعرض',()=>{window.apOpenWk&&apOpenWk()}]]);
  if(N.kahf&&w.kahf)C.push(['kahf','وقت سورة الكهف','سنة الجمعة',['استمع',pl('kahf','kahf')]]);
  if(N.sal&&w.sal)C.push(['sal','وقت الصلاة على النبي ﷺ','أكثِر منها يوم الجمعة',['سبّح',()=>NTACT.sal&&NTACT.sal()]]);
@@ -8189,6 +8189,93 @@ const go=()=>{const pc=d.getElementById('pc'),pr=d.getElementById('prayerReady')
   new MutationObserver(restart).observe(el,{childList:true,characterData:true,subtree:true});
   restart();
 })();
+</script>
+<style id="qy2-css">
+/* خطة قيام الليل: الهدف + ابدأ/سجّل/إعادة في سطر واحد، والمؤقت تحتهم */
+#qiyamBox .qrow{display:flex;flex-wrap:nowrap;align-items:center;gap:6px;flex:1 1 100%;min-width:0}
+#qiyamBox .qrow .zr{display:flex;align-items:center;gap:4px;flex:0 1 auto;min-width:0}
+#qiyamBox .qrow .zr label{font-size:.74rem;line-height:1.2;white-space:normal;flex:0 1 auto;min-width:0}
+#qiyamBox .qrow .zr input{width:50px;height:32px;font-size:.9rem;flex:0 0 auto}
+#qiyamBox .qrow .chips{display:flex!important;flex:1 1 auto;min-width:0;gap:4px;flex-wrap:nowrap!important;justify-content:flex-end!important;grid-template-columns:none}
+#qiyamBox .qrow .chip{flex:1 1 0;min-width:0;min-height:34px;padding:0 4px;font-size:.78rem;white-space:nowrap;display:flex;align-items:center;justify-content:center}
+#qiyamBox #qiyamTime{flex:1 1 100%;text-align:center;font-size:1rem;font-weight:700;font-variant-numeric:tabular-nums}
+#qiyamBox:not([hidden]){max-height:none!important;overflow:visible!important;padding:14px 10px!important;gap:12px!important}
+#qiyamBox .qrow .zr input{height:40px}
+#qiyamBox .qrow .chip{min-height:42px}
+#qiyamBox #qiyamTime{font-size:1.25rem;padding:8px 0;min-height:36px}
+#qiyamBox #qiyamTotal{padding-top:2px}
+</style>
+<script>
+/* (1) قيام الليل: نجمع حقل الهدف والأزرار الثلاثة في سطر واحد، ويبقى المؤقت تحتهم */
+try{hisnWhen(['qiyamBox'],function(){var d=document,q=d.getElementById('qiyamBox');if(!q||q.querySelector('.qrow'))return;
+  var z=q.querySelector('.zr'),c=q.querySelector('.chips');if(!z||!c)return;
+  var r=d.createElement('div');r.className='qrow';q.insertBefore(r,z);r.appendChild(z);r.appendChild(c)})}catch(e){console.error(e)}
+/* (2) الاستعداد للصلاة: تنبيه واحد «باقي ٥ دقائق على صلاة كذا، استعد للصلاة» مع زر يفتح القائمة، وإعادة القائمة تلقائيًا معه */
+try{(function(){
+  var d=document,KEY='hisn_prepauto_v1',first=false,st={};
+  try{var raw=localStorage.getItem(KEY);if(raw===null)first=true;else st=JSON.parse(raw)||{}}catch(e){}
+  var save=function(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+  var lead=function(){try{var n=JSON.parse(localStorage.getItem('ntf31')||'{}');return +n.pm>0?+n.pm:5}catch(e){return 5}};
+  var resetPrep=function(){var pr=d.getElementById('prayerReady');if(!pr)return false;var b,k=0;while((b=pr.querySelector('button.on'))&&k++<20)b.click();return true};
+  /* تُستدعى من التنبيه ومن المؤقت الداخلي: تمسح القائمة مرة واحدة لكل صلاة في اليوم */
+  window.hisnPrepAuto=function(k){try{
+    if(typeof T==='undefined'||!T||!T[k]||!d.getElementById('prayerReady'))return;
+    var n=new Date(),td=n.toDateString(),key=td+'|'+k;if(st[key])return;
+    var ns={};Object.keys(st).forEach(function(x){if(x.indexOf(td)===0)ns[x]=1});st=ns;st[key]=1;save();
+    var wasFirst=first;first=false;
+    if(wasFirst&&+n>=+T[k])return;   /* أول تشغيل بعد التحديث: لا نمسح ما أنجزته قبل الآن */
+    resetPrep();
+  }catch(e){}};
+  var tick=function(){try{
+    if(typeof T==='undefined'||!T||typeof PR==='undefined'||d.getElementById('splash'))return;
+    var n=new Date(),td=n.toDateString(),cur=null,L=lead();
+    PR.forEach(function(p){var t=T[p[0]];if(!t||t.toDateString()!==td)return;if(+n>=+t-L*6e4)cur=p[0]});
+    if(cur)window.hisnPrepAuto(cur);
+  }catch(e){}};
+  setInterval(tick,15000);setTimeout(tick,4000);
+  d.addEventListener('visibilitychange',function(){if(!d.hidden)tick()});addEventListener('focus',tick);
+  /* زر «الاستعداد» في التنبيه: يفتح الخدمات ← الصلاة ← اليوم ويوصّل لقائمة الاستعداد مباشرة */
+  window.NTACT=window.NTACT||{};
+  var go=function(){try{
+    var sh=d.getElementById('sheet'),v=d.getElementById('svc');if(v&&!(sh&&sh.classList.contains('open')))v.click();
+    setTimeout(function(){var t=d.querySelector('#stabs [data-t="sal"]');t&&t.click();
+      setTimeout(function(){var sc=d.querySelector('.sc[data-g="الصلاة"]');if(sc){if(sc.classList.contains('cl'))sc.click();
+        var c=[].slice.call(sc.querySelectorAll('.seg .chip')).filter(function(x){return x.textContent.trim()==='اليوم'})[0];c&&!c.classList.contains('on')&&c.click()}
+        setTimeout(function(){var p=d.getElementById('prepBox')||d.getElementById('prayerReady');p&&p.scrollIntoView({behavior:'smooth',block:'center'})},250)},250)},350)
+  }catch(e){}};
+  NTACT.prep=go;['fajr','dhuhr','asr','maghrib','isha'].forEach(function(k){NTACT['p'+k]=go});
+})()}catch(e){console.error(e)}
+</script>
+<style id="plfx-css">
+/* تحكم منفصل في ثلاثة تأثيرات لزر التشغيل (من إعدادات المظهر) */
+body.pl-nob .play{animation:none!important}
+body.pl-noh .halo{animation:none!important;opacity:0!important}
+body.pl-noo .orb::before{animation:none!important;opacity:0!important}
+</style>
+<script>
+/* تفعيل/إيقاف: التنفّس، موجات الهالة، الحلقة الدوّارة (محفوظة على الجهاز) */
+try{(function(){
+  var d=document,KEY='hisn_plfx_v1',FX=[['b','pl-nob','التنفّس'],['h','pl-noh','موجات الهالة'],['o','pl-noo','الحلقة الدوّارة']],st={b:1,h:1,o:1};
+  try{var r=JSON.parse(localStorage.getItem(KEY)||'null');if(r&&typeof r==='object')FX.forEach(function(f){if(r[f[0]]===0)st[f[0]]=0})}catch(e){}
+  var apply=function(){FX.forEach(function(f){d.body.classList.toggle(f[1],!st[f[0]])})};
+  var save=function(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
+  apply();
+  /* نضيف الخانات داخل نفس شبكة أزرار «إعدادات المظهر» (تحت الأزرار الأخرى مباشرة) */
+  hisnWhen(['apc','tourAgain'],function(){
+    var host=d.getElementById('apc'),g=host&&host.closest('.stb');if(!g||d.getElementById('plfx'))return;
+    var btns=[];
+    var mk=function(id,label){var t=d.createElement('div');t.className='ti';if(id)t.id=id;
+      t.innerHTML='<span class="tl">'+label+'</span><div class="chips"><button type="button" class="chip"></button></div>';
+      g.appendChild(t);var b=t.querySelector('button');btns.push(b);return b};
+    var paint=function(){FX.forEach(function(f,i){var on=!!st[f[0]],b=btns[i];b.classList.toggle('on',on);b.setAttribute('aria-pressed',on?'true':'false');b.setAttribute('aria-label',f[2]+': '+(on?'شغّال':'متوقف'));b.textContent=on?'شغّال':'متوقف'});
+      var all=FX.every(function(f){return st[f[0]]});var ab=btns[3];ab.classList.toggle('on',all);ab.textContent=all?'إيقاف الكل':'تشغيل الكل'};
+    FX.forEach(function(f,i){var b=mk(i===0?'plfx':'',f[2]);
+      b.addEventListener('click',function(){st[f[0]]=st[f[0]]?0:1;save();apply();paint();try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}})});
+    var ab=mk('','تأثيرات الزر');
+    ab.addEventListener('click',function(){var all=FX.every(function(f){return st[f[0]]});FX.forEach(function(f){st[f[0]]=all?0:1});save();apply();paint();try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}});
+    paint();
+  });
+})()}catch(e){console.error(e)}
 </script>
 </body>
 </html>
