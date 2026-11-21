@@ -712,15 +712,10 @@ body:not(.pk-used) .cat button[data-m="quran"]::after,body:not(.pk-used) .cat bu
 @keyframes arcIn{from{opacity:0;transform:scale(.6)}}
 /* ===== الضغطة المطوّلة: تعبئة تدريجية للقطعة + انتفاخ وتوهّج ===== */
 .ctl-wrap .sub .arcg{transform:scale(1);filter:drop-shadow(0 0 0 transparent);transition:transform .25s cubic-bezier(.3,.8,.3,1),filter .25s}
-.ctl-wrap .sub .arcfill{fill:none;stroke:var(--hf,var(--ac));stroke-width:44;stroke-dasharray:100;stroke-dashoffset:100;opacity:0;pointer-events:none;transition:stroke-dashoffset .2s ease,opacity .2s ease}
+.ctl-wrap .sub .arcfill{fill:none;stroke:var(--hf,var(--ac));stroke-width:0;stroke-dasharray:100;stroke-dashoffset:0;opacity:0;pointer-events:none;transition:stroke-width .22s ease,opacity .22s ease}
 .ctl-wrap .sub button.on{--hf:color-mix(in srgb,var(--ac) 45%,#fff)}
-.ctl-wrap .sub button.lp-hold .arcfill{stroke-dashoffset:0;opacity:.7;transition:stroke-dashoffset .55s linear,opacity .2s ease}
-.ctl-wrap .sub button.lp-hold .arcg{transform:scale(1.05);filter:drop-shadow(0 0 9px color-mix(in srgb,var(--ac) 75%,transparent));transition:transform .55s cubic-bezier(.3,.7,.4,1),filter .55s}
-.ctl-wrap .sub button.lp-hold .arclb{fill:#1a1408;transition:fill .2s .3s}
-.ctl-wrap .sub button.lp-pop .arcg{animation:arcPop .45s cubic-bezier(.2,.9,.3,1)}
-.ctl-wrap .sub button.lp-pop .arcfill{animation:arcFlash .45s ease-out forwards}
-@keyframes arcPop{0%{transform:scale(1.05)}35%{transform:scale(1.13)}100%{transform:scale(1.05)}}
-@keyframes arcFlash{0%{opacity:.7}30%{opacity:1}100%{opacity:0}}
+.ctl-wrap .sub .arcedge{fill:none;stroke:var(--hf,var(--ac));stroke-width:2.5;stroke-linejoin:round;stroke-opacity:0;pointer-events:none;filter:drop-shadow(0 0 0 transparent);transition:stroke-opacity .2s ease,filter .2s ease}
+.ctl-wrap .sub button.lp-hold .arcedge{stroke-opacity:1;filter:drop-shadow(0 0 7px color-mix(in srgb,var(--ac) 85%,transparent));transition:stroke-opacity .8s cubic-bezier(.3,0,.7,1) .25s,filter .8s cubic-bezier(.3,0,.7,1) .25s}
 @media (orientation:landscape) and (max-height:540px){.ctl-wrap{--o:150px}.ctl-wrap .sub{margin-top:-12px}}
 /* ===== سماعة الرأس: القوس (قرآن/أذكار/ابتهالات/أناشيد) متصل بزرّي التقديم والتأخير، وزر التشغيل هو «الرأس» ===== */
 .ctl-wrap{--o:min(clamp(140px,46vw,220px),calc((100vw - 40px) / 1.96))}
@@ -743,7 +738,6 @@ body:not(.pk-used) .cat button[data-m="quran"]::after,body:not(.pk-used) .cat bu
 .ctl-wrap .sub .archl path{fill:color-mix(in srgb,var(--ac) 42%,transparent);filter:drop-shadow(0 0 7px color-mix(in srgb,var(--ac) 60%,transparent))}
 .ctl-wrap .sub .archl path.archs{fill:none;stroke:var(--ac);stroke-width:3;filter:none}
 .ctl-wrap .sub button.on .arclb{fill:#fffaf0;paint-order:stroke;stroke:rgba(8,14,28,.6);stroke-width:2.2px;stroke-linejoin:round}
-.ctl-wrap .sub button.on.lp-hold .arclb{fill:#1a1408;stroke:none}
 body.fx-ctl .ctl-wrap .sub .arcsheen{display:none!important}
 
 #title.sw-n,#why.sw-n{animation:swN .45s cubic-bezier(.2,.9,.3,1) both}
@@ -979,14 +973,14 @@ body.lite .fxi *,body.lite .fxi,body.lite .eq i,body.lite #qrd #qrPl{animation:n
 /* ضغط مطوّل موحّد: حلقة التقدّم + القائمة + النقطة */
 #lpRing{position:fixed;z-index:9000;box-sizing:border-box;pointer-events:none;border:2.5px solid var(--ac);opacity:0;will-change:transform,opacity;box-shadow:0 0 14px color-mix(in srgb,var(--ac) 65%,transparent)}
 #lpRing::before{content:'';position:absolute;inset:0;border-radius:inherit;background:var(--ac);opacity:.4;clip-path:inset(0 0 0 100%)}
-#lpRing.on::before{animation:lpfill .55s linear forwards}
-#lpRing.fire::before{animation:lpflash .32s ease-out forwards}
+#lpRing.on::before{display:none}
+#lpRing.fire::before{display:none}
 @keyframes lpfill{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
 @keyframes lpflash{from{clip-path:inset(0);opacity:.7}to{clip-path:inset(0);opacity:0}}
-#lpRing.on{animation:lpgrow .55s cubic-bezier(.2,.8,.2,1) forwards}
+#lpRing.on{animation:lpgrow 1.05s cubic-bezier(.3,0,.7,1) forwards}
 #lpRing.fire{animation:lpfire .32s ease-out forwards}
-@keyframes lpgrow{0%{opacity:0;transform:scale(.96)}12%{opacity:.95}100%{opacity:.95;transform:scale(1.07)}}
-@keyframes lpfire{from{opacity:.95;transform:scale(1.07)}to{opacity:0;transform:scale(1.28)}}
+@keyframes lpgrow{0%,23.8%{opacity:0;box-shadow:0 0 0 transparent}100%{opacity:1;box-shadow:0 0 14px color-mix(in srgb,var(--ac) 80%,transparent)}}
+@keyframes lpfire{from{opacity:1}to{opacity:0}}
 .lp-ing{filter:brightness(1.15)}
 #lpMenu{position:fixed;z-index:9001;min-width:176px;max-width:calc(100vw - 16px);padding:8px;border-radius:22px;direction:rtl;display:flex;flex-direction:column;gap:6px;color:var(--ink);border:1.5px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.1),rgba(255,255,255,0) 60%),var(--t);box-shadow:0 14px 40px rgba(0,0,0,.45);animation:lpin .16s ease-out}
 #lpMenu .lph{margin:2px 6px 0;font-size:.78rem;color:var(--mut);text-align:center}
@@ -1664,11 +1658,11 @@ $('cat').onclick=e=>{const b=e.target.closest('button');if(!b||!b.dataset.m)retu
 try{if(localStorage.getItem('pk_used'))document.body.classList.add('pk-used')}catch(x){}
 setGrp(grp);setNavM(navM);$('sub').onclick=e=>{const b=e.target.closest('button[data-g]');if(!b)return;e.stopPropagation();PKQ=null;{const f=SUBS.indexOf(mode),t=SUBS.indexOf(b.dataset.g);if(t>-1&&f!==t)swapFx(t>f?'sw-n':'sw-p')}if(b.dataset.g!=='quran')setGrp(b.dataset.g);setMode(b.dataset.g)};
 PKM.forEach(m=>{const b=document.querySelector('#cat [data-m="'+m+'"]');if(b)b.title='اضغط مطوّلًا لاختيار ما تريد تشغيله';if(b)b.setAttribute('aria-haspopup','dialog');const c=document.querySelector('#sub [data-g="'+m+'"]');if(c){c.title='اضغط مطوّلًا لاختيار ما تريد تشغيله';c.setAttribute('aria-haspopup','dialog')}});
-/* ===== الضغط المطوّل الموحّد (دالة واحدة لكل الأزرار): حلقة تقدّم بعد ٢٠٠ مللي ثانية، تنفيذ بعد ٥٥٠، وتُلغى لو تحرّك الإصبع أكتر من ١٠ بكسل.
+/* ===== الضغط المطوّل الموحّد (دالة واحدة لكل الأزرار): حلقة تقدّم فورية، تنفيذ بعد ١٠٥٠، وتُلغى لو تحرّك الإصبع أكتر من ١٠ بكسل.
    بدائل بدون إصبع: زر الماوس الأيمن (contextmenu) وShift+Enter يفتحان نفس الإجراء.
    للاستعمال من أي ملف آخر (مثل data/radio-data.js): hisnLP.bind(container, selector, {fire:(btn,ev)=>{…}, key:'اسم', ring:(btn)=>عنصر_الحلقة}) و hisnLP.menu(anchor,title,[{label,on,run}]) ===== */
 window.hisnLP=(function(){
-  const DELAY=1050,FEED=500,SLOP=10,d=document;
+  const DELAY=1050,FEED=0,SLOP=10,d=document;
   const used=()=>{try{return JSON.parse(localStorage.getItem('lp_used')||'{}')||{}}catch(e){return{}}};
   Object.keys(used()).forEach(k=>d.body.classList.add('lpu-'+k));
   const markUsed=k=>{if(!k)return;const u=used();if(u[k])return;u[k]=1;try{localStorage.setItem('lp_used',JSON.stringify(u))}catch(e){}d.body.classList.add('lpu-'+k)};
@@ -1677,8 +1671,8 @@ window.hisnLP=(function(){
   function ringOn(b){if(!b)return;const r=b.getBoundingClientRect();if(!r.width)return;
     if(!rg){rg=d.createElement('i');rg.id='lpRing';rg.setAttribute('aria-hidden','true');d.body.appendChild(rg)}
     Object.assign(rg.style,{left:r.left+'px',top:r.top+'px',width:r.width+'px',height:r.height+'px',borderRadius:getComputedStyle(b).borderRadius});
-    rg.className='';void rg.offsetWidth;rg.className='on';rgEl=b;b.classList.add('lp-ing');
-    try{if(b.animate){swK=1+Math.min(.05,9/Math.max(r.width,r.height));swB=b;swA=b.animate([{scale:'1'},{scale:String(swK)}],{duration:550,easing:'cubic-bezier(.3,.7,.4,1)',fill:'forwards'})}}catch(e){swA=null}}
+    rg.className='';void rg.offsetWidth;rg.className='on';rgEl=b;
+  }
   function swOff(){if(!swA)return;const a=swA;swA=null;try{a.onfinish=()=>a.cancel();a.updatePlaybackRate(-3)}catch(e){try{a.cancel()}catch(x){}}}
   function ringOff(){if(rgEl){rgEl.classList.remove('lp-ing');rgEl=null}swOff();if(rg&&rg.className!=='fire')rg.className=''}
   function ringFire(){if(rg&&rg.className==='on')rg.className='fire';
@@ -1729,11 +1723,17 @@ const pkFire=b=>{const m=b.dataset.g||(b.dataset.m==='quran'?navM:b.dataset.m);t
 hisnLP.bind('#cat','button[data-m="quran"]',{fire:pkFire});
 hisnLP.bind('#sub','button[data-g]',{fire:pkFire,ring:()=>null});
 (function(){const sub=document.getElementById('sub');if(!sub)return;
-const WAIT=500,HOLD=1050,SLOP=10;let b=null,t=0,w=0,x0=0,y0=0;
-const clear=()=>{clearTimeout(t);clearTimeout(w);t=w=0;if(b){b.classList.remove('lp-hold');b=null}};
+/* حد مضيء حول كل قطعة: يُبنى من نفس إحداثيات التعبئة القديمة */
+sub.querySelectorAll('.arcg').forEach(g=>{if(g.querySelector('.arcedge'))return;const f=g.querySelector('.arcfill');if(!f)return;
+ const n=(f.getAttribute('d').match(/-?\d+\.?\d*/g)||[]).map(Number);if(n.length<9)return;
+ const p1=[n[0],n[1]],p2=[n[7],n[8]],q=(p,r)=>[(p[0]*r/151).toFixed(2),(p[1]*r/151).toFixed(2)],RO=167,RI=135,a=q(p1,RO),b=q(p2,RO),c=q(p2,RI),e=q(p1,RI);
+ const el=document.createElementNS('http://www.w3.org/2000/svg','path');el.setAttribute('class','arcedge');
+ el.setAttribute('d','M'+a.join(' ')+'A'+RO+' '+RO+' 0 0 0 '+b.join(' ')+'L'+c.join(' ')+'A'+RI+' '+RI+' 0 0 1 '+e.join(' ')+'Z');
+ g.insertBefore(el,g.querySelector('.arcseg'))});
+const HOLD=1050,SLOP=10;let b=null,t=0,x0=0,y0=0;
+const clear=()=>{clearTimeout(t);t=0;if(b){b.classList.remove('lp-hold');b=null}};
 sub.addEventListener('pointerdown',e=>{if(e.button>0)return;const k=e.target.closest&&e.target.closest('button[data-g]');if(!k||!sub.contains(k))return;
- clear();b=k;x0=e.clientX;y0=e.clientY;w=setTimeout(()=>{w=0;if(b===k)k.classList.add('lp-hold')},WAIT);
- t=setTimeout(()=>{t=0;if(!b)return;const k2=b;b=null;k2.classList.add('lp-pop');setTimeout(()=>k2.classList.remove('lp-hold','lp-pop'),460)},HOLD)});
+ clear();b=k;x0=e.clientX;y0=e.clientY;k.classList.add('lp-hold');t=setTimeout(clear,HOLD)});
 sub.addEventListener('pointermove',e=>{if(b&&Math.hypot(e.clientX-x0,e.clientY-y0)>SLOP)clear()});
 ['pointerup','pointercancel','pointerleave'].forEach(ev=>sub.addEventListener(ev,clear));
 })();
