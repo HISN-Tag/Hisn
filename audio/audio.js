@@ -157,6 +157,9 @@ var MY_AUDIO = [
 
 
 // ibtihalat
+	{ title: 'فكم لله من لطف خفي', file: 'audio/ibtihalat/fakam-lillah-min-lutf-khafi.mp3', type: 'ibtihalat' },
+	{ title: 'يا من له ستر', file: 'audio/ibtihalat/fa_km_Lelah.mp3', type: 'ibtihalat' , desc: 'النقشبندي' },
+
 	{ title: 'هو الله رب الوجود', file: 'audio/ibtihalat/huwa-allah-rabb-alwujud.mp3', type: 'ibtihalat' },
 	{ title: 'سبحان من بسط الأرض', file: 'audio/ibtihalat/subhan-man-basat-alard.mp3', type: 'ibtihalat' },
 	{ title: 'الضحى من نور من ؟', file: 'audio/ibtihalat/aldoha-min-noor.mp3', type: 'ibtihalat' },
