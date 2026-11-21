@@ -1151,7 +1151,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="sc" data-p="c"><h3>إعدادات التشغيل</h3><div class="stb" style="--c:2"><div class="ti"><span class="tl">سرعة التشغيل</span><div class="chips" id="sp"><button class="chip" data-r="0.85">٠٫٨٥×</button><button class="chip on" data-r="1">١×</button><button class="chip" data-r="1.25">١٫٢٥×</button><button class="chip" data-r="1.5">١٫٥×</button></div></div><div class="ti"><span class="tl">مؤقت النوم</span><div class="chips" id="sl"><button class="chip" data-m="15">١٥ د</button><button class="chip" data-m="30">٣٠ د</button><button class="chip" data-m="60">ساعة</button><button class="chip" data-m="90">ساعة ونصف</button></div></div></div><p class="mutp" style="margin-top:6px"><span id="sst" style="display:block;color:var(--ac);font-weight:600"></span>يخفض مؤقت النوم الصوت تدريجيًا ثم يوقف التشغيل.</p></section>
 <section class="sc" data-p="d"><h3>الأذكار بعد الصلاة</h3><div class="ck" id="pa"></div><div class="chips" style="justify-content:center;margin-top:10px"><button class="chip" id="par">بدء صلاة جديدة ↻</button></div></section>
 <section class="sc" data-p="b"><h3><span>نوافل اليوم</span><span id="nfc"></span></h3><div class="ck" id="nf"></div></section>
-<section class="sc" data-p="b"><h3><span>سنن الجمعة</span><span id="jmc"></span></h3><div class="ck" id="jm"></div><p class="mutp">تُصفَّر تلقائيًا كل أسبوع</p></section>
+<section class="sc" data-p="b"><h3><span>سنن الجمعة</span><span id="jmc"></span></h3><div class="ck" id="jm"></div></section>
 <section class="sc" data-p="m"><h3>العد التنازلي للمناسبات</h3><div class="qd" id="cdl"></div><p class="mutp">حسب تقويم أم القرى، وقد تختلف بيوم عن الرؤية الشرعية</p></section>
 <section class="sc" data-p="m"><h3>سجل الصدقات</h3><div class="add"><input aria-label="مبلغ الصدقة" autocomplete="off" id="sdi" inputmode="decimal" placeholder="مبلغ الصدقة"/><button class="chip" id="sda">إضافة</button><button class="chip" id="sdu">تراجع</button></div><p class="mutp" id="sdt"></p></section>
 <section class="sc" data-p="d"><h3><span>حديث اليوم</span><span id="hdn"></span></h3><p class="duat" id="hdt"></p><div class="chips" style="justify-content:center"><button class="chip" id="hdx">حديث آخر ↻</button><button class="chip" id="hdc">نسخ</button></div></section>
@@ -1192,7 +1192,7 @@ var mo=new MutationObserver(function(){if(d.getElementById('splash')){rm();mo.di
 <section class="sc" data-p="b"><h3>محاسبة النفس اليومية</h3><p class="mutp">مراجعة شخصية هادئة تساعدك على تحديد ما تريد تحسينه غدًا.</p><div class="ck" id="muhasabaList"></div><textarea id="muhasabaNote" maxlength="1000" placeholder="ما الأمر الذي أريد تحسينه غدًا؟" rows="3" style="width:100%;box-sizing:border-box;border-radius:16px;border:1.5px solid var(--line);background:rgba(0,0,0,.18);color:inherit;padding:10px 12px;font:inherit;margin-top:8px"></textarea></section>
 <section class="sc" data-p="m"><h3>دفتر الامتنان</h3><p class="mutp">اكتب ثلاثة أشياء تشعر بالامتنان لها اليوم.</p><div class="ck" style="gap:8px"><input id="grat1" maxlength="180" placeholder="الأمر الأول" style="width:100%;box-sizing:border-box;border-radius:14px;padding:10px;background:rgba(0,0,0,.18);border:1px solid var(--line);color:inherit;font:inherit"/><input id="grat2" maxlength="180" placeholder="الأمر الثاني" style="width:100%;box-sizing:border-box;border-radius:14px;padding:10px;background:rgba(0,0,0,.18);border:1px solid var(--line);color:inherit;font:inherit"/><input id="grat3" maxlength="180" placeholder="الأمر الثالث" style="width:100%;box-sizing:border-box;border-radius:14px;padding:10px;background:rgba(0,0,0,.18);border:1px solid var(--line);color:inherit;font:inherit"/></div><p class="mutp" id="gratSaved"></p></section>
 <section class="sc" data-p="b"><h3>أعمال خير مقترحة</h3><p class="duat" id="goodDeedText">اختر اقتراحًا لعمل خير بسيط.</p><div class="chips" style="justify-content:center"><button class="chip" id="goodDeedNext">اقتراح آخر</button><button class="chip" id="goodDeedDone">أنجزته</button></div><p class="mutp" id="goodDeedCount"></p></section>
-<section class="sc" data-p="b"><h3>متابعة السنن الرواتب</h3><p class="mutp">علّم السنن التي أديتها اليوم. تختلف بعض التفاصيل الفقهية؛ اتبع ما تعلمته من أهل العلم.</p><div class="ck" id="rawatibList"></div><p class="mutp" id="rawatibStatus"></p></section>
+<section class="sc" data-p="b"><h3>متابعة السنن الرواتب</h3><p class="mutp">علّم ما أديته اليوم.</p><div class="ck" id="rawatibList"></div><p class="mutp" id="rawatibStatus"></p></section>
 <section class="sc" data-p="b"><h3>خطة قيام الليل</h3><div class="zr"><label for="qiyamGoal">هدف القيام بالدقائق</label><input id="qiyamGoal" max="300" min="1" type="number" value="15"/></div><div class="zres" id="qiyamTime">لم يبدأ المؤقت بعد.</div><div class="chips" style="justify-content:center"><button class="chip" id="qiyamStart">ابدأ المؤقت</button><button class="chip" id="qiyamStop">إنهاء وتسجيل</button><button class="chip" id="qiyamReset">إعادة</button></div><p class="mutp" id="qiyamTotal"></p></section>
 <section class="sc" data-p="m"><h3>خطة الصدقة الشهرية</h3><div class="zr"><label for="sadaqaTarget">الهدف الشهري</label><input id="sadaqaTarget" min="0" placeholder="المبلغ" type="number"/></div><div class="zr"><label for="sadaqaCurrent">ما تصدقت به</label><input id="sadaqaCurrent" min="0" placeholder="المبلغ" type="number"/></div><div class="kbar"><i id="sadaqaBar"></i></div><p class="zres" id="sadaqaResult"></p><p class="mutp">هذا منظم شخصي للتخطيط وليس حاسبة زكاة.</p></section>
 <section class="sc" data-p="m"><h3>دليل صلاة المسافر</h3><div class="qd"><div class="qr"><span>القصر</span><b>تُقصر الصلاة الرباعية إلى ركعتين عند تحقق شروط السفر.</b></div><div class="qr"><span>الفجر والمغرب</span><b>لا تُقصران.</b></div><div class="qr"><span>الجمع</span><b>قد يُشرع جمع الظهر والعصر أو المغرب والعشاء وفق أحكام السفر.</b></div><div class="qr"><span>تنبيه</span><b>تختلف بعض التفاصيل بحسب المذهب وظروف السفر؛ اسأل عالمًا موثوقًا عن حالتك.</b></div></div></section>
@@ -2097,6 +2097,35 @@ window.addNewDuas=arr=>{const z=t=>String(t).replace(/[\u064B-\u0652\u0640،؛.,
     el.querySelectorAll('.ptB i').forEach(i=>{const a=+i.dataset.a,e=+i.dataset.e;i.style.width=Math.min(100,Math.max(0,(n-a)/(e-a)*100)).toFixed(1)+'%'});
     if(pState().rows.map(r=>r.q).join('')!==el.dataset.st)prayers()}
   setInterval(ptLive,1000);
+  /* السنن الرواتب: نفس منطق جدول الصلوات (لم يحن بعد / باقي كذا / فاتت) بحسب وقت كل سنة */
+  const RWW=()=>[[T.fajr,T.sunrise],[T.dhuhr,T.asr],[T.dhuhr,T.asr],[T.maghrib,T.isha],[T.isha,new Date(T.fajr.getTime()+864e5)]];
+  function rwLive(){try{const l=$('rawatibList');if(!l||!l.offsetParent)return;const n=new Date(),W=RWW();
+    [...l.querySelectorAll('button')].forEach((b,i)=>{const w=W[i];if(!w)return;const on=b.classList.contains('on'),q=on?'done':n<w[0]?'later':n<w[1]?'now':'missed';
+      let r=b.querySelector('.rst');if(!r){r=document.createElement('small');r.className='rst';b.appendChild(r)}
+      const t=q==='later'?'لم يحن · '+fmT(w[0]):q==='now'?'باقي '+hms(w[1]-n).slice(0,5):q==='missed'?'فاتت · تُقضى':'';
+      if(r.textContent!==t)r.textContent=t;if(b.dataset.rw!==q){b.dataset.rw=q}
+      const dis=q==='later';if(b.disabled!==dis){b.disabled=dis;b.setAttribute('aria-disabled',dis)}})}catch(e){}}
+  (function(){const l=$('rawatibList');if(!l)return;
+    l.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&(b.disabled||b.dataset.rw==='later')){e.stopImmediatePropagation();e.preventDefault()}},true);
+    new MutationObserver(()=>rwLive()).observe(l,{childList:true});setInterval(rwLive,1000);rwLive()})();
+  /* نوافل اليوم وسنن الجمعة: نفس منطق الأوقات (لم يحن / باقي كذا / فاتت) */
+  function tmLive(id,W,keep){try{const l=$(id);if(!l||!l.offsetParent)return;const n=new Date(),ws=W(n);
+    [...l.querySelectorAll('button')].forEach((b,i)=>{const w=ws[i];if(!w)return;const on=b.classList.contains('on'),q=on?'done':n<w[0]?'later':n<w[1]?'now':'missed';
+      let r=b.querySelector(':scope>.rst');if(!r){r=document.createElement('small');r.className='rst';b.appendChild(r)}
+      const t=q==='later'?(w[2]||(id==='nf'?'لم يحن بعد · ':'لم يحن · ')+fmT(w[0])):q==='now'?'باقي '+hms(w[1]-n).slice(0,5):q==='missed'?'فاتت':'';
+      if(r.textContent!==t)r.textContent=t;if(b.dataset.rw!==q)b.dataset.rw=q;
+      const dis=q==='later'&&!(keep&&keep.includes(i));if(b.disabled!==dis){b.disabled=dis;b.setAttribute('aria-disabled',dis)}})}catch(e){}}
+  const nightW=n=>n<T.fajr?[new Date(+T.fajr-864e5),T.fajr]:[T.isha,new Date(+T.fajr+864e5)];
+  const nfW=()=>[null,[new Date(+T.sunrise+15*6e4),T.dhuhr],nightW(new Date()),nightW(new Date())];
+  const jmW=n=>{const d=n.getDay(),F='لم يحن · الجمعة',later=[n,n];let st=[new Date(+n+864e5),new Date(+n+2*864e5),F];
+    const L=()=>st;
+    if(d===5){const th=new Date(+T.maghrib-864e5);return[[T.fajr,T.dhuhr],[T.fajr,T.dhuhr],[th,T.maghrib],[th,T.maghrib],[T.dhuhr,T.maghrib]]}
+    const fr=(5-d+7)%7*864e5,k=[new Date(+T.maghrib+fr-864e5),new Date(+T.maghrib+fr)];
+    if(d===4&&n>=T.maghrib){return[st,st,[T.maghrib,new Date(+T.maghrib+864e5)],[T.maghrib,new Date(+T.maghrib+864e5)],st]}
+    return[st,st,[k[0],k[1],F],[k[0],k[1],F],st]};
+  (function(){[['nf',nfW,[2,3]],['jm',jmW,[]]].forEach(([id,W,keep])=>{const l=$(id);if(!l)return;
+    l.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||(e.target.closest&&e.target.closest('.qtg')))return;if(b.disabled||b.dataset.rw==='later'){e.stopImmediatePropagation();e.preventDefault()}},true);
+    const f=()=>tmLive(id,W,keep);new MutationObserver(f).observe(l,{childList:true});setInterval(f,1000);f()})})();
   $('pt').onclick=e=>{const b=e.target.closest('button');if(!b)return;const s=(ld(dk())||'').split(',').filter(Boolean);
     if(b.dataset.q){const k=b.dataset.k,qs=(ld(pqk())||'').split(',').filter(Boolean);if(!qs.includes(k)){qs.push(k);sv(pqk(),qs.join(','));try{QD[k]=qv(k)+1;sv('qd',JSON.stringify(QD));qdR()}catch(x){}}vb(10);prayers();return}
     if(b.dataset.all){const n=new Date();PR.forEach(([k])=>{if(T[k]<=n&&!s.includes(k)){s.push(k);qadaSet(k,0)}});sv(dk(),s.join(','));vb(10);prayers();return}
@@ -7917,6 +7946,43 @@ body.lite .ctl-wrap.plv .arcsheen,body.fx-ctl .ctl-wrap.plv .arcsheen{animation:
 #nf button:nth-child(4){grid-column:1/-1}
 .sunH{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:0 0 6px}
 .sunH p{margin:0!important}
+/* بطاقة الصلاة الحالية/القادمة: العنوان يمين والوقت المتبقي يسار في سطر واحد */
+#pt .ptH{display:flex!important;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 10px}
+#pt .ptH h4,#pt .ptH p{margin:0!important}
+#pt .ptH p{white-space:nowrap}
+#pt .ptH .ptB,#pt .ptH .pt-now{flex:1 1 100%}
+/* كل صلاتين في سطر: الفجر والظهر / العصر والمغرب / العشاء */
+#pt{display:grid!important;grid-template-columns:1fr 1fr;gap:6px}
+#pt>.ptH,#pt>.ptAll,#pt>.ptR:last-of-type{grid-column:1/-1}
+#pt .ptR{min-width:0;margin:0!important}
+#pt .ptR>.pt-s{display:none}
+#pt .ptR>button.pr{display:grid!important;grid-template-columns:1fr auto;align-items:center;gap:2px 6px;width:100%;box-sizing:border-box;padding:8px 10px;min-width:0}
+#pt .ptR>button.pr .pn{grid-column:1;text-align:start}
+#pt .ptR>button.pr .pm{grid-column:2;white-space:nowrap;font-size:.8rem}
+#pt .ptR>button.pr .pt-s{grid-column:1/-1;font-size:.72rem;opacity:.85;text-align:start;overflow-wrap:anywhere}
+/* سطر واحد داخل كل صلاة: الاسم والتوقيت يمين، والحالة يسار */
+#pt .ptR>button.pr{display:flex!important;flex-wrap:nowrap;align-items:baseline;gap:5px;padding:8px 9px;min-height:0;white-space:nowrap}
+#pt .ptR>button.pr .pn{font-size:.85rem;flex:0 0 auto}
+#pt .ptR>button.pr .pm{font-size:.7rem;opacity:.8;flex:0 0 auto}
+#pt .ptR>button.pr .pt-s{margin-inline-start:auto;font-size:.66rem;flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;text-align:end}
+/* الاستعداد للصلاة: صف واحد مقسّم لأزرار */
+#prayerReady{display:grid!important;grid-template-columns:repeat(5,1fr);gap:6px}
+#prayerReady button{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;min-height:48px;padding:6px 2px;text-align:center;font-size:.78rem;line-height:1.25;word-break:keep-all;overflow-wrap:anywhere}
+#prayerReady button em{display:none}
+#prepBox{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;padding:0;overflow:hidden;border:1px solid color-mix(in srgb,var(--ac) 55%,var(--line));border-radius:14px;background:transparent}
+#prepBox #prayerReady,#prepBox .chips{display:contents!important}
+#prepBox button{min-width:0;min-height:44px;padding:4px 2px;font-size:.68rem;line-height:1.25;display:flex;align-items:center;justify-content:center;text-align:center;overflow-wrap:anywhere;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#prepBox #prayerReady button:not(:first-child),#prepBox #prayerReadyReset{border-inline-start:1px solid color-mix(in srgb,var(--ac) 35%,var(--line))!important}
+#prepBox #prayerReady button.on{background:color-mix(in srgb,var(--ac) 18%,transparent)!important}
+#prepBox button::before,#prepBox button::after{content:none!important;display:none!important}
+#prepBox #prayerReady button.on span{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ac);opacity:.7}
+/* السنن الرواتب: نفس تصميم جدول الاستعداد (إطار واحد، فواصل فقط، شطب عند الإتمام) */
+#rawatibList{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:0!important;padding:0;overflow:hidden;border:1px solid color-mix(in srgb,var(--ac) 55%,var(--line));border-radius:14px;background:transparent}
+#rawatibList button{border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;min-height:44px;padding:4px 2px}
+#rawatibList button:not(:first-child){border-inline-start:1px solid color-mix(in srgb,var(--ac) 35%,var(--line))!important}
+#rawatibList button.on{background:color-mix(in srgb,var(--ac) 18%,transparent)!important}
+#rawatibList button::before,#rawatibList button::after{content:none!important;display:none!important}
+#rawatibList button.on span{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ac);opacity:.7}
 #qiyamBox:not([hidden]){padding:8px;gap:8px;max-height:200px}
 #qiyamBox .zr label{font-size:.8rem;white-space:normal}
 #qiyamBox .zr input{width:64px;height:34px;font-size:.95rem}
@@ -7957,5 +8023,72 @@ const go=()=>{const l=d.getElementById('nf');if(!l||!d.getElementById('qiyamBox'
   l.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('.qtg');if(!t)return;e.stopPropagation();e.preventDefault();const q=d.getElementById('qiyamBox');q.hidden=!q.hidden;t.textContent=q.hidden?'⏱ الخطة ▾':'⏱ الخطة ▴';fit()},true);
   new MutationObserver(()=>add(l)).observe(l,{childList:true,subtree:true});add(l)};go()})();
 </script>
+<script>
+/* عنوان كل قائمة يمين + عدّادها/حالتها يسار في سطر واحد (اليوم، الاستعداد، السنن الرواتب) */
+(function(){const d=document;let n=0;
+const row=(h,k)=>{if(!h||!k||h.parentElement.classList.contains('sunH'))return;const w=d.createElement('div');w.className='sunH';h.before(w);w.appendChild(h);w.appendChild(k)};
+const go=()=>{const pc=d.getElementById('pc'),pr=d.getElementById('prayerReady'),rl=d.getElementById('rawatibList');
+  if(!pc||!pr||!rl){if(n++<40)setTimeout(go,150);return}
+  try{const a=pc.closest('p');row(a.previousElementSibling,a);
+    row(pr.previousElementSibling,d.getElementById('prayerReadyStatus'));
+    const rs=d.getElementById('prayerReadyReset');if(rs&&!d.getElementById('prepBox')){const bx=d.createElement('div');bx.id='prepBox';pr.before(bx);bx.appendChild(pr);bx.appendChild(rs.parentElement);rs.title=rs.textContent;rs.textContent='إعادة';rs.addEventListener('click',e=>{e.stopImmediatePropagation();e.preventDefault();let b,k=0;while((b=pr.querySelector('button.on'))&&k++<20)b.click()},true)}
+    row(rl.parentElement.querySelector('p.mutp[style]'),d.getElementById('rawatibStatus'))}catch(e){}};go()})();
+</script>
+<style id="rw-css">
+/* السنن الرواتب: حالات الوقت (مثل جدول الصلوات) */
+#rawatibList button{flex-direction:column;gap:2px}
+#rawatibList .rst{display:block;font-size:.58rem;line-height:1.2;color:var(--mut);font-variant-numeric:tabular-nums;text-align:center}
+#rawatibList button[data-rw="later"]{opacity:.55;cursor:not-allowed}
+#rawatibList button[data-rw="now"]{background:color-mix(in srgb,var(--ac) 9%,transparent)!important}
+#rawatibList button[data-rw="now"] .rst{color:var(--ac);font-weight:700}
+#rawatibList button[data-rw="missed"] .rst{color:#ffb3a8;font-weight:600}
+#rawatibList button.on .rst{display:none}
+</style>
+<style id="tour-bg">
+/* بطاقة الجولة بنفس لون خلفية التطبيق (تتبع الثيم) */
+#tourCard{background:linear-gradient(180deg,var(--t) 0%,color-mix(in srgb,var(--t) 55%,var(--b)) 58%,var(--b) 100%)!important}
+</style>
+<style id="tm-css">
+#nf button,#jm button{flex-wrap:wrap}
+#nf .rst,#jm .rst{flex-basis:100%;display:block;font-size:.66rem;line-height:1.2;color:var(--mut);font-variant-numeric:tabular-nums;text-align:start}
+#nf button[data-rw="later"],#jm button[data-rw="later"]{opacity:.55;cursor:not-allowed}
+#nf button[data-rw="now"] .rst,#jm button[data-rw="now"] .rst{color:var(--ac);font-weight:700}
+#nf button[data-rw="missed"] .rst,#jm button[data-rw="missed"] .rst{color:#ffb3a8;font-weight:600}
+#nf button.on .rst,#jm button.on .rst{display:none}
+</style>
+<style id="hz-css">
+/* نوافل اليوم وسنن الجمعة: جدول أفقي بنفس تصميم الاستعداد والسنن الرواتب */
+.sunGrid{grid-template-columns:1fr!important}
+#nf,#jm{display:grid!important;gap:0!important;padding:0;overflow:hidden;border:1px solid color-mix(in srgb,var(--ac) 55%,var(--line));border-radius:14px;background:transparent}
+#nf{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#jm{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+#nf button:nth-child(4){grid-column:auto!important}
+#nf button,#jm button{flex-direction:column!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:2px!important;min-width:0;min-height:56px;padding:4px 2px!important;text-align:center;font-size:.7rem!important;line-height:1.25;overflow-wrap:anywhere;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important}
+#nf button em,#jm button em{display:none}
+#nf button::before,#nf button::after,#jm button::before,#jm button::after{content:none!important;display:none!important}
+#nf button:nth-child(n+3),#jm button:not(:first-child){border-inline-start:1px solid color-mix(in srgb,var(--ac) 35%,var(--line))!important}
+#nf button.on,#jm button.on{background:color-mix(in srgb,var(--ac) 18%,transparent)!important;color:inherit!important}
+#nf button.on span,#jm button.on span{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:var(--ac);opacity:.7}
+#nf button[data-rw="now"],#jm button[data-rw="now"]{background:color-mix(in srgb,var(--ac) 9%,transparent)!important}
+#nf .rst,#jm .rst{flex-basis:auto!important;text-align:center!important;font-size:.58rem!important}
+#nf .qtg{font-size:.6rem}
+</style>
+<style id="ln-css">
+/* الاسم وحالته (باقي كذا) في سطر واحد؛ يلتفّ لسطرين فقط لو الخانة أضيق من اللازم */
+#nf button,#jm button,#rawatibList button{flex-direction:row!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;column-gap:5px!important;row-gap:0!important}
+#nf .rst,#jm .rst,#rawatibList .rst{flex-basis:auto!important;white-space:nowrap}
+#nf button:nth-child(-n+3){flex-wrap:nowrap!important}
+</style>
+<style id="qy-css">
+/* نوافل اليوم: كل خانة: الاسم فوق والتوقيت تحته. قيام الليل: الاسم + زر الخطة في سطر والتوقيت تحتهما */
+#nf{grid-template-columns:1fr 1fr 1.7fr!important}
+#nf button:nth-child(n+3){border-inline-start:1px solid color-mix(in srgb,var(--ac) 35%,var(--line))!important}
+#nf button:nth-child(2),#nf button:nth-child(3){flex-direction:column!important;flex-wrap:nowrap!important;justify-content:center!important;gap:2px!important}
+#nf button:nth-child(4){grid-column:auto!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:center!important;align-items:center!important;column-gap:8px!important;row-gap:2px!important;padding:4px 6px!important}
+#nf button:nth-child(4)>span:not(.rst):not(.qtg){order:0;white-space:nowrap}
+#nf button:nth-child(4) .qtg{order:1;font-size:.62rem;padding:2px 7px;border:1px solid color-mix(in srgb,var(--ac) 55%,var(--line));border-radius:99px;white-space:nowrap}
+#nf button:nth-child(4) .rst{order:2;flex-basis:100%!important;text-align:center!important}
+#nf .rst{font-size:.6rem!important;text-align:center!important;white-space:nowrap}
+</style>
 </body>
 </html>
