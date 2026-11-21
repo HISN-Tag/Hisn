@@ -8133,8 +8133,8 @@ const go=()=>{const pc=d.getElementById('pc'),pr=d.getElementById('prayerReady')
   try{CSS.registerProperty({name:'--r',syntax:'<percentage>',inherits:false,initialValue:'0%'});CSS.registerProperty({name:'--sh',syntax:'<percentage>',inherits:false,initialValue:'-30%'})}catch(e){}
   let tok=0,ii=0,oi=0,hi=0,mine=[];const sync=()=>{el.dataset.t=el.textContent};sync();
   const sleep=ms=>new Promise(r=>setTimeout(r,ms)),fin=a=>a.finished.catch(()=>{});
-  const A=(k,o,cls)=>{if(cls)el.classList.add(cls);const a=el.animate(k,Object.assign({fill:'backwards'},o));mine.push(a);return a};
-  const clear=()=>{mine.forEach(a=>{try{a.cancel()}catch(e){}});mine=[];el.classList.remove('mk','sp','shim')};
+  const A=(k,o,cls)=>{if(window.__ttlOff)return{finished:Promise.resolve(),cancel:function(){}};if(cls)el.classList.add(cls);const a=el.animate(k,Object.assign({fill:'backwards'},o));mine.push(a);return a};
+  const clear=()=>{mine.forEach(a=>{try{a.cancel()}catch(e){}});mine=[];el.classList.remove('mk','sp','shim')};window.__ttlFxStop=clear;
   const cnt=()=>Math.max(2,[...el.textContent].filter(c=>c.trim()).length);
   const fl=()=>{const f=getComputedStyle(el).filter;return f&&f!=='none'?f:''};
   const geo=()=>{try{const r=document.createRange();r.selectNodeContents(el);const t=r.getBoundingClientRect(),b=el.getBoundingClientRect(),lh=parseFloat(getComputedStyle(el).lineHeight)||40;
@@ -8260,6 +8260,8 @@ try{(function(){
   var apply=function(){FX.forEach(function(f){d.body.classList.toggle(f[1],!st[f[0]])})};
   var save=function(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}};
   apply();
+  var TK='hisn_ttlfx_v1',tt=1;try{if(localStorage.getItem(TK)==='0')tt=0}catch(e){}
+  window.__ttlOff=!tt;if(!tt&&window.__ttlFxStop)window.__ttlFxStop();
   /* نضيف الخانات داخل نفس شبكة أزرار «إعدادات المظهر» (تحت الأزرار الأخرى مباشرة) */
   hisnWhen(['apc','tourAgain'],function(){
     var host=d.getElementById('apc'),g=host&&host.closest('.stb');if(!g||d.getElementById('plfx'))return;
@@ -8273,7 +8275,10 @@ try{(function(){
       b.addEventListener('click',function(){st[f[0]]=st[f[0]]?0:1;save();apply();paint();try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}})});
     var ab=mk('','تأثيرات الزر');
     ab.addEventListener('click',function(){var all=FX.every(function(f){return st[f[0]]});FX.forEach(function(f){st[f[0]]=all?0:1});save();apply();paint();try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}});
-    paint();
+    var tc=mk('','تأثيرات اسم الملف');tc.parentNode.parentNode.style.gridColumn='1/-1';
+    var tp=function(){tc.classList.toggle('on',!!tt);tc.setAttribute('aria-pressed',tt?'true':'false');tc.textContent=tt?'شغّالة':'متوقفة'};
+    tc.addEventListener('click',function(){tt=tt?0:1;try{localStorage.setItem(TK,tt?'1':'0')}catch(e){}window.__ttlOff=!tt;if(!tt&&window.__ttlFxStop)window.__ttlFxStop();tp();try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}});
+    paint();tp();
   });
 })()}catch(e){console.error(e)}
 </script>
