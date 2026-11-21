@@ -2861,6 +2861,11 @@ try{
       {t:'مرحبًا بك',p:'نجهّز التطبيق في خطوات سريعة ليناسبك.',x:()=>''},
       {t:'حدّد موقعك',p:'لنحسب مواقيت الصلاة واتجاه القبلة بدقة.',x:b=>{b.innerHTML='<button class="chip" id="obg">تحديد موقعي</button><p class="mutp">أو اختر مدينتك:</p><select class="pmsel" id="obc" aria-label="المدينة"><option value="">—</option>'+CITY.map(c=>`<option>${c[0]}</option>`).join('')+'</select><p id="obm"></p>';b.querySelector('#obg').onclick=()=>geo(m=>b.querySelector('#obm').textContent=m);b.querySelector('#obc').onchange=e=>{const o=pmGet();o.city=e.target.value;pmSave(o);refresh();b.querySelector('#obm').textContent=e.target.value?'تم ضبط المدينة ✓':''}}},
       {t:'طريقة الحساب',p:'اختر الجهة المعتمدة في بلدك، ويمكنك تغييرها لاحقًا من «ضبط المواقيت».',x:b=>{b.innerHTML='<select class="pmsel" id="obs" aria-label="طريقة الحساب">'+Object.entries(METH).map(([k,v])=>`<option value="${k}">${v[0]}</option>`).join('')+'</select>';const s=b.querySelector('#obs');s.value=pmGet().m;s.onchange=()=>{const q=pmGet();q.m=s.value;pmSave(q);refresh();pmM&&pmR()}}},
+      {t:'توفير البطارية',p:'الحركات المستمرة (نبض زر التشغيل وموجاته وحلقته، وحركة اسم الملف) تستهلك بطارية أكثر. اختر ما يناسبك، ويمكنك تغييره لاحقًا من «إعدادات المظهر».',x:b=>{const F=window.hisnFx;if(!F){b.innerHTML='';return}
+        b.innerHTML='<div class="chips" style="justify-content:center;flex-direction:column;gap:8px;align-items:stretch"><button class="chip" id="obfb" type="button"></button><button class="chip" id="obft" type="button"></button></div>';
+        const eb=b.querySelector('#obfb'),et=b.querySelector('#obft');
+        const paint=()=>{const g=F.get();eb.classList.toggle('on',g.btn);et.classList.toggle('on',g.ttl);eb.textContent='تأثيرات زر التشغيل: '+(g.btn?'شغّالة ✓':'متوقفة (توفير بطارية)');et.textContent='تأثيرات اسم الملف: '+(g.ttl?'شغّالة ✓':'متوقفة (توفير بطارية)')};
+        eb.onclick=()=>{F.set({btn:!F.get().btn});paint()};et.onclick=()=>{F.set({ttl:!F.get().ttl});paint()};paint()}},
       {t:'جولة تعريفية',p:'سنمرّ الآن على كل أزرار التطبيق وخدماته خطوة بخطوة: التشغيل، وضع إخفاء الأزرار، وضع السكون، الخدمات والإعدادات. تستغرق دقيقتين تقريبًا، ويمكنك إعادتها لاحقًا من «إعدادات المظهر».',x:()=>''}];
     const draw=()=>{const s=S[i];o.innerHTML='<div class="cd2"><h2>'+s.t+'</h2><p>'+s.p+'</p><div id="obx"></div><div class="dots">'+S.map((_,k)=>'<i class="'+(k===i?'on':'')+'"></i>').join('')+'</div><div class="chips" style="justify-content:center"><button class="chip" id="obk">'+(i<S.length-1?'التالي':'ابدأ الجولة')+'</button><button class="chip" id="obs0">'+(i<S.length-1?'تخطي':'لاحقًا')+'</button></div></div>';
       s.x(o.querySelector('#obx'));o.querySelector('#obk').onclick=()=>{if(i<S.length-1){i++;draw()}else fin(1)};const sk=o.querySelector('#obs0');if(sk)sk.onclick=()=>fin(0)};
@@ -8262,6 +8267,14 @@ try{(function(){
   apply();
   var TK='hisn_ttlfx_v1',tt=1;try{if(localStorage.getItem(TK)==='0')tt=0}catch(e){}
   window.__ttlOff=!tt;if(!tt&&window.__ttlFxStop)window.__ttlFxStop();
+  window.hisnFx={
+    get:function(){return{btn:FX.every(function(f){return st[f[0]]}),ttl:!!tt}},
+    set:function(o){
+      if('btn' in o)FX.forEach(function(f){st[f[0]]=o.btn?1:0});
+      if('ttl' in o){tt=o.ttl?1:0;try{localStorage.setItem(TK,tt?'1':'0')}catch(e){}window.__ttlOff=!tt;if(!tt&&window.__ttlFxStop)window.__ttlFxStop()}
+      save();apply();try{window.__fxPaint&&window.__fxPaint()}catch(e){}
+    }
+  };
   /* نضيف الخانات داخل نفس شبكة أزرار «إعدادات المظهر» (تحت الأزرار الأخرى مباشرة) */
   hisnWhen(['apc','tourAgain'],function(){
     var host=d.getElementById('apc'),g=host&&host.closest('.stb');if(!g||d.getElementById('plfx'))return;
@@ -8278,9 +8291,34 @@ try{(function(){
     var tc=mk('','تأثيرات اسم الملف');tc.parentNode.parentNode.style.gridColumn='1/-1';
     var tp=function(){tc.classList.toggle('on',!!tt);tc.setAttribute('aria-pressed',tt?'true':'false');tc.textContent=tt?'شغّالة':'متوقفة'};
     tc.addEventListener('click',function(){tt=tt?0:1;try{localStorage.setItem(TK,tt?'1':'0')}catch(e){}window.__ttlOff=!tt;if(!tt&&window.__ttlFxStop)window.__ttlFxStop();tp();try{navigator.vibrate&&navigator.vibrate(8)}catch(e){}});
-    paint();tp();
+    paint();tp();window.__fxPaint=function(){paint();tp()};
   });
 })()}catch(e){console.error(e)}
+</script>
+<style id="stg-css">
+#sheet .sh-h #stgb{width:42px!important;height:42px!important;min-height:0!important;padding:0!important;box-sizing:border-box!important;border-radius:50%!important;font-size:1.1rem!important;display:inline-flex;align-items:center;justify-content:center;line-height:1;flex:none;border:1.5px solid var(--line);background:rgba(255,255,255,.07);color:var(--ink);cursor:pointer}
+#sheet .sh-h #stgb:active{transform:scale(.92)}
+</style>
+<script>
+/* أيقونة الضبط بجانب البحث في رأس قائمة الخدمات: تفتح الإعدادات مباشرة */
+try{hisnWhen(['sqb','sheet'],function(){
+  var d=document,sq=d.getElementById('sqb');if(!sq||d.getElementById('stgb'))return;
+  var b=d.createElement('button');b.id='stgb';b.type='button';b.setAttribute('aria-label','الإعدادات');b.title='الإعدادات';b.textContent='\u2699\uFE0F';
+  sq.after(b);
+  var openSet=function(){
+    var sh=d.getElementById('sheet'),svc=d.getElementById('svcg'),tabs=d.getElementById('stabs');if(!svc||!tabs)return false;
+    var t=tabs.querySelector('[data-t="mor"]');if(t&&!t.classList.contains('on'))t.click();   /* لو التبويب مفتوح أصلًا لا نضغطه كي لا يُقفل */
+    var sc=svc.querySelector('.sc[data-g="الإعدادات"]');if(!sc)return false;
+    if(sc.classList.contains('cl'))sc.click();
+    if(sh)sh.scrollTop=0;
+    return !sc.classList.contains('cl');
+  };
+  b.addEventListener('click',function(){try{
+    if(sq.getAttribute('aria-expanded')==='true')sq.click();   /* لو البحث مفتوح نقفله الأول */
+    openSet();
+    [60,250].forEach(function(ms){setTimeout(function(){try{var sc=d.querySelector('#svcg .sc[data-g="الإعدادات"]');if(sc&&sc.classList.contains('cl'))openSet()}catch(e){}},ms)});
+  }catch(e){}});
+})}catch(e){console.error(e)}
 </script>
 </body>
 </html>
