@@ -86,6 +86,8 @@ if(ok())return cb();var mo=new MutationObserver(function(){if(ok()){mo.disconnec
   function check(){
     if(!/^https?:$/.test(location.protocol)||navigator.onLine===false)return;
     lastChk=Date.now();
+    var ctl=navigator.serviceWorker&&navigator.serviceWorker.controller;
+    if(ctl){try{ctl.postMessage({type:'CHECK_PAGE'});return}catch(e){}}   /* الـservice worker بيقارن محتوى الصفحة الفعلي (مش الهيدرز) فمفيش إنذار كاذب */
     sig().then(function(s){
       if(!s)return;
       if(S0===null){S0=s;return}

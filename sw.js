@@ -5,11 +5,16 @@ const AUDIO='hisn-audio';   // كاش المقاطع الصوتية: ما بيت
 const AUDIO_RE=/\.(mp3|m4a|aac|ogg|oga|opus|wav|flac)$/i;
 const inflight=new Set();
 
-const VERSION='2026.4';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
+const VERSION='2026.5';     // غيّره مع كل إصدار: المتصفح بيكتشف التحديث لما الملف ده يتغيّر، وبيظهر للمستخدم «في تحديث جديد»
 
 /* ما بنعملش skipWaiting تلقائي: النسخة الجديدة بتستنى لحد ما المستخدم يضغط «تحديث الآن» (الصفحة بتبعت SKIP_WAITING) */
 self.addEventListener('install',e=>{});
-self.addEventListener('message',e=>{if(e.data&&e.data.type==='SKIP_WAITING')self.skipWaiting()});
+self.addEventListener('message',e=>{
+  const t=e.data&&e.data.type;
+  if(t==='SKIP_WAITING')self.skipWaiting();
+  /* الصفحة بتطلب فحص دوري: نجيب نسخة الصفحة من السيرفر ونقارن محتواها الفعلي (مش الهيدرز) بالمحفوظة */
+  else if(t==='CHECK_PAGE'&&e.source&&e.source.url)e.waitUntil(checkPage(e.source.url.split('#')[0]));
+});
 self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C&&x!==AUDIO&&x!==FONTS).map(x=>caches.delete(x)))).then(()=>self.clients.claim())));
 
 const isFile=r=>{try{return AUDIO_RE.test(new URL(r.url).pathname)}catch(_){return false}};
@@ -41,19 +46,39 @@ async function swr(e,name){
   if(hit){e.waitUntil(net);return hit}
   return (await net)||new Response('',{status:504});
 }
-const sig=r=>r.headers.get('etag')||r.headers.get('last-modified')||r.headers.get('content-length')||'';
+/* مقارنة المحتوى الفعلي (SHA-256) بدل الهيدرز: الـETag وLast-Modified وContent-Length بتختلف من سيرفر CDN للتاني ومن ضغط لضغط، وكانت بتطلّع «في تحديث جديد» كل شوية من غير ما يحصل أي تحديث */
+async function digest(resp){
+  const buf=await resp.clone().arrayBuffer();
+  const h=await crypto.subtle.digest('SHA-256',buf);
+  return Array.from(new Uint8Array(h),x=>x.toString(16).padStart(2,'0')).join('');
+}
+async function differs(a,b){
+  try{const [x,y]=await Promise.all([digest(a),digest(b)]);return x!==y}
+  catch(_){return false}   // أي شك = مفيش إشعار
+}
 async function shell(e){
   const r=e.request,c=await caches.open(C),hit=await c.match(r);
+  const copy=hit&&r.mode==='navigate'?hit.clone():null;   // نسخة للمقارنة: الأصل بيتسلّم للصفحة وجسمه بيتستهلك
   const net=fetch(r).then(async res=>{
     if(res&&res.ok){
-      const changed=hit&&r.mode==='navigate'&&sig(hit)&&sig(res)&&sig(hit)!==sig(res);
+      const changed=!!copy&&await differs(copy,res);
       await c.put(r,res.clone());
-      if(changed)notify();   // الصفحة اتحدّثت في الخلفية: نبلّغ المستخدم يعمل تحديث
+      if(changed){await new Promise(r=>setTimeout(r,2500));notify()}   // محتوى الصفحة اتغيّر فعلًا: نبلّغ المستخدم (بعد ثانيتين ونص عشان الصفحة تكون جاهزة تستقبل الرسالة)
     }
     return res;
   }).catch(()=>null);
   if(hit){e.waitUntil(net);return hit}
   return (await net)||(await caches.match('./'))||new Response('غير متصل',{status:503,headers:{'Content-Type':'text/plain; charset=utf-8'}});
+}
+/* فحص بطلب من الصفحة (كل فترة): نفس المقارنة، بدون HEAD */
+async function checkPage(url){
+  try{
+    const c=await caches.open(C),hit=await c.match(url);
+    const res=await fetch(url,{cache:'no-store'});
+    if(!res||!res.ok)return;
+    if(!hit){await c.put(url,res.clone());return}
+    if(await differs(hit,res)){await c.put(url,res.clone());notify()}
+  }catch(_){}
 }
 async function notify(){
   const l=await self.clients.matchAll({type:'window'});
